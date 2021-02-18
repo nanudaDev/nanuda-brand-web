@@ -1,9 +1,5 @@
-const plugins = [require("autoprefixer")];
-
-if (process.env.QUASAR_RTL) {
-  plugins.push(require("postcss-rtl")({}));
-}
+const plugins = [require('autoprefixer')];
 
 module.exports = {
-  plugins
+  plugins,
 };
