@@ -86,7 +86,6 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   vertical-align: baseline;
 }
 
@@ -138,6 +137,10 @@ a:hover,
 a:-webkit-any-link {
   text-decoration: none;
   color: inherit;
+}
+
+p {
+  line-height: 1.4;
 }
 
 img {

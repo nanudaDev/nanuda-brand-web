@@ -1,50 +1,48 @@
 <template>
-  <nav id="nav">
-    <div class="nav-logo">
+  <nav id="nav" class="sticky-nav-header navbar navbar-expand-lg navbar-light">
+    <div class="nav-logo px-4">
       <h1>
         <router-link to="/">NND BRAND</router-link>
       </h1>
     </div>
-    <div class="nav-list">
-      <ul>
-        <li v-for="item in items" :key="item.meta.title">
-          <router-link :to="item.path">{{ item.meta.title }}</router-link>
-        </li>
-      </ul>
+    <button class="navbar-toggler collapsed bg-white" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-nav navbar-collapse collapse">
+      <div v-for="item in items" :key="item.meta.title" class="navbar-nav-item">
+        <router-link :to="item.path">{{ item.meta.title }}</router-link>
+      </div>
     </div>
   </nav>
 </template>
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
-import { routes } from '@/router';
+import { componentRoutes } from '@/router/modules';
+
 import { Component } from 'vue-property-decorator';
 
 @Component({
   name: 'NavBar',
 })
 export default class NavBar extends BaseComponent {
-  private items = routes;
+  private items = componentRoutes;
 }
 </script>
 <style lang="scss">
-#nav {
-  display: flex;
-  align-items: center;
-  padding: 2em;
-  overflow: hidden;
-  border-bottom: 1px solid #dcdcdc;
-  .nav-logo {
-    font-size: 2em;
-    font-weight: bold;
-    margin-right: 1em;
-  }
-  .nav-list {
-    li {
-      float: left;
-      a {
-        color: #000;
-        margin: 0 1em;
-      }
+.sticky-nav-header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5em;
+  padding: 0 40px;
+  z-index: 99;
+  color: #fff;
+  .navbar-nav {
+    .navbar-nav-item {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0 1em;
     }
   }
 }

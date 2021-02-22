@@ -1,5 +1,5 @@
 import { Environment, EnvironmentType } from './environment.type';
 
-export const ProdEnvironment: Environment = {
+export const ProductionEnvironment: Environment = {
   NODE_ENV: EnvironmentType.production,
 };

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router, { RouteConfig } from 'vue-router';
+import { componentRoutes } from './modules';
 
 Vue.use(Router);
 
@@ -7,23 +8,13 @@ export const routes: RouteConfig[] = [
   {
     path: '/',
     name: 'main',
-    component: () => import('../modules/main/AppMain.vue'),
+    component: () => import('../modules/main/Main.vue'),
     meta: {
-      authRequired: true,
       layout: 'MainLayout',
-      title: '브랜드 메인',
+      title: '메인',
     },
   },
-  {
-    path: '/brands',
-    name: 'brands',
-    component: () => import('../modules/brands/BrandList.vue'),
-    meta: {
-      authRequired: true,
-      layout: 'MainLayout',
-      title: '브랜드 목록',
-    },
-  },
+  ...componentRoutes,
 ];
 
 const router = new Router({
