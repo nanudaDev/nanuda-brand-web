@@ -2,16 +2,7 @@
   <article class="main-article">
     <div class="video-wrapper">
       <div class="video-container">
-        <video
-          autoplay
-          playsInline
-          videoHeight
-          poster=""
-          loop
-          id="main-video"
-          ref="videoRef"
-          class="video"
-        >
+        <video autoplay muted loop id="vid" ref="videoRef" class="video">
           해당 브라우저는 video 태그를 지원하지 않습니다.
           <source
             :src="require('@/assets/video/main_video.mp4')"
@@ -277,15 +268,7 @@ import Component from 'vue-class-component';
 @Component({
   name: 'Main',
 })
-export default class Main extends BaseComponent {
-  playVideo() {
-    // const audioPlayer: HTMLVideoElement = document.getElementById('man-video');
-    // audioPlayer.play();
-  }
-  mounted() {
-    this.playVideo();
-  }
-}
+export default class Main extends BaseComponent {}
 </script>
 <style lang="scss">
 .video-wrapper {
