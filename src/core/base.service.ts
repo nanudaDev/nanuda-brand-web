@@ -1,14 +1,17 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import Axios from 'axios-observable';
-import { AxiosObservable } from 'axios-observable/dist/axios-observable.interface';
-
-import Vue from 'vue';
+import * as env from '../../environments/development.environment';
 import {
   DevelopmentEnvironment,
-  ProductionEnvironment,
   StagingEnvironment,
+  ProductionEnvironment,
   EnvironmentType,
-} from '@/enviroments';
+} from '../../environments';
+import { Observable } from 'rxjs';
+import { Pagination, PaginatedResponse } from '../common';
+// import toast from '../../resources/assets/js/services/toast.js';
+import { AxiosObservable } from 'axios-observable/dist/axios-observable.interface';
+import Vue from 'vue';
 
 // axios에서 사용할 메소드 타입
 type Method =
@@ -22,16 +25,13 @@ type Method =
   | 'OPTIONS'
   | 'post'
   | 'POST'
-  | 'put'
-  | 'PUT'
   | 'patch'
   | 'PATCH'
   | 'link'
   | 'LINK'
   | 'unlink'
   | 'UNLINK';
-export class BaseService extends Vue {
-  self = this;
+export class BaseService {
   private __makeArrayParam(value: any) {
     const s: string[] = [];
 
@@ -90,27 +90,51 @@ export class BaseService extends Vue {
     method: Method,
     path: string,
     params?: any,
-    analysis?: boolean,
   ): AxiosObservable<T> {
-    let baseURL;
+    let baseUrl;
     if (process.env.NODE_ENV === EnvironmentType.development) {
-      baseURL = DevelopmentEnvironment.baseURL;
+      baseUrl = DevelopmentEnvironment.baseURL;
     }
     if (process.env.NODE_ENV === EnvironmentType.staging) {
-      baseURL = StagingEnvironment.baseURL;
+      baseUrl = StagingEnvironment.baseURL;
     }
     if (process.env.NODE_ENV === EnvironmentType.production) {
-      baseURL = ProductionEnvironment.baseURL;
+      baseUrl = ProductionEnvironment.baseURL;
     }
+    //axios observable에서 글로벌 에러 catch하는 코드
+    Axios.interceptors.response.use(
+      response => {
+        return response;
+      },
+      error => {
+        // if (typeof error.response.data.message === 'object') {
+        //   Vue.toasted.global.custom_error({
+        //     message:
+        //       error.response.data.message[0].constraints[
+        //         Object.keys(error.response.data.message[0].constraints)[0]
+        //       ],
+        //   });
+        // } else {
+        //   Vue.toasted.global.custom_error({
+        //     message: error.response.data.message,
+        //   });
+        // }
+      },
+    );
 
     if (path.indexOf('http') !== 0) {
-      path = baseURL + path;
+      path = baseUrl + path;
     }
     const headers: any = {
-      'x-client-name': baseURL,
+      'x-client-name': env.DevelopmentEnvironment.clientName,
       'Content-type': 'application/json',
       //   'Accept': 'application/json',
     };
+    // access token added if there is one.
+    // const accessToken = JwtStorageService.getToken();
+    // if (accessToken) {
+    //   headers.Authorization = `Bearer ${accessToken}`;
+    // }
     if (params) {
       params = this.__excludeNullParam(params);
     }
@@ -123,23 +147,6 @@ export class BaseService extends Vue {
     } else if (method === 'delete') {
       return Axios.delete(path, { params, headers }) as AxiosObservable<T>;
     }
-  }
-
-  public fileGet(path: string, params?: any) {
-    let baseUrl;
-    if (process.env.NODE_ENV === EnvironmentType.development) {
-      baseUrl = DevelopmentEnvironment.baseURL;
-    }
-    if (process.env.NODE_ENV === EnvironmentType.staging) {
-      baseUrl = StagingEnvironment.baseURL;
-    }
-    if (process.env.NODE_ENV === EnvironmentType.production) {
-      baseUrl = ProductionEnvironment.baseURL;
-    }
-    if (path.indexOf('http') !== 0) {
-      path = baseUrl + path;
-    }
-    return axios.get(path, params);
   }
 
   public filePost(path: string, params?: any) {
@@ -159,16 +166,8 @@ export class BaseService extends Vue {
     return axios.post(path, params);
   }
 
-  public put(path: string, params?: any) {
-    return axios.put(path, params);
-  }
-
-  protected get<T>(
-    path: string,
-    params?: any,
-    analysis?: boolean,
-  ): AxiosObservable<T> {
-    return this.__api('get', path, params, analysis);
+  protected get<T>(path: string, params?: any): AxiosObservable<T> {
+    return this.__api('get', path, params);
   }
 
   protected post<T>(path: string, params?: any): AxiosObservable<T> {
@@ -179,6 +178,26 @@ export class BaseService extends Vue {
     return this.__api('patch', path, params);
   }
 
+  protected paginate<T>(
+    path: string,
+    params: any | Pagination,
+    pagination?: Pagination,
+  ): Observable<any> {
+    let request = {};
+    if (params instanceof Pagination) {
+      request = {
+        skip: String(params.page),
+        take: String(params.limit),
+      };
+    } else {
+      request = {
+        ...params,
+        skip: String(pagination.page),
+        take: String(pagination.limit),
+      };
+    }
+    return this.__api('get', path, request);
+  }
   protected delete<T>(path: string, params?: any): AxiosObservable<T> {
     return this.__api('delete', path, params);
   }
