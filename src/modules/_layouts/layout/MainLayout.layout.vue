@@ -5,9 +5,20 @@
       <router-view></router-view>
       <footer id="footer">
         <div class="container">
-          <p class="text-secondary">NND BRAND 2021</p>
+          <span class="footer-logo">PEAKCOOK</span>
+          <div>
+            <h4>운영시간</h4>
+            <p>10:00 ~ 19:00</p>
+            <p>서울특별시 서초구 서초대로 396, 19층(서초동, 강남빌딩)</p>
+          </div>
+          <div class="mt-2">
+            <p>Copyright. 2020 PEAKCOOK. All Right Reserved.</p>
+          </div>
         </div>
       </footer>
+    </div>
+    <div id="app-sticky-bar">
+      <div class="inner-container"></div>
     </div>
   </div>
 </template>
@@ -33,6 +44,8 @@ export default class MainLayout extends BaseComponent {
   handleScroll() {
     if (window.scrollY > 0) {
       this.isScrolled = true;
+    } else {
+      this.isScrolled = false;
     }
   }
 
@@ -46,21 +59,29 @@ export default class MainLayout extends BaseComponent {
   }
 }
 </script>
-<style lang="scss">
-#app-main {
-  padding: 3em 0;
+<style lang="scss" scoped>
+#app {
+  #nav {
+    background-color: transparent;
+    transition: background-color 0.4s ease;
+  }
   &.is-scrolled {
     #nav {
       background-color: black;
     }
   }
+}
+#app-main {
+  padding: 3em 0;
 
   &.app-main {
     padding: 0;
   }
 
   #footer {
+    padding: 1em 0;
     background-color: black;
+    color: #fff;
     padding: 1em 0;
   }
 }

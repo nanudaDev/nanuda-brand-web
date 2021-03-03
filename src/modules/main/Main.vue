@@ -46,7 +46,7 @@
       </section>
       <section class="article-section bg-light pb-0">
         <header class="section-title">
-          <span class="d-block mb-2">NANUDA BRAND</span>
+          <span class="d-block mb-2">PEAKCOOK</span>
           <h3>
             예비 혹은 기존 사장님의 상황을 파악하여 <br />적합한 창업 플랜을
             추천해드립니다
@@ -66,7 +66,10 @@
                 </div>
                 <div class="col-xs-12 col-lg-6">
                   <div>
-                    <h4>상권분석을 통한 메뉴 추천</h4>
+                    <h4>
+                      창업 성공률을 높여주는 <br />
+                      나만의 창업 맞춤 솔루션
+                    </h4>
                     <p class="mt-2">
                       부가 설명 부가 설명 부가 설명 부가 설명 부가 설명 부가
                       설명 부가 설명 부가 설명 부가 설명 부가 설명 부가 설명
