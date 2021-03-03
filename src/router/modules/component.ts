@@ -11,7 +11,7 @@ export const componentRoutes: RouteConfig[] = [
     },
   },
   {
-    path: '/brands',
+    path: '/faq',
     name: 'Faq',
     component: () => import('../../modules/faq/Faq.vue'),
     meta: {
