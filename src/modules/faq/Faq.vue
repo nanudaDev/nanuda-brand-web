@@ -1,11 +1,16 @@
 <template>
   <div>
     <h1>자주묻는 질문</h1>
-    <div v-for="faq in faqList" :key="faq.id">
-      <b-card class="m-2">
-        <div class="m-3">Q: {{ faq.faq }}</div>
-        <div class="m-3">A: {{ faq.answer }}</div>
-      </b-card>
+    <template v-if="faqList.length > 0">
+      <div v-for="faq in faqList" :key="faq.id">
+        <b-card class="m-2">
+          <div class="m-3">Q: {{ faq.faq }}</div>
+          <div class="m-3">A: {{ faq.answer }}</div>
+        </b-card>
+      </div>
+    </template>
+    <div v-else>
+      <b-spinner label="Loading..."></b-spinner>
     </div>
     <b-pagination
       v-model="pagination.page"
@@ -18,7 +23,7 @@
 import BaseComponent from '@/core/base.component';
 import { Component, Watch } from 'vue-property-decorator';
 import { Pagination } from '@/common';
-import faqService from '@/services/faq/faq.service';
+import faqService from '@/services/faq.service';
 @Component({
   name: 'Faq',
 })
