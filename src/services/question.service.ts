@@ -15,6 +15,9 @@ export class QuestionService extends BaseService {
   getNextQuestion(nextQuestionDto: NextQuestionDto) {
     return super.post<QuestionResponseDto>('question/next', nextQuestionDto);
   }
+  getSido() {
+    return super.get('code-hdong/sido');
+  }
 }
 
 export default new QuestionService();
