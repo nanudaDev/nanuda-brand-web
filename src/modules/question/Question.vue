@@ -23,7 +23,11 @@
           >{{ given.givenDetails.displayName }}</b-button
         >
         <div>
-          <b-btn @click="getNextQuestion()">확인</b-btn>
+          <b-btn
+            @click="getNextQuestion()"
+            :disabled="!selectedAnswers.length > 0"
+            >확인</b-btn
+          >
         </div>
       </div>
     </div>
@@ -40,7 +44,9 @@
             ><div><vue-daum-postcode @complete="onPostCodeComplete" /></div
           ></b-modal>
           <div>
-            <b-btn @click="getFirstQuestion">확인</b-btn>
+            <b-btn @click="getFirstQuestion" :disabled="!selectedRoadAddress"
+              >확인</b-btn
+            >
           </div>
         </div>
         <div v-else>
