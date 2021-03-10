@@ -9,6 +9,7 @@ export class QuestionResponseDto extends BaseDto<QuestionResponseDto> {
   userType: USER;
   order: number;
   isLastQuestion: YN;
+  multipleAnswerYn: YN;
   inUser: YN;
   commonCode: CommonCode;
   givens: Given[];

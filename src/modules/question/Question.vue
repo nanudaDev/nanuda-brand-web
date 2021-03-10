@@ -1,49 +1,72 @@
 <template>
   <div>
     <h3>{{ question }}</h3>
-
-    <b-button-group deck v-if="givens.length > 0">
-      <b-button
-        v-for="given in givens"
-        :key="given.id"
-        class="m-2"
-        @click="getNextQuestion(given.id)"
-        style="max-width: 20rem; min-width: 15rem"
-        >{{ given.given }}</b-button
-      >
-    </b-button-group>
+    <div v-if="givens.length > 0">
+      <div v-if="!isMultipleAnswer">
+        <b-button
+          v-for="given in givens"
+          :key="given.id"
+          class="m-2"
+          @click="getNextQuestion(given.id)"
+          style="max-width: 20rem; min-width: 15rem"
+          >{{ given.givenDetails.displayName }}</b-button
+        >
+      </div>
+      <div v-else>
+        <b-button
+          v-for="given in givens"
+          :key="given.id"
+          class="m-2"
+          :variant="selectedAnswers.includes(given.id) ? 'primary' : 'light'"
+          @click="onMultipleAnswerClicked(given.id)"
+          style="max-width: 20rem; min-width: 15rem"
+          >{{ given.givenDetails.displayName }}</b-button
+        >
+        <div>
+          <b-btn @click="getNextQuestion()">확인</b-btn>
+        </div>
+      </div>
+    </div>
 
     <div v-else>
       <div v-if="firstQuestionDto.userType">
         <div v-if="firstQuestionDto.userType === USER.CUR_FNB_OWNER">
-          <div><vue-daum-postcode /></div>
+          <!-- 다음 주소 api -->
+          <input
+            v-model="selectedRoadAddress"
+            @click="$bvModal.show('post-code')"
+          />
+          <b-modal id="post-code" :title="question"
+            ><div><vue-daum-postcode @complete="onPostCodeComplete" /></div
+          ></b-modal>
+          <div>
+            <b-btn @click="getFirstQuestion">확인</b-btn>
+          </div>
         </div>
         <div v-else>
           <!-- 행정동 버튼 그룹 -->
-          <b-button-group deck>
-            <b-button
-              v-for="given in addressGivens"
-              :key="given.id"
-              class="m-2"
-              @click="getGuOrDong(given)"
-              style="max-width: 20rem; min-width: 15rem"
-              >{{ given[showingLevel] }}</b-button
-            >
-          </b-button-group>
+
+          <b-button
+            v-for="given in addressGivens"
+            :key="given.id"
+            class="m-2"
+            @click="getGuOrDong(given)"
+            style="max-width: 20rem; min-width: 15rem"
+            >{{ given[showingLevel] }}</b-button
+          >
         </div>
       </div>
       <div v-else>
         <!-- 첫번째 질문 (사장님 or 창업) -->
-        <b-button-group>
-          <b-button
-            v-for="given in firstGivens"
-            :key="given.id"
-            class="m-2"
-            @click="saveUserType(given.userType)"
-            style="max-width: 20rem; min-width: 15rem"
-            >{{ given.given }}</b-button
-          >
-        </b-button-group>
+
+        <b-button
+          v-for="given in firstGivens"
+          :key="given.id"
+          class="m-2"
+          @click="saveUserType(given.userType)"
+          style="max-width: 20rem; min-width: 15rem"
+          >{{ given.given }}</b-button
+        >
       </div>
     </div>
   </div>
@@ -86,11 +109,18 @@ export default class Question extends BaseComponent {
   private givens: Given[] = [];
   private addressGivens: any[] = [];
   private showingLevel = 'sidoName';
+  private selectedRoadAddress = '';
+  private isMultipleAnswer = false;
+  private selectedAnswers: number[] = [];
   saveUserType(userType: USER) {
     this.$set(this.firstQuestionDto, 'userType', userType);
     this.$set(this.nextQuestionDto, 'userType', userType);
     if (userType === USER.CUR_FNB_OWNER) {
       this.question = '음식점 주소를 알려주세요!';
+      console.log('show postcode');
+      this.$nextTick(() => {
+        this.$bvModal.show('post-code');
+      });
     } else {
       this.question = '어떤 곳에서 창업을 희망하나요?';
       codeHdongService.getSido().subscribe(res => {
@@ -103,16 +133,27 @@ export default class Question extends BaseComponent {
       this.givens = res.data.givens;
       this.question = res.data.question;
       this.nextQuestionDto.questionId = res.data.id;
+      this.nextQuestionDto.givenId = [];
+      this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
     });
   }
 
-  getNextQuestion(id: number) {
+  getNextQuestion(id?: number) {
     this.nextQuestionDto.givenId = [];
-    this.nextQuestionDto.givenId.push(id);
+    if (id) {
+      this.nextQuestionDto.givenId.push(id);
+    } else {
+      console.log('no id');
+      this.$set(this.nextQuestionDto, 'givenId', this.selectedAnswers);
+      this.nextQuestionDto.givenId = this.selectedAnswers;
+    }
+
     questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
       this.nextQuestionDto.questionId = res.data.id;
       this.question = res.data.question;
       this.givens = res.data.givens;
+      this.nextQuestionDto.givenId = [];
+      this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
     });
   }
   getGuOrDong(given: CodeHdongDto) {
@@ -134,11 +175,23 @@ export default class Question extends BaseComponent {
       this.getFirstQuestion();
     }
   }
-  created() {
+  onPostCodeComplete(event: any) {
+    this.selectedRoadAddress = event.roadAddress;
+    this.$bvModal.hide('post-code');
+  }
+  onMultipleAnswerClicked(id: number) {
+    if (this.selectedAnswers.includes(id)) {
+      const theIndex = this.selectedAnswers.findIndex(e => e === id);
+      this.selectedAnswers.splice(theIndex, 1);
+    } else {
+      this.selectedAnswers.push(id);
+    }
+  }
+  async mounted() {
     //get ip address
-    axios.get('https://api.ipify.org?format=json').then(res => {
+    await axios.get('https://api.ipify.org?format=json').then(res => {
       this.nextQuestionDto.ipAddress = res.data.ip;
-      this.nextQuestionDto.uniqueSessionId = `${res.data.ip}-window.navigator.userAgent`;
+      this.nextQuestionDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
       console.log('window.navigator.userAgent', window.navigator.userAgent);
     });
   }
