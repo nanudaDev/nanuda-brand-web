@@ -255,7 +255,10 @@
               <img src="https://i.stack.imgur.com/y9DpT.jpg" alt="" />
             </figure>
             <div class="text-center mt-4">
-              <button class="btn btn-primary btn-lg rounded-pill">
+              <button
+                class="btn btn-primary btn-lg rounded-pill"
+                @click="$router.push('/plan')"
+              >
                 NND 창업 플랜 신청하기
               </button>
             </div>
