@@ -1,24 +1,49 @@
 <template>
-  <div id="app" :class="{ 'is-scrolled': isScrolled }">
-    <nav-bar></nav-bar>
+  <div id="app">
+    <nav-bar :class="{ 'is-scrolled': isScrolled }"></nav-bar>
     <div id="app-main" :class="`app-${$route.name}`">
       <router-view></router-view>
       <footer id="footer">
         <div class="container">
-          <span class="footer-logo">PEAKCOOK</span>
-          <div>
-            <h4>운영시간</h4>
-            <p>10:00 ~ 19:00</p>
-            <p>서울특별시 서초구 서초대로 396, 19층(서초동, 강남빌딩)</p>
+          <div class="row-box">
+            <h4>고객센터</h4>
+            <p>
+              전화 문의 1800 - 5972
+            </p>
+            <p>
+              운영시간 : 평일 10:00 - 19:00 | 주말공휴일 제외
+            </p>
+            <p>
+              점심시간 : 평일 12:30 - 13:30
+            </p>
           </div>
-          <div class="mt-2">
-            <p>Copyright. 2020 PEAKCOOK. All Right Reserved.</p>
+          <div class="row-box">
+            <h4>주식회사 위대한 상사</h4>
+            <p>
+              서울특별시 강남구 선릉로93길 40(역삼동 704-45), 나라키움 역삼A빌딩
+              406호
+            </p>
+            <p>사업자등록번호 : 779-87-00655</p>
+            <p>대표 : 김유구</p>
+          </div>
+          <div class="row-box">
+            <ul>
+              <li>
+                <a href="">이용약관</a>
+              </li>
+              <li>
+                <a href="">개인정보취급방침</a>
+              </li>
+              <li>
+                <a href="">사업자정보확인</a>
+              </li>
+            </ul>
           </div>
         </div>
       </footer>
     </div>
     <div id="app-sticky-bar">
-      <div class="inner-container"></div>
+      <div class="container"></div>
     </div>
   </div>
 </template>
@@ -60,29 +85,45 @@ export default class MainLayout extends BaseComponent {
 }
 </script>
 <style lang="scss" scoped>
-#app {
-  #nav {
-    background-color: transparent;
-    transition: background-color 0.4s ease;
-  }
-  &.is-scrolled {
-    #nav {
-      background-color: black;
-    }
-  }
-}
 #app-main {
   padding: 3em 0;
+  margin-bottom: 3em;
 
   &.app-main {
     padding: 0;
   }
 
   #footer {
-    padding: 1em 0;
-    background-color: black;
-    color: #fff;
-    padding: 1em 0;
+    background-color: #f5f5f5;
+    color: #707070;
+    padding: 1.5em 1.25em;
+
+    .container {
+      padding: 0;
+    }
+    .row-box {
+      h4 {
+        font-size: 0.75em;
+        font-weight: 800;
+        margin-bottom: 1em;
+      }
+      p {
+        font-size: 0.625em;
+      }
+      + .row-box {
+        margin-top: 40px;
+      }
+      ul {
+        overflow: hidden;
+        li {
+          float: left;
+          font-size: 0.625em;
+          + li {
+            margin-left: 1em;
+          }
+        }
+      }
+    }
   }
 }
 </style>
