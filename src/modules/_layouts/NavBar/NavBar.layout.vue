@@ -2,7 +2,7 @@
   <nav id="nav" class="sticky-nav-header navbar navbar-expand-lg navbar-light">
     <div class="nav-logo px-4">
       <h1>
-        <router-link to="/">NND BRAND</router-link>
+        <router-link to="/">PEAKCOOK</router-link>
       </h1>
     </div>
     <button class="navbar-toggler collapsed bg-white" type="button">
