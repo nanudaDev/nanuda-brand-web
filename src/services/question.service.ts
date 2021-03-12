@@ -3,7 +3,9 @@ import {
   NextQuestionDto,
   QuestionResponseDto,
   FirstQuestionDto,
+  ResultResponseDto,
 } from '@/dto/question';
+import { ResultRequestDto } from '@/dto/question/result-request.dto';
 
 export class QuestionService extends BaseService {
   constructor() {
@@ -15,8 +17,11 @@ export class QuestionService extends BaseService {
   getNextQuestion(nextQuestionDto: NextQuestionDto) {
     return super.post<QuestionResponseDto>('question/next', nextQuestionDto);
   }
-  getSido() {
-    return super.get('code-hdong/sido');
+  getResult(resultRequestDto: ResultRequestDto) {
+    return super.get<ResultResponseDto>(
+      'aggregate-result-response',
+      resultRequestDto,
+    );
   }
 }
 

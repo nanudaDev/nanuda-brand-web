@@ -21,7 +21,6 @@ Vue.use(VueScrollTo, {
   easing: [0, 0, 0.1, 1],
   offset: -100,
 });
-
 new Vue({
   router,
   render: h => h(App),
