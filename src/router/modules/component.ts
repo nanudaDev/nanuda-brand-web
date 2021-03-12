@@ -37,4 +37,13 @@ export const componentRoutes: RouteConfig[] = [
       title: '성공사례확인',
     },
   },
+  {
+    path: '/question',
+    name: 'Question',
+    component: () => import('../../modules/question/Question.vue'),
+    meta: {
+      layout: 'MainLayout',
+      title: '설문',
+    },
+  },
 ];
