@@ -33,7 +33,7 @@
       </div>
       <button
         class="btn-scroll-down"
-        v-scroll-to="{ el: '#content-wrapper', offset: -navBarHeight }"
+        v-scroll-to="{ el: '#content-wrapper', offset: -60 }"
       >
         <BaseArrow />
       </button>
@@ -439,9 +439,10 @@ export default class Main extends BaseComponent {
     return this.$refs.mySwiper.swiper;
   }
 
-  get navBarHeight() {
-    return document.querySelector('.navbar').getBoundingClientRect().height;
-  }
+  // get navBarHeight() {
+  //   const target = document.querySelector('.navbar');
+  //   return target.getBoundingClientRect().height;
+  // }
 
   private handleDebouncedScroll: {
     (this: Window, ev: Event): any;
