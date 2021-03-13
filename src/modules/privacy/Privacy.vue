@@ -1,6 +1,8 @@
 <template>
   <article class="main-article">
-    성공사례확인
+    <div class="container">
+      개잉정보취급방침
+    </div>
   </article>
 </template>
 <script lang="ts">
@@ -8,7 +10,7 @@ import BaseComponent from '@/core/base.component';
 import { Component } from 'vue-property-decorator';
 
 @Component({
-  name: 'Reviews',
+  name: 'Privacy',
 })
-export default class Reviews extends BaseComponent {}
+export default class Privacy extends BaseComponent {}
 </script>

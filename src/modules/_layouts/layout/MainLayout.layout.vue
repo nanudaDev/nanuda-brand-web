@@ -29,21 +29,22 @@
           <div class="row-box">
             <ul>
               <li>
-                <a href="">이용약관</a>
+                <router-link to="/agreement">이용약관</router-link>
               </li>
               <li>
-                <a href="">개인정보취급방침</a>
+                <router-link to="/privacy">개인정보취급방침</router-link>
               </li>
               <li>
-                <a href="">사업자정보확인</a>
+                <a
+                  href="https://ftc.go.kr/www/bizCommView.do?key=232&apv_perm_no=2017322016230204945&pageUnit=10&searchCnd=wrkr_no&searchKrwd=7798700655&pageIndex=1"
+                  target="_blank"
+                  >사업자정보확인</a
+                >
               </li>
             </ul>
           </div>
         </div>
       </footer>
-    </div>
-    <div id="app-sticky-bar">
-      <div class="container"></div>
     </div>
   </div>
 </template>
@@ -103,12 +104,12 @@ export default class MainLayout extends BaseComponent {
     }
     .row-box {
       h4 {
-        font-size: 0.75em;
+        font-size: 0.875em;
         font-weight: 800;
         margin-bottom: 1em;
       }
       p {
-        font-size: 0.625em;
+        font-size: 0.875em;
       }
       + .row-box {
         margin-top: 40px;
@@ -117,7 +118,7 @@ export default class MainLayout extends BaseComponent {
         overflow: hidden;
         li {
           float: left;
-          font-size: 0.625em;
+          font-size: 0.875em;
           + li {
             margin-left: 1em;
           }

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router, { RouteConfig } from 'vue-router';
 import { componentRoutes } from './modules';
+import nonNavBarRouter from './modules/non-navbar-component';
 
 Vue.use(Router);
 
@@ -15,6 +16,7 @@ export const routes: RouteConfig[] = [
     },
   },
   ...componentRoutes,
+  ...nonNavBarRouter,
 ];
 
 const router = new Router({

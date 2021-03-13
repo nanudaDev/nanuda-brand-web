@@ -17,22 +17,27 @@
       <div class="title-container">
         <div>
           <h2>실패없는 창업을<br />안내합니다.</h2>
+          <p>
+            위치에서 무슨 메뉴로 창업해야 할지<br />
+            빅데이터로 분석합니다.
+          </p>
           <div class="btn-box">
             <button class="btn btn-primary rounded-pill btn-lg shawdow">
-              <span>브랜드 진단</span>
-              <span class="icon icon-arrow-right"><BaseArrow /></span>
+              <span>원하는 지역의 내 메뉴 찾기</span>
+              <span class="icon icon-arrow-right icon-align-right"
+                ><BaseArrow
+              /></span>
             </button>
           </div>
         </div>
       </div>
       <button
         class="btn-scroll-down"
-        v-scroll-to="{ el: '#content-wrapper', offset: -60 }"
+        v-scroll-to="{ el: '#content-wrapper', offset: -navBarHeight }"
       >
         <BaseArrow />
       </button>
     </div>
-    ""
     <div class="content-wrapper" id="content-wrapper">
       <section class="article-section section01">
         <div class="container">
@@ -42,8 +47,8 @@
               data-aos="fade-up"
               data-aos-duration="1000"
             >
-              픽쿡은 다양한 제휴사와 <br />
-              함께하고 있습니다.
+              픽쿡은 파트너사와 함께 <br />
+              여러분의 창업을 안내합니다
             </h3>
           </header>
           <div class="section-content">
@@ -71,101 +76,104 @@
           </div>
         </div>
       </section>
-      <section class="article-section section02 bg-light">
-        <header class="section-title">
-          <h3 class="text-primary" data-aos="fade-up" data-aos-duration="1000">
-            픽쿡과 함께하면 <br />
-            창업이 쉬워집니다
-          </h3>
-          <p data-aos="fade-up" data-aos-duration="1500">
-            예비 혹은 기존 사장님의 상황을 파악하여 <br />적합한 창업 플랜을
-            추천드립니다
-          </p>
-        </header>
-        <div
-          class="section-content"
-          data-aos="fade-up"
-          data-aos-duration="2000"
-        >
-          <b-tabs align="center">
-            <b-tab title="진단하기" active>
-              <div class="img-box">
-                <div class="mask-box">
-                  <img
-                    :src="require(`@/assets/images/main_section02_img01.png`)"
-                  />
+      <section class="article-section section04 bg-light">
+        <div class="container">
+          <header class="section-title">
+            <h3 data-aos="fade-up" data-aos-duration="1000">
+              1분만 투자하면 <br />
+              나에게 맞는 창업을 딱!
+            </h3>
+          </header>
+          <div
+            class="section-content"
+            data-aos="fade-up"
+            data-aos-duration="2000"
+          >
+            <div class="row no-gutters align-items-center">
+              <div class="col-12 col-lg-6">
+                <div class="search-box">
+                  <p class="search-keyword">
+                    서울시 {{ locationText }}
+                    <span class="cursor"></span>
+                  </p>
+                  <span class="icon icon-search"><BaseSearch /></span>
+                </div>
+                <div class="tag-box">
+                  <div
+                    class="row-box"
+                    v-for="(list, index) in tagList"
+                    :key="index"
+                  >
+                    <div class="tags">
+                      <span
+                        v-for="(tag, index2) in list.items"
+                        :key="index2"
+                        class="tag"
+                        ref="tagRef"
+                        :class="{
+                          'is-active': index2 === list.posX[currentIdx - 1] - 1,
+                        }"
+                        >{{ tag.text }}
+                      </span>
+                      <span
+                        class="tag is-selected"
+                        :style="{
+                          left: 25 * (list.posX[currentIdx - 1] - 1) + '%',
+                        }"
+                      ></span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="txt-box">
-                <p>
-                  상권의 시간대별 소비현황과 <br />현재 상황을 세부적으로
-                  분석합니다.
-                </p>
-              </div>
-            </b-tab>
-            <b-tab title="분석하기">
-              <div class="img-box">
-                <div class="mask-box">
-                  <img
-                    :src="require(`@/assets/images/main_section02_img02.png`)"
-                  />
+              <div class="col-12 col-lg-6">
+                <div class="mockup-box text-center">
+                  <div class="mockup-card rounded-10 shadow-sm">
+                    <swiper :options="swiperOption" ref="mySwiper">
+                      <swiper-slide>
+                        <figure>
+                          <img
+                            src="@/assets/images/search_location_menu01.jpg"
+                          />
+                        </figure>
+                      </swiper-slide>
+                      <swiper-slide>
+                        <figure>
+                          <img
+                            src="@/assets/images/search_location_menu01.jpg"
+                          />
+                        </figure>
+                      </swiper-slide>
+                      <swiper-slide>
+                        <figure>
+                          <img
+                            src="@/assets/images/search_location_menu01.jpg"
+                          />
+                        </figure>
+                      </swiper-slide>
+                    </swiper>
+                  </div>
                 </div>
               </div>
-              <div class="txt-box">
-                <p>
-                  입력한 위치 검색으로 고객, <br />경쟁사, 잘팔리는 업종을
-                  진단합니다.
-                </p>
-              </div>
-            </b-tab>
-            <b-tab title="추천하기">
-              <div class="img-box">
-                <div class="mask-box">
-                  <img
-                    :src="require(`@/assets/images/main_section02_img03.png`)"
-                  />
-                </div>
-              </div>
-              <div class="txt-box">
-                <p>
-                  각자의 조건의 맞는 <br />외식운영 포트폴리오를 제공합니다.
-                </p>
-              </div>
-            </b-tab>
-            <b-tab title="실행하기">
-              <div class="img-box">
-                <div class="mask-box">
-                  <img
-                    :src="require(`@/assets/images/main_section02_img04.png`)"
-                  />
-                </div>
-              </div>
-              <div class="txt-box">
-                <p>
-                  교육부터 관리까지 한 번에 <br />체계적으로 성장할 수 있도록
-                  안내합니다.
-                </p>
-              </div>
-            </b-tab>
-          </b-tabs>
+            </div>
+          </div>
         </div>
       </section>
       <section class="article-section section03">
         <div class="container">
           <div class="row">
-            <div class="col-12 col-lg-4 py-4">
+            <div class="col-12 col-lg-4 py-5 mb-5">
               <header class="section-title">
                 <h3
                   class="text-primary"
                   data-aos="fade-up"
                   data-aos-duration="1000"
                 >
-                  빅데이터를 활용한 <br />
-                  전문적인 상권 및 매출 분석
+                  픽쿡은 빅데이터로 <br />
+                  시간대별 적정 메뉴를 알려줍니다
                 </h3>
                 <p data-aos="fade-up" data-aos-duration="1500">
-                  빅데이터를 통한 지역에 맞는 <br />추천 창업을 통한 실패없는
-                  창업
+                  창업의 메뉴부터 배달 전략까지 <br />
+                  분석하여 실패 없는 창업을 이끕니다.
                 </p>
               </header>
               <div
@@ -178,19 +186,19 @@
                 </figure>
               </div>
             </div>
-            <div class="col-12 col-lg-4 py-4">
+            <div class="col-12 col-lg-4 py-5 mb-5">
               <header class="section-title">
                 <h3
                   class="text-primary"
                   data-aos="fade-up"
                   data-aos-duration="1000"
                 >
-                  전문가 상담을 통해 <br />
-                  효율적인 창업을 시작하세요
+                  지역에 맞게 고객이 원하는 <br />
+                  서비스를 딱 맞게 제공합니다
                 </h3>
                 <p data-aos="fade-up" data-aos-duration="1500">
-                  픽쿡만의 노하우로 효율적이고 <br />
-                  안전한 창업을 안내
+                  메뉴/브랜드 교육부터 디자인, 마케팅까지 <br />
+                  고객에 맞는 서비스를 제공합니다.
                 </p>
               </header>
               <div
@@ -203,19 +211,19 @@
                 </figure>
               </div>
             </div>
-            <div class="col-12 col-lg-4 py-4">
+            <div class="col-12 col-lg-4 py-5 mb-5">
               <header class="section-title">
                 <h3
                   class="text-primary"
                   data-aos="fade-up"
                   data-aos-duration="1000"
                 >
-                  레시피 연구소에서 <br />
-                  탄생되는 맛있는 음식
+                  픽쿡 플래너가 <br />
+                  효율적인 창업을 안내합니다
                 </h3>
                 <p data-aos="fade-up" data-aos-duration="1500">
-                  픽쿡만의 전문적인 레시피 연구를 통해 <br />
-                  맛있고 가성비 좋은 음식 개발
+                  메뉴 교육부터 판매 운영까지<br />
+                  픽쿡 플래너가 음식점 창업을 안내합니다.
                 </p>
               </header>
               <div
@@ -231,29 +239,88 @@
           </div>
         </div>
       </section>
-      <section class="article-section section04 bg-light">
-        <div class="container">
-          <header class="section-title">
-            <h3 data-aos="fade-up" data-aos-duration="1000">
-              지역별로 쉽게 찾는 <br />
-              나에게 맞는 창업 분석
-            </h3>
-          </header>
-          <div
-            class="section-content"
-            data-aos="fade-up"
-            data-aos-duration="2000"
-          >
-            <figure class="img-box text-center"></figure>
-          </div>
+      <section class="article-section section02 bg-light">
+        <header class="section-title">
+          <h3 class="text-primary" data-aos="fade-up" data-aos-duration="1000">
+            픽쿡은 장소에 맞는 <br />
+            메뉴와 운영 방법을 안내합니다
+          </h3>
+        </header>
+        <div
+          class="section-content"
+          data-aos="fade-up"
+          data-aos-duration="1500"
+        >
+          <b-tabs align="center">
+            <b-tab title="분석하기" active>
+              <div class="img-box">
+                <div class="mask-box">
+                  <img
+                    :src="require(`@/assets/images/main_section02_img01.png`)"
+                  />
+                </div>
+              </div>
+              <div class="txt-box">
+                <p>
+                  창업지역의 고객, 경쟁자, 잘 팔리는 업종을 <br />
+                  꼼꼼하게 분석합니다.
+                </p>
+              </div>
+            </b-tab>
+            <b-tab title="진단하기">
+              <div class="img-box">
+                <div class="mask-box">
+                  <img
+                    :src="require(`@/assets/images/main_section02_img02.png`)"
+                  />
+                </div>
+              </div>
+              <div class="txt-box">
+                <p>
+                  창업지역의 시간대별 소비현황과 <br />
+                  매장의 상황을 세부적으로 진단합니다.
+                </p>
+              </div>
+            </b-tab>
+            <b-tab title="추천하기">
+              <div class="img-box">
+                <div class="mask-box">
+                  <img
+                    :src="require(`@/assets/images/main_section02_img03.png`)"
+                  />
+                </div>
+              </div>
+              <div class="txt-box">
+                <p>
+                  창업 지역에 딱맞는 시간대별 <br />
+                  메뉴와 판매 방법을 제공합니다.
+                </p>
+              </div>
+            </b-tab>
+            <b-tab title="실행하기">
+              <div class="img-box">
+                <div class="mask-box">
+                  <img
+                    :src="require(`@/assets/images/main_section02_img04.png`)"
+                  />
+                </div>
+              </div>
+              <div class="txt-box">
+                <p>
+                  메뉴와 운영 교육, 관리를 <br />
+                  픽쿡이 함께 합니다.
+                </p>
+              </div>
+            </b-tab>
+          </b-tabs>
         </div>
       </section>
       <section class="article-section section05">
         <div class="container">
           <header class="section-title">
             <h3 data-aos="fade-up" data-aos-duration="1000">
-              픽쿡이 제공하는 솔루션을<br />
-              상담을 통해 자세히 알아보세요
+              창업의 성공을 위한 첫걸음 <br />
+              픽쿡을 지금 시작하세요
             </h3>
           </header>
           <div
@@ -263,7 +330,7 @@
           >
             <div class="btn-box text-center">
               <button class="btn btn-primary rounded-pill btn-lg shawdow">
-                <span>상담하기</span>
+                <span>원하는 지역의 내 메뉴 찾기</span>
                 <span class="icon icon-arrow-right"><BaseArrow /></span>
               </button>
             </div>
@@ -271,26 +338,178 @@
         </div>
       </section>
     </div>
-    <a
-      href=""
-      class="position-fixed fixed-bottom text-center p-4 bg-primary text-white"
-    >
-      나의 창업상태 진단하기
-    </a>
+    <transition name="slideInUp">
+      <button
+        v-if="isStickyBtnVisible"
+        class="position-fixed fixed-bottom text-center p-4 btn btn-lg btn-primary btn-block"
+      >
+        원하는 지역의 내 메뉴 찾기
+      </button>
+    </transition>
   </article>
 </template>
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
 import Component from 'vue-class-component';
 import BaseArrow from '@/modules/_components/svg/BaseArrow.vue';
+import BaseSearch from '@/modules/_components/svg/BaseSearch.vue';
+import debounce from 'lodash/debounce';
 
 @Component({
   name: 'Main',
   components: {
     BaseArrow,
+    BaseSearch,
   },
 })
-export default class Main extends BaseComponent {}
+export default class Main extends BaseComponent {
+  $refs!: {
+    mySwiper: HTMLFormElement;
+    tagRef: HTMLFormElement;
+  };
+  private currentIdx = 1;
+  private tagList: any = [
+    {
+      posX: [2, 2, 3],
+      items: [
+        {
+          text: '아침',
+        },
+        {
+          text: '점심',
+        },
+        {
+          text: '저녁',
+        },
+        {
+          text: '야식',
+        },
+      ],
+    },
+    {
+      posX: [2, 1, 3],
+      items: [
+        {
+          text: '한식',
+        },
+        {
+          text: '분식',
+        },
+        {
+          text: '치킨',
+        },
+        {
+          text: '피자',
+        },
+      ],
+    },
+    {
+      posX: [2, 3, 2],
+      items: [
+        {
+          text: '　',
+        },
+        {
+          text: '홀',
+        },
+        {
+          text: '배달',
+        },
+        {
+          text: '　',
+        },
+      ],
+    },
+  ];
+
+  private isStickyBtnVisible = false;
+  private locationText = '';
+  private locationArray = ['강남구 논현동', '영등포구 여의동', '관악구 신림동'];
+  private swiperOption: any = {
+    slidesPerView: 1,
+    loop: true,
+    grabCursor: false,
+    speed: 700,
+    autoplay: {
+      delay: 3000,
+    },
+  };
+
+  get swiper() {
+    return this.$refs.mySwiper.swiper;
+  }
+
+  get navBarHeight() {
+    return document.querySelector('.navbar').getBoundingClientRect().height;
+  }
+
+  private handleDebouncedScroll: {
+    (this: Window, ev: Event): any;
+    (this: Window, ev: Event): any;
+  } = null;
+
+  typeWriter(text: string, i: number, callback: TimerHandler) {
+    if (i < text.length) {
+      this.locationText = text.substring(0, i + 1);
+      setTimeout(() => {
+        this.typeWriter(text, i + 1, callback);
+      }, 100);
+    } else if (typeof callback == 'function') {
+      setTimeout(callback, 3000);
+    }
+  }
+
+  startTextAnimation(i: number) {
+    if (typeof this.locationArray[i] == 'undefined') {
+      setTimeout(() => {
+        this.startTextAnimation(0);
+      }, 1000);
+    }
+    if (i < this.locationArray.length) {
+      this.typeWriter(this.locationArray[i], 0, () => {
+        this.startTextAnimation(i + 1);
+      });
+    }
+  }
+
+  onSwipe(varuable: any) {
+    const idx = varuable.swiper.activeIndex - 1;
+    const tags = this.$refs.tagRef;
+    return (this.currentIdx = idx);
+  }
+
+  handleScroll() {
+    const offsetTop = document
+      .getElementById('content-wrapper')
+      .getBoundingClientRect().top;
+    if (offsetTop < 0) {
+      this.isStickyBtnVisible = true;
+    } else {
+      this.isStickyBtnVisible = false;
+    }
+  }
+
+  callback() {
+    console.log('callback');
+  }
+
+  created() {
+    this.handleDebouncedScroll = debounce(this.handleScroll, 100);
+    window.addEventListener('scroll', this.handleDebouncedScroll);
+  }
+
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleDebouncedScroll);
+  }
+
+  mounted() {
+    this.startTextAnimation(0);
+
+    this.swiper.on('slideChange', () => {
+      this.onSwipe(this);
+    });
+  }
+}
 </script>
 <style lang="scss">
 .video-wrapper {
@@ -335,58 +554,47 @@ export default class Main extends BaseComponent {}
       line-height: 1.3;
     }
     p {
-      font-size: 20px;
-      margin-top: 16px;
+      font-size: 1.25em;
+      margin-top: 1em;
     }
     .btn-box {
-      margin-top: 10em;
-      .btn {
-        width: 214px;
-        height: 60px;
-        font-size: 24px;
-        font-weight: 600;
-      }
-      .icon {
-        fill: #fff;
-        margin-left: 0.5em;
-        transform: rotate(-90deg);
-      }
+      margin-top: 5em;
     }
   }
   .btn-scroll-down {
     position: absolute;
-    bottom: 40px;
+    bottom: 2.5em;
     left: 50%;
-    margin-left: -12px;
+    margin-left: -0.75em;
     z-index: 10;
     animation: animated-mouse 1s ease-in-out infinite;
     svg {
-      width: 24px;
-      height: 24px;
+      width: 1.5em;
+      height: 1.5em;
       fill: white;
     }
   }
 }
 .article-section {
-  padding: 4em 0;
+  padding: 5em 0;
   .section-title {
     text-align: center;
     h3 {
-      font-size: 25px;
+      font-size: 1.5em;
       font-weight: bold;
 
       + p {
-        font-size: 16px;
-        margin-top: 20px;
+        font-size: 1em;
+        margin-top: 1.25em;
       }
     }
     .title-en {
       display: block;
       font-weight: bold;
-      margin-bottom: 8px;
+      margin-bottom: 0.5em;
     }
     + .section-content {
-      margin-top: 48px;
+      margin-top: 3em;
     }
   }
 
@@ -395,7 +603,7 @@ export default class Main extends BaseComponent {}
       position: relative;
       .nav-tabs {
         position: absolute;
-        bottom: 90px;
+        bottom: 5.625em;
         left: 0;
         right: 0;
         border: 0;
@@ -405,9 +613,9 @@ export default class Main extends BaseComponent {}
             border: 0;
             background: 0;
             color: #acacac;
-            font-size: 17px;
-            padding: 10px 0;
-            margin: 0 10px;
+            font-size: 1.0625em;
+            padding: 1em 0;
+            margin: 0 1em;
             &.active {
               font-weight: 800;
               color: #2140a3;
@@ -418,9 +626,9 @@ export default class Main extends BaseComponent {}
                 bottom: 0;
                 left: 0;
                 width: 100%;
-                height: 4px;
+                height: 0.25em;
                 background: #2140a3;
-                border-radius: 20px;
+                border-radius: 1.25em;
               }
             }
           }
@@ -438,7 +646,7 @@ export default class Main extends BaseComponent {}
         }
         .img-box {
           text-align: center;
-          max-width: 400px;
+          max-width: 25em;
           margin: 0 auto;
           .mask-box {
             position: relative;
@@ -455,9 +663,9 @@ export default class Main extends BaseComponent {}
         }
         .txt-box {
           text-align: center;
-          margin-top: 90px;
+          margin-top: 5.625em;
           p {
-            font-size: 18px;
+            font-size: 1.125em;
           }
         }
       }
@@ -467,20 +675,97 @@ export default class Main extends BaseComponent {}
   &.section05 {
     .section-title {
       h3 {
-        font-size: 20px;
+        font-size: 1.5em;
         font-weight: 400;
+        line-height: 1.4;
       }
     }
-    .btn-box {
-      .btn {
-        width: 214px;
-        height: 60px;
-        font-size: 24px;
-        font-weight: 600;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border: 1px solid #707070;
+    border-radius: 2.5em;
+    width: 18em;
+    height: 2.875em;
+    font-weight: 500;
+    padding: 0 1.25em;
+    margin: 0 auto;
+
+    .search-keyword {
+      font-size: 1.25em;
+    }
+
+    .cursor {
+      margin-left: 0.05em;
+      border-right: 0.05em solid;
+      animation: caret 1s steps(1) infinite;
+    }
+  }
+
+  .tag-box {
+    margin: 2.5em auto;
+    .row-box {
+      margin-top: 1em;
+    }
+    .tags {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      max-width: 20em;
+      margin: 0 auto;
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 25%;
+        height: 1.875em;
+        font-size: 1em;
+        color: #707070;
+        z-index: 2;
+        transition: all 1s ease;
+
+        &.is-active {
+          color: #fff;
+          font-weight: 500;
+        }
+
+        &.is-selected {
+          position: absolute;
+          top: 0;
+          background: #004d8a;
+          border-radius: 2.5em;
+          z-index: 1;
+        }
+      }
+    }
+  }
+
+  .mockup-box {
+    .mockup-card {
+      width: 17.5em;
+      overflow: hidden;
+      margin: 0 auto;
+      border-radius: 1.25em;
+      figure {
+        img {
+          display: block;
+          width: 100%;
+        }
       }
     }
   }
 }
+
+@keyframes caret {
+  50% {
+    border-color: transparent;
+  }
+}
+
 @keyframes slideInUp {
   0% {
     bottom: -20%;
@@ -499,9 +784,9 @@ export default class Main extends BaseComponent {}
   }
   100% {
     opacity: 1;
-    -webkit-transform: translateY(15px);
-    -ms-transform: translateY(15px);
-    transform: translateY(15px);
+    -webkit-transform: translateY(1em);
+    -ms-transform: translateY(1em);
+    transform: translateY(1em);
   }
 }
 </style>

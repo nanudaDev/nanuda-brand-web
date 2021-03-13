@@ -31,7 +31,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav py-lg-0">
         <li class="nav-item active" v-for="item in items" :key="item.path">
-          <a class="nav-link" href="#">{{ item.meta.title }}</a>
+          <router-link class="nav-link" :to="item.path">{{
+            item.meta.title
+          }}</router-link>
         </li>
       </ul>
     </div>
@@ -56,30 +58,10 @@ export default class NavBar extends BaseComponent {
 </script>
 <style lang="scss">
 .navbar {
-  padding: 5px 20px;
+  padding: 0.3125em 1.25em;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
   background: #fff;
   transition: background-color 0.2s ease;
-
-  &:not(.is-scrolled).navbar-close {
-    background: transparent;
-    box-shadow: none;
-    .nav-logo {
-      .logo-w {
-        display: block;
-      }
-      .logo {
-        display: none;
-      }
-    }
-    .navbar-toggler {
-      .navbar-hamburger {
-        span {
-          background: #fff;
-        }
-      }
-    }
-  }
 
   &.navbar-open {
     .navbar-toggler {
@@ -169,18 +151,31 @@ export default class NavBar extends BaseComponent {
     }
   }
 }
-@media screen and (min-width: 1024px) {
+.app-main {
   .navbar {
     &:not(.is-scrolled).navbar-close {
-      .navbar-nav {
-        .nav-item {
-          .nav-link {
-            color: #fff;
+      background: transparent;
+      box-shadow: none;
+      .nav-logo {
+        .logo-w {
+          display: block;
+        }
+        .logo {
+          display: none;
+        }
+      }
+      .navbar-toggler {
+        .navbar-hamburger {
+          span {
+            background: #fff;
           }
         }
       }
     }
-
+  }
+}
+@media screen and (min-width: 1024px) {
+  .navbar {
     .navbar-nav {
       margin-left: auto;
       margin-right: 1.5em;
@@ -191,6 +186,19 @@ export default class NavBar extends BaseComponent {
         .nav-link {
           font-size: 18px;
           font-weight: 600;
+        }
+      }
+    }
+  }
+  .app-main {
+    .navbar {
+      &:not(.is-scrolled).navbar-close {
+        .navbar-nav {
+          .nav-item {
+            .nav-link {
+              color: #fff;
+            }
+          }
         }
       }
     }

@@ -10,6 +10,8 @@ import VueScrollTo from 'vue-scrollto';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import 'intersection-observer'; // Optional
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import 'swiper/swiper-bundle.css';
 
 Vue.config.productionTip = false;
 Vue.component('MainLayout', MainLayout);
@@ -21,6 +23,7 @@ Vue.use(VueScrollTo, {
   easing: [0, 0, 0.1, 1],
   offset: -100,
 });
+Vue.use(VueAwesomeSwiper /* { default global options } */);
 
 new Vue({
   router,
