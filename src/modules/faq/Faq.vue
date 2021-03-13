@@ -1,20 +1,22 @@
 <template>
-  <div>
-    <h1>자주묻는 질문</h1>
-    <template v-if="faqList.length > 0">
-      <div v-for="faq in faqList" :key="faq.id">
-        <b-card class="m-2">
-          <div class="m-3">Q: {{ faq.faq }}</div>
-          <div class="m-3" v-for="answer in faq.answers" :key="answer.id">
-            A: {{ answer.answer }}
-          </div>
-        </b-card>
+  <article class="main-article">
+    <div class="container">
+      <h3>자주묻는 질문</h3>
+      <template v-if="faqList.length > 0">
+        <div v-for="faq in faqList" :key="faq.id">
+          <b-card class="m-2">
+            <div class="m-3">Q: {{ faq.faq }}</div>
+            <div class="m-3" v-for="answer in faq.answers" :key="answer.id">
+              A: {{ answer.answer }}
+            </div>
+          </b-card>
+        </div>
+      </template>
+      <div v-else>
+        <b-spinner label="Loading..."></b-spinner>
       </div>
-    </template>
-    <div v-else>
-      <b-spinner label="Loading..."></b-spinner>
     </div>
-  </div>
+  </article>
 </template>
 <script lang="ts">
 import BaseComponent from '@/core/base.component';

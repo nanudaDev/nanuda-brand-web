@@ -1,89 +1,119 @@
 <template>
-  <div>
-    <b-overlay :show="isLoading">
-      <div v-if="!result">
-        <h3>{{ question }}</h3>
-        <div v-if="givens.length > 0">
-          <div v-if="!isMultipleAnswer">
-            <b-button
-              v-for="given in givens"
-              :key="given.id"
-              class="m-2"
-              @click="getNextQuestion(given)"
-              style="max-width: 20rem; min-width: 15rem"
-              >{{ given.givenDetails.displayName }}</b-button
-            >
-          </div>
-          <div v-else>
-            <!-- 복수 선택 -->
-            <b-button
-              v-for="given in givens"
-              :key="given.id"
-              class="m-2"
-              :variant="selectedAnswers.includes(given) ? 'primary' : 'light'"
-              @click="onMultipleAnswerClicked(given)"
-              style="max-width: 20rem; min-width: 15rem"
-              >{{ given.givenDetails.displayName }}</b-button
-            >
-            <div>
-              <b-btn
-                @click="getNextQuestion()"
-                :disabled="!selectedAnswers.length > 0"
-                >확인</b-btn
-              >
-            </div>
-          </div>
-        </div>
-
-        <div v-else>
-          <div v-if="firstQuestionDto.userType">
-            <div v-if="firstQuestionDto.userType === FNB_OWNER.CUR_FNB_OWNER">
-              <!-- 다음 주소 api -->
-              <input
-                v-model="selectedRoadAddress"
-                @click="$bvModal.show('post-code')"
-              />
-              <b-modal id="post-code" :title="question"
-                ><div><vue-daum-postcode @complete="onPostCodeComplete" /></div
-              ></b-modal>
-              <div>
-                <b-btn
-                  @click="getFirstQuestion"
-                  :disabled="!selectedRoadAddress"
-                  >확인</b-btn
-                >
+  <article class="main-article">
+    <div>
+      <b-overlay :show="isLoading">
+        <template v-if="!result">
+          <section class="article-section">
+            <header class="section-title bg-light">
+              <h3 class="text-primary">{{ question }}</h3>
+            </header>
+            <div class="section-content">
+              <div class="container">
+                <template v-if="givens.length > 0">
+                  <template v-if="!isMultipleAnswer">
+                    <b-btn
+                      v-for="given in givens"
+                      :key="given.id"
+                      variant="outline-primary"
+                      class="mb-2"
+                      block
+                      size="lg"
+                      @click="getNextQuestion(given)"
+                      >{{ given.givenDetails.displayName }}</b-btn
+                    >
+                  </template>
+                  <template v-else>
+                    <!-- 복수 선택 -->
+                    <b-btn
+                      v-for="given in givens"
+                      :key="given.id"
+                      :variant="
+                        selectedAnswers.includes(given)
+                          ? 'primary'
+                          : 'outline-primary'
+                      "
+                      class="mb-2"
+                      block
+                      size="lg"
+                      @click="onMultipleAnswerClicked(given)"
+                      >{{ given.givenDetails.displayName }}
+                    </b-btn>
+                    <div class="btn-box mt-2">
+                      <b-btn
+                        variant="success"
+                        block
+                        size="lg"
+                        @click="getNextQuestion()"
+                        :disabled="!selectedAnswers.length > 0"
+                        >확인</b-btn
+                      >
+                    </div>
+                  </template>
+                </template>
+                <template v-else>
+                  <template v-if="firstQuestionDto.userType">
+                    <div
+                      v-if="
+                        firstQuestionDto.userType === FNB_OWNER.CUR_FNB_OWNER
+                      "
+                    >
+                      <!-- 다음 주소 api -->
+                      <b-form-gorup>
+                        <b-form-input
+                          size="lg"
+                          v-model="selectedRoadAddress"
+                          @click="$bvModal.show('post-code')"
+                        />
+                      </b-form-gorup>
+                      <div class="mt-2">
+                        <b-btn
+                          @click="getFirstQuestion"
+                          :disabled="!selectedRoadAddress"
+                          block
+                          >확인</b-btn
+                        >
+                      </div>
+                      <b-modal id="post-code" :title="question"
+                        ><div>
+                          <vue-daum-postcode
+                            @complete="onPostCodeComplete"
+                          /></div
+                      ></b-modal>
+                    </div>
+                    <div v-else>
+                      <!-- 행정동 버튼 그룹 -->
+                      <b-btn
+                        v-for="given in addressGivens"
+                        :key="given.id"
+                        class="mb-2"
+                        @click="getGuOrDong(given)"
+                        >{{ given[showingLevel] }}</b-btn
+                      >
+                    </div>
+                  </template>
+                  <template v-else>
+                    <!-- 첫번째 질문 (사장님 or 창업) -->
+                    <b-btn
+                      v-for="given in firstGivens"
+                      :key="given.id"
+                      variant="outline-primary"
+                      class="mb-2"
+                      block
+                      size="lg"
+                      @click="saveUserType(given.userType)"
+                    >
+                      {{ given.given }}
+                    </b-btn>
+                  </template>
+                </template>
               </div>
             </div>
-            <div v-else>
-              <!-- 행정동 버튼 그룹 -->
-
-              <b-button
-                v-for="given in addressGivens"
-                :key="given.id"
-                class="m-2"
-                @click="getGuOrDong(given)"
-                style="max-width: 20rem; min-width: 15rem"
-                >{{ given[showingLevel] }}</b-button
-              >
-            </div>
-          </div>
-          <div v-else>
-            <!-- 첫번째 질문 (사장님 or 창업) -->
-
-            <b-button
-              v-for="given in firstGivens"
-              :key="given.id"
-              class="m-2"
-              @click="saveUserType(given.userType)"
-              style="max-width: 20rem; min-width: 15rem"
-              >{{ given.given }}</b-button
-            >
-          </div>
-        </div>
-      </div>
-      <div v-else>결과: {{ result.response }}</div>
-    </b-overlay>
-  </div>
+          </section>
+        </template>
+        <template v-else>결과: {{ result.response }}</template>
+      </b-overlay>
+    </div>
+  </article>
 </template>
 
 <script lang="ts">
@@ -254,5 +284,38 @@ export default class Question extends BaseComponent {
   }
 }
 </script>
+<style lang="scss">
+.article-section {
+  .section-title {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10em;
+    padding: 1em;
+    h3 {
+      font-size: 1.5em;
+      font-weight: bold;
+      word-break: keep-all;
 
-<style></style>
+      + p {
+        font-size: 1em;
+        margin-top: 1.25em;
+      }
+    }
+    .title-en {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5em;
+    }
+    + .section-content {
+      margin-top: 1.5em;
+    }
+
+    .btn {
+      word-break: keep-all;
+      line-height: 1.4;
+    }
+  }
+}
+</style>

@@ -760,6 +760,16 @@ export default class Main extends BaseComponent {
   }
 }
 
+@media screen and (min-width: 1200px) {
+  .article-section {
+    &.section03 {
+      .container {
+        max-width: 1400px;
+      }
+    }
+  }
+}
+
 @keyframes caret {
   50% {
     border-color: transparent;

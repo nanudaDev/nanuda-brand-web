@@ -16,5 +16,4 @@ export enum KB_FOOD_CATEGORY {
   F15 = '패스트푸드',
   F16 = '한식',
 }
-export const CONST_KB_FOOD_CATEGORY  = Object.values(KB_FOOD_CATEGORY);
-
+export const CONST_KB_FOOD_CATEGORY = Object.values(KB_FOOD_CATEGORY);

@@ -59,9 +59,12 @@ export default class NavBar extends BaseComponent {
 <style lang="scss">
 .navbar {
   padding: 0.3125em 1.25em;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
   background: #fff;
   transition: background-color 0.2s ease;
+
+  &.is-scrolled {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  }
 
   &.navbar-open {
     .navbar-toggler {

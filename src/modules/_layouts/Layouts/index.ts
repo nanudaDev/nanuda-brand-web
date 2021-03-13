@@ -1,1 +1,2 @@
-export { default as MainLayout } from 'src/modules/_layouts/Layouts/MainLayout.layout.vue';
+export { default as MainLayout } from './MainLayout.layout.vue';
+export { default as NonLayout } from './NonLayout.layout.vue';

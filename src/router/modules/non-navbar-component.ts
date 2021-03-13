@@ -27,7 +27,7 @@ const nonNavBarRouter: RouteConfig[] = [
     component: () => import('../../modules/question/Question.vue'),
     meta: {
       authRequired: true,
-      layout: 'MainLayout',
+      layout: 'NonLayout',
       title: '설문',
     },
   },
