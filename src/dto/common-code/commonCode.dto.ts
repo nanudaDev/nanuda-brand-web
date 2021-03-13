@@ -1,10 +1,10 @@
-import { USER } from '@/common';
+import { FNB_OWNER } from '@/common';
 import { BaseDto } from '@/core';
 
 export class CommonCode extends BaseDto<CommonCode> {
   id: number;
-  key: USER;
-  value: USER;
+  key: FNB_OWNER;
+  value: FNB_OWNER;
   category: string;
   comment: string;
   displayName: string;
