@@ -436,7 +436,7 @@ export default class Main extends BaseComponent {
   };
 
   get swiper() {
-    return this.$refs.mySwiper.swiper;
+    return this.$refs.mySwiper.$swiper;
   }
 
   // get navBarHeight() {
@@ -506,9 +506,9 @@ export default class Main extends BaseComponent {
   mounted() {
     this.startTextAnimation(0);
 
-    // this.swiper.on('slideChange', () => {
-    //   this.onSwipe(this);
-    // });
+    this.swiper.on('slideChange', () => {
+      this.onSwipe(this);
+    });
   }
 }
 </script>

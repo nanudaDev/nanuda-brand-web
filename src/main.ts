@@ -12,6 +12,16 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import 'intersection-observer'; // Optional
 import VueAwesomeSwiper from 'vue-awesome-swiper';
+import {
+  Swiper as SwiperClass,
+  Pagination,
+  Mousewheel,
+  Autoplay,
+} from 'swiper';
+import getAwesomeSwiper from 'vue-awesome-swiper/dist/exporter';
+SwiperClass.use([Pagination, Mousewheel, Autoplay]);
+Vue.use(getAwesomeSwiper(SwiperClass));
+const { Swiper, SwiperSlide } = getAwesomeSwiper(SwiperClass);
 import 'swiper/swiper-bundle.css';
 
 Vue.config.productionTip = false;
