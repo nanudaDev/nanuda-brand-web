@@ -1,105 +1,163 @@
 <template>
-  <div>
-    <h3>{{ question }}</h3>
-    <div v-if="givens.length > 0">
-      <div v-if="!isMultipleAnswer">
-        <b-button
-          v-for="given in givens"
-          :key="given.id"
-          class="m-2"
-          @click="getNextQuestion(given.id)"
-          style="max-width: 20rem; min-width: 15rem"
-          >{{ given.givenDetails.displayName }}</b-button
-        >
-      </div>
-      <div v-else>
-        <b-button
-          v-for="given in givens"
-          :key="given.id"
-          class="m-2"
-          :variant="selectedAnswers.includes(given.id) ? 'primary' : 'light'"
-          @click="onMultipleAnswerClicked(given.id)"
-          style="max-width: 20rem; min-width: 15rem"
-          >{{ given.givenDetails.displayName }}</b-button
-        >
-        <div>
-          <b-btn
-            @click="getNextQuestion()"
-            :disabled="!selectedAnswers.length > 0"
-            >확인</b-btn
-          >
-        </div>
-      </div>
+  <article class="main-article">
+    <div>
+      <b-overlay :show="isLoading">
+        <template v-if="!result">
+          <section class="article-section">
+            <header class="section-title bg-light">
+              <h3 class="text-primary">{{ question }}</h3>
+            </header>
+            <div class="section-content">
+              <div class="container">
+                <template v-if="givens.length > 0">
+                  <template v-if="!isMultipleAnswer">
+                    <b-btn
+                      v-for="given in givens"
+                      :key="given.id"
+                      variant="outline-primary"
+                      class="mb-2"
+                      block
+                      size="lg"
+                      @click="getNextQuestion(given)"
+                      >{{ given.givenDetails.displayName }}</b-btn
+                    >
+                  </template>
+                  <template v-else>
+                    <!-- 복수 선택 -->
+                    <b-btn
+                      v-for="given in givens"
+                      :key="given.id"
+                      :variant="
+                        selectedAnswers.includes(given)
+                          ? 'primary'
+                          : 'outline-primary'
+                      "
+                      class="mb-2"
+                      block
+                      size="lg"
+                      @click="onMultipleAnswerClicked(given)"
+                      >{{ given.givenDetails.displayName }}
+                    </b-btn>
+                    <div class="btn-box mt-2">
+                      <b-btn
+                        variant="success"
+                        block
+                        size="lg"
+                        @click="getNextQuestion()"
+                        :disabled="!selectedAnswers.length > 0"
+                        >확인</b-btn
+                      >
+                    </div>
+                  </template>
+                </template>
+                <template v-else>
+                  <template v-if="firstQuestionDto.userType">
+                    <div
+                      v-if="
+                        firstQuestionDto.userType === FNB_OWNER.CUR_FNB_OWNER
+                      "
+                    >
+                      <!-- 다음 주소 api -->
+                      <b-form-group>
+                        <b-form-input
+                          size="lg"
+                          v-model="selectedRoadAddress"
+                          @click="$bvModal.show('post-code')"
+                        />
+                      </b-form-group>
+                      <div class="mt-2">
+                        <b-btn
+                          @click="getFirstQuestion"
+                          :disabled="!selectedRoadAddress"
+                          block
+                          >확인</b-btn
+                        >
+                      </div>
+                      <b-modal id="post-code" :title="question"
+                        ><div>
+                          <vue-daum-postcode
+                            @complete="onPostCodeComplete"
+                          /></div
+                      ></b-modal>
+                    </div>
+                    <div class="row" v-else>
+                      <div
+                        class="col-4"
+                        v-for="given in addressGivens"
+                        :key="given.id"
+                      >
+                        <!-- 행정동 버튼 그룹 -->
+                        <b-btn
+                          class="mb-4"
+                          variant="outline-primary"
+                          block
+                          @click="getGuOrDong(given)"
+                          >{{ given[showingLevel] }}</b-btn
+                        >
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <!-- 첫번째 질문 (사장님 or 창업) -->
+                    <b-btn
+                      v-for="given in firstGivens"
+                      :key="given.id"
+                      variant="outline-primary"
+                      class="mb-2"
+                      block
+                      size="lg"
+                      @click="saveUserType(given.userType)"
+                    >
+                      {{ given.given }}
+                    </b-btn>
+                  </template>
+                </template>
+              </div>
+            </div>
+          </section>
+        </template>
+        <template v-else>
+          <section class="article-section">
+            <header class="section-title">
+              <h3>{{ result.response }}</h3>
+            </header>
+          </section>
+        </template>
+      </b-overlay>
     </div>
-
-    <div v-else>
-      <div v-if="firstQuestionDto.userType">
-        <div v-if="firstQuestionDto.userType === USER.CUR_FNB_OWNER">
-          <!-- 다음 주소 api -->
-          <input
-            v-model="selectedRoadAddress"
-            @click="$bvModal.show('post-code')"
-          />
-          <b-modal id="post-code" :title="question"
-            ><div><vue-daum-postcode @complete="onPostCodeComplete" /></div
-          ></b-modal>
-          <div>
-            <b-btn @click="getFirstQuestion" :disabled="!selectedRoadAddress"
-              >확인</b-btn
-            >
-          </div>
-        </div>
-        <div v-else>
-          <!-- 행정동 버튼 그룹 -->
-
-          <b-button
-            v-for="given in addressGivens"
-            :key="given.id"
-            class="m-2"
-            @click="getGuOrDong(given)"
-            style="max-width: 20rem; min-width: 15rem"
-            >{{ given[showingLevel] }}</b-button
-          >
-        </div>
-      </div>
-      <div v-else>
-        <!-- 첫번째 질문 (사장님 or 창업) -->
-
-        <b-button
-          v-for="given in firstGivens"
-          :key="given.id"
-          class="m-2"
-          @click="saveUserType(given.userType)"
-          style="max-width: 20rem; min-width: 15rem"
-          >{{ given.given }}</b-button
-        >
-      </div>
-    </div>
-  </div>
+  </article>
 </template>
 
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
 import { Component, Watch } from 'vue-property-decorator';
 import { VueDaumPostcode } from 'vue-daum-postcode';
-import { USER } from '@/common';
 import questionService from '@/services/question.service';
 import codeHdongService from '@/services/code-hdong.service';
 import axios from 'axios';
-import { FirstQuestionDto, Given, NextQuestionDto } from '@/dto/question';
+import {
+  FirstQuestionDto,
+  Given,
+  NextQuestionDto,
+  ResultRequestDto,
+} from '@/dto/question';
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
+import { FNB_OWNER } from '@/common';
 @Component({
   name: 'Question',
   components: { VueDaumPostcode },
 })
 export default class Question extends BaseComponent {
   // private userType: USER = null;
-  private USER = USER;
+  private isLastQuestion = false;
   private firstQuestionDto = new FirstQuestionDto();
   private nextQuestionDto = new NextQuestionDto();
   private codeHdongSearchDto = new CodeHdongSearchDto();
+  private resultRequestDto = new ResultRequestDto();
   private question = '나는 현재';
+  private FNB_OWNER = FNB_OWNER;
+  private result: any = null;
   private firstGivens = [
     {
       id: 1,
@@ -117,13 +175,14 @@ export default class Question extends BaseComponent {
   private showingLevel = 'sidoName';
   private selectedRoadAddress = '';
   private isMultipleAnswer = false;
-  private selectedAnswers: number[] = [];
-  saveUserType(userType: USER) {
+  private selectedAnswers: Given[] = [];
+  private isLoading = false;
+  saveUserType(userType: FNB_OWNER) {
+    this.resultRequestDto.fnbOwnerStatus = userType;
     this.$set(this.firstQuestionDto, 'userType', userType);
     this.$set(this.nextQuestionDto, 'userType', userType);
-    if (userType === USER.CUR_FNB_OWNER) {
+    if (userType === FNB_OWNER.CUR_FNB_OWNER) {
       this.question = '음식점 주소를 알려주세요!';
-      console.log('show postcode');
       this.$nextTick(() => {
         this.$bvModal.show('post-code');
       });
@@ -144,24 +203,56 @@ export default class Question extends BaseComponent {
     });
   }
 
-  getNextQuestion(id?: number) {
-    this.nextQuestionDto.givenId = [];
-    if (id) {
-      this.nextQuestionDto.givenId.push(id);
+  getNextQuestion(given?: Given) {
+    if (this.isLastQuestion) {
+      this.isLoading = true;
+      //get result
+      questionService.getResult(this.resultRequestDto).subscribe(res => {
+        this.isLoading = false;
+        this.result = res.data;
+      });
     } else {
-      console.log('no id');
-      this.$set(this.nextQuestionDto, 'givenId', this.selectedAnswers);
-      this.nextQuestionDto.givenId = this.selectedAnswers;
-    }
-
-    questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
-      this.nextQuestionDto.questionId = res.data.id;
-      this.question = res.data.question;
-      this.givens = res.data.givens;
+      //대답 하나 or 여러개 선택
       this.nextQuestionDto.givenId = [];
-      this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
-    });
+      if (given) {
+        this.nextQuestionDto.givenId.push(given.id);
+        if (given.givenDetails.category === 'KB_MEDIUM_CATEGORY') {
+          this.resultRequestDto.kbFoodCategory = given.givenDetails.value;
+        }
+        if (given.givenDetails.category === 'AGE_GROUP') {
+          this.resultRequestDto.ageGroupCode = given.givenDetails.key;
+        }
+        if (given.givenDetails.category === 'REVENUE_RANGE') {
+          this.resultRequestDto.revenueRangeCode = given.givenDetails.key;
+        }
+      } else {
+        this.$set(this.nextQuestionDto, 'givenId', this.selectedAnswers);
+        const selectedGivenId = this.selectedAnswers.map(e => e.id);
+        this.nextQuestionDto.givenId = selectedGivenId;
+        //영업 시간
+        if (this.givens[0].givenDetails.category === 'OPERATION_TIME') {
+          this.resultRequestDto.operationTimes = [];
+          this.selectedAnswers.forEach(e => {
+            this.resultRequestDto.operationTimes.push(e.givenDetails.value);
+          });
+        }
+      }
+
+      questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
+        if (res.data.isLastQuestion === 'Y') {
+          this.isLastQuestion = true;
+        }
+
+        this.nextQuestionDto.questionId = res.data.id;
+        this.question = res.data.question;
+        this.givens = res.data.givens;
+        this.nextQuestionDto.givenId = [];
+        this.isMultipleAnswer =
+          res.data.multipleAnswerYn === 'Y' ? true : false;
+      });
+    }
   }
+  //level이 내려감에따라 showingLevel(보여줘야할 정보)이 변함
   getGuOrDong(given: CodeHdongDto) {
     this.codeHdongSearchDto.sidoName = given.sidoName;
     this.codeHdongSearchDto.hdongCode = given.hdongCode;
@@ -178,6 +269,7 @@ export default class Question extends BaseComponent {
         this.showingLevel = 'hdongName';
       });
     } else {
+      this.resultRequestDto.hdongCode = given.hdongCode;
       this.getFirstQuestion();
     }
   }
@@ -185,23 +277,57 @@ export default class Question extends BaseComponent {
     this.selectedRoadAddress = event.roadAddress;
     this.$bvModal.hide('post-code');
   }
-  onMultipleAnswerClicked(id: number) {
-    if (this.selectedAnswers.includes(id)) {
-      const theIndex = this.selectedAnswers.findIndex(e => e === id);
+  onMultipleAnswerClicked(given: Given) {
+    if (this.selectedAnswers.includes(given)) {
+      const theIndex = this.selectedAnswers.findIndex(e => e === given);
       this.selectedAnswers.splice(theIndex, 1);
     } else {
-      this.selectedAnswers.push(id);
+      this.selectedAnswers.push(given);
     }
   }
   async mounted() {
+    this.isLoading = true;
     //get ip address
     await axios.get('https://api.ipify.org?format=json').then(res => {
+      this.isLoading = false;
       this.nextQuestionDto.ipAddress = res.data.ip;
       this.nextQuestionDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
-      console.log('window.navigator.userAgent', window.navigator.userAgent);
     });
   }
 }
 </script>
+<style lang="scss">
+.article-section {
+  .section-title {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10em;
+    padding: 1em;
+    h3 {
+      font-size: 1.5em;
+      font-weight: bold;
+      word-break: keep-all;
 
-<style></style>
+      + p {
+        font-size: 1em;
+        margin-top: 1.25em;
+      }
+    }
+    .title-en {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5em;
+    }
+    + .section-content {
+      margin-top: 1.5em;
+    }
+
+    .btn {
+      word-break: keep-all;
+      line-height: 1.4;
+    }
+  }
+}
+</style>

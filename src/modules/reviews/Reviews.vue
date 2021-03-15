@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <article class="main-article">
     성공사례확인
-  </div>
+  </article>
 </template>
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
 import { Component } from 'vue-property-decorator';
 
 @Component({
-  name: 'Faq',
+  name: 'Reviews',
 })
-export default class Faq extends BaseComponent {}
+export default class Reviews extends BaseComponent {}
 </script>

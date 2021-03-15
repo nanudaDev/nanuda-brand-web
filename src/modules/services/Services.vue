@@ -1,7 +1,9 @@
 <template>
-  <div>
-    서비스 소개
-  </div>
+  <article class="main-article">
+    <div class="container">
+      서비스 소개
+    </div>
+  </article>
 </template>
 <script lang="ts">
 import BaseComponent from '@/core/base.component';

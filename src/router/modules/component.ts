@@ -2,8 +2,17 @@ import { RouteConfig } from 'vue-router';
 
 export const componentRoutes: RouteConfig[] = [
   {
+    path: '/about-us',
+    name: 'about-us',
+    component: () => import('../../modules/about-us/AboutUs.vue'),
+    meta: {
+      layout: 'MainLayout',
+      title: '회사소개',
+    },
+  },
+  {
     path: '/services',
-    name: 'Services',
+    name: 'services',
     component: () => import('../../modules/services/Services.vue'),
     meta: {
       layout: 'MainLayout',
@@ -12,38 +21,20 @@ export const componentRoutes: RouteConfig[] = [
   },
   {
     path: '/faq',
-    name: 'Faq',
+    name: 'faq',
     component: () => import('../../modules/faq/Faq.vue'),
     meta: {
       layout: 'MainLayout',
       title: '자주묻는질문',
     },
   },
-  {
-    path: '/about-us',
-    name: 'AboutUs',
-    component: () => import('../../modules/about-us/AboutUs.vue'),
-    meta: {
-      layout: 'MainLayout',
-      title: '회사소개',
-    },
-  },
-  {
-    path: '/reviews',
-    name: 'Reviews',
-    component: () => import('../../modules/reviews/Reviews.vue'),
-    meta: {
-      layout: 'MainLayout',
-      title: '성공사례확인',
-    },
-  },
-  {
-    path: '/question',
-    name: 'Question',
-    component: () => import('../../modules/question/Question.vue'),
-    meta: {
-      layout: 'MainLayout',
-      title: '설문',
-    },
-  },
+  // {
+  //   path: '/reviews',
+  //   name: 'reviews',
+  //   component: () => import('../../modules/reviews/Reviews.vue'),
+  //   meta: {
+  //     layout: 'MainLayout',
+  //     title: '성공사례확인',
+  //   },
+  // },
 ];

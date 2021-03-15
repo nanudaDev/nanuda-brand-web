@@ -1,4 +1,4 @@
-import { USER } from '@/common';
+import { FNB_OWNER } from '@/common';
 import { BaseDto } from '@/core';
 
 export class NextQuestionDto extends BaseDto<NextQuestionDto> {
@@ -6,5 +6,5 @@ export class NextQuestionDto extends BaseDto<NextQuestionDto> {
   givenId: number[];
   ipAddress: string;
   uniqueSessionId: string;
-  userType: USER;
+  userType: FNB_OWNER;
 }
