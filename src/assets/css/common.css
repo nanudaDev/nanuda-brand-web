@@ -238,6 +238,11 @@ body {
 }
 
 .btn.btn-lg {
+  font-size: 0.75em;
+  padding: 0 1em;
+}
+
+.btn.btn-lg {
   font-size: 1.125em;
   height: 3.33em;
 }
@@ -302,6 +307,52 @@ body {
 
 .slideInUp-leave-active {
   animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) reverse;
+}
+
+.article-section .section-header h3 {
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid #545454;
+  font-size: 1.5em;
+  color: #545454;
+}
+
+.article-section .agree-box {
+  font-size: 0.875em;
+  line-height: 1.4;
+}
+
+.article-section .agree-box + .agree-box {
+  margin-top: 2em;
+}
+
+.article-section .agree-box h4 {
+  font-size: 1.25em;
+  color: #545454;
+  font-weight: 600;
+  margin: 1em 0;
+}
+
+.article-section .agree-box .o-list {
+  margin: 1em 0;
+}
+
+.article-section .agree-box .o-list li {
+  position: relative;
+  margin: 0.5em 0;
+  padding-left: 0.75em;
+}
+
+.article-section .agree-box .o-list li:before {
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  display: block;
+  content: '';
+  width: 0.25em;
+  height: 0.25em;
+  background-color: #0b538d;
+  border-radius: 50%;
 }
 
 @keyframes slideInUp {
