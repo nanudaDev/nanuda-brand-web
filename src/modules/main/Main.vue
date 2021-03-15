@@ -15,6 +15,9 @@
             />
           </video>
         </template>
+        <template v-else>
+          <img src="@/assets/video/main_video.gif" alt="" />
+        </template>
       </div>
       <div class="title-container">
         <div>
@@ -547,6 +550,13 @@ export default class Main extends BaseComponent {
       z-index: -10;
       width: 100%;
       height: 100vh;
+    }
+    img {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      object-fit: cover;
+      height: 100%;
     }
   }
   .title-container {
