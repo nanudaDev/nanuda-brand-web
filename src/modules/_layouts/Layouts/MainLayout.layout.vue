@@ -94,9 +94,6 @@ export default class MainLayout extends BaseComponent {
 #app {
   &.app-main {
     // 메인
-    #app-main {
-      margin-bottom: 3.75em;
-    }
     .main-article {
       padding: 0;
     }

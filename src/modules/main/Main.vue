@@ -33,7 +33,7 @@
       </div>
       <button
         class="btn-scroll-down"
-        v-scroll-to="{ el: '#content-wrapper', offset: -60 }"
+        v-scroll-to="{ el: '#content-wrapper', offset: -navbarHeight }"
       >
         <BaseArrow />
       </button>
@@ -315,7 +315,7 @@
           </b-tabs>
         </div>
       </section>
-      <section class="article-section section05">
+      <section class="article-section section05" id="bottom-btn-wrap">
         <div class="container">
           <header class="section-title">
             <h3 data-aos="fade-up" data-aos-duration="1000">
@@ -367,6 +367,7 @@ export default class Main extends BaseComponent {
     mySwiper: HTMLFormElement;
     tagRef: HTMLFormElement;
   };
+  navbarHeight: any = 0;
   private currentIdx = 1;
   private tagList: any = [
     {
@@ -439,36 +440,31 @@ export default class Main extends BaseComponent {
     return this.$refs.mySwiper.$swiper;
   }
 
-  // get navBarHeight() {
-  //   const target = document.querySelector('.navbar');
-  //   return target.getBoundingClientRect().height;
-  // }
-
   private handleDebouncedScroll: {
     (this: Window, ev: Event): any;
     (this: Window, ev: Event): any;
   } = null;
 
-  typeWriter(text: string, i: number, callback: TimerHandler) {
+  onTypeWriter(text: string, i: number, callback: TimerHandler) {
     if (i < text.length) {
       this.locationText = text.substring(0, i + 1);
       setTimeout(() => {
-        this.typeWriter(text, i + 1, callback);
+        this.onTypeWriter(text, i + 1, callback);
       }, 100);
     } else if (typeof callback == 'function') {
       setTimeout(callback, 3000);
     }
   }
 
-  startTextAnimation(i: number) {
+  onStartTextAnimation(i: number) {
     if (typeof this.locationArray[i] == 'undefined') {
       setTimeout(() => {
-        this.startTextAnimation(0);
+        this.onStartTextAnimation(0);
       }, 1000);
     }
     if (i < this.locationArray.length) {
-      this.typeWriter(this.locationArray[i], 0, () => {
-        this.startTextAnimation(i + 1);
+      this.onTypeWriter(this.locationArray[i], 0, () => {
+        this.onStartTextAnimation(i + 1);
       });
     }
   }
@@ -483,15 +479,18 @@ export default class Main extends BaseComponent {
     const offsetTop = document
       .getElementById('content-wrapper')
       .getBoundingClientRect().top;
-    if (offsetTop < 0) {
+    const bottomOffsetTop = document
+      .getElementById('bottom-btn-wrap')
+      .getBoundingClientRect().top;
+    const winHeight = window.innerHeight;
+    if (
+      offsetTop - this.navbarHeight < 0 &&
+      bottomOffsetTop - (winHeight - this.navbarHeight) > 0
+    ) {
       this.isStickyBtnVisible = true;
     } else {
       this.isStickyBtnVisible = false;
     }
-  }
-
-  callback() {
-    console.log('callback');
   }
 
   created() {
@@ -504,8 +503,9 @@ export default class Main extends BaseComponent {
   }
 
   mounted() {
-    this.startTextAnimation(0);
-
+    const target = document.querySelector('.navbar');
+    this.navbarHeight = target.getBoundingClientRect().height;
+    this.onStartTextAnimation(0);
     this.swiper.on('slideChange', () => {
       this.onSwipe(this);
     });
