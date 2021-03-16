@@ -10,6 +10,7 @@
             <div class="section-content">
               <div class="container">
                 <template v-if="givens.length > 0">
+                  <b-btn @click="goToPrevious">뒤로가기</b-btn>
                   <template v-if="!isMultipleAnswer">
                     <b-btn
                       v-for="given in givens"
@@ -58,13 +59,13 @@
                       "
                     >
                       <!-- 다음 주소 api -->
-                      <b-form-group>
-                        <b-form-input
-                          size="lg"
-                          v-model="selectedRoadAddress"
-                          @click="$bvModal.show('post-code')"
-                        />
-                      </b-form-group>
+                      <b-btn @click="goToPreviousAddr">뒤로가기</b-btn>
+                      <b-form-input
+                        size="lg"
+                        v-model="selectedRoadAddress"
+                        @click="$bvModal.show('post-code')"
+                      />
+
                       <div class="mt-2">
                         <b-btn
                           @click="getFirstQuestion"
@@ -80,12 +81,10 @@
                           /></div
                       ></b-modal>
                     </div>
-                    <div class="row" v-else>
-                      <div
-                        class="col-4"
-                        v-for="given in addressGivens"
-                        :key="given.id"
-                      >
+                    <div v-else>
+                      <b-btn @click="goToPreviousAddr">뒤로가기</b-btn>
+                      <!-- 행정동 버튼 그룹 -->
+                      <div v-for="given in addressGivens" :key="given.id">
                         <!-- 행정동 버튼 그룹 -->
                         <b-btn
                           class="mb-4"
@@ -143,7 +142,7 @@ import {
 } from '@/dto/question';
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
-import { FNB_OWNER } from '@/common';
+import { ADDRESS_LEVEL, FNB_OWNER } from '@/common';
 @Component({
   name: 'Question',
   components: { VueDaumPostcode },
@@ -172,11 +171,12 @@ export default class Question extends BaseComponent {
   ];
   private givens: Given[] = [];
   private addressGivens: any[] = [];
-  private showingLevel = 'sidoName';
+  private showingLevel = ADDRESS_LEVEL.sidoName;
   private selectedRoadAddress = '';
   private isMultipleAnswer = false;
   private selectedAnswers: Given[] = [];
   private isLoading = false;
+  private previousQuestionDtoArr: NextQuestionDto[] = [];
   saveUserType(userType: FNB_OWNER) {
     this.resultRequestDto.fnbOwnerStatus = userType;
     this.$set(this.firstQuestionDto, 'userType', userType);
@@ -202,8 +202,54 @@ export default class Question extends BaseComponent {
       this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
     });
   }
+  // 주소 선택화면일때 뒤로가기
+  goToPreviousAddr() {
+    if (this.showingLevel == ADDRESS_LEVEL.hdongName) {
+      codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
+        this.addressGivens = res.data;
+        this.showingLevel = ADDRESS_LEVEL.guName;
+      });
+    } else if (this.showingLevel == 'guName') {
+      codeHdongService.getSido().subscribe(res => {
+        this.addressGivens = res.data;
+        this.showingLevel = ADDRESS_LEVEL.sidoName;
+      });
+    } else {
+      this.selectedRoadAddress = '';
+      this.firstQuestionDto.userType = null;
+    }
+  }
+  // 질문 화면일때 뒤로가기
+  goToPrevious() {
+    if (this.previousQuestionDtoArr.length == 0) {
+      this.givens = [];
+      codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
+        this.addressGivens = res.data;
+        this.showingLevel = ADDRESS_LEVEL.hdongName;
+      });
+      return;
+    }
+    if (this.previousQuestionDtoArr.length == 1) {
+      this.getFirstQuestion();
+    }
+    const previousDto = this.previousQuestionDtoArr[
+      this.previousQuestionDtoArr.length - 2
+    ];
+    this.previousQuestionDtoArr.pop();
+    questionService.getNextQuestion(previousDto).subscribe(res => {
+      if (res.data.isLastQuestion === 'Y') {
+        this.isLastQuestion = true;
+      }
 
+      this.nextQuestionDto.questionId = res.data.id;
+      this.question = res.data.question;
+      this.givens = res.data.givens;
+      this.nextQuestionDto.givenId = [];
+      this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
+    });
+  }
   getNextQuestion(given?: Given) {
+    this.previousQuestionDtoArr.push({ ...this.nextQuestionDto });
     if (this.isLastQuestion) {
       this.isLoading = true;
       //get result
@@ -237,7 +283,6 @@ export default class Question extends BaseComponent {
           });
         }
       }
-
       questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
         if (res.data.isLastQuestion === 'Y') {
           this.isLastQuestion = true;
@@ -249,27 +294,34 @@ export default class Question extends BaseComponent {
         this.nextQuestionDto.givenId = [];
         this.isMultipleAnswer =
           res.data.multipleAnswerYn === 'Y' ? true : false;
+        this.selectedAnswers = [];
       });
     }
   }
   //level이 내려감에따라 showingLevel(보여줘야할 정보)이 변함
-  getGuOrDong(given: CodeHdongDto) {
-    this.codeHdongSearchDto.sidoName = given.sidoName;
-    this.codeHdongSearchDto.hdongCode = given.hdongCode;
-    this.codeHdongSearchDto.hdongName = given.hdongName;
-    this.codeHdongSearchDto.guName = given.guName;
-    if (this.showingLevel === 'sidoName') {
+  getGuOrDong(given?: CodeHdongDto) {
+    if (given) {
+      this.codeHdongSearchDto.sidoName = given.sidoName;
+      this.codeHdongSearchDto.hdongCode = given.hdongCode;
+      this.codeHdongSearchDto.hdongName = given.hdongName;
+      this.codeHdongSearchDto.guName = given.guName;
+    }
+
+    if (this.showingLevel === ADDRESS_LEVEL.sidoName) {
       codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
         this.addressGivens = res.data;
-        this.showingLevel = 'guName';
+        this.showingLevel = ADDRESS_LEVEL.guName;
       });
-    } else if (this.showingLevel === 'guName') {
+    } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
       codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
         this.addressGivens = res.data;
-        this.showingLevel = 'hdongName';
+        this.showingLevel = ADDRESS_LEVEL.hdongName;
       });
     } else {
-      this.resultRequestDto.hdongCode = given.hdongCode;
+      if (given) {
+        this.resultRequestDto.hdongCode = given.hdongCode;
+      }
+
       this.getFirstQuestion();
     }
   }
