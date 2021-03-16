@@ -29,27 +29,35 @@
       </header>
     </article>
     <article
-      class="main-article bg-primary"
+      class="main-article"
       :id="nextQuestionDto.questionId"
       v-if="!isStart"
+      :class="
+        (nextQuestionDto.questionId > 1 && nextQuestionDto.questionId < 7) ||
+        (nextQuestionDto.questionId > 10 && nextQuestionDto.questionId < 15)
+          ? 'bg-light'
+          : 'bg-primary'
+      "
     >
-      <b-overlay :show="isLoading">
-        <header class="article-header">
-          <h1>
-            <img src="@/assets/images/logo_w_v2.svg" alt="픽쿡" />
-          </h1>
-          <div class="progress-bar-rail">
-            <span class="progress-bar"></span>
-          </div>
-        </header>
-        <div class="article-content">
+      <header class="article-header">
+        <h1>
+          <img src="@/assets/images/logo_w_v2.svg" alt="픽쿡" />
+        </h1>
+        <div class="progress-bar-rail">
+          <span class="progress-bar"></span>
+        </div>
+      </header>
+      <div class="article-content">
+        <b-overlay :show="isLoading">
           <template v-if="!result">
             <section class="article-section">
               <header class="section-title">
-                <span>
-                  <img src="@/assets/images/logo_w_v3.svg" alt="픽쿡" />
-                </span>
-                <h3>{{ question }}</h3>
+                <div class="container">
+                  <span>
+                    <img src="@/assets/images/logo_w_v3.svg" alt="픽쿡" />
+                  </span>
+                  <h3>{{ question }}</h3>
+                </div>
               </header>
               <div class="section-content">
                 <div class="container">
@@ -58,48 +66,82 @@
                       @click="goToPrevious"
                       size="sm"
                       class="btn-back"
-                      variant="primary"
+                      :variant="
+                        (nextQuestionDto.questionId > 1 &&
+                          nextQuestionDto.questionId < 7) ||
+                        (nextQuestionDto.questionId > 10 &&
+                          nextQuestionDto.questionId < 15)
+                          ? 'transparent'
+                          : 'primary'
+                      "
                       pill
                     >
                       <span class="icon icon-arrow-left"><BaseArrow /></span>
                       <span class="is-blind">뒤로가기</span>
                     </b-btn>
                     <template v-if="!isMultipleAnswer">
-                      <b-btn
-                        v-for="given in givens"
-                        :key="given.id"
-                        variant="outline-primary"
-                        class="mb-2"
-                        block
-                        size="lg"
-                        @click="getNextQuestion(given)"
-                        >{{ given.givenDetails.displayName }}</b-btn
-                      >
+                      <div class="row gutter-sm">
+                        <div
+                          :class="
+                            [1, 4, 5, 10, 12].includes(
+                              nextQuestionDto.questionId,
+                            )
+                              ? 'col-6 col-sm-4'
+                              : 'col-12'
+                          "
+                          v-for="given in givens"
+                          :key="given.id"
+                        >
+                          <b-btn
+                            variant="light"
+                            class="mb-4 shadow"
+                            block
+                            size="lg"
+                            pill
+                            @click="getNextQuestion(given)"
+                            >{{ given.givenDetails.displayName }}</b-btn
+                          >
+                        </div>
+                      </div>
                     </template>
                     <template v-else>
                       <!-- 복수 선택 -->
-                      <b-btn
-                        v-for="given in givens"
-                        :key="given.id"
-                        :variant="
-                          selectedAnswers.includes(given)
-                            ? 'primary'
-                            : 'outline-primary'
-                        "
-                        class="mb-2"
-                        block
-                        size="lg"
-                        @click="onMultipleAnswerClicked(given)"
-                        >{{ given.givenDetails.displayName }}
-                      </b-btn>
+                      <div class="row">
+                        <div
+                          v-for="given in givens"
+                          :key="given.id"
+                          :class="
+                            [1, 4, 5, 10, 12].includes(
+                              nextQuestionDto.questionId,
+                            )
+                              ? 'col-6 col-sm-4'
+                              : 'col-12'
+                          "
+                        >
+                          <b-btn
+                            :variant="
+                              selectedAnswers.includes(given)
+                                ? 'primary'
+                                : 'light'
+                            "
+                            class="mb-4"
+                            block
+                            size="lg"
+                            pill
+                            @click="onMultipleAnswerClicked(given)"
+                            >{{ given.givenDetails.displayName }}
+                          </b-btn>
+                        </div>
+                      </div>
                       <div class="btn-box mt-2">
                         <b-btn
                           variant="success"
                           block
                           size="lg"
+                          pill
                           @click="getNextQuestion()"
                           :disabled="!selectedAnswers.length > 0"
-                          >확인</b-btn
+                          >다음</b-btn
                         >
                       </div>
                     </template>
@@ -136,10 +178,11 @@
                           <b-btn
                             @click="getFirstQuestion"
                             :disabled="!selectedRoadAddress"
-                            variant="light"
-                            size="xl"
+                            variant="success"
+                            size="lg"
+                            block
                             pill
-                            >확인</b-btn
+                            >다음</b-btn
                           >
                         </div>
                         <b-modal id="post-code" :title="question"
@@ -163,16 +206,24 @@
                           <span class="is-blind">뒤로가기</span>
                         </b-btn>
                         <!-- 행정동 버튼 그룹 -->
-                        <div v-for="given in addressGivens" :key="given.id">
-                          <!-- 행정동 버튼 그룹 -->
-                          <b-btn
-                            class="mb-4"
-                            variant="light"
-                            size="xl"
-                            block
-                            @click="getGuOrDong(given)"
-                            >{{ given[showingLevel] }}</b-btn
-                          >
+                        <div>
+                          <div class="row gutter-sm">
+                            <div
+                              class="col-6 col-sm-4"
+                              v-for="given in addressGivens"
+                              :key="given.id"
+                            >
+                              <b-btn
+                                size="lg"
+                                variant="light"
+                                block
+                                class="mb-4 shadow"
+                                pill
+                                @click="getGuOrDong(given)"
+                                >{{ given[showingLevel] }}</b-btn
+                              >
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </template>
@@ -182,7 +233,7 @@
                         v-for="given in firstGivens"
                         :key="given.id"
                         variant="light"
-                        class="mb-3 shadow"
+                        class="mb-4 shadow"
                         block
                         pill
                         size="lg"
@@ -203,8 +254,8 @@
               </header>
             </section>
           </template>
-        </div>
-      </b-overlay>
+        </b-overlay>
+      </div>
     </article>
   </div>
 </template>
@@ -441,6 +492,13 @@ export default class Question extends BaseComponent {
 </script>
 <style lang="scss">
 .app-question {
+  .btn {
+    &.btn-light {
+      border: 1px solid #0b538d;
+      background-color: #fff;
+      color: #0b538d;
+    }
+  }
   .progress-bar-rail {
     position: absolute;
     bottom: 0;
@@ -462,7 +520,19 @@ export default class Question extends BaseComponent {
       .btn-back {
         position: fixed;
         left: 0.75em;
-        top: 1.75em;
+        top: 1.25em;
+        width: 4em;
+        height: 4em;
+        background-color: transparent;
+        .icon {
+          fill: #6c8fb7;
+        }
+        &:hover {
+          background-color: #6c8fb7;
+          .icon {
+            fill: #fff;
+          }
+        }
       }
       .article-header {
         position: relative;
@@ -470,6 +540,7 @@ export default class Question extends BaseComponent {
         align-items: center;
         justify-content: center;
         height: 5em;
+        box-shadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.05);
         h1 {
           width: 7.75em;
           font-size: 1em;
@@ -518,6 +589,13 @@ export default class Question extends BaseComponent {
         }
         .btn-box {
           margin-top: 3.125em;
+        }
+      }
+    }
+    &.bg-light {
+      .article-section {
+        .section-title {
+          color: #0b538d;
         }
       }
     }

@@ -237,19 +237,36 @@ body {
   border-radius: 3em !important;
 }
 
+.gutter-sm {
+  margin-left: -.5em;
+  margin-right: -.5em;
+}
+
+.gutter-sm [class^="col-"] {
+  padding-left: .5em;
+  padding-right: .5em;
+}
+
 .btn {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 1.25em;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0 1em;
   font-size: 1em;
-  height: 2.5em;
+  height: 3em;
   line-height: 1.2;
 }
 
 .btn.btn-sm {
   font-size: 0.75em;
   padding: 0 1em;
+  height: 2.5em;
 }
 
 .btn.btn-lg {
@@ -279,8 +296,14 @@ body {
   fill: #fff;
 }
 
-.btn-light {
-  color: #0b538d;
+.btn-outline-primary {
+  border-color: #0b538d;
+  background-color: transparent;
+  font-weight: 700;
+}
+
+.btn-outline-primary .icon {
+  fill: #0b538d;
 }
 
 .text-bold {
@@ -292,17 +315,25 @@ body {
 }
 
 .icon {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .icon.icon-arrow-right {
-  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
 }
 
 .icon.icon-arrow-left {
-  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
 }
 
 .bg-primary {
@@ -318,6 +349,8 @@ body {
 }
 
 .icon {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
   width: 1.5em;
   height: 1.5em;
@@ -330,7 +363,8 @@ body {
 }
 
 .slideInUp-enter-active {
-  animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+          animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .slideInUp-leave-active {
@@ -383,11 +417,24 @@ body {
   border-radius: 50%;
 }
 
-@keyframes slideInUp {
+@-webkit-keyframes slideInUp {
   from {
+    -webkit-transform: translate3d(0, 100%, 0);
     transform: translate3d(0, 100%, 0);
   }
   to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
 }
