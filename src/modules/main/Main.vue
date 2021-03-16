@@ -369,14 +369,12 @@
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
 import Component from 'vue-class-component';
-import BaseArrow from '@/modules/_components/svg/BaseArrow.vue';
 import BaseSearch from '@/modules/_components/svg/BaseSearch.vue';
 import debounce from 'lodash/debounce';
 
 @Component({
   name: 'Main',
   components: {
-    BaseArrow,
     BaseSearch,
   },
 })
