@@ -133,7 +133,7 @@ import {
 } from '@/dto/question';
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
-import { FNB_OWNER } from '@/common';
+import { ADDRESS_LEVEL, FNB_OWNER } from '@/common';
 @Component({
   name: 'Question',
   components: { VueDaumPostcode },
@@ -162,7 +162,7 @@ export default class Question extends BaseComponent {
   ];
   private givens: Given[] = [];
   private addressGivens: any[] = [];
-  private showingLevel = 'sidoName';
+  private showingLevel = ADDRESS_LEVEL.sidoName;
   private selectedRoadAddress = '';
   private isMultipleAnswer = false;
   private selectedAnswers: Given[] = [];
@@ -193,28 +193,30 @@ export default class Question extends BaseComponent {
       this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
     });
   }
+  // 주소 선택화면일때 뒤로가기
   goToPreviousAddr() {
-    if (this.showingLevel == 'hdongName') {
+    if (this.showingLevel == ADDRESS_LEVEL.hdongName) {
       codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
         this.addressGivens = res.data;
-        this.showingLevel = 'guName';
+        this.showingLevel = ADDRESS_LEVEL.guName;
       });
     } else if (this.showingLevel == 'guName') {
       codeHdongService.getSido().subscribe(res => {
         this.addressGivens = res.data;
-        this.showingLevel = 'sidoName';
+        this.showingLevel = ADDRESS_LEVEL.sidoName;
       });
     } else {
       this.selectedRoadAddress = '';
       this.firstQuestionDto.userType = null;
     }
   }
+  // 질문 화면일때 뒤로가기
   goToPrevious() {
     if (this.previousQuestionDtoArr.length == 0) {
       this.givens = [];
       codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
         this.addressGivens = res.data;
-        this.showingLevel = 'hdongName';
+        this.showingLevel = ADDRESS_LEVEL.hdongName;
       });
       return;
     }
@@ -296,15 +298,15 @@ export default class Question extends BaseComponent {
       this.codeHdongSearchDto.guName = given.guName;
     }
 
-    if (this.showingLevel === 'sidoName') {
+    if (this.showingLevel === ADDRESS_LEVEL.sidoName) {
       codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
         this.addressGivens = res.data;
-        this.showingLevel = 'guName';
+        this.showingLevel = ADDRESS_LEVEL.guName;
       });
-    } else if (this.showingLevel === 'guName') {
+    } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
       codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
         this.addressGivens = res.data;
-        this.showingLevel = 'hdongName';
+        this.showingLevel = ADDRESS_LEVEL.hdongName;
       });
     } else {
       if (given) {
