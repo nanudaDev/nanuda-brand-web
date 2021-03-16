@@ -58,13 +58,13 @@
                       "
                     >
                       <!-- 다음 주소 api -->
-                      <b-form-gorup>
+                      <b-form-group>
                         <b-form-input
                           size="lg"
                           v-model="selectedRoadAddress"
                           @click="$bvModal.show('post-code')"
                         />
-                      </b-form-gorup>
+                      </b-form-group>
                       <div class="mt-2">
                         <b-btn
                           @click="getFirstQuestion"
@@ -80,15 +80,21 @@
                           /></div
                       ></b-modal>
                     </div>
-                    <div v-else>
-                      <!-- 행정동 버튼 그룹 -->
-                      <b-btn
+                    <div class="row" v-else>
+                      <div
+                        class="col-4"
                         v-for="given in addressGivens"
                         :key="given.id"
-                        class="mb-2"
-                        @click="getGuOrDong(given)"
-                        >{{ given[showingLevel] }}</b-btn
                       >
+                        <!-- 행정동 버튼 그룹 -->
+                        <b-btn
+                          class="mb-4"
+                          variant="outline-primary"
+                          block
+                          @click="getGuOrDong(given)"
+                          >{{ given[showingLevel] }}</b-btn
+                        >
+                      </div>
                     </div>
                   </template>
                   <template v-else>
@@ -110,7 +116,13 @@
             </div>
           </section>
         </template>
-        <template v-else>결과: {{ result.response }}</template>
+        <template v-else>
+          <section class="article-section">
+            <header class="section-title">
+              <h3>{{ result.response }}</h3>
+            </header>
+          </section>
+        </template>
       </b-overlay>
     </div>
   </article>

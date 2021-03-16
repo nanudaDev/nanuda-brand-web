@@ -2,27 +2,36 @@
   <article class="main-article">
     <div class="video-wrapper">
       <div class="video-container">
-        <video autoplay muted loop id="vid" ref="videoRef" class="video">
-          해당 브라우저는 video 태그를 지원하지 않습니다.
-          <source
-            :src="require('@/assets/video/main_video.mp4')"
-            type="video/webm"
-          />
-          <source
-            :src="require('@/assets/video/main_video.mp4')"
-            type="video/mp4"
-          />
-        </video>
+        <template v-if="!isMobile">
+          <video autoplay muted loop id="vid" ref="videoRef" class="video">
+            해당 브라우저는 video 태그를 지원하지 않습니다.
+            <source
+              :src="require('@/assets/video/main_video.mp4')"
+              type="video/webm"
+            />
+            <source
+              :src="require('@/assets/video/main_video.mp4')"
+              type="video/mp4"
+            />
+          </video>
+        </template>
+        <template v-else>
+          <img src="@/assets/video/main_video.gif" alt="" />
+        </template>
       </div>
       <div class="title-container">
         <div>
-          <h2>실패없는 창업을<br />안내합니다.</h2>
+          <h2>실패없는 창업을<br />안내합니다</h2>
           <p>
             위치에서 무슨 메뉴로 창업해야 할지<br />
             빅데이터로 분석합니다.
           </p>
           <div class="btn-box">
-            <button class="btn btn-primary rounded-pill btn-lg shawdow">
+            <button
+              class="btn btn-primary rounded-pill btn-lg shawdow"
+              id="top-button"
+              @click="$router.push('/question')"
+            >
               <span>원하는 지역의 내 메뉴 찾기</span>
               <span class="icon icon-arrow-right icon-align-right"
                 ><BaseArrow
@@ -33,7 +42,7 @@
       </div>
       <button
         class="btn-scroll-down"
-        v-scroll-to="{ el: '#content-wrapper', offset: -60 }"
+        v-scroll-to="{ el: '#content-wrapper', offset: -navbarHeight }"
       >
         <BaseArrow />
       </button>
@@ -76,7 +85,7 @@
           </div>
         </div>
       </section>
-      <section class="article-section section04 bg-light">
+      <section class="article-section section02 bg-light">
         <div class="container">
           <header class="section-title">
             <h3 data-aos="fade-up" data-aos-duration="1000">
@@ -111,14 +120,14 @@
                         class="tag"
                         ref="tagRef"
                         :class="{
-                          'is-active': index2 === list.posX[currentIdx - 1] - 1,
+                          'is-active': index2 === list.posX[currentIdx] - 1,
                         }"
                         >{{ tag.text }}
                       </span>
                       <span
                         class="tag is-selected"
                         :style="{
-                          left: 25 * (list.posX[currentIdx - 1] - 1) + '%',
+                          left: 25 * (list.posX[currentIdx] - 1) + '%',
                         }"
                       ></span>
                     </div>
@@ -127,27 +136,21 @@
               </div>
               <div class="col-12 col-lg-6">
                 <div class="mockup-box text-center">
-                  <div class="mockup-card rounded-10 shadow-sm">
+                  <div class="mockup-card rounded-10 shadow">
                     <swiper :options="swiperOption" ref="mySwiper">
                       <swiper-slide>
                         <figure>
-                          <img
-                            src="@/assets/images/search_location_menu01.jpg"
-                          />
+                          <img src="@/assets/images/main_section02_img01.jpg" />
                         </figure>
                       </swiper-slide>
                       <swiper-slide>
                         <figure>
-                          <img
-                            src="@/assets/images/search_location_menu01.jpg"
-                          />
+                          <img src="@/assets/images/main_section02_img02.jpg" />
                         </figure>
                       </swiper-slide>
                       <swiper-slide>
                         <figure>
-                          <img
-                            src="@/assets/images/search_location_menu01.jpg"
-                          />
+                          <img src="@/assets/images/main_section02_img03.jpg" />
                         </figure>
                       </swiper-slide>
                     </swiper>
@@ -239,7 +242,7 @@
           </div>
         </div>
       </section>
-      <section class="article-section section02 bg-light">
+      <section class="article-section section04 bg-light">
         <header class="section-title">
           <h3 class="text-primary" data-aos="fade-up" data-aos-duration="1000">
             픽쿡은 장소에 맞는 <br />
@@ -256,7 +259,7 @@
               <div class="img-box">
                 <div class="mask-box">
                   <img
-                    :src="require(`@/assets/images/main_section02_img01.png`)"
+                    :src="require(`@/assets/images/main_section04_img01.png`)"
                   />
                 </div>
               </div>
@@ -271,7 +274,7 @@
               <div class="img-box">
                 <div class="mask-box">
                   <img
-                    :src="require(`@/assets/images/main_section02_img02.png`)"
+                    :src="require(`@/assets/images/main_section04_img02.png`)"
                   />
                 </div>
               </div>
@@ -286,7 +289,7 @@
               <div class="img-box">
                 <div class="mask-box">
                   <img
-                    :src="require(`@/assets/images/main_section02_img03.png`)"
+                    :src="require(`@/assets/images/main_section04_img03.png`)"
                   />
                 </div>
               </div>
@@ -301,7 +304,7 @@
               <div class="img-box">
                 <div class="mask-box">
                   <img
-                    :src="require(`@/assets/images/main_section02_img04.png`)"
+                    :src="require(`@/assets/images/main_section04_img04.png`)"
                   />
                 </div>
               </div>
@@ -329,7 +332,11 @@
             data-aos-duration="2000"
           >
             <div class="btn-box text-center">
-              <button class="btn btn-primary rounded-pill btn-lg shawdow">
+              <button
+                class="btn btn-primary rounded-pill btn-lg shawdow"
+                id="bottom-button"
+                @click="$router.push('/question')"
+              >
                 <span>원하는 지역의 내 메뉴 찾기</span>
                 <span class="icon icon-arrow-right"><BaseArrow /></span>
               </button>
@@ -341,7 +348,9 @@
     <transition name="slideInUp">
       <button
         v-if="isStickyBtnVisible"
-        class="position-fixed fixed-bottom text-center p-4 btn btn-lg btn-primary btn-block"
+        class="position-fixed fixed-bottom text-center p-4 btn btn-lg btn-primary btn-block rounded-0"
+        id="sticky-button"
+        @click="$router.push('/question')"
       >
         원하는 지역의 내 메뉴 찾기
       </button>
@@ -367,7 +376,8 @@ export default class Main extends BaseComponent {
     mySwiper: HTMLFormElement;
     tagRef: HTMLFormElement;
   };
-  private currentIdx = 1;
+  navbarHeight: any = 0;
+  private currentIdx = 0;
   private tagList: any = [
     {
       posX: [2, 2, 3],
@@ -404,7 +414,7 @@ export default class Main extends BaseComponent {
       ],
     },
     {
-      posX: [2, 3, 2],
+      posX: [3, 2, 3],
       items: [
         {
           text: '　',
@@ -429,6 +439,7 @@ export default class Main extends BaseComponent {
     slidesPerView: 1,
     loop: true,
     grabCursor: false,
+    allowTouchMove: false,
     speed: 700,
     autoplay: {
       delay: 3000,
@@ -439,59 +450,59 @@ export default class Main extends BaseComponent {
     return this.$refs.mySwiper.$swiper;
   }
 
-  // get navBarHeight() {
-  //   const target = document.querySelector('.navbar');
-  //   return target.getBoundingClientRect().height;
-  // }
-
   private handleDebouncedScroll: {
     (this: Window, ev: Event): any;
     (this: Window, ev: Event): any;
   } = null;
 
-  typeWriter(text: string, i: number, callback: TimerHandler) {
-    if (i < text.length) {
-      this.locationText = text.substring(0, i + 1);
+  onTypeWriter(text: string, idx: number, callback: TimerHandler) {
+    if (idx < text.length) {
+      this.locationText = text.substring(0, idx + 1);
       setTimeout(() => {
-        this.typeWriter(text, i + 1, callback);
+        this.onTypeWriter(text, idx + 1, callback);
       }, 100);
     } else if (typeof callback == 'function') {
       setTimeout(callback, 3000);
     }
   }
 
-  startTextAnimation(i: number) {
-    if (typeof this.locationArray[i] == 'undefined') {
+  onStartTextAnimation(idx: number) {
+    if (typeof this.locationArray[idx] == 'undefined') {
       setTimeout(() => {
-        this.startTextAnimation(0);
+        this.onStartTextAnimation(0);
       }, 1000);
     }
-    if (i < this.locationArray.length) {
-      this.typeWriter(this.locationArray[i], 0, () => {
-        this.startTextAnimation(i + 1);
+    if (idx < this.locationArray.length) {
+      this.onTypeWriter(this.locationArray[idx], 0, () => {
+        this.onStartTextAnimation(idx + 1);
       });
     }
   }
 
   onSwipe(varuable: any) {
-    const idx = varuable.swiper.activeIndex - 1;
-    const tags = this.$refs.tagRef;
+    let idx = varuable.swiper.activeIndex - 1;
+    if (idx > 2) {
+      idx = 0;
+    }
     return (this.currentIdx = idx);
   }
 
   handleScroll() {
-    const offsetTop = document
-      .getElementById('content-wrapper')
+    const topBtnoffsetTop = document
+      .getElementById('top-button')
       .getBoundingClientRect().top;
-    if (offsetTop < 0) {
+    const bottomBtnOffsetTop = document
+      .getElementById('bottom-button')
+      .getBoundingClientRect().top;
+    const winHeight = window.innerHeight;
+    if (
+      topBtnoffsetTop - this.navbarHeight < 0 &&
+      bottomBtnOffsetTop - (winHeight - this.navbarHeight) > 0
+    ) {
       this.isStickyBtnVisible = true;
     } else {
       this.isStickyBtnVisible = false;
     }
-  }
-
-  callback() {
-    console.log('callback');
   }
 
   created() {
@@ -504,8 +515,9 @@ export default class Main extends BaseComponent {
   }
 
   mounted() {
-    this.startTextAnimation(0);
-
+    const target = document.querySelector('.navbar');
+    this.navbarHeight = target.getBoundingClientRect().height;
+    this.onStartTextAnimation(0);
     this.swiper.on('slideChange', () => {
       this.onSwipe(this);
     });
@@ -539,6 +551,13 @@ export default class Main extends BaseComponent {
       width: 100%;
       height: 100vh;
     }
+    img {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      object-fit: cover;
+      height: 100%;
+    }
   }
   .title-container {
     position: relative;
@@ -550,7 +569,7 @@ export default class Main extends BaseComponent {
     color: #fff;
     text-align: center;
     h2 {
-      font-size: 2em;
+      font-size: 2.1875em;
       font-weight: bold;
       line-height: 1.3;
     }
@@ -583,6 +602,7 @@ export default class Main extends BaseComponent {
     h3 {
       font-size: 1.5em;
       font-weight: bold;
+      line-height: 1.4;
 
       + p {
         font-size: 1em;
@@ -599,7 +619,7 @@ export default class Main extends BaseComponent {
     }
   }
 
-  &.section02 {
+  &.section04 {
     .tabs {
       position: relative;
       .nav-tabs {
@@ -614,8 +634,8 @@ export default class Main extends BaseComponent {
             border: 0;
             background: 0;
             color: #acacac;
-            font-size: 1.0625em;
-            padding: 1em 0;
+            font-size: 1em;
+            padding: 0.625em 0;
             margin: 0 1em;
             &.active {
               font-weight: 800;
@@ -629,7 +649,7 @@ export default class Main extends BaseComponent {
                 width: 100%;
                 height: 0.25em;
                 background: #2140a3;
-                border-radius: 1.25em;
+                border-radius: 1.5em;
               }
             }
           }
@@ -700,6 +720,10 @@ export default class Main extends BaseComponent {
       font-size: 1.25em;
     }
 
+    .icon-search {
+      fill: #707070;
+    }
+
     .cursor {
       margin-left: 0.05em;
       border-right: 0.05em solid;
@@ -751,6 +775,10 @@ export default class Main extends BaseComponent {
       overflow: hidden;
       margin: 0 auto;
       border-radius: 1.25em;
+      .swiper-container {
+        border-radius: 1.25em;
+        overflow: hidden;
+      }
       figure {
         img {
           display: block;

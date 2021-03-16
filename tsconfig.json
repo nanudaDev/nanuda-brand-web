@@ -5,6 +5,7 @@
     "strict": true,
     "strictNullChecks": false,
     "jsx": "preserve",
+    "typeRoots": ["src/types"],
     "importHelpers": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -24,11 +25,14 @@
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
+    "src/**/*",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "typings/**/*.d.ts",
+    "types/**/*.d.ts"
   ],
   "exclude": ["node_modules"]
 }
