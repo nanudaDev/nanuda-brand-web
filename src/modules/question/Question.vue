@@ -195,17 +195,18 @@ export default class Question extends BaseComponent {
   }
   // 주소 선택화면일때 뒤로가기
   goToPreviousAddr() {
-    if (this.showingLevel == ADDRESS_LEVEL.hdongName) {
+    if (this.showingLevel === ADDRESS_LEVEL.hdongName) {
       codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
         this.addressGivens = res.data;
         this.showingLevel = ADDRESS_LEVEL.guName;
       });
-    } else if (this.showingLevel == 'guName') {
+    } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
       codeHdongService.getSido().subscribe(res => {
         this.addressGivens = res.data;
         this.showingLevel = ADDRESS_LEVEL.sidoName;
       });
     } else {
+      this.question = '나는 현재';
       this.selectedRoadAddress = '';
       this.firstQuestionDto.userType = null;
     }
@@ -213,10 +214,17 @@ export default class Question extends BaseComponent {
   // 질문 화면일때 뒤로가기
   goToPrevious() {
     if (this.previousQuestionDtoArr.length == 0) {
+      if (this.firstQuestionDto.userType == FNB_OWNER.CUR_FNB_OWNER) {
+        this.question = '음식점 주소를 알려주세요!';
+      } else {
+        this.question = '어떤 곳에서 창업을 희망하나요?';
+      }
       this.givens = [];
       codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
         this.addressGivens = res.data;
-        this.showingLevel = ADDRESS_LEVEL.hdongName;
+        if (this.firstQuestionDto.userType == FNB_OWNER.NEW_FNB_OWNER) {
+          this.showingLevel = ADDRESS_LEVEL.hdongName;
+        }
       });
       return;
     }
