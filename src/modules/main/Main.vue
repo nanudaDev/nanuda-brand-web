@@ -2,22 +2,25 @@
   <article class="main-article">
     <div class="video-wrapper">
       <div class="video-container">
-        <template v-if="!isMobile">
-          <video autoplay muted loop id="vid" ref="videoRef" class="video">
-            해당 브라우저는 video 태그를 지원하지 않습니다.
-            <source
-              :src="require('@/assets/video/main_video.mp4')"
-              type="video/webm"
-            />
-            <source
-              :src="require('@/assets/video/main_video.mp4')"
-              type="video/mp4"
-            />
-          </video>
-        </template>
-        <template v-else>
-          <img src="@/assets/video/main_video.gif" alt="" />
-        </template>
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          id="vid"
+          ref="videoRef"
+          class="video"
+        >
+          해당 브라우저는 video 태그를 지원하지 않습니다.
+          <source
+            :src="require('@/assets/video/main_video.mp4')"
+            type="video/webm"
+          />
+          <source
+            :src="require('@/assets/video/main_video.mp4')"
+            type="video/mp4"
+          />
+        </video>
       </div>
       <div class="title-container">
         <div>
@@ -164,8 +167,10 @@
       <section class="article-section section03">
         <div class="container">
           <div class="row">
-            <div class="col-12 col-lg-4 py-5 mb-5">
-              <header class="section-title">
+            <div
+              class="col-12 col-xl-4 pb-5 mb-5 d-md-flex d-xl-block align-items-center"
+            >
+              <header class="section-title col-12 col-md-6 col-xl-12">
                 <h3
                   class="text-primary"
                   data-aos="fade-up"
@@ -180,7 +185,7 @@
                 </p>
               </header>
               <div
-                class="section-content"
+                class="section-content col-12 col-md-6 col-xl-12"
                 data-aos="fade-up"
                 data-aos-duration="2000"
               >
@@ -189,8 +194,10 @@
                 </figure>
               </div>
             </div>
-            <div class="col-12 col-lg-4 py-5 mb-5">
-              <header class="section-title">
+            <div
+              class="col-12 col-xl-4 pb-5 mb-5 d-md-flex flex-row-reverse d-xl-block align-items-center"
+            >
+              <header class="section-title col-12 col-md-6 col-xl-12">
                 <h3
                   class="text-primary"
                   data-aos="fade-up"
@@ -205,7 +212,7 @@
                 </p>
               </header>
               <div
-                class="section-content"
+                class="section-content col-12 col-md-6 col-xl-12 "
                 data-aos="fade-up"
                 data-aos-duration="2000"
               >
@@ -214,8 +221,10 @@
                 </figure>
               </div>
             </div>
-            <div class="col-12 col-lg-4 py-5 mb-5">
-              <header class="section-title">
+            <div
+              class="col-12 col-xl-4 pb-5 mb-5 d-md-flex d-xl-block align-items-center"
+            >
+              <header class="section-title col-12 col-md-6 col-xl-12">
                 <h3
                   class="text-primary"
                   data-aos="fade-up"
@@ -230,7 +239,7 @@
                 </p>
               </header>
               <div
-                class="section-content"
+                class="section-content col-12 col-md-6 col-xl-12"
                 data-aos="fade-up"
                 data-aos-duration="2000"
               >
@@ -360,14 +369,12 @@
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
 import Component from 'vue-class-component';
-import BaseArrow from '@/modules/_components/svg/BaseArrow.vue';
 import BaseSearch from '@/modules/_components/svg/BaseSearch.vue';
 import debounce from 'lodash/debounce';
 
 @Component({
   name: 'Main',
   components: {
-    BaseArrow,
     BaseSearch,
   },
 })

@@ -255,6 +255,15 @@ body {
     url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.ttf')
       format('truetype');
 }
+.form-control-lg {
+  font-size: 1.125em;
+  height: 3.33em;
+  padding: 0 1.25em;
+}
+
+.rounded-lg {
+  border-radius: 3em !important;
+}
 
 .btn {
   display: inline-flex;
@@ -265,7 +274,7 @@ body {
   height: 2.5em;
   line-height: 1.2;
 
-  &.btn-lg {
+  &.btn-sm {
     font-size: 0.75em;
     padding: 0 1em;
   }
@@ -273,6 +282,12 @@ body {
   &.btn-lg {
     font-size: 1.125em;
     height: 3.33em;
+  }
+
+  &.btn-xl {
+    font-size: 1.625em;
+    height: 2.3076em;
+    min-width: 8.4615em;
   }
 
   .icon-arrow-right {
@@ -289,9 +304,16 @@ body {
     fill: #fff;
   }
 }
+.btn-light {
+  color: #0b538d;
+}
 
 .text-bold {
   font-weight: 800;
+}
+
+.is-blind {
+  display: none;
 }
 
 .icon {
@@ -300,6 +322,9 @@ body {
   justify-content: center;
   &.icon-arrow-right {
     transform: rotate(-90deg);
+  }
+  &.icon-arrow-left {
+    transform: rotate(90deg);
   }
 }
 
@@ -389,7 +414,7 @@ body {
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1200px) {
   html {
     font-size: 12px;
   }
