@@ -364,7 +364,7 @@ body {
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1200px) {
   html {
     font-size: 12px;
   }
