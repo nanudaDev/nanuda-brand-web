@@ -5,6 +5,7 @@ import {
   FirstQuestionDto,
   ResultResponseDto,
 } from '@/dto/question';
+import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 import { ResultRequestDto } from '@/dto/question/result-request.dto';
 
 export class QuestionService extends BaseService {
@@ -18,7 +19,7 @@ export class QuestionService extends BaseService {
     return super.post<QuestionResponseDto>('question/next', nextQuestionDto);
   }
   getResult(resultRequestDto: ResultRequestDto) {
-    return super.get<ResultResponseDto>(
+    return super.post<AggregateResultResponse>(
       'aggregate-result-response',
       resultRequestDto,
     );

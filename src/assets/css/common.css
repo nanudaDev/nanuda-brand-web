@@ -161,12 +161,8 @@ button:focus {
   outline: 0;
 }
 
-html {
-  font-size: 10px;
-}
-
 body {
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-family: 'Gotham', 'YoonGothic', sans-serif;
   letter-spacing: -0.03em;
 }
@@ -227,24 +223,62 @@ body {
   src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.ttf") format("truetype");
 }
 
+.form-group {
+  position: relative;
+}
+
+.form-group .icon-search {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.form-control-lg {
+  font-size: 1.125em;
+  height: 3.33em;
+  padding: 0 1.25em;
+}
+
+.rounded-lg {
+  border-radius: 3em !important;
+}
+
+.gutter-sm {
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+}
+
+.gutter-sm [class^='col-'] {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 1.25em;
+  padding: 0 1em;
   font-size: 1em;
-  height: 2.5em;
+  height: 3em;
   line-height: 1.2;
 }
 
-.btn.btn-lg {
+.btn.btn-sm {
   font-size: 0.75em;
   padding: 0 1em;
+  height: 2.5em;
 }
 
 .btn.btn-lg {
   font-size: 1.125em;
   height: 3.33em;
+}
+
+.btn.btn-xl {
+  font-size: 1.625em;
+  height: 2.3076em;
+  min-width: 8.4615em;
 }
 
 .btn .icon-arrow-right {
@@ -263,8 +297,22 @@ body {
   fill: #fff;
 }
 
+.btn-outline-primary {
+  border-color: #0b538d;
+  background-color: transparent;
+  font-weight: 700;
+}
+
+.btn-outline-primary .icon {
+  fill: #0b538d;
+}
+
 .text-bold {
   font-weight: 800;
+}
+
+.is-blind {
+  display: none;
 }
 
 .icon {
@@ -275,6 +323,10 @@ body {
 
 .icon.icon-arrow-right {
   transform: rotate(-90deg);
+}
+
+.icon.icon-arrow-left {
+  transform: rotate(90deg);
 }
 
 .bg-primary {
@@ -364,9 +416,9 @@ body {
   }
 }
 
-@media screen and (min-width: 1024px) {
-  html {
-    font-size: 12px;
+@media screen and (min-width: 1200px) {
+  body {
+    font-size: 1.2rem;
   }
 }
 /*# sourceMappingURL=common.css.map */

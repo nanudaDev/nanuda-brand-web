@@ -151,11 +151,11 @@ button {
 button:focus {
   outline: 0;
 }
-html {
-  font-size: 10px;
-}
+// html {
+//   font-size: 10px;
+// }
 body {
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-family: 'Gotham', 'YoonGothic', sans-serif;
   letter-spacing: -0.03em;
 }
@@ -256,23 +256,59 @@ body {
       format('truetype');
 }
 
+.form-group {
+  position: relative;
+  .icon-search {
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.form-control-lg {
+  font-size: 1.125em;
+  height: 3.33em;
+  padding: 0 1.25em;
+}
+
+.rounded-lg {
+  border-radius: 3em !important;
+}
+
+.gutter-sm {
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  [class^='col-'] {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 1.25em;
+  padding: 0 1em;
   font-size: 1em;
-  height: 2.5em;
+  height: 3em;
   line-height: 1.2;
 
-  &.btn-lg {
+  &.btn-sm {
     font-size: 0.75em;
     padding: 0 1em;
+    height: 2.5em;
   }
 
   &.btn-lg {
     font-size: 1.125em;
     height: 3.33em;
+  }
+
+  &.btn-xl {
+    font-size: 1.625em;
+    height: 2.3076em;
+    min-width: 8.4615em;
   }
 
   .icon-arrow-right {
@@ -290,8 +326,21 @@ body {
   }
 }
 
+.btn-outline-primary {
+  border-color: #0b538d;
+  background-color: transparent;
+  font-weight: 700;
+  .icon {
+    fill: #0b538d;
+  }
+}
+
 .text-bold {
   font-weight: 800;
+}
+
+.is-blind {
+  display: none;
 }
 
 .icon {
@@ -300,6 +349,9 @@ body {
   justify-content: center;
   &.icon-arrow-right {
     transform: rotate(-90deg);
+  }
+  &.icon-arrow-left {
+    transform: rotate(90deg);
   }
 }
 
@@ -389,8 +441,8 @@ body {
   }
 }
 
-@media screen and (min-width: 1024px) {
-  html {
-    font-size: 12px;
+@media screen and (min-width: 1200px) {
+  body {
+    font-size: 1.2rem;
   }
 }

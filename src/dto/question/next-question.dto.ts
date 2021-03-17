@@ -7,4 +7,5 @@ export class NextQuestionDto extends BaseDto<NextQuestionDto> {
   ipAddress: string;
   uniqueSessionId: string;
   userType: FNB_OWNER;
+  order: number;
 }

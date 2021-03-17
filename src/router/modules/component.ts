@@ -28,6 +28,7 @@ export const componentRoutes: RouteConfig[] = [
       title: '자주묻는질문',
     },
   },
+
   // {
   //   path: '/reviews',
   //   name: 'reviews',

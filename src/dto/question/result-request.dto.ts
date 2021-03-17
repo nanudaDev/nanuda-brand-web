@@ -19,4 +19,5 @@ export class ResultRequestDto extends BaseDto<ResultRequestDto> {
   fnbOwnerStatus: FNB_OWNER;
   hdongCode: string;
   kbFoodCategory: KB_FOOD_CATEGORY;
+  questionGivenArray: number[];
 }
