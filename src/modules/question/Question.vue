@@ -250,7 +250,7 @@
           <template v-else>
             <section class="article-section">
               <header class="section-title">
-                <h3>{{ result.response }}</h3>
+                <Result :result="result" />
               </header>
             </section>
           </template>
@@ -267,6 +267,7 @@ import { VueDaumPostcode } from 'vue-daum-postcode';
 import questionService from '@/services/question.service';
 import codeHdongService from '@/services/code-hdong.service';
 import axios from 'axios';
+import Result from './Result.vue';
 import {
   FirstQuestionDto,
   Given,
@@ -278,7 +279,7 @@ import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
 import { ADDRESS_LEVEL, FNB_OWNER } from '@/common';
 @Component({
   name: 'Question',
-  components: { VueDaumPostcode },
+  components: { VueDaumPostcode, Result },
 })
 export default class Question extends BaseComponent {
   // private userType: USER = null;
@@ -392,58 +393,62 @@ export default class Question extends BaseComponent {
     });
   }
   getNextQuestion(given?: Given) {
+    //이전 질문들 저장
     this.previousQuestionDtoArr.push({ ...this.nextQuestionDto });
+
+    this.nextQuestionDto.givenId = [];
+    // 답변을 하나만 선택할때
+    if (given) {
+      this.nextQuestionDto.givenId.push(given.id);
+      if (given.givenDetails.category === 'KB_MEDIUM_CATEGORY') {
+        this.resultRequestDto.kbFoodCategory = given.givenDetails.value;
+      }
+      if (given.givenDetails.category === 'AGE_GROUP') {
+        this.resultRequestDto.ageGroupCode = given.givenDetails.key;
+      }
+      if (given.givenDetails.category === 'REVENUE_RANGE') {
+        this.resultRequestDto.revenueRangeCode = given.givenDetails.key;
+      }
+    } else {
+      //답변을 여러개 선택할때
+      this.$set(this.nextQuestionDto, 'givenId', this.selectedAnswers);
+      const selectedGivenId = this.selectedAnswers.map(e => e.id);
+      this.nextQuestionDto.givenId = selectedGivenId;
+      //영업 시간
+      if (this.givens[0].givenDetails.category === 'OPERATION_TIME') {
+        this.resultRequestDto.operationTimes = [];
+        this.selectedAnswers.forEach(e => {
+          this.resultRequestDto.operationTimes.push(e.givenDetails.value);
+        });
+      }
+    }
+    //questionGivenArray에 지금까지의 질문과 답변 저장
+    this.questionGivenArray.push({
+      questionId: this.nextQuestionDto.questionId,
+      givenId: this.nextQuestionDto.givenId,
+    });
+    this.resultRequestDto.questionGivenArray = this.questionGivenArray;
+    //마지막 질문일때
     if (this.isLastQuestion) {
       this.isLoading = true;
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
         this.isLoading = false;
         this.result = res.data;
-        this.$router.push('/question/result');
-      });
-    } else {
-      //대답 하나 or 여러개 선택
-      this.nextQuestionDto.givenId = [];
-      if (given) {
-        this.nextQuestionDto.givenId.push(given.id);
-        if (given.givenDetails.category === 'KB_MEDIUM_CATEGORY') {
-          this.resultRequestDto.kbFoodCategory = given.givenDetails.value;
-        }
-        if (given.givenDetails.category === 'AGE_GROUP') {
-          this.resultRequestDto.ageGroupCode = given.givenDetails.key;
-        }
-        if (given.givenDetails.category === 'REVENUE_RANGE') {
-          this.resultRequestDto.revenueRangeCode = given.givenDetails.key;
-        }
-      } else {
-        this.$set(this.nextQuestionDto, 'givenId', this.selectedAnswers);
-        const selectedGivenId = this.selectedAnswers.map(e => e.id);
-        this.nextQuestionDto.givenId = selectedGivenId;
-        //영업 시간
-        if (this.givens[0].givenDetails.category === 'OPERATION_TIME') {
-          this.resultRequestDto.operationTimes = [];
-          this.selectedAnswers.forEach(e => {
-            this.resultRequestDto.operationTimes.push(e.givenDetails.value);
-          });
-        }
-      }
-      this.questionGivenArray.push({
-        questionId: this.nextQuestionDto.questionId,
-        givenId: this.nextQuestionDto.givenId,
-      });
-      questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
-        if (res.data.isLastQuestion === 'Y') {
-          this.isLastQuestion = true;
-        }
-        this.nextQuestionDto.questionId = res.data.id;
-        this.question = res.data.question;
-        this.givens = res.data.givens;
-        this.nextQuestionDto.givenId = [];
-        this.isMultipleAnswer =
-          res.data.multipleAnswerYn === 'Y' ? true : false;
-        this.selectedAnswers = [];
+        return;
       });
     }
+    questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
+      if (res.data.isLastQuestion === 'Y') {
+        this.isLastQuestion = true;
+      }
+      this.nextQuestionDto.questionId = res.data.id;
+      this.question = res.data.question;
+      this.givens = res.data.givens;
+      this.nextQuestionDto.givenId = [];
+      this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
+      this.selectedAnswers = [];
+    });
   }
   //level이 내려감에따라 showingLevel(보여줘야할 정보)이 변함
   getGuOrDong(given?: CodeHdongDto) {
