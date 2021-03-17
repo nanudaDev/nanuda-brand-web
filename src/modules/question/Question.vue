@@ -308,7 +308,8 @@ import {
 } from '@/dto/question';
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
-import { ADDRESS_LEVEL, FNB_OWNER } from '@/common';
+import { ADDRESS_LEVEL, YN } from '@/common';
+import { COMMON_CODE_CATEGORY, FNB_OWNER } from '@/shared';
 @Component({
   name: 'Question',
   components: { VueDaumPostcode, Result },
@@ -334,12 +335,12 @@ export default class Question extends BaseComponent {
   private firstGivens = [
     {
       id: 1,
-      userType: 'CUR_FNB_OWNER',
+      userType: FNB_OWNER.CUR_FNB_OWNER,
       given: '음식점 사장님입니다',
     },
     {
       id: 2,
-      userType: 'NEW_FNB_OWNER',
+      userType: FNB_OWNER.NEW_FNB_OWNER,
       given: '창업을 생각하고 있습니다',
     },
   ];
@@ -378,7 +379,8 @@ export default class Question extends BaseComponent {
       this.nextQuestionDto.order = res.data.order;
       this.nextQuestionDto.questionId = res.data.id;
       this.nextQuestionDto.givenId = [];
-      this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
+      this.isMultipleAnswer =
+        res.data.multipleAnswerYn === YN.YES ? true : false;
     });
     // 이전 단계 저장 후 증가
     this.questionOrder += 1;
@@ -432,7 +434,7 @@ export default class Question extends BaseComponent {
         this.nextQuestionDto.questionId = res.data.id;
         this.nextQuestionDto.givenId = [];
         this.isMultipleAnswer =
-          res.data.multipleAnswerYn === 'Y' ? true : false;
+          res.data.multipleAnswerYn === YN.YES ? true : false;
         // 진행 단계 저장
         this.prevOrder = this.questionOrder;
       });
@@ -443,14 +445,15 @@ export default class Question extends BaseComponent {
     this.previousQuestionDtoArr.pop();
     this.questionGivenArray.pop();
     questionService.getNextQuestion(previousDto).subscribe(res => {
-      if (res.data.isLastQuestion === 'Y') {
+      if (res.data.isLastQuestion === YN.YES) {
         this.isLastQuestion = true;
       }
       this.nextQuestionDto.questionId = res.data.id;
       this.question = res.data.question;
       this.givens = res.data.givens;
       this.nextQuestionDto.givenId = [];
-      this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
+      this.isMultipleAnswer =
+        res.data.multipleAnswerYn === YN.YES ? true : false;
     });
     // 진행 단계 감소
     this.questionOrder -= 1;
@@ -464,13 +467,15 @@ export default class Question extends BaseComponent {
     // 답변을 하나만 선택할때
     if (given) {
       this.nextQuestionDto.givenId.push(given.id);
-      if (given.givenDetails.category === 'KB_MEDIUM_CATEGORY') {
+      if (
+        given.givenDetails.category === COMMON_CODE_CATEGORY.KB_MEDIUM_CATEGORY
+      ) {
         this.resultRequestDto.kbFoodCategory = given.givenDetails.value;
       }
-      if (given.givenDetails.category === 'AGE_GROUP') {
+      if (given.givenDetails.category === COMMON_CODE_CATEGORY.AGE_GROUP) {
         this.resultRequestDto.ageGroupCode = given.givenDetails.key;
       }
-      if (given.givenDetails.category === 'REVENUE_RANGE') {
+      if (given.givenDetails.category === COMMON_CODE_CATEGORY.REVENUE_RANGE) {
         this.resultRequestDto.revenueRangeCode = given.givenDetails.key;
       }
     } else {
@@ -479,7 +484,10 @@ export default class Question extends BaseComponent {
       const selectedGivenId = this.selectedAnswers.map(e => e.id);
       this.nextQuestionDto.givenId = selectedGivenId;
       //영업 시간
-      if (this.givens[0].givenDetails.category === 'OPERATION_TIME') {
+      if (
+        this.givens[0].givenDetails.category ===
+        COMMON_CODE_CATEGORY.OPERATION_TIME
+      ) {
         this.resultRequestDto.operationTimes = [];
         this.selectedAnswers.forEach(e => {
           this.resultRequestDto.operationTimes.push(e.givenDetails.value);
@@ -503,7 +511,7 @@ export default class Question extends BaseComponent {
       });
     }
     questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
-      if (res.data.isLastQuestion === 'Y') {
+      if (res.data.isLastQuestion === YN.YES) {
         this.isLastQuestion = true;
       }
       this.nextQuestionDto.order = res.data.order;
@@ -512,7 +520,8 @@ export default class Question extends BaseComponent {
       this.questionOrder = this.nextQuestionDto.order + (this.prevOrder - 1);
       this.givens = res.data.givens;
       this.nextQuestionDto.givenId = [];
-      this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
+      this.isMultipleAnswer =
+        res.data.multipleAnswerYn === YN.YES ? true : false;
       this.selectedAnswers = [];
     });
   }
