@@ -213,9 +213,9 @@
                           <template #modal-title>
                             <strong class="text-primary">주소검색</strong>
                           </template>
-                          <!-- <div>
+                          <div>
                             <vue-daum-postcode @complete="onPostCodeComplete" />
-                          </div> -->
+                          </div>
                         </b-modal>
                       </div>
                       <div v-else>
@@ -295,7 +295,7 @@
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
 import { Component, Watch } from 'vue-property-decorator';
-// import { VueDaumPostcode } from 'vue-daum-postcode';
+import { VueDaumPostcode } from 'vue-daum-postcode';
 import questionService from '@/services/question.service';
 import codeHdongService from '@/services/code-hdong.service';
 import axios from 'axios';
@@ -311,7 +311,7 @@ import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
 import { ADDRESS_LEVEL, FNB_OWNER } from '@/common';
 @Component({
   name: 'Question',
-  components: { Result },
+  components: { VueDaumPostcode, Result },
 })
 export default class Question extends BaseComponent {
   // private userType: USER = null;
@@ -381,8 +381,8 @@ export default class Question extends BaseComponent {
       this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
     });
     // 이전 단계 저장 후 증가
-    this.prevOrder = this.questionOrder;
     this.questionOrder += 1;
+    this.prevOrder = this.questionOrder;
   }
   // 주소 선택화면일때 뒤로가기
   goToPreviousAddr() {
@@ -403,6 +403,7 @@ export default class Question extends BaseComponent {
     }
     // 진행 단계 감소
     this.questionOrder -= 1;
+    this.isLastQuestion = false;
   }
   // 질문 화면일때 뒤로가기
   goToPrevious() {
@@ -453,6 +454,7 @@ export default class Question extends BaseComponent {
     });
     // 진행 단계 감소
     this.questionOrder -= 1;
+    this.isLastQuestion = false;
   }
   getNextQuestion(given?: Given) {
     //이전 질문들 저장
