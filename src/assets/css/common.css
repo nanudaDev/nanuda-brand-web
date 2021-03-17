@@ -161,12 +161,8 @@ button:focus {
   outline: 0;
 }
 
-html {
-  font-size: 10px;
-}
-
 body {
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-family: 'Gotham', 'YoonGothic', sans-serif;
   letter-spacing: -0.03em;
 }
@@ -225,6 +221,17 @@ body {
   font-style: normal;
   font-weight: 800;
   src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.ttf") format("truetype");
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group .icon-search {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .form-control-lg {
@@ -410,8 +417,8 @@ body {
 }
 
 @media screen and (min-width: 1200px) {
-  html {
-    font-size: 12px;
+  body {
+    font-size: 1.2rem;
   }
 }
 /*# sourceMappingURL=common.css.map */

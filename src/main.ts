@@ -24,10 +24,13 @@ Vue.use(getAwesomeSwiper(SwiperClass));
 const { Swiper, SwiperSlide } = getAwesomeSwiper(SwiperClass);
 import 'swiper/swiper-bundle.css';
 import BaseArrow from '@/modules/_components/svg/BaseArrow.vue';
+import BaseSearch from '@/modules/_components/svg/BaseSearch.vue';
 
 Vue.config.productionTip = false;
 Vue.component('MainLayout', MainLayout);
 Vue.component('NonLayout', NonLayout);
+Vue.component('BaseArrow', BaseArrow);
+Vue.component('BaseSearch', BaseSearch);
 
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
@@ -37,8 +40,6 @@ Vue.use(VueScrollTo, {
   offset: -100,
 });
 Vue.use(VueAwesomeSwiper /* { default global options } */);
-
-Vue.component('BaseArrow', BaseArrow);
 
 new Vue({
   router,
