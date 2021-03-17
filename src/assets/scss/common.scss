@@ -265,18 +265,28 @@ body {
   border-radius: 3em !important;
 }
 
+.gutter-sm {
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  [class^='col-'] {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 1.25em;
+  padding: 0 1em;
   font-size: 1em;
-  height: 2.5em;
+  height: 3em;
   line-height: 1.2;
 
   &.btn-sm {
     font-size: 0.75em;
     padding: 0 1em;
+    height: 2.5em;
   }
 
   &.btn-lg {
@@ -304,8 +314,14 @@ body {
     fill: #fff;
   }
 }
-.btn-light {
-  color: #0b538d;
+
+.btn-outline-primary {
+  border-color: #0b538d;
+  background-color: transparent;
+  font-weight: 700;
+  .icon {
+    fill: #0b538d;
+  }
 }
 
 .text-bold {
