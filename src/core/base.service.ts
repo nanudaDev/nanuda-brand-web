@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 import { Pagination, PaginatedResponse } from '../common';
 // import toast from '../../resources/assets/js/services/toast.js';
 import { AxiosObservable } from 'axios-observable/dist/axios-observable.interface';
-import Vue from 'vue';
 
 // axios에서 사용할 메소드 타입
 type Method =

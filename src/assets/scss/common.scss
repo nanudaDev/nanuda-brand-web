@@ -151,11 +151,11 @@ button {
 button:focus {
   outline: 0;
 }
-html {
-  font-size: 10px;
-}
+// html {
+//   font-size: 10px;
+// }
 body {
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-family: 'Gotham', 'YoonGothic', sans-serif;
   letter-spacing: -0.03em;
 }
@@ -255,6 +255,17 @@ body {
     url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.ttf')
       format('truetype');
 }
+
+.form-group {
+  position: relative;
+  .icon-search {
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
 .form-control-lg {
   font-size: 1.125em;
   height: 3.33em;
@@ -266,11 +277,11 @@ body {
 }
 
 .gutter-sm {
-  margin-left: -.5em;
-  margin-right: -.5em;
-  [class^="col-"] {
-    padding-left :.5em;
-    padding-right: .5em;
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  [class^='col-'] {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
 }
 
@@ -317,7 +328,7 @@ body {
 
 .btn-outline-primary {
   border-color: #0b538d;
-  background-color:  transparent;
+  background-color: transparent;
   font-weight: 700;
   .icon {
     fill: #0b538d;
@@ -370,6 +381,16 @@ body {
   }
 }
 
+.txt-lg {
+  font-size: 1.125em;
+}
+.txt-xl {
+  font-size: 1.25em;
+}
+.txt-big {
+  font-size: 1.5em;
+}
+
 .slideInUp-enter-active {
   animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
@@ -377,44 +398,47 @@ body {
   animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) reverse;
 }
 
-.article-section {
-  .section-header {
-    h3 {
-      padding-bottom: 1em;
-      margin-bottom: 1em;
-      border-bottom: 2px solid #545454;
-      font-size: 1.5em;
-      color: #545454;
+.app-agrement,
+.app-privacy {
+  .article-section {
+    .section-header {
+      h3 {
+        padding-bottom: 1em;
+        margin-bottom: 1em;
+        border-bottom: 2px solid #545454;
+        font-size: 1.5em;
+        color: #545454;
+      }
     }
-  }
-  .agree-box {
-    font-size: 0.875em;
-    line-height: 1.4;
-    + .agree-box {
-      margin-top: 2em;
-    }
-    h4 {
-      font-size: 1.25em;
-      color: #545454;
-      font-weight: 600;
-      margin: 1em 0;
-    }
-    .o-list {
-      margin: 1em 0;
-      li {
-        position: relative;
-        margin: 0.5em 0;
-        padding-left: 0.75em;
-        &:before {
-          position: absolute;
-          left: 0;
-          top: 0.5em;
-          display: block;
-          content: '';
-          width: 0.25em;
-          height: 0.25em;
-          background-color: #0b538d;
-          border-radius: 50%;
+    .agree-box {
+      font-size: 0.875em;
+      line-height: 1.4;
+      + .agree-box {
+        margin-top: 2em;
+      }
+      h4 {
+        font-size: 1.25em;
+        color: #545454;
+        font-weight: 600;
+        margin: 1em 0;
+      }
+      .o-list {
+        margin: 1em 0;
+        li {
+          position: relative;
+          margin: 0.5em 0;
+          padding-left: 0.75em;
+          &:before {
+            position: absolute;
+            left: 0;
+            top: 0.5em;
+            display: block;
+            content: '';
+            width: 0.25em;
+            height: 0.25em;
+            background-color: #0b538d;
+            border-radius: 50%;
+          }
         }
       }
     }
@@ -434,7 +458,7 @@ body {
 }
 
 @media screen and (min-width: 1200px) {
-  html {
-    font-size: 12px;
+  body {
+    font-size: 1.2rem;
   }
 }

@@ -161,12 +161,8 @@ button:focus {
   outline: 0;
 }
 
-html {
-  font-size: 10px;
-}
-
 body {
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-family: 'Gotham', 'YoonGothic', sans-serif;
   letter-spacing: -0.03em;
 }
@@ -227,6 +223,17 @@ body {
   src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.ttf") format("truetype");
 }
 
+.form-group {
+  position: relative;
+}
+
+.form-group .icon-search {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .form-control-lg {
   font-size: 1.125em;
   height: 3.33em;
@@ -238,25 +245,21 @@ body {
 }
 
 .gutter-sm {
-  margin-left: -.5em;
-  margin-right: -.5em;
+  margin-left: -0.5em;
+  margin-right: -0.5em;
 }
 
-.gutter-sm [class^="col-"] {
-  padding-left: .5em;
-  padding-right: .5em;
+.gutter-sm [class^='col-'] {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 
 .btn {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   padding: 0 1em;
   font-size: 1em;
   height: 3em;
@@ -362,6 +365,18 @@ body {
   height: inherit;
 }
 
+.txt-lg {
+  font-size: 1.125em;
+}
+
+.txt-xl {
+  font-size: 1.25em;
+}
+
+.txt-big {
+  font-size: 1.5em;
+}
+
 .slideInUp-enter-active {
   -webkit-animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
           animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -371,7 +386,8 @@ body {
   animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) reverse;
 }
 
-.article-section .section-header h3 {
+.app-agrement .article-section .section-header h3,
+.app-privacy .article-section .section-header h3 {
   padding-bottom: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid #545454;
@@ -379,33 +395,39 @@ body {
   color: #545454;
 }
 
-.article-section .agree-box {
+.app-agrement .article-section .agree-box,
+.app-privacy .article-section .agree-box {
   font-size: 0.875em;
   line-height: 1.4;
 }
 
-.article-section .agree-box + .agree-box {
+.app-agrement .article-section .agree-box + .agree-box,
+.app-privacy .article-section .agree-box + .agree-box {
   margin-top: 2em;
 }
 
-.article-section .agree-box h4 {
+.app-agrement .article-section .agree-box h4,
+.app-privacy .article-section .agree-box h4 {
   font-size: 1.25em;
   color: #545454;
   font-weight: 600;
   margin: 1em 0;
 }
 
-.article-section .agree-box .o-list {
+.app-agrement .article-section .agree-box .o-list,
+.app-privacy .article-section .agree-box .o-list {
   margin: 1em 0;
 }
 
-.article-section .agree-box .o-list li {
+.app-agrement .article-section .agree-box .o-list li,
+.app-privacy .article-section .agree-box .o-list li {
   position: relative;
   margin: 0.5em 0;
   padding-left: 0.75em;
 }
 
-.article-section .agree-box .o-list li:before {
+.app-agrement .article-section .agree-box .o-list li:before,
+.app-privacy .article-section .agree-box .o-list li:before {
   position: absolute;
   left: 0;
   top: 0.5em;
@@ -440,8 +462,8 @@ body {
 }
 
 @media screen and (min-width: 1200px) {
-  html {
-    font-size: 12px;
+  body {
+    font-size: 1.2rem;
   }
 }
 /*# sourceMappingURL=common.css.map */
