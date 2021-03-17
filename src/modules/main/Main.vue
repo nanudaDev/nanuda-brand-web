@@ -13,11 +13,11 @@
         >
           해당 브라우저는 video 태그를 지원하지 않습니다.
           <source
-            :src="require('@/assets/video/main_video.mp4')"
+            src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
             type="video/webm"
           />
           <source
-            :src="require('@/assets/video/main_video.mp4')"
+            src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
             type="video/mp4"
           />
         </video>

@@ -353,6 +353,18 @@ body {
   height: inherit;
 }
 
+.txt-lg {
+  font-size: 1.125em;
+}
+
+.txt-xl {
+  font-size: 1.25em;
+}
+
+.txt-big {
+  font-size: 1.5em;
+}
+
 .slideInUp-enter-active {
   animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
@@ -361,7 +373,8 @@ body {
   animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) reverse;
 }
 
-.article-section .section-header h3 {
+.app-agrement .article-section .section-header h3,
+.app-privacy .article-section .section-header h3 {
   padding-bottom: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid #545454;
@@ -369,33 +382,39 @@ body {
   color: #545454;
 }
 
-.article-section .agree-box {
+.app-agrement .article-section .agree-box,
+.app-privacy .article-section .agree-box {
   font-size: 0.875em;
   line-height: 1.4;
 }
 
-.article-section .agree-box + .agree-box {
+.app-agrement .article-section .agree-box + .agree-box,
+.app-privacy .article-section .agree-box + .agree-box {
   margin-top: 2em;
 }
 
-.article-section .agree-box h4 {
+.app-agrement .article-section .agree-box h4,
+.app-privacy .article-section .agree-box h4 {
   font-size: 1.25em;
   color: #545454;
   font-weight: 600;
   margin: 1em 0;
 }
 
-.article-section .agree-box .o-list {
+.app-agrement .article-section .agree-box .o-list,
+.app-privacy .article-section .agree-box .o-list {
   margin: 1em 0;
 }
 
-.article-section .agree-box .o-list li {
+.app-agrement .article-section .agree-box .o-list li,
+.app-privacy .article-section .agree-box .o-list li {
   position: relative;
   margin: 0.5em 0;
   padding-left: 0.75em;
 }
 
-.article-section .agree-box .o-list li:before {
+.app-agrement .article-section .agree-box .o-list li:before,
+.app-privacy .article-section .agree-box .o-list li:before {
   position: absolute;
   left: 0;
   top: 0.5em;

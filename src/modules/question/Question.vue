@@ -28,37 +28,37 @@
         </div>
       </header>
     </article>
-    <article
-      class="main-article"
-      :id="nextQuestionDto.questionId"
-      v-if="!isStart"
-      :class="
-        bgLightQuestionId.includes(nextQuestionDto.questionId)
-          ? 'bg-light'
-          : 'bg-primary'
-      "
-    >
-      <b-overlay :show="isLoading">
-        <header class="article-header">
-          <h1>
-            <img
-              src="@/assets/images/logo.svg"
-              alt="픽쿡"
-              v-if="bgLightQuestionId.includes(nextQuestionDto.questionId)"
-            />
-            <img src="@/assets/images/logo_w.svg" alt="픽쿡" v-else />
-          </h1>
-          <div class="progress-bar-rail">
-            <span
-              class="progress-bar"
-              :style="{
-                width: (questionOrder / (questionTotalCount + 1)) * 100 + '%',
-              }"
-            ></span>
-          </div>
-        </header>
-        <div class="article-content">
-          <template v-if="!result">
+    <template v-if="!result">
+      <article
+        class="main-article"
+        :id="nextQuestionDto.questionId"
+        v-if="!isStart"
+        :class="
+          bgLightQuestionId.includes(nextQuestionDto.questionId)
+            ? 'bg-light'
+            : 'bg-primary'
+        "
+      >
+        <b-overlay :show="isLoading">
+          <header class="article-header">
+            <h1>
+              <img
+                src="@/assets/images/logo.svg"
+                alt="픽쿡"
+                v-if="bgLightQuestionId.includes(nextQuestionDto.questionId)"
+              />
+              <img src="@/assets/images/logo_w.svg" alt="픽쿡" v-else />
+            </h1>
+            <div class="progress-bar-rail">
+              <span
+                class="progress-bar"
+                :style="{
+                  width: (questionOrder / (questionTotalCount + 1)) * 100 + '%',
+                }"
+              ></span>
+            </div>
+          </header>
+          <div class="article-content">
             <section class="article-section">
               <header class="section-title">
                 <div class="container">
@@ -278,17 +278,13 @@
                 </div>
               </div>
             </section>
-          </template>
-          <template v-else>
-            <section class="article-section">
-              <header class="section-title">
-                <Result :result="result" />
-              </header>
-            </section>
-          </template>
-        </div>
-      </b-overlay>
-    </article>
+          </div>
+        </b-overlay>
+      </article>
+    </template>
+    <template v-else>
+      <Result :result="result" />
+    </template>
   </div>
 </template>
 
@@ -603,7 +599,7 @@ export default class Question extends BaseComponent {
   }
   .main-article {
     min-height: 100vh;
-    &:not(#question-start) {
+    &:not(#question-start, #question-result) {
       .btn-back {
         position: fixed;
         left: 0.75em;
