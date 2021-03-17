@@ -7,7 +7,7 @@ const nonNavBarRouter: RouteConfig[] = [
     component: () => import('../../modules/agreement/Agreement.vue'),
     meta: {
       authRequired: true,
-      layout: 'MainLayout',
+      layout: 'NonLayout',
       title: '이용약관',
     },
   },
@@ -17,7 +17,7 @@ const nonNavBarRouter: RouteConfig[] = [
     component: () => import('../../modules/privacy/Privacy.vue'),
     meta: {
       authRequired: true,
-      layout: 'MainLayout',
+      layout: 'NonLayout',
       title: '개인정보취급',
     },
   },

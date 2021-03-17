@@ -157,75 +157,147 @@ html {
 body {
   font-size: 1.6rem;
   font-family: 'Gotham', 'YoonGothic', sans-serif;
-  letter-spacing: -0.08em;
+  letter-spacing: -0.03em;
 }
 
 @font-face {
   font-family: 'Gotham';
   font-style: normal;
   font-weight: 400;
-  src: url('/assets/fonts/Gotham-book.woff2') format('woff2'),
-    url('/assets/fonts/Gotham-book.woff') format('woff'),
-    url('/assets/fonts/Gotham-book.ttf') format('truetype');
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBook.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBook.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBook.ttf')
+      format('truetype');
 }
 
 @font-face {
   font-family: 'Gotham';
   font-style: normal;
   font-weight: 600;
-  src: url('/assets/fonts/Gotham-Medium.woff2') format('woff2'),
-    url('/assets/fonts/Gotham-Medium.woff') format('woff'),
-    url('/assets/fonts/Gotham-Medium.ttf') format('truetype');
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamMedium.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamMedium.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamMedium.ttf')
+      format('truetype');
 }
 
 @font-face {
   font-family: 'Gotham';
   font-style: normal;
   font-weight: 800;
-  src: url('/assets/fonts/Gotham-bold.woff2') format('woff2'),
-    url('/assets/fonts/Gotham-bold.woff') format('woff'),
-    url('/assets/fonts/Gotham-bold.ttf') format('truetype');
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBold.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBold.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBold.ttf')
+      format('truetype');
 }
 
 @font-face {
   font-family: 'YoonGothic';
   font-style: normal;
   font-weight: 400;
-  src: url('/assets/fonts/YoonGothicPro745.woff2') format('woff2'),
-    url('/assets/fonts/YoonGothicPro745.woff') format('woff'),
-    url('/assets/fonts/YoonGothicPro745.ttf') format('truetype');
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.ttf')
+      format('truetype');
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 500;
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.ttf')
+      format('truetype');
 }
 
 @font-face {
   font-family: 'YoonGothic';
   font-style: normal;
   font-weight: 600;
-  src: url('/assets/fonts/YoonGothicPro765.woff2') format('woff2'),
-    url('/assets/fonts/YoonGothicPro765.woff') format('woff'),
-    url('/assets/fonts/YoonGothicPro765.ttf') format('truetype');
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.ttf')
+      format('truetype');
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.ttf')
+      format('truetype');
 }
 
 @font-face {
   font-family: 'YoonGothic';
   font-style: normal;
   font-weight: 800;
-  src: url('/assets/fonts/YoonGothicPro785.woff2') format('woff2'),
-    url('/assets/fonts/YoonGothicPro785.woff') format('woff'),
-    url('/assets/fonts/YoonGothicPro785.ttf') format('truetype');
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.ttf')
+      format('truetype');
+}
+.form-control-lg {
+  font-size: 1.125em;
+  height: 3.33em;
+  padding: 0 1.25em;
+}
+
+.rounded-lg {
+  border-radius: 3em !important;
+}
+
+.gutter-sm {
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  [class^='col-'] {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 1.25em;
+  padding: 0 1em;
   font-size: 1em;
-  height: 2.5em;
+  height: 3em;
   line-height: 1.2;
+
+  &.btn-sm {
+    font-size: 0.75em;
+    padding: 0 1em;
+    height: 2.5em;
+  }
 
   &.btn-lg {
     font-size: 1.125em;
     height: 3.33em;
+  }
+
+  &.btn-xl {
+    font-size: 1.625em;
+    height: 2.3076em;
+    min-width: 8.4615em;
   }
 
   .icon-arrow-right {
@@ -243,8 +315,21 @@ body {
   }
 }
 
+.btn-outline-primary {
+  border-color: #0b538d;
+  background-color: transparent;
+  font-weight: 700;
+  .icon {
+    fill: #0b538d;
+  }
+}
+
 .text-bold {
   font-weight: 800;
+}
+
+.is-blind {
+  display: none;
 }
 
 .icon {
@@ -253,6 +338,9 @@ body {
   justify-content: center;
   &.icon-arrow-right {
     transform: rotate(-90deg);
+  }
+  &.icon-arrow-left {
+    transform: rotate(90deg);
   }
 }
 
@@ -286,6 +374,50 @@ body {
   animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) reverse;
 }
 
+.article-section {
+  .section-header {
+    h3 {
+      padding-bottom: 1em;
+      margin-bottom: 1em;
+      border-bottom: 2px solid #545454;
+      font-size: 1.5em;
+      color: #545454;
+    }
+  }
+  .agree-box {
+    font-size: 0.875em;
+    line-height: 1.4;
+    + .agree-box {
+      margin-top: 2em;
+    }
+    h4 {
+      font-size: 1.25em;
+      color: #545454;
+      font-weight: 600;
+      margin: 1em 0;
+    }
+    .o-list {
+      margin: 1em 0;
+      li {
+        position: relative;
+        margin: 0.5em 0;
+        padding-left: 0.75em;
+        &:before {
+          position: absolute;
+          left: 0;
+          top: 0.5em;
+          display: block;
+          content: '';
+          width: 0.25em;
+          height: 0.25em;
+          background-color: #0b538d;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+
 @keyframes slideInUp {
   from {
     -webkit-transform: translate3d(0, 100%, 0);
@@ -298,7 +430,7 @@ body {
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1200px) {
   html {
     font-size: 12px;
   }

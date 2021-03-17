@@ -73,7 +73,8 @@ export default class MainLayout extends BaseComponent {
   } = null;
 
   handleScroll() {
-    if (window.scrollY > 0) {
+    const scrollTop = window.scrollY || window.pageYOffset;
+    if (scrollTop > 0) {
       this.isScrolled = true;
     } else {
       this.isScrolled = false;
@@ -94,9 +95,6 @@ export default class MainLayout extends BaseComponent {
 #app {
   &.app-main {
     // 메인
-    #app-main {
-      margin-bottom: 3.75em;
-    }
     .main-article {
       padding: 0;
     }
@@ -121,7 +119,8 @@ export default class MainLayout extends BaseComponent {
       h4 {
         font-size: 0.85em;
         font-weight: 800;
-        margin-bottom: 1em;
+        margin-bottom: 0.88em;
+        line-height: 1;
       }
       p {
         font-size: 0.75em;
@@ -135,8 +134,9 @@ export default class MainLayout extends BaseComponent {
         li {
           float: left;
           font-size: 0.875em;
+          line-height: 1.2;
           + li {
-            margin-left: 1em;
+            margin-left: 2.2857em;
           }
         }
       }

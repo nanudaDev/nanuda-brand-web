@@ -67,6 +67,7 @@ export default class NavBar extends BaseComponent {
   }
 
   &.navbar-open {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
     .navbar-toggler {
       .navbar-hamburger {
         span {
@@ -138,12 +139,12 @@ export default class NavBar extends BaseComponent {
     }
   }
   .navbar-nav {
-    padding-top: 40px;
-    padding-bottom: 34px;
+    padding-top: 1.5em;
+    padding-bottom: 2.5em;
     .nav-item {
-      margin: 12px 0;
+      margin: 0.5em 0;
       .nav-link {
-        font-size: 17px;
+        font-size: 1.125em;
         line-height: 1;
         color: #707070;
         padding: 0;
@@ -177,7 +178,7 @@ export default class NavBar extends BaseComponent {
     }
   }
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 992px) {
   .navbar {
     .navbar-nav {
       margin-left: auto;
@@ -187,7 +188,7 @@ export default class NavBar extends BaseComponent {
           margin-left: 2em;
         }
         .nav-link {
-          font-size: 18px;
+          font-size: 1em;
           font-weight: 600;
         }
       }
