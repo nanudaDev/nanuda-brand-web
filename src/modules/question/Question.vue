@@ -168,6 +168,7 @@ export default class Question extends BaseComponent {
   private selectedAnswers: Given[] = [];
   private isLoading = false;
   private previousQuestionDtoArr: NextQuestionDto[] = [];
+  private questionGivenArray: any[] = [];
   saveUserType(userType: FNB_OWNER) {
     this.resultRequestDto.fnbOwnerStatus = userType;
     this.$set(this.firstQuestionDto, 'userType', userType);
@@ -235,11 +236,11 @@ export default class Question extends BaseComponent {
       this.previousQuestionDtoArr.length - 2
     ];
     this.previousQuestionDtoArr.pop();
+    this.questionGivenArray.pop();
     questionService.getNextQuestion(previousDto).subscribe(res => {
       if (res.data.isLastQuestion === 'Y') {
         this.isLastQuestion = true;
       }
-
       this.nextQuestionDto.questionId = res.data.id;
       this.question = res.data.question;
       this.givens = res.data.givens;
@@ -255,6 +256,7 @@ export default class Question extends BaseComponent {
       questionService.getResult(this.resultRequestDto).subscribe(res => {
         this.isLoading = false;
         this.result = res.data;
+        this.$router.push('/question/result');
       });
     } else {
       //대답 하나 or 여러개 선택
@@ -282,11 +284,14 @@ export default class Question extends BaseComponent {
           });
         }
       }
+      this.questionGivenArray.push({
+        questionId: this.nextQuestionDto.questionId,
+        givenId: this.nextQuestionDto.givenId,
+      });
       questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
         if (res.data.isLastQuestion === 'Y') {
           this.isLastQuestion = true;
         }
-
         this.nextQuestionDto.questionId = res.data.id;
         this.question = res.data.question;
         this.givens = res.data.givens;
@@ -320,7 +325,6 @@ export default class Question extends BaseComponent {
       if (given) {
         this.resultRequestDto.hdongCode = given.hdongCode;
       }
-
       this.getFirstQuestion();
     }
   }

@@ -31,6 +31,24 @@ const nonNavBarRouter: RouteConfig[] = [
       title: '설문',
     },
   },
+  {
+    path: '/question/result',
+    name: 'result',
+    component: () => import('../../modules/question/Result.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '결과',
+    },
+  },
+  {
+    path: '/question/solution',
+    name: 'solution',
+    component: () => import('../../modules/question/Solution.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '솔루션',
+    },
+  },
 ];
 
 export default nonNavBarRouter;
