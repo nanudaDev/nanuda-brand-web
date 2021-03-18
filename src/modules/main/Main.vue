@@ -812,19 +812,4 @@ export default class Main extends BaseComponent {
     bottom: 0;
   }
 }
-
-@keyframes animated-mouse {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(0);
-    -ms-transform: translateY(0);
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: translateY(1em);
-    -ms-transform: translateY(1em);
-    transform: translateY(1em);
-  }
-}
 </style>

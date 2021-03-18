@@ -241,7 +241,7 @@ body {
 }
 
 .rounded-lg {
-  border-radius: 3em !important;
+  border-radius: 1.25em !important;
 }
 
 .gutter-sm {
@@ -475,6 +475,17 @@ body {
 @media screen and (min-width: 1200px) {
   body {
     font-size: 1.2rem;
+  }
+}
+
+@keyframes animated-mouse {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(1em);
   }
 }
 /*# sourceMappingURL=common.css.map */

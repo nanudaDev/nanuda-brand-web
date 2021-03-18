@@ -1,5 +1,5 @@
 <template>
-  <article class="main-article" id="question-result">
+  <article class="main-article" id="question-result" v-if="!isSolution">
     <header class="article-header">
       <div class="container">
         <div class="title-box">
@@ -12,7 +12,13 @@
         </div>
         <div class="txt-box">
           <template v-if="resultRequestDto.fnbOwnerStatus === 'NEW_FNB_OWNER'">
-            <p>예비사장님의 희망 업종은 <strong>한식</strong> 입니다.</p>
+            <p>
+              예비사장님의 희망 업종은
+              <strong>{{
+                resultRequestDto.kbFoodCategory | enumTransformer
+              }}</strong>
+              입니다.
+            </p>
           </template>
           <template v-else>
             <p>사장님의 평균 매출은 <strong>1000~2000만원</strong> 입니다.</p>
@@ -26,12 +32,12 @@
           <header class="section-header">
             <h3>
               현재 {{ codeHdongSearchDto.hdongName }} 에서 <br />
-              <strong>한식의 매출이 높습니다</strong>
+              <strong>{{ newFnbBestCategory }}의 매출이 높습니다</strong>
             </h3>
             <p>
               {{ codeHdongSearchDto.hdongName }} 에서는
-              <strong>{{ newFnbOwnerPieLabelArrayText }}</strong> 순으로
-              <br />매출이 높습니다.
+              <strong>{{ newFnbOwnerCategoryList }}</strong> 순으로 <br />매출이
+              높습니다.
             </p>
           </header>
           <div class="section-content">
@@ -49,10 +55,17 @@
                 상권 현황을 알려 드리겠습니다.
               </p>
             </div>
+
+            <button
+              class="btn-scroll-down"
+              v-scroll-to="{ el: '#detail-info', offset: 0 }"
+            >
+              <BaseArrow />
+            </button>
           </div>
         </div>
       </section>
-      <section class="article-section bg-light">
+      <section class="article-section bg-light" id="detail-info">
         <div class="container">
           <header class="section-header">
             <h3>
@@ -82,7 +95,6 @@
                     </template>
                   </div>
                 </div>
-                <!-- {{ result }} -->
               </div>
             </div>
             <!-- <div class="txt-box text-center mt-4" v-if="result.responses[0]">
@@ -189,8 +201,161 @@
           </div>
         </div>
       </section>
+      <b-btn
+        variant="primary"
+        block
+        size="lg"
+        class=" rounded-0"
+        @click="isSolution = true"
+      >
+        <span>내게 맞는 솔루션 보러가기</span>
+        <span class="icon icon-arrow-right"><BaseArrow /></span>
+      </b-btn>
+    </div>
+  </article>
+  <article class="main-article" id="question-solution" v-else>
+    <header class="article-header">
+      <div class="container">
+        <span>
+          <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
+        </span>
+        <h2>
+          {{ resultRequestDto.fnbOwnerStatus | enumTransformer }}에게 딱 맞는
+          전략을 <br />소개합니다
+        </h2>
+      </div>
+    </header>
+    <div class="article-content">
+      <section class="bg-light">
+        <div class="complete-time-box">
+          <div class="row no-gutters">
+            <div
+              v-for="timeData in result.completeTimeData"
+              :key="timeData.hour"
+              :style="`width:${100 / result.completeTimeData.length}%`"
+            >
+              <div class="label-box">
+                {{ timeData.hour | enumTransformer }}
+              </div>
+              <div class="cont-box">
+                <template v-if="timeData.aggregateData[0]">
+                  {{ timeData.aggregateData[0].medium_small_category_nm }}
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="article-section section01 bg-primary">
+        <div class="container">
+          <div class="row-box">
+            <h4>
+              메뉴 전략
+            </h4>
+            <p>
+              점심에는 한식의 국/탕류 저녁에는 분식의 국물류 메뉴를 추가하면 더
+              큰 수익을 기대할 수 있습니다.
+            </p>
+          </div>
+          <div class="row-box">
+            <h4>
+              운영 전략
+            </h4>
+            <p>
+              홀 고객이 적은 시간에 배달을 추가해 영업 시간을 활용하면 좋은
+              지역입니다.
+            </p>
+          </div>
+          <div class="btn-box text-center mt-5 pt-5">
+            <p>
+              예비사장님의 상권분석 및 진단이 <br />
+              완료되었습니다.
+            </p>
+          </div>
+          <button
+            class="btn-scroll-down"
+            v-scroll-to="{ el: '#detail-info', offset: 0 }"
+          >
+            <BaseArrow />
+          </button>
+        </div>
+      </section>
+      <section class="article-section section02" id="detail-info">
+        <div class="container">
+          <div class="card p-4 shadow-sm rounded-lg">
+            <div class="row-box">
+              <div class="img-box">
+                <img src="@/assets/images/icon_solution_01.svg" alt="" />
+              </div>
+              <div class="dscr-box">
+                <h4>
+                  우리 매장에 맞는 메뉴 추천
+                </h4>
+                <p>
+                  창업지역의 정밀한 상권분석 결과로 <br />
+                  딱 맞는 메뉴를 추천드립니다.
+                </p>
+              </div>
+            </div>
+            <div class="row-box">
+              <div class="img-box">
+                <img src="@/assets/images/icon_solution_02.svg" alt="" />
+              </div>
+              <div class="dscr-box">
+                <h4>
+                  운영할 메뉴선택과 서비스 제공
+                </h4>
+                <p>
+                  추가 인력 필요 없는 간편한 메뉴, 홍보물등 <br />
+                  부가 서비스를 한 번에 제공합니다.
+                </p>
+              </div>
+            </div>
+            <div class="row-box">
+              <div class="img-box">
+                <img src="@/assets/images/icon_solution_03.svg" alt="" />
+              </div>
+              <div class="dscr-box">
+                <h4>
+                  매월 상권리포트 제공
+                </h4>
+                <p>
+                  매월 상권 데이터를 통해, 트렌드에 맞춘 <br />메뉴 추천 및 운영
+                  플랜을 제공합니다.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="article-section section03 bg-light">
+        <div class="container">
+          <div class="row-box">
+            <div class="img-box">
+              <img src="@/assets/images/icon_logo_simbol.png" />
+            </div>
+            <div class="txt-box">
+              <h4>이용자 후기</h4>
+              <p>
+                메뉴 선정하고 7일만에 매장에서 판매하였는데, <br />점심에 방문
+                고객이 훨씬 늘어났어요!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="article-section section04">
+        <div class="section-content">
+          <div class="container">
+            <!-- 폼 영역 -->
+            폼 영역
+            <!-- // 폼 영역 -->
+          </div>
+        </div>
+      </section>
       <b-btn variant="primary" block size="lg" class=" rounded-0">
-        내게 맞는 솔루션 보러가기
+        <span>픽쿡 플래너 만나기</span>
+        <span class="icon icon-arrow-right"><BaseArrow /></span>
       </b-btn>
     </div>
   </article>
@@ -221,6 +386,7 @@ export default class Result extends BaseComponent {
   @Prop() readonly resultRequestDto: ResultRequestDto;
   @Prop() readonly codeHdongSearchDto: CodeHdongSearchDto;
 
+  private isSolution = false;
   private selectedFoodCategory = '';
   private bestFoodCategory: BEST_FOOD_CATEGORY[] = [
     ...CONST_BEST_FOOD_CATEGORY,
@@ -260,7 +426,11 @@ export default class Result extends BaseComponent {
     console.log('selectedFoodCategory', this.selectedFoodCategory);
   }
 
-  get newFnbOwnerPieLabelArrayText() {
+  get newFnbBestCategory() {
+    return this.result.newFnbOwnerPieChartData.labels[0];
+  }
+
+  get newFnbOwnerCategoryList() {
     return this.result.newFnbOwnerPieChartData.labels.join(', ');
   }
 
@@ -274,6 +444,19 @@ export default class Result extends BaseComponent {
 .app-question {
   #question-result {
     word-break: keep-all;
+    .btn-scroll-down {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 3em;
+      z-index: 2;
+      animation: animated-mouse 1s ease-in-out infinite;
+      svg {
+        width: 1.5em;
+        height: 1.5em;
+        fill: #0b538d;
+      }
+    }
     .article-header {
       padding: 2em 0;
       color: #fff;
@@ -316,6 +499,7 @@ export default class Result extends BaseComponent {
       filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0b538d",endColorstr="#6c8fb7",GradientType=1);
     }
     .article-section {
+      position: relative;
       padding: 6.25em 0;
       .section-header {
         text-align: center;
@@ -376,6 +560,132 @@ export default class Result extends BaseComponent {
               rgba(232, 215, 145, 1) 35%
             );
             margin-right: auto;
+          }
+        }
+      }
+    }
+  }
+
+  #question-solution {
+    .btn-scroll-down {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 3em;
+      z-index: 2;
+      animation: animated-mouse 1s ease-in-out infinite;
+      svg {
+        width: 1.5em;
+        height: 1.5em;
+        fill: #fff;
+      }
+    }
+    .article-header {
+      background-color: #004d8a;
+      text-align: center;
+      padding: 3em 0;
+      color: #fff;
+      height: auto;
+      span {
+        display: block;
+        margin-bottom: 0.5em;
+        img {
+          width: 6.5em;
+        }
+      }
+      h2 {
+        font-size: 1.375em;
+      }
+    }
+    .article-section {
+      position: relative;
+      padding: 6.25em 0;
+      .section-header {
+        text-align: center;
+        color: #0b538d;
+        h3 {
+          font-weight: 200;
+          strong {
+            font-weight: 600;
+          }
+        }
+        p {
+          font-size: 0.875em;
+          margin-top: 3em;
+          color: #878787;
+        }
+      }
+      .section-content {
+        margin-top: 2.5em;
+      }
+      &.section01 {
+        color: #fff;
+        .row-box {
+          + .row-box {
+            margin-top: 10em;
+          }
+          h4 {
+            font-size: 0.875em;
+            margin-bottom: 1em;
+          }
+          p {
+            font-size: 1.5em;
+          }
+        }
+      }
+      &.section02 {
+        .row-box {
+          display: flex;
+          + .row-box {
+            margin-top: 3em;
+          }
+          .img-box {
+            width: 5em;
+            text-align: center;
+            img {
+              height: 3.75em;
+            }
+          }
+          .dscr-box {
+            h4 {
+              font-size: 0.875em;
+              font-weight: 600;
+              color: #004d8a;
+              margin-bottom: 0.5em;
+            }
+            p {
+              font-size: 0.75em;
+              color: #000000;
+              line-height: 1.6;
+            }
+          }
+        }
+      }
+      &.section03 {
+        .row-box {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .img-box {
+            width: 20em;
+            text-align: center;
+            img {
+              border-radius: 50%;
+              box-shadow: 0 0 1em rgba(0, 0, 0, 0.05);
+              width: 50%;
+            }
+          }
+          .txt-box {
+            text-align: left;
+            color: #004d8a;
+            h4 {
+              font-size: 0.875em;
+              font-weight: 600;
+              margin-bottom: 0.5em;
+            }
+            p {
+              font-size: 0.75em;
+            }
           }
         }
       }
