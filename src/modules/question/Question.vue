@@ -283,7 +283,7 @@
       </article>
     </template>
     <template v-else>
-      <Result :result="result" />
+      <Result :result="result" :resultRequestDto="resultRequestDto" />
     </template>
   </div>
 </template>

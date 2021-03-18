@@ -59,10 +59,10 @@
                   :key="timeData.hour"
                   :style="`width:${100 / result.completeTimeData.length}%`"
                 >
-                  <div class="time-label">
-                    {{ timeData.hour }}
+                  <div class="label-box">
+                    {{ timeData.hour | enumTransformer }}
                   </div>
-                  <div class="time-menu">
+                  <div class="cont-box">
                     <template v-if="timeData.aggregateData[0]">
                       {{ timeData.aggregateData[0].medium_small_category_nm }}
                     </template>
@@ -71,7 +71,7 @@
                 <!-- {{ result }} -->
               </div>
             </div>
-            <div class="txt-box text-center mt-4" v-if="result.responses[0]">
+            <!-- <div class="txt-box text-center mt-4" v-if="result.responses[0]">
               <p class="txt-xl">
                 {{ result.responses[0].koreanPrefSentence }}
                 <strong class="text-primary">{{
@@ -80,7 +80,7 @@
                 의 <br />
                 매출이 높습니다.
               </p>
-            </div>
+            </div> -->
           </div>
         </div>
       </section>
@@ -96,23 +96,68 @@
             <p class="text-center">
               메뉴별 매장/배달 소비 현황
             </p>
-            <div class="complete-time-box mt-5">
-              <div class="row no-gutters">
-                <div style="width:50%">
-                  <div class="time-label">
-                    매장 식사 비중
+            <div class="mt-5">
+              <div
+                class="complete-time-box"
+                v-for="(info, index) in locationDetailInfo"
+                :key="index"
+              >
+                <template
+                  v-if="info.mediumCategoryName == selectedFoodCategory"
+                >
+                  <div class="row no-gutters">
+                    <div style="width:50%">
+                      <div class="label-box">
+                        매장 식사 비중
+                      </div>
+                      <div class="cont-box">
+                        <div
+                          class="percent-box offline-ratio"
+                          :style="`width: ${info.offlineRatio}%`"
+                          v-if="info.offlineRatio"
+                        >
+                          <!-- {{ info.offlineRatio }} -->
+                        </div>
+                      </div>
+                    </div>
+                    <div style="width:50%">
+                      <div class="label-box">
+                        배달 주문 비중
+                      </div>
+                      <div class="cont-box">
+                        <div
+                          class="percent-box delivery-ratio"
+                          :style="`width: ${info.deliveryRatio}%`"
+                          v-if="info.deliveryRatio"
+                        >
+                          <!-- {{ info.deliveryRatio }} -->
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="time-menu">
-                    <div class="percent-box"></div>
-                  </div>
-                </div>
-                <div style="width:50%">
-                  <div class="time-label">
-                    배달 주문 비중
-                  </div>
-                  <div class="time-menu">
-                    <div class="percent-box"></div>
-                  </div>
+                </template>
+              </div>
+            </div>
+
+            <div class="best-food-category mt-4">
+              <div class="row gutter-sm">
+                <div
+                  class="col-4 col-sm-3 mb-3"
+                  v-for="info in locationDetailInfo"
+                  :key="info.mediumCategoryName"
+                >
+                  <b-btn
+                    :variant="
+                      info.mediumCategoryName === selectedFoodCategory
+                        ? 'primary'
+                        : 'light'
+                    "
+                    pill
+                    block
+                    @click="getCategory(info.mediumCategoryName)"
+                  >
+                    {{ info.mediumCategoryName }}
+                  </b-btn>
                 </div>
               </div>
             </div>
@@ -135,12 +180,64 @@
 import BaseComponent from '@/core/base.component';
 import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 import { Component, Prop } from 'vue-property-decorator';
+import LocationAnalysisService from '@/services/location-analysis.service';
+import {
+  BEST_FOOD_CATEGORY,
+  CONST_BEST_FOOD_CATEGORY,
+  CONST_OPERATION_TIME_CATEGORY,
+  OPERATION_TIME_CATEGORY,
+} from '@/shared';
+import { ResultRequestDto } from '@/dto/question';
 
 @Component({
   name: 'Result',
 })
 export default class Result extends BaseComponent {
   @Prop() readonly result: AggregateResultResponse;
+  @Prop() readonly resultRequestDto: ResultRequestDto;
+
+  private selectedFoodCategory = '';
+  private bestFoodCategory: BEST_FOOD_CATEGORY[] = [
+    ...CONST_BEST_FOOD_CATEGORY,
+  ];
+  private operationTimeCAtegory: OPERATION_TIME_CATEGORY[] = [
+    ...CONST_OPERATION_TIME_CATEGORY,
+  ];
+  private locationDetailInfo: any = [];
+
+  // 해당 상권 베스트5 업종 매출&홀 비율
+  getLocationInfoDetail(hdongCode: string): void {
+    LocationAnalysisService.getLocationInfoDetail(hdongCode).subscribe(res => {
+      if (res) {
+        let filterArray = [...Object.values(res.data)];
+        filterArray = filterArray.filter((arr: any) => {
+          for (const filter of this.bestFoodCategory) {
+            if (arr.mediumCategoryName.includes(filter)) {
+              return true;
+            }
+          }
+        });
+        filterArray = filterArray.filter((arr: any) => {
+          if (arr.deliveryRatio && arr.offlineRatio) {
+            return true;
+          }
+        });
+        this.selectedFoodCategory = filterArray[0].mediumCategoryName;
+        this.locationDetailInfo = filterArray.splice(0, 5);
+        console.log(this.selectedFoodCategory, this.locationDetailInfo);
+      }
+    });
+  }
+
+  getCategory(category: string) {
+    console.log(category);
+    this.selectedFoodCategory = category;
+    console.log('selectedFoodCategory', this.selectedFoodCategory);
+  }
+
+  created() {
+    this.getLocationInfoDetail(this.resultRequestDto.hdongCode);
+  }
 }
 </script>
 
@@ -217,18 +314,40 @@ export default class Result extends BaseComponent {
         + div {
           border-left: 1px solid #0b538d;
         }
-        .time-label {
-          height: 2em;
+        .label-box {
+          padding: 1em 0;
           font-size: 0.875em;
           color: #020202;
           text-align: center;
           border-bottom: 1px solid #0b538d;
+          background-color: #f9f9f9;
         }
-        .time-menu {
+        .cont-box {
           display: flex;
           align-items: center;
           justify-content: center;
           height: 5.875em;
+        }
+        .percent-box {
+          height: 100%;
+          &.offline-ratio {
+            background: rgb(167, 189, 211);
+            background: linear-gradient(
+              90deg,
+              rgba(167, 189, 211, 1) 0%,
+              rgba(28, 77, 134, 1) 35%
+            );
+            margin-left: auto;
+          }
+          &.delivery-ratio {
+            background: rgb(221, 176, 40);
+            background: linear-gradient(
+              90deg,
+              rgba(221, 176, 40, 1) 0%,
+              rgba(232, 215, 145, 1) 35%
+            );
+            margin-right: auto;
+          }
         }
       }
     }

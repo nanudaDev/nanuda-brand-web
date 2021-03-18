@@ -365,14 +365,6 @@ body {
   font-size: 1.5em;
 }
 
-.slideInUp-enter-active {
-  animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-
-.slideInUp-leave-active {
-  animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) reverse;
-}
-
 .app-agreement .main-header h1,
 .app-privacy .main-header h1 {
   font-size: 1em;
@@ -434,6 +426,32 @@ body {
   height: 0.25em;
   background-color: #0b538d;
   border-radius: 50%;
+}
+
+/* animation */
+.fadeIn-enter-active {
+  animation: fadeIn 0.3s ease;
+}
+
+.fadeIn-leave-active {
+  animation: fadeIn 0.3s ease reverse;
+}
+
+.slideInUp-enter-active {
+  animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.slideInUp-leave-active {
+  animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) reverse;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideInUp {
