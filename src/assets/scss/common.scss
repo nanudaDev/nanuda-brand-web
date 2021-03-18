@@ -395,8 +395,16 @@ body {
   animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) reverse;
 }
 
-.app-agrement,
+.app-agreement,
 .app-privacy {
+  .main-header {
+    h1 {
+      font-size: 1em;
+      img {
+        width: 8em;
+      }
+    }
+  }
   .article-section {
     .section-header {
       h3 {
