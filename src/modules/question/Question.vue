@@ -28,7 +28,7 @@
         </div>
       </header>
     </article>
-    <template v-if="!result">
+    <template v-if="!aggregateResultResponseDto">
       <article
         class="main-article"
         :id="nextQuestionDto.questionId"
@@ -332,7 +332,7 @@ export default class Question extends BaseComponent {
   private prevOrder: any = 0;
   private question = '나는 현재';
   private FNB_OWNER = FNB_OWNER;
-  private aggregateResultResponseDto = new AggregateResultResponse();
+  private aggregateResultResponseDto: AggregateResultResponse = null;
   private firstGivens = [
     {
       id: 1,
