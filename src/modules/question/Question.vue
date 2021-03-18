@@ -49,7 +49,7 @@
       </header>
       <div class="article-content">
         <b-overlay :show="isLoading">
-          <template v-if="!result">
+          <template v-if="!aggregateResultResponseDto">
             <section class="article-section">
               <header class="section-title">
                 <div class="container">
@@ -250,7 +250,7 @@
           <template v-else>
             <section class="article-section">
               <header class="section-title">
-                <Result :result="result" />
+                <Result :result="aggregateResultResponseDto" />
               </header>
             </section>
           </template>
@@ -277,6 +277,7 @@ import {
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
 import { ADDRESS_LEVEL, FNB_OWNER } from '@/common';
+import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 @Component({
   name: 'Question',
   components: { VueDaumPostcode, Result },
@@ -291,7 +292,7 @@ export default class Question extends BaseComponent {
   private resultRequestDto = new ResultRequestDto();
   private question = '나는 현재';
   private FNB_OWNER = FNB_OWNER;
-  private result: any = null;
+  private aggregateResultResponseDto = new AggregateResultResponse();
   private firstGivens = [
     {
       id: 1,
@@ -434,7 +435,7 @@ export default class Question extends BaseComponent {
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
         this.isLoading = false;
-        this.result = res.data;
+        this.aggregateResultResponseDto = res.data;
         return;
       });
     }
