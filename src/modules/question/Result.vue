@@ -208,6 +208,7 @@ import {
   CONST_BEST_FOOD_CATEGORY,
   CONST_OPERATION_TIME_CATEGORY,
   OPERATION_TIME_CATEGORY,
+  FNB_OWNER,
 } from '@/shared';
 import { ResultRequestDto } from '@/dto/question';
 import { CodeHdongSearchDto } from '@/dto/code-hdong';
