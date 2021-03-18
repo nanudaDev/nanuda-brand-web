@@ -309,8 +309,8 @@ import {
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
 import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
-import { ADDRESS_LEVEL, YN } from '@/common';
 import { COMMON_CODE_CATEGORY, FNB_OWNER } from '@/shared';
+import { ADDRESS_LEVEL, YN } from '@/common';
 @Component({
   name: 'Question',
   components: { VueDaumPostcode, Result },
@@ -613,7 +613,7 @@ export default class Question extends BaseComponent {
   }
   .main-article {
     min-height: 100vh;
-    &:not(#question-start, #question-result) {
+    &:not(#question-start, #question-result, #question-solution) {
       .btn-back {
         position: fixed;
         left: 0.75em;
