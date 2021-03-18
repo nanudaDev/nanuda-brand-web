@@ -11,9 +11,7 @@
           </h2>
         </div>
         <div class="txt-box">
-          <template
-            v-if="resultRequestDto.fnbOwnerStatus === FNB_OWNER.NEW_FNB_OWNER"
-          >
+          <template v-if="resultRequestDto.fnbOwnerStatus === 'NEW_FNB_OWNER'">
             <p>예비사장님의 희망 업종은 <strong>한식</strong> 입니다.</p>
           </template>
           <template v-else>
