@@ -31,6 +31,14 @@ const nonNavBarRouter: RouteConfig[] = [
       title: '설문',
     },
   },
+  {
+    path: '/solution',
+    name: 'solution',
+    component: () => import('../../modules/question/Solution.vue'),
+    meta: {
+      layout: 'NonLayout',
+    },
+  },
 ];
 
 export default nonNavBarRouter;
