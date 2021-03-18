@@ -211,7 +211,7 @@
                           no-close-on-backdrop
                         >
                           <template #modal-title>
-                            <strong class="text-primary">주소검색</strong>
+                            <strong class="txt-primary">주소검색</strong>
                           </template>
                           <div>
                             <vue-daum-postcode @complete="onPostCodeComplete" />
@@ -283,7 +283,11 @@
       </article>
     </template>
     <template v-else>
-      <Result :result="result" :resultRequestDto="resultRequestDto" />
+      <Result
+        :result="result"
+        :resultRequestDto="resultRequestDto"
+        :codeHdongSearchDto="codeHdongSearchDto"
+      />
     </template>
   </div>
 </template>

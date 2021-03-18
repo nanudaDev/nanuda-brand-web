@@ -11,7 +11,14 @@
           </h2>
         </div>
         <div class="txt-box">
-          <p>예비사장님의 희망 업종은 <strong>한식</strong> 입니다.</p>
+          <template
+            v-if="resultRequestDto.fnbOwnerStatus === FNB_OWNER.NEW_FNB_OWNER"
+          >
+            <p>예비사장님의 희망 업종은 <strong>한식</strong> 입니다.</p>
+          </template>
+          <template v-else>
+            <p>사장님의 평균 매출은 <strong>1000~2000만원</strong> 입니다.</p>
+          </template>
         </div>
       </div>
     </header>
@@ -20,21 +27,28 @@
         <div class="container">
           <header class="section-header">
             <h3>
-              현재 상권에서 <br />
+              현재 {{ codeHdongSearchDto.hdongName }} 에서 <br />
               <strong>한식의 매출이 높습니다</strong>
             </h3>
             <p>
-              논현동에서는 한식, 분식, 중식, 일식, 치킨순으로 <br />매출이
-              높습니다.
+              {{ codeHdongSearchDto.hdongName }} 에서는
+              <strong>{{ newFnbOwnerPieLabelArrayText }}</strong> 순으로
+              <br />매출이 높습니다.
             </p>
           </header>
           <div class="section-content">
             <!-- 차트 영역 -->
-            <div style="padding-bottom:56.25%" class="bg-light"></div>
+            <div>
+              <FoodCategoryRatioChart
+                :chartData="result.newFnbOwnerPieChartData"
+                style="height:600px"
+              />
+            </div>
+
             <div class="txt-box text-center mt-5">
-              <p class="txt-lg text-primary">
-                창업을 시작하기 앞서 <br />논현동의 상권 현황을 알려
-                드리겠습니다.
+              <p class="txt-lg txt-primary">
+                창업을 시작하기 앞서 <br />{{ codeHdongSearchDto.hdongName }} 의
+                상권 현황을 알려 드리겠습니다.
               </p>
             </div>
           </div>
@@ -45,12 +59,14 @@
           <header class="section-header">
             <h3>
               우선 메뉴에 따라 다른 <br />
-              <strong>시간대의 매출을 확인하세요</strong>
+              <strong class="txt-underline">시간대의 매출을 확인하세요</strong>
             </h3>
           </header>
           <div class="section-content">
             <p class="txt-box text-center">
-              논현동 시간대별 매출 추이
+              <strong class="txt-bold"
+                >{{ codeHdongSearchDto.hdongName }} 시간대별 매출 추이</strong
+              >
             </p>
             <div class="complete-time-box mt-5">
               <div class="row no-gutters">
@@ -74,7 +90,7 @@
             <!-- <div class="txt-box text-center mt-4" v-if="result.responses[0]">
               <p class="txt-xl">
                 {{ result.responses[0].koreanPrefSentence }}
-                <strong class="text-primary">{{
+                <strong class="txt-primary">{{
                   result.responses[0].modifiedSufSentence
                 }}</strong>
                 의 <br />
@@ -113,8 +129,11 @@
                       <div class="cont-box">
                         <div
                           class="percent-box offline-ratio"
-                          :style="`width: ${info.offlineRatio}%`"
-                          v-if="info.offlineRatio"
+                          :style="
+                            `width: ${
+                              !info.deliveryRatio ? 100 : info.offlineRatio
+                            }%`
+                          "
                         >
                           <!-- {{ info.offlineRatio }} -->
                         </div>
@@ -127,8 +146,11 @@
                       <div class="cont-box">
                         <div
                           class="percent-box delivery-ratio"
-                          :style="`width: ${info.deliveryRatio}%`"
-                          v-if="info.deliveryRatio"
+                          :style="
+                            `width: ${
+                              !info.deliveryRatio ? 0 : info.deliveryRatio
+                            }%`
+                          "
                         >
                           <!-- {{ info.deliveryRatio }} -->
                         </div>
@@ -188,13 +210,18 @@ import {
   OPERATION_TIME_CATEGORY,
 } from '@/shared';
 import { ResultRequestDto } from '@/dto/question';
+import { CodeHdongSearchDto } from '@/dto/code-hdong';
+import FoodCategoryRatioChart from '@/modules/_components/charts/FoodCategoryRatioChart.vue';
 
 @Component({
   name: 'Result',
+  components: { FoodCategoryRatioChart },
 })
 export default class Result extends BaseComponent {
+  [x: string]: any;
   @Prop() readonly result: AggregateResultResponse;
   @Prop() readonly resultRequestDto: ResultRequestDto;
+  @Prop() readonly codeHdongSearchDto: CodeHdongSearchDto;
 
   private selectedFoodCategory = '';
   private bestFoodCategory: BEST_FOOD_CATEGORY[] = [
@@ -217,11 +244,11 @@ export default class Result extends BaseComponent {
             }
           }
         });
-        filterArray = filterArray.filter((arr: any) => {
-          if (arr.deliveryRatio && arr.offlineRatio) {
-            return true;
-          }
-        });
+        // filterArray = filterArray.filter((arr: any) => {
+        //   if (arr.deliveryRatio && arr.offlineRatio) {
+        //     return true;
+        //   }
+        // });
         this.selectedFoodCategory = filterArray[0].mediumCategoryName;
         this.locationDetailInfo = filterArray.splice(0, 5);
         console.log(this.selectedFoodCategory, this.locationDetailInfo);
@@ -233,6 +260,10 @@ export default class Result extends BaseComponent {
     console.log(category);
     this.selectedFoodCategory = category;
     console.log('selectedFoodCategory', this.selectedFoodCategory);
+  }
+
+  get newFnbOwnerPieLabelArrayText() {
+    return this.result.newFnbOwnerPieChartData.labels.join(', ');
   }
 
   created() {

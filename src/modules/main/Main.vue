@@ -54,11 +54,7 @@
       <section class="article-section section01">
         <div class="container">
           <header class="section-title">
-            <h3
-              class="text-primary"
-              data-aos="fade-up"
-              data-aos-duration="1000"
-            >
+            <h3 class="txt-primary" data-aos="fade-up" data-aos-duration="1000">
               픽쿡은 파트너사와 함께 <br />
               여러분의 창업을 안내합니다
             </h3>
@@ -172,7 +168,7 @@
             >
               <header class="section-title col-12 col-md-6 col-xl-12">
                 <h3
-                  class="text-primary"
+                  class="txt-primary"
                   data-aos="fade-up"
                   data-aos-duration="1000"
                 >
@@ -199,7 +195,7 @@
             >
               <header class="section-title col-12 col-md-6 col-xl-12">
                 <h3
-                  class="text-primary"
+                  class="txt-primary"
                   data-aos="fade-up"
                   data-aos-duration="1000"
                 >
@@ -226,7 +222,7 @@
             >
               <header class="section-title col-12 col-md-6 col-xl-12">
                 <h3
-                  class="text-primary"
+                  class="txt-primary"
                   data-aos="fade-up"
                   data-aos-duration="1000"
                 >
@@ -253,7 +249,7 @@
       </section>
       <section class="article-section section04 bg-light">
         <header class="section-title">
-          <h3 class="text-primary" data-aos="fade-up" data-aos-duration="1000">
+          <h3 class="txt-primary" data-aos="fade-up" data-aos-duration="1000">
             픽쿡은 장소에 맞는 <br />
             메뉴와 운영 방법을 안내합니다
           </h3>
