@@ -28,7 +28,7 @@
         </div>
       </header>
     </article>
-    <template v-if="!result">
+    <template v-if="!aggregateResultResponseDto">
       <article
         class="main-article"
         :id="nextQuestionDto.questionId"
@@ -284,7 +284,7 @@
     </template>
     <template v-else>
       <Result
-        :result="result"
+        :result="aggregateResultResponseDto"
         :resultRequestDto="resultRequestDto"
         :codeHdongSearchDto="codeHdongSearchDto"
       />
@@ -308,6 +308,7 @@ import {
 } from '@/dto/question';
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
+import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 import { ADDRESS_LEVEL, YN } from '@/common';
 import { COMMON_CODE_CATEGORY, FNB_OWNER } from '@/shared';
 @Component({
@@ -331,7 +332,7 @@ export default class Question extends BaseComponent {
   private prevOrder: any = 0;
   private question = '나는 현재';
   private FNB_OWNER = FNB_OWNER;
-  private result: any = null;
+  private aggregateResultResponseDto: AggregateResultResponse = null;
   private firstGivens = [
     {
       id: 1,
@@ -506,7 +507,7 @@ export default class Question extends BaseComponent {
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
         this.isLoading = false;
-        this.result = res.data;
+        this.aggregateResultResponseDto = res.data;
         return;
       });
     }
