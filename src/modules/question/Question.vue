@@ -3,7 +3,7 @@
     <article class="main-article bg-primary" v-if="isStart" id="question-start">
       <header class="article-header">
         <span data-aos="fade-down" data-aos-duration="1500"
-          ><img src="@/assets/images/logo_w_v2.svg" alt="픽쿡" class="logo-w"
+          ><img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w"
         /></span>
         <h2 data-aos="fade-down" data-aos-duration="1500">
           실패없는 창업을 <br />안내합니다
@@ -28,33 +28,53 @@
         </div>
       </header>
     </article>
-    <article
-      class="main-article"
-      :id="nextQuestionDto.questionId"
-      v-if="!isStart"
-      :class="
-        (nextQuestionDto.questionId > 1 && nextQuestionDto.questionId < 7) ||
-        (nextQuestionDto.questionId > 10 && nextQuestionDto.questionId < 15)
-          ? 'bg-light'
-          : 'bg-primary'
-      "
-    >
-      <header class="article-header">
-        <h1>
-          <img src="@/assets/images/logo_w_v2.svg" alt="픽쿡" />
-        </h1>
-        <div class="progress-bar-rail">
-          <span class="progress-bar"></span>
-        </div>
-      </header>
-      <div class="article-content">
+    <template v-if="!result">
+      <article
+        class="main-article"
+        :id="nextQuestionDto.questionId"
+        v-if="!isStart"
+        :class="
+          bgLightQuestionId.includes(nextQuestionDto.questionId)
+            ? 'bg-light'
+            : 'bg-primary'
+        "
+      >
         <b-overlay :show="isLoading">
-          <template v-if="!aggregateResultResponseDto">
+          <header class="article-header">
+            <h1>
+              <img
+                src="@/assets/images/logo.svg"
+                alt="픽쿡"
+                v-if="bgLightQuestionId.includes(nextQuestionDto.questionId)"
+              />
+              <img src="@/assets/images/logo_w.svg" alt="픽쿡" v-else />
+            </h1>
+            <div class="progress-bar-rail">
+              <span
+                class="progress-bar"
+                :style="{
+                  width: (questionOrder / (questionTotalCount + 1)) * 100 + '%',
+                }"
+              ></span>
+            </div>
+          </header>
+          <div class="article-content">
             <section class="article-section">
               <header class="section-title">
                 <div class="container">
                   <span>
-                    <img src="@/assets/images/logo_w_v3.svg" alt="픽쿡" />
+                    <img
+                      src="@/assets/images/logo_simbol.svg"
+                      alt="픽쿡"
+                      v-if="
+                        bgLightQuestionId.includes(nextQuestionDto.questionId)
+                      "
+                    />
+                    <img
+                      src="@/assets/images/logo_simbol_w.svg"
+                      alt="픽쿡"
+                      v-else
+                    />
                   </span>
                   <h3>{{ question }}</h3>
                 </div>
@@ -63,15 +83,12 @@
                 <div class="container">
                   <template v-if="givens.length > 0">
                     <b-btn
-                      @click="goToPrevious"
+                      @click="goToPrevious()"
                       size="sm"
                       class="btn-back"
                       :variant="
-                        (nextQuestionDto.questionId > 1 &&
-                          nextQuestionDto.questionId < 7) ||
-                        (nextQuestionDto.questionId > 10 &&
-                          nextQuestionDto.questionId < 15)
-                          ? 'transparent'
+                        bgLightQuestionId.includes(nextQuestionDto.questionId)
+                          ? 'light'
                           : 'primary'
                       "
                       pill
@@ -83,7 +100,7 @@
                       <div class="row gutter-sm">
                         <div
                           :class="
-                            [1, 4, 5, 10, 12].includes(
+                            smallSizeQuestionId.includes(
                               nextQuestionDto.questionId,
                             )
                               ? 'col-6 col-sm-4'
@@ -111,7 +128,7 @@
                           v-for="given in givens"
                           :key="given.id"
                           :class="
-                            [1, 4, 5, 10, 12].includes(
+                            smallSizeQuestionId.includes(
                               nextQuestionDto.questionId,
                             )
                               ? 'col-6 col-sm-4'
@@ -155,7 +172,7 @@
                       >
                         <!-- 다음 주소 api -->
                         <b-btn
-                          @click="goToPreviousAddr"
+                          @click="goToPreviousAddr()"
                           size="sm"
                           class="btn-back"
                           variant="primary"
@@ -166,17 +183,20 @@
                           /></span>
                           <span class="is-blind">뒤로가기</span>
                         </b-btn>
-                        <b-form-input
-                          size="lg"
-                          v-model="selectedRoadAddress"
-                          placeholder="운영하고 있는 음식점 위치 검색"
-                          @click="$bvModal.show('post-code')"
-                          class="rounded-lg"
-                        />
+                        <b-form-group>
+                          <span class="icon icon-search"><BaseSearch /></span>
+                          <b-form-input
+                            size="lg"
+                            v-model="selectedRoadAddress"
+                            placeholder="운영하고 있는 음식점 위치 검색"
+                            @click="$bvModal.show('post-code')"
+                            class="rounded-lg"
+                          />
+                        </b-form-group>
 
-                        <div class="text-center mt-5">
+                        <div class="text-center mt-4">
                           <b-btn
-                            @click="getFirstQuestion"
+                            @click="getFirstQuestion()"
                             :disabled="!selectedRoadAddress"
                             variant="success"
                             size="lg"
@@ -185,16 +205,22 @@
                             >다음</b-btn
                           >
                         </div>
-                        <b-modal id="post-code" :title="question"
-                          ><div>
-                            <vue-daum-postcode
-                              @complete="onPostCodeComplete"
-                            /></div
-                        ></b-modal>
+                        <b-modal
+                          id="post-code"
+                          hide-footer
+                          no-close-on-backdrop
+                        >
+                          <template #modal-title>
+                            <strong class="txt-primary">주소검색</strong>
+                          </template>
+                          <div>
+                            <vue-daum-postcode @complete="onPostCodeComplete" />
+                          </div>
+                        </b-modal>
                       </div>
                       <div v-else>
                         <b-btn
-                          @click="goToPreviousAddr"
+                          @click="goToPreviousAddr()"
                           size="sm"
                           class="btn-back"
                           variant="primary"
@@ -229,34 +255,40 @@
                     </template>
                     <template v-else>
                       <!-- 첫번째 질문 (사장님 or 창업) -->
-                      <b-btn
-                        v-for="given in firstGivens"
-                        :key="given.id"
-                        variant="light"
-                        class="mb-4 shadow"
-                        block
-                        pill
-                        size="lg"
-                        @click="saveUserType(given.userType)"
-                      >
-                        {{ given.given }}
-                      </b-btn>
+                      <div class="row">
+                        <div
+                          class="col-12"
+                          v-for="given in firstGivens"
+                          :key="given.id"
+                        >
+                          <b-btn
+                            variant="light"
+                            class="mb-4 shadow"
+                            block
+                            pill
+                            size="lg"
+                            @click="saveUserType(given.userType)"
+                          >
+                            {{ given.given }}
+                          </b-btn>
+                        </div>
+                      </div>
                     </template>
                   </template>
                 </div>
               </div>
             </section>
-          </template>
-          <template v-else>
-            <section class="article-section">
-              <header class="section-title">
-                <Result :result="aggregateResultResponseDto" />
-              </header>
-            </section>
-          </template>
+          </div>
         </b-overlay>
-      </div>
-    </article>
+      </article>
+    </template>
+    <template v-else>
+      <Result
+        :result="aggregateResultResponseDto"
+        :resultRequestDto="resultRequestDto"
+        :codeHdongSearchDto="codeHdongSearchDto"
+      />
+    </template>
   </div>
 </template>
 
@@ -276,32 +308,40 @@ import {
 } from '@/dto/question';
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
-import { ADDRESS_LEVEL, FNB_OWNER } from '@/common';
 import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
+import { ADDRESS_LEVEL, YN } from '@/common';
+import { COMMON_CODE_CATEGORY, FNB_OWNER } from '@/shared';
 @Component({
   name: 'Question',
   components: { VueDaumPostcode, Result },
 })
 export default class Question extends BaseComponent {
   // private userType: USER = null;
-  private isStart = true;
-  private isLastQuestion = false;
+
   private firstQuestionDto = new FirstQuestionDto();
   private nextQuestionDto = new NextQuestionDto();
   private codeHdongSearchDto = new CodeHdongSearchDto();
   private resultRequestDto = new ResultRequestDto();
+
+  private isStart = true;
+  private isLastQuestion = false;
+  private smallSizeQuestionId = [1, 4, 5, 10, 12];
+  private bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
+  private questionTotalCount: any = 9;
+  private questionOrder: any = 0;
+  private prevOrder: any = 0;
   private question = '나는 현재';
   private FNB_OWNER = FNB_OWNER;
   private aggregateResultResponseDto = new AggregateResultResponse();
   private firstGivens = [
     {
       id: 1,
-      userType: 'CUR_FNB_OWNER',
+      userType: FNB_OWNER.CUR_FNB_OWNER,
       given: '음식점 사장님입니다',
     },
     {
       id: 2,
-      userType: 'NEW_FNB_OWNER',
+      userType: FNB_OWNER.NEW_FNB_OWNER,
       given: '창업을 생각하고 있습니다',
     },
   ];
@@ -314,6 +354,7 @@ export default class Question extends BaseComponent {
   private isLoading = false;
   private previousQuestionDtoArr: NextQuestionDto[] = [];
   private questionGivenArray: any[] = [];
+
   saveUserType(userType: FNB_OWNER) {
     this.resultRequestDto.fnbOwnerStatus = userType;
     this.$set(this.firstQuestionDto, 'userType', userType);
@@ -329,15 +370,22 @@ export default class Question extends BaseComponent {
         this.addressGivens = res.data;
       });
     }
+    // 진행 단계 증가
+    this.questionOrder += 1;
   }
   getFirstQuestion() {
     questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
       this.givens = res.data.givens;
       this.question = res.data.question;
+      this.nextQuestionDto.order = res.data.order;
       this.nextQuestionDto.questionId = res.data.id;
       this.nextQuestionDto.givenId = [];
-      this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
+      this.isMultipleAnswer =
+        res.data.multipleAnswerYn === YN.YES ? true : false;
     });
+    // 이전 단계 저장 후 증가
+    this.questionOrder += 1;
+    this.prevOrder = this.questionOrder;
   }
   // 주소 선택화면일때 뒤로가기
   goToPreviousAddr() {
@@ -356,6 +404,9 @@ export default class Question extends BaseComponent {
       this.selectedRoadAddress = '';
       this.firstQuestionDto.userType = null;
     }
+    // 진행 단계 감소
+    this.questionOrder -= 1;
+    this.isLastQuestion = false;
   }
   // 질문 화면일때 뒤로가기
   goToPrevious() {
@@ -372,10 +423,22 @@ export default class Question extends BaseComponent {
           this.showingLevel = ADDRESS_LEVEL.hdongName;
         }
       });
+      // 진행 단계 저장
+      this.questionOrder = this.prevOrder - 1;
       return;
     }
     if (this.previousQuestionDtoArr.length == 1) {
-      this.getFirstQuestion();
+      questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
+        this.givens = res.data.givens;
+        this.question = res.data.question;
+        this.nextQuestionDto.order = res.data.order;
+        this.nextQuestionDto.questionId = res.data.id;
+        this.nextQuestionDto.givenId = [];
+        this.isMultipleAnswer =
+          res.data.multipleAnswerYn === YN.YES ? true : false;
+        // 진행 단계 저장
+        this.prevOrder = this.questionOrder;
+      });
     }
     const previousDto = this.previousQuestionDtoArr[
       this.previousQuestionDtoArr.length - 2
@@ -383,31 +446,37 @@ export default class Question extends BaseComponent {
     this.previousQuestionDtoArr.pop();
     this.questionGivenArray.pop();
     questionService.getNextQuestion(previousDto).subscribe(res => {
-      if (res.data.isLastQuestion === 'Y') {
+      if (res.data.isLastQuestion === YN.YES) {
         this.isLastQuestion = true;
       }
       this.nextQuestionDto.questionId = res.data.id;
       this.question = res.data.question;
       this.givens = res.data.givens;
       this.nextQuestionDto.givenId = [];
-      this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
+      this.isMultipleAnswer =
+        res.data.multipleAnswerYn === YN.YES ? true : false;
     });
+    // 진행 단계 감소
+    this.questionOrder -= 1;
+    this.isLastQuestion = false;
   }
   getNextQuestion(given?: Given) {
     //이전 질문들 저장
     this.previousQuestionDtoArr.push({ ...this.nextQuestionDto });
-
     this.nextQuestionDto.givenId = [];
+
     // 답변을 하나만 선택할때
     if (given) {
       this.nextQuestionDto.givenId.push(given.id);
-      if (given.givenDetails.category === 'KB_MEDIUM_CATEGORY') {
+      if (
+        given.givenDetails.category === COMMON_CODE_CATEGORY.KB_MEDIUM_CATEGORY
+      ) {
         this.resultRequestDto.kbFoodCategory = given.givenDetails.value;
       }
-      if (given.givenDetails.category === 'AGE_GROUP') {
+      if (given.givenDetails.category === COMMON_CODE_CATEGORY.AGE_GROUP) {
         this.resultRequestDto.ageGroupCode = given.givenDetails.key;
       }
-      if (given.givenDetails.category === 'REVENUE_RANGE') {
+      if (given.givenDetails.category === COMMON_CODE_CATEGORY.REVENUE_RANGE) {
         this.resultRequestDto.revenueRangeCode = given.givenDetails.key;
       }
     } else {
@@ -416,7 +485,10 @@ export default class Question extends BaseComponent {
       const selectedGivenId = this.selectedAnswers.map(e => e.id);
       this.nextQuestionDto.givenId = selectedGivenId;
       //영업 시간
-      if (this.givens[0].givenDetails.category === 'OPERATION_TIME') {
+      if (
+        this.givens[0].givenDetails.category ===
+        COMMON_CODE_CATEGORY.OPERATION_TIME
+      ) {
         this.resultRequestDto.operationTimes = [];
         this.selectedAnswers.forEach(e => {
           this.resultRequestDto.operationTimes.push(e.givenDetails.value);
@@ -440,14 +512,17 @@ export default class Question extends BaseComponent {
       });
     }
     questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
-      if (res.data.isLastQuestion === 'Y') {
+      if (res.data.isLastQuestion === YN.YES) {
         this.isLastQuestion = true;
       }
+      this.nextQuestionDto.order = res.data.order;
       this.nextQuestionDto.questionId = res.data.id;
       this.question = res.data.question;
+      this.questionOrder = this.nextQuestionDto.order + (this.prevOrder - 1);
       this.givens = res.data.givens;
       this.nextQuestionDto.givenId = [];
-      this.isMultipleAnswer = res.data.multipleAnswerYn === 'Y' ? true : false;
+      this.isMultipleAnswer =
+        res.data.multipleAnswerYn === YN.YES ? true : false;
       this.selectedAnswers = [];
     });
   }
@@ -463,11 +538,15 @@ export default class Question extends BaseComponent {
       codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
         this.addressGivens = res.data;
         this.showingLevel = ADDRESS_LEVEL.guName;
+        // 진행 단계 증가
+        this.questionOrder += 1;
       });
     } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
       codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
         this.addressGivens = res.data;
         this.showingLevel = ADDRESS_LEVEL.hdongName;
+        // 진행 단계 증가
+        this.questionOrder += 1;
       });
     } else {
       if (given) {
@@ -475,6 +554,7 @@ export default class Question extends BaseComponent {
       }
       this.getFirstQuestion();
     }
+    this.prevOrder = this.questionOrder;
   }
   onPostCodeComplete(event: any) {
     this.selectedRoadAddress = event.roadAddress;
@@ -508,6 +588,14 @@ export default class Question extends BaseComponent {
       color: #0b538d;
     }
   }
+  .form-group {
+    .icon-search {
+      fill: #6c8fb7;
+      ~ input[type='text'] {
+        padding-right: 3em;
+      }
+    }
+  }
   .progress-bar-rail {
     position: absolute;
     bottom: 0;
@@ -525,7 +613,7 @@ export default class Question extends BaseComponent {
   }
   .main-article {
     min-height: 100vh;
-    &:not(#question-start) {
+    &:not(#question-start, #question-result) {
       .btn-back {
         position: fixed;
         left: 0.75em;
@@ -577,6 +665,7 @@ export default class Question extends BaseComponent {
       align-items: center;
       justify-content: center;
       color: #fff;
+      height: 100vh;
       .article-header {
         text-align: center;
         span {
@@ -627,7 +716,7 @@ export default class Question extends BaseComponent {
         margin-bottom: 0.5em;
       }
       + .section-content {
-        margin-top: 1.5em;
+        margin-top: 2em;
       }
       .btn {
         word-break: keep-all;

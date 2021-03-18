@@ -7,8 +7,8 @@
     <div class="nav-logo">
       <h1>
         <router-link to="/">
-          <img src="@/assets/images/logo.png" alt="픽쿡" class="logo" />
-          <img src="@/assets/images/logo_w.png" alt="픽쿡" class="logo-w" />
+          <img src="@/assets/images/logo.svg" alt="픽쿡" class="logo" />
+          <img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w" />
         </router-link>
       </h1>
     </div>

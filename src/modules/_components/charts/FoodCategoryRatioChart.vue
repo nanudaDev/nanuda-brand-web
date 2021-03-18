@@ -11,11 +11,12 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
   components: { ChartDataLabels },
 })
 export default class FoodCategoryRatioChart extends Vue {
+  @Prop() private readonly chartData: any;
   public renderChart!: (chartData: any, options?: any) => void;
-  @Prop() private readonly data: any;
+
   mounted(): void {
     // Overwriting base render method with actual data.
-    this.renderChart(this.data, {
+    this.renderChart(this.chartData, {
       plugins: {
         datalabels: {
           labels: {
@@ -23,24 +24,25 @@ export default class FoodCategoryRatioChart extends Vue {
               align: 'end',
               anchor: 'center',
               // color: function(ctx: any) {
-              //   return ctx.dataset.backgroundColor;
+              //   return 'rgba(11,83,141,1)';
               // },
-              font: { size: 18 },
-              formatter: function(value: any, ctx: any) {
-                return `${ctx.chart.data.labels[ctx.dataIndex]}
- ${value}%`;
-              },
+              font: { size: 14, align: 'center' },
               backgroundColor: 'white',
+              textAlign: 'center',
+              formatter: function(value: any, ctx: any) {
+                return `${ctx.chart.data.labels[ctx.dataIndex]}\n${value}%`;
+              },
             },
           },
-          borderRadius: 100,
-          borderWidth: 1,
-          borderColor: 'gray',
-          padding: 20,
+          borderRadius: 500,
+          borderWidth: 3,
+          borderColor: 'rgba(245,245,245,1)',
+          padding: 15,
           font: {
             weight: 'bold',
           },
-          color: 'blue',
+          offset: 5,
+          color: 'rgba(11,83,141,1)',
         },
       },
       tooltips: {
@@ -49,7 +51,11 @@ export default class FoodCategoryRatioChart extends Vue {
       responsive: true,
       maintainAspectRatio: false,
       legend: {
-        display: false,
+        display: true,
+        position: 'bottom',
+        labels: {
+          padding: 40,
+        },
       },
     });
   }

@@ -1,17 +1,17 @@
 <template>
   <div id="content-wrapper">
-    <header class="bg-primary py-3">
+    <header class="main-header bg-primary py-3">
       <div class="container">
         <h1>
           <router-link to="/">
-            <img src="@/assets/images/logo_w.png" alt="픽쿡" class="logo-w" />
+            <img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w" />
           </router-link>
         </h1>
       </div>
     </header>
     <article class="main-article bg-light py-5">
       <div class="container">
-        <section class="article-section p-5 border rounded-lg bg-white">
+        <section class="article-section p-5 border  bg-white">
           <header class="section-header">
             <h3>이용약관</h3>
           </header>
@@ -20,7 +20,7 @@
               <h4>제1조 (목적)</h4>
               <p>
                 본 서비스 약관은 주식회사 위대한상사(이하 "회사")가 운영하는
-                <span class="text-primary">픽쿡</span> (이하 "사이트")에서
+                <span class="txt-primary">픽쿡</span> (이하 "사이트")에서
                 제공하는 인터넷 관련 서비스(이하 "서비스")를 이용함에 있어
                 이용자와 회사간의 권리·의무 및 책임사항을 규정함을 목적으로
                 합니다.

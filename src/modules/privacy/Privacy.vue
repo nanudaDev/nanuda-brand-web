@@ -1,17 +1,17 @@
 <template>
   <div id="content-wrapper">
-    <header class="bg-primary py-3">
+    <header class="main-header bg-primary py-3">
       <div class="container">
         <h1>
           <router-link to="/">
-            <img src="@/assets/images/logo_w.png" alt="픽쿡" class="logo-w" />
+            <img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w" />
           </router-link>
         </h1>
       </div>
     </header>
     <article class="main-article bg-light py-5">
       <div class="container">
-        <section class="article-section p-5 border rounded-lg bg-white">
+        <section class="article-section p-5 border  bg-white">
           <header class="section-header">
             <h3>개인정보 수집 및 이용 동의서</h3>
           </header>
