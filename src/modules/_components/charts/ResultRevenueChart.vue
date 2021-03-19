@@ -13,24 +13,37 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 export default class ResultRevenueChart extends Vue {
   public renderChart!: (chartData: any, options?: any) => void;
   private gradient: any;
+
   mounted(): void {
     // Overwriting base render method with actual data.
+
+    const canvas = document.getElementById('line-chart') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d');
+
+    const gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+    gradientStroke.addColorStop(0, '#80b6f4');
+    gradientStroke.addColorStop(1, '#f49080');
+
+    const gradientFill = ctx.createLinearGradient(0, 0, 0, 500);
+    gradientFill.addColorStop(0, 'rgba(103,186,208,1)');
+    gradientFill.addColorStop(1, 'rgba(11,83,141,1)');
+
     this.renderChart(
       {
         labels: ['', '최저매출', '내 매출', '평균매출', '최고매출', ''],
         datasets: [
           {
-            backgroundColor: '#f87979',
+            backgroundColor: gradientFill,
             data: [700, 900, 1200, 1400, 1600, 1800],
             pointRadius: [0, 5, 15, 5, 5, 0],
             pointHoverRadius: [0, 5, 20, 5, 5, 0],
             pointBackgroundColor: [
-              'grey',
-              'grey',
-              'blue',
-              'grey',
-              'grey',
-              'grey',
+              '#C4C4C4',
+              '#C4C4C4',
+              '#004D8A',
+              '#C4C4C4',
+              '#C4C4C4',
+              '#C4C4C4',
             ],
           },
         ],
@@ -38,7 +51,7 @@ export default class ResultRevenueChart extends Vue {
       {
         plugins: {
           datalabels: {
-            backgroundColor: '#fff',
+            backgroundColor: 'transparent',
             anchor: 'end',
             align: 'top',
             offset: '15',

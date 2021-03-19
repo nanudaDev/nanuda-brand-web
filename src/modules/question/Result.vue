@@ -50,14 +50,12 @@
                   style="height:600px"
                 />
               </div>
-
               <div class="txt-box text-center mt-5">
                 <p class="txt-lg txt-primary">
                   창업을 시작하기 앞서 <br />{{ codeHdongSearchDto.hdongName }}
                   의 상권 현황을 알려 드리겠습니다.
                 </p>
               </div>
-
               <button
                 class="btn-scroll-down"
                 v-scroll-to="{ el: '#detail-info', offset: 0 }"
@@ -70,31 +68,29 @@
       </template>
       <!-- 기존 창업자 차트 -->
       <template v-else>
-        <section class="article-section">
-          <div class="container">
-            <header class="section-header">
-              <h3>
-                상권 평균 매출보다 <br />
-                <strong>다소 저조합니다</strong>
-              </h3>
-              <p>
-                논현동은 최대 2800만원의 수익이 발생하고 있으며 <br />
-                평균 월 매출은 1000만원입니다.
-              </p>
-            </header>
-            <div class="section-content">
-              <!-- 차트 영역 -->
-              <div>
-                <ResultRevenueChart />
-              </div>
-
-              <div class="txt-box text-center mt-5">
-                <p class="txt-lg txt-primary">
+        <section class="article-section pb-0">
+          <header class="section-header">
+            <h3>
+              상권 평균 매출보다 <br />
+              <strong>다소 저조합니다</strong>
+            </h3>
+            <p>
+              논현동은 최대 2800만원의 수익이 발생하고 있으며 <br />
+              평균 월 매출은 1000만원입니다.
+            </p>
+          </header>
+          <div class="section-content">
+            <!-- 차트 영역 -->
+            <div class="chart-container">
+              <ResultRevenueChart />
+            </div>
+            <div class="bg-gradient">
+              <div class="txt-box text-center">
+                <p class="txt-lg">
                   창업을 시작하기 앞서 <br />{{ codeHdongSearchDto.hdongName }}
                   의 상권 현황을 알려 드리겠습니다.
                 </p>
               </div>
-
               <button
                 class="btn-scroll-down"
                 v-scroll-to="{ el: '#detail-info', offset: 0 }"
@@ -485,19 +481,42 @@ export default class Result extends BaseComponent {
 
 <style lang="scss">
 .app-question {
+  .bg-gradient {
+    background: #0b538d;
+    background: rgb(11, 83, 141);
+    background: -moz-linear-gradient(
+      360deg,
+      rgba(11, 83, 141, 1) 0%,
+      rgba(30, 104, 155, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+      360deg,
+      rgba(11, 83, 141, 1) 0%,
+      rgba(30, 104, 155, 1) 100%
+    );
+    background: linear-gradient(
+      360deg,
+      rgba(11, 83, 141, 1) 0%,
+      rgba(30, 104, 155, 1) 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0b538d",endColorstr="#1e689b",GradientType=1);
+    padding-top: 3.25em;
+    padding-bottom: 6.25em;
+    color: #fff;
+  }
   #question-result {
     word-break: keep-all;
     .btn-scroll-down {
       position: absolute;
       left: 50%;
-      transform: translateX(-50%);
+      margin-left: -0.75em;
       bottom: 3em;
       z-index: 2;
       animation: animated-mouse 1s ease-in-out infinite;
       svg {
         width: 1.5em;
         height: 1.5em;
-        fill: #0b538d;
+        fill: #fff;
       }
     }
     .article-header {
@@ -609,11 +628,19 @@ export default class Result extends BaseComponent {
     }
   }
 
+  .chart-container {
+    position: relative;
+    overflow: hidden;
+    canvas {
+      transform: scaleX(1.05);
+    }
+  }
+
   #question-solution {
     .btn-scroll-down {
       position: absolute;
       left: 50%;
-      transform: translateX(-50%);
+      margin-left: -0.75em;
       bottom: 3em;
       z-index: 2;
       animation: animated-mouse 1s ease-in-out infinite;
