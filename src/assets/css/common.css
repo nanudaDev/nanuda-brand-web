@@ -362,6 +362,14 @@ body {
   height: inherit;
 }
 
+.txt-xs {
+  font-size: 0.75rem;
+}
+
+.txt-sm {
+  font-size: 0.875rem;
+}
+
 .txt-lg {
   font-size: 1.125em;
 }
@@ -487,5 +495,105 @@ body {
     opacity: 1;
     transform: translateY(1em);
   }
+}
+
+.vue-daum-postcode {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-body {
+  background: url("../images/loading.gif") no-repeat center center;
+  background-size: 5em 5em;
+  min-height: 400px;
+}
+
+.loading-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.6);
+  background-image: url("../images/loading.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 5em 5em;
+}
+
+.loading-layer .loading-container video {
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  z-index: -10;
+  width: 100%;
+  height: 100vh;
+}
+
+.complete-time-box .row > div + div {
+  border-left: 1px solid #0b538d;
+}
+
+.complete-time-box .row > div .label-box {
+  padding: 1em 0;
+  font-size: 0.875em;
+  color: #020202;
+  text-align: center;
+  border-bottom: 1px solid #0b538d;
+  background-color: #f9f9f9;
+}
+
+.complete-time-box .row > div .cont-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 5.875em;
+  line-height: 1.5;
+}
+
+.complete-time-box .row > div .cont-box p {
+  padding: 0.5em;
+  font-size: 0.875em;
+}
+
+.complete-time-box .row > div .percent-box {
+  height: 100%;
+}
+
+.complete-time-box .row > div .percent-box.offline-ratio {
+  background: #a7bdd3;
+  background: linear-gradient(90deg, #a7bdd3 0%, #1c4d86 35%);
+  margin-left: auto;
+}
+
+.complete-time-box .row > div .percent-box.delivery-ratio {
+  background: #ddb028;
+  background: linear-gradient(90deg, #ddb028 0%, #e8d791 35%);
+  margin-right: auto;
+}
+
+.form-container label {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: #000000;
+}
+
+.form-container input {
+  border-radius: 0;
+  border-color: #707070;
+}
+
+.form-container .btn {
+  width: 100%;
+  border-radius: 0;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  color: #c4c4c4;
+  font-size: 1em !important;
 }
 /*# sourceMappingURL=common.css.map */
