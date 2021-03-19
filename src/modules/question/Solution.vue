@@ -5,16 +5,23 @@
         <span>
           <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
         </span>
-        <h2>
-          <!-- {{ resultRequestDto.fnbOwnerStatus | enumTransformer }} -->
-          의 <template> 업력,</template> 경험 그리고 상권분석을 <br />
+        <h2 v-if="resultRequestDto">
+          {{ resultRequestDto.fnbOwnerStatus | enumTransformer }}
+          의
+          <template v-if="resultRequestDto.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
+            업력,</template
+          >
+          경험 그리고 상권분석을 <br />
           종합하였을 때 아래의 메뉴가 가장 적합합니다
         </h2>
       </div>
     </header>
     <div class="article-content">
-      <!-- <section class="bg-light">
-        <div class="complete-time-box">
+      <section class="bg-light">
+        <div
+          class="complete-time-box"
+          v-if="result.completeTimeData && result.completeTimeData.length > 0"
+        >
           <div class="row no-gutters">
             <div
               v-for="timeData in result.completeTimeData"
@@ -34,16 +41,16 @@
             </div>
           </div>
         </div>
-      </section> -->
+      </section>
       <section class="article-section section01 bg-primary">
         <div class="container">
-          <div class="row-box">
+          <div class="row-box" v-if="result && result.responses[0]">
             <h4>
               메뉴 전략
             </h4>
             <p>
-              점심에는 한식의 국/탕류 저녁에는 분식의 국물류 메뉴를 추가하면 더
-              큰 수익을 기대할 수 있습니다.
+              {{ result.responses[0].koreanPrefSentence }}
+              {{ result.responses[0].modifiedResponse.response }}
             </p>
           </div>
           <div class="row-box">
@@ -51,8 +58,7 @@
               운영 전략
             </h4>
             <p>
-              홀 고객이 적은 시간에 배달을 추가해 영업 시간을 활용하면 좋은
-              지역입니다.
+              {{ result.operationSentenceResponse }}
             </p>
           </div>
           <div class="btn-box text-center mt-5 pt-5">
@@ -119,14 +125,15 @@
       </section>
       <section class="article-section section03 bg-light">
         <div class="container">
+          <!-- TODO: 이용자 후기 이름 변경 필요 -->
           <swiper :options="swiperOption" ref="mySwiper">
             <swiper-slide>
               <div class="row-box">
                 <div class="img-box">
-                  <img src="@/assets/images/icon_logo_symbol.png" />
+                  <img src="@/assets/images/icon_logo_symbol.svg" />
                 </div>
                 <div class="txt-box">
-                  <h4>이용자 후기</h4>
+                  <h4>이지원 이용자 후기</h4>
                   <p>
                     배달 메뉴를 추가하려고 픽쿡을 찾았는데 <br />
                     예상보다 매출이 잘나와서 좋았습니다.<br />
@@ -138,10 +145,10 @@
             <swiper-slide>
               <div class="row-box">
                 <div class="img-box">
-                  <img src="@/assets/images/icon_logo_symbol.png" />
+                  <img src="@/assets/images/icon_logo_symbol.svg" />
                 </div>
                 <div class="txt-box">
-                  <h4>이용자 후기</h4>
+                  <h4>박지홍 이용자 후기</h4>
                   <p>
                     한식을 매장 판매 하는데 배달은 픽쿡이 안내한 파스타를<br />
                     판매하고 있습니다. 만들기가 쉽게 만들어져서 편리합니다.
@@ -154,10 +161,10 @@
             <swiper-slide>
               <div class="row-box">
                 <div class="img-box">
-                  <img src="@/assets/images/icon_logo_symbol.png" />
+                  <img src="@/assets/images/icon_logo_symbol.svg" />
                 </div>
                 <div class="txt-box">
-                  <h4>이용자 후기</h4>
+                  <h4>전지연 이용자 후기</h4>
                   <p>
                     맨처음 창업할 때 부터 이 서비스가 있었다면 좀 더 <br />잘
                     만들 수 있었을 텐데ㅠㅠ. 상권도 모르고 가게 열어서
@@ -257,6 +264,7 @@
         size="lg"
         class=" rounded-0"
         :disabled="isConsultBtnDisabled"
+        @click="onConsultBtnClicked"
       >
         <span>픽쿡 플래너 만나기</span>
         <span class="icon icon-arrow-right"><BaseArrow /></span>
@@ -274,6 +282,7 @@ import { ConsultRequestDto } from '@/dto/question';
 import authService from '@/services/auth.service';
 // import toast from '../../../resources/assets/js/services/toast.js';
 import questionService from '@/services/question.service';
+import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 @Component({
   name: 'Solution',
   components: { ResultRevenueChart, FoodCategoryRatioChart },
@@ -283,7 +292,10 @@ export default class Solution extends BaseComponent {
     mySwiper: HTMLFormElement;
     tagRef: HTMLFormElement;
   };
-
+  // TODO: result, resultRequestDto  세션스토리지로 바꿔야함 , 타입체크변경
+  private result: any = null;
+  private resultRequestDto: any = null;
+  //
   private consultRequestDto = new ConsultRequestDto();
   private isVerified = false;
   private isSMSCodeSent = false;
@@ -370,7 +382,11 @@ export default class Solution extends BaseComponent {
   onConsultBtnClicked() {
     questionService.postConsult(this.consultRequestDto);
   }
-  mounted() {
+
+  created() {
+    // TODO : result , resultRequestDto 세션 스토리 저장? 필요
+    this.result = this.$route.params.result;
+    this.resultRequestDto = this.$route.params.resultRequestDto;
     this.consultRequestDto.proformaConsultResultId = +this.$route.params
       .proformaId;
   }

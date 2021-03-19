@@ -76,14 +76,15 @@
             </h3>
             <p>
               <strong>{{ result.hdong.hdongName }}</strong
-              >은 월 매출 최대 <strong>{{ result.highestRevenue }}</strong
-              >만원의 수익이 발생하고 있으며
+              >은 월 매출 최대
+              <strong>{{ result.highestRevenue }}</strong> 만원의 수익이
+              발생하고 있으며
               <br />
               평균 월 매출은
               <strong>{{
                 Math.round((result.highestRevenue + result.lowestRevenue) / 2)
-              }}</strong
-              >만원입니다.
+              }}</strong>
+              만원입니다.
             </p>
           </header>
           <div class="section-content">
@@ -97,7 +98,7 @@
               <div class="txt-box text-center">
                 <p class="txt-lg">
                   사장님께서 위치한 <br />
-                  {{ codeHdongSearchDto.hdongName }} 의 상권 현황입니다
+                  {{ result.hdong.hdongName }} 의 상권 현황입니다
                 </p>
               </div>
               <button
@@ -259,7 +260,11 @@
         @click="
           $router.push({
             name: 'solution',
-            params: { proformaId: result.proformaId },
+            params: {
+              proformaId: result.proformaId,
+              resultRequestDto: resultRequestDto,
+              result: result,
+            },
           })
         "
       >
@@ -326,7 +331,7 @@ export default class Result extends BaseComponent {
         // });
         this.selectedFoodCategory = filterArray[0].mediumCategoryName;
         this.locationDetailInfo = filterArray.splice(0, 5);
-        console.log(this.selectedFoodCategory, this.locationDetailInfo);
+        // console.log(this.selectedFoodCategory, this.locationDetailInfo);
       }
     });
   }
