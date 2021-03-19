@@ -385,7 +385,9 @@ export default class Question extends BaseComponent {
       });
     } else {
       this.question = '어떤 곳에서 창업을 희망하나요?';
+      this.isLoading = true;
       codeHdongService.getSido().subscribe(res => {
+        this.isLoading = false;
         this.addressGivens = res.data;
       });
     }
@@ -556,6 +558,7 @@ export default class Question extends BaseComponent {
   }
   //level이 내려감에따라 showingLevel(보여줘야할 정보)이 변함
   getGuOrDong(given?: CodeHdongDto) {
+    this.isLoading = true;
     if (given) {
       this.codeHdongSearchDto.sidoName = given.sidoName;
       this.codeHdongSearchDto.hdongCode = given.hdongCode;
@@ -564,6 +567,7 @@ export default class Question extends BaseComponent {
     }
     if (this.showingLevel === ADDRESS_LEVEL.sidoName) {
       codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
+        this.isLoading = false;
         this.addressGivens = res.data;
         this.showingLevel = ADDRESS_LEVEL.guName;
         // 진행 단계 증가
@@ -571,6 +575,7 @@ export default class Question extends BaseComponent {
       });
     } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
       codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
+        this.isLoading = false;
         this.addressGivens = res.data;
         this.showingLevel = ADDRESS_LEVEL.hdongName;
         // 진행 단계 증가
