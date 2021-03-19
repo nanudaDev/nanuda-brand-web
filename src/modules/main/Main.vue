@@ -260,7 +260,7 @@
           data-aos-duration="1500"
         >
           <b-tabs align="center">
-            <b-tab title="분석하기" active>
+            <b-tab title="진단하기" active>
               <div class="img-box">
                 <div class="mask-box">
                   <img
@@ -270,12 +270,12 @@
               </div>
               <div class="txt-box">
                 <p>
-                  창업지역의 고객, 경쟁자, 잘 팔리는 업종을 <br />
-                  꼼꼼하게 분석합니다.
+                  간단한 설문을 통해 창업지역과 <br />
+                  현재 상황을 진단할 수 있어요.
                 </p>
               </div>
             </b-tab>
-            <b-tab title="진단하기">
+            <b-tab title="결과보기">
               <div class="img-box">
                 <div class="mask-box">
                   <img
@@ -285,12 +285,12 @@
               </div>
               <div class="txt-box">
                 <p>
-                  창업지역의 시간대별 소비현황과 <br />
-                  매장의 상황을 세부적으로 진단합니다.
+                  빅데이터로 분석된 고객, 경쟁사, 시간대별 <br />
+                  소비메뉴를 세부적으로 확인하세요.
                 </p>
               </div>
             </b-tab>
-            <b-tab title="추천하기">
+            <b-tab title="추천받기">
               <div class="img-box">
                 <div class="mask-box">
                   <img
@@ -300,12 +300,12 @@
               </div>
               <div class="txt-box">
                 <p>
-                  창업 지역에 딱맞는 시간대별 <br />
-                  메뉴와 판매 방법을 제공합니다.
+                  창업지역에 딱 맞는 시간대별 메뉴와 <br />
+                  운영 방법을 추천 받으세요.
                 </p>
               </div>
             </b-tab>
-            <b-tab title="실행하기">
+            <b-tab title="신청하기">
               <div class="img-box">
                 <div class="mask-box">
                   <img
@@ -315,8 +315,8 @@
               </div>
               <div class="txt-box">
                 <p>
-                  메뉴와 운영 교육, 관리를 <br />
-                  픽쿡이 함께 합니다.
+                  픽쿡플래너를 통해 자신에게 <br />
+                  딱 맞는 창업을 시작해보세요.
                 </p>
               </div>
             </b-tab>
@@ -636,6 +636,7 @@ export default class Main extends BaseComponent {
             font-size: 1em;
             padding: 0.625em 0;
             margin: 0 1em;
+            outline: none !important;
             &.active {
               font-weight: 800;
               color: #2140a3;
