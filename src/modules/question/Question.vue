@@ -628,11 +628,10 @@ export default class Question extends BaseComponent {
           this.isAvailableLocation = false;
         }
         // console.log(hdongCodeSido);
+        this.$bvModal.hide('post-code');
       }
     };
     geocoder.addressSearch(this.selectedRoadAddress, callback);
-
-    this.$bvModal.hide('post-code');
   }
   onMultipleAnswerClicked(given: Given) {
     if (this.selectedAnswers.includes(given)) {

@@ -562,271 +562,272 @@ export default class Main extends BaseComponent {
 }
 </script>
 <style lang="scss">
-.video-wrapper {
-  position: relative;
-  .video-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    &:after {
-      display: block;
-      content: '';
-      background-color: rgba(0, 0, 0, 0.35);
+.app-main {
+  .video-wrapper {
+    position: relative;
+    .video-container {
       position: absolute;
       left: 0;
       top: 0;
-      width: 100%;
-      height: 100%;
-    }
-    video {
-      object-fit: cover;
-      position: absolute;
-      top: 0;
-      z-index: -10;
       width: 100%;
       height: 100vh;
-    }
-    img {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      object-fit: cover;
-      height: 100%;
-    }
-  }
-  .title-container {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    color: #fff;
-    text-align: center;
-    h2 {
-      font-size: 2.1875em;
-      font-weight: bold;
-      line-height: 1.3;
-    }
-    p {
-      font-size: 1.25em;
-      margin-top: 1em;
-    }
-    .btn-box {
-      margin-top: 5em;
-    }
-  }
-  .btn-scroll-down {
-    position: absolute;
-    bottom: 2.5em;
-    left: 50%;
-    margin-left: -0.75em;
-    z-index: 10;
-    animation: animated-mouse 1s ease-in-out infinite;
-    svg {
-      width: 1.5em;
-      height: 1.5em;
-      fill: white;
-    }
-  }
-}
-.article-section {
-  padding: 5em 0;
-  .section-title {
-    text-align: center;
-    h3 {
-      font-size: 1.5em;
-      font-weight: bold;
-      line-height: 1.4;
-
-      + p {
-        font-size: 1em;
-        margin-top: 1.25em;
-      }
-    }
-    .title-en {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 0.5em;
-    }
-    + .section-content {
-      margin-top: 3em;
-    }
-  }
-
-  &.section04 {
-    .tabs {
-      position: relative;
-      .nav-tabs {
+      &:after {
+        display: block;
+        content: '';
+        background-color: rgba(0, 0, 0, 0.35);
         position: absolute;
-        bottom: 5.625em;
         left: 0;
-        right: 0;
-        border: 0;
-        .nav-item {
-          .nav-link {
-            position: relative;
-            border: 0;
-            background: 0;
-            color: #acacac;
-            font-size: 1em;
-            padding: 0.625em 0;
-            margin: 0 1em;
-            outline: none !important;
-            &.active {
-              font-weight: 800;
-              color: #2140a3;
-              &:before {
-                display: block;
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 0.25em;
-                background: #2140a3;
-                border-radius: 1.5em;
-              }
-            }
-          }
-        }
+        top: 0;
+        width: 100%;
+        height: 100%;
       }
-      .tab-content {
-        .tab-pane {
-          &.active {
-            .mask-box {
-              img {
-                animation: slideInUp 0.6s ease-out forwards;
-              }
-            }
-          }
-        }
-        .img-box {
-          text-align: center;
-          max-width: 25em;
-          margin: 0 auto;
-          .mask-box {
-            position: relative;
-            padding-bottom: 96%;
-            overflow: hidden;
-
-            img {
-              position: absolute;
-              bottom: -20%;
-              left: 0;
-              width: 100%;
-            }
-          }
-        }
-        .txt-box {
-          text-align: center;
-          margin-top: 5.625em;
-          p {
-            font-size: 1.125em;
-          }
-        }
+      video {
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        z-index: -10;
+        width: 100%;
+        height: 100vh;
+      }
+      img {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        object-fit: cover;
+        height: 100%;
+      }
+    }
+    .title-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #fff;
+      text-align: center;
+      h2 {
+        font-size: 2.1875em;
+        font-weight: bold;
+        line-height: 1.3;
+      }
+      p {
+        font-size: 1.25em;
+        margin-top: 1em;
+      }
+      .btn-box {
+        margin-top: 5em;
+      }
+    }
+    .btn-scroll-down {
+      position: absolute;
+      bottom: 2.5em;
+      left: 50%;
+      margin-left: -0.75em;
+      z-index: 10;
+      animation: animated-mouse 1s ease-in-out infinite;
+      svg {
+        width: 1.5em;
+        height: 1.5em;
+        fill: white;
       }
     }
   }
-
-  &.section05 {
+  .article-section {
+    padding: 5em 0;
     .section-title {
+      text-align: center;
       h3 {
         font-size: 1.5em;
-        font-weight: 400;
+        font-weight: bold;
         line-height: 1.4;
+
+        + p {
+          font-size: 1em;
+          margin-top: 1.25em;
+        }
+      }
+      .title-en {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5em;
+      }
+      + .section-content {
+        margin-top: 3em;
       }
     }
-  }
 
-  .search-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    border: 1px solid #707070;
-    border-radius: 2.5em;
-    width: 18em;
-    height: 2.875em;
-    font-weight: 500;
-    padding: 0 1.25em;
-    margin: 0 auto;
-
-    .search-keyword {
-      font-size: 1.25em;
-    }
-
-    .icon-search {
-      fill: #707070;
-    }
-
-    .cursor {
-      margin-left: 0.05em;
-      border-right: 0.05em solid;
-      animation: caret 1s steps(1) infinite;
-    }
-  }
-
-  .tag-box {
-    margin: 2.5em auto;
-    .row-box {
-      margin-top: 1em;
-    }
-    .tags {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      max-width: 20em;
-      margin: 0 auto;
-      .tag {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 25%;
-        height: 1.875em;
-        font-size: 1em;
-        color: #707070;
-        z-index: 2;
-        transition: all 1s ease;
-
-        &.is-active {
-          color: #fff;
-          font-weight: 500;
-        }
-
-        &.is-selected {
+    &.section04 {
+      .tabs {
+        position: relative;
+        .nav-tabs {
           position: absolute;
-          top: 0;
-          background: #004d8a;
-          border-radius: 2.5em;
-          z-index: 1;
+          bottom: 5.625em;
+          left: 0;
+          right: 0;
+          border: 0;
+          .nav-item {
+            .nav-link {
+              position: relative;
+              border: 0;
+              background: 0;
+              color: #acacac;
+              font-size: 1em;
+              padding: 0.625em 0;
+              margin: 0 1em;
+              outline: none !important;
+              &.active {
+                font-weight: 800;
+                color: #2140a3;
+                &:before {
+                  display: block;
+                  content: '';
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 0.25em;
+                  background: #2140a3;
+                  border-radius: 1.5em;
+                }
+              }
+            }
+          }
+        }
+        .tab-content {
+          .tab-pane {
+            &.active {
+              .mask-box {
+                img {
+                  animation: slideInUp 0.6s ease-out forwards;
+                }
+              }
+            }
+          }
+          .img-box {
+            text-align: center;
+            max-width: 25em;
+            margin: 0 auto;
+            .mask-box {
+              position: relative;
+              padding-bottom: 96%;
+              overflow: hidden;
+
+              img {
+                position: absolute;
+                bottom: -20%;
+                left: 0;
+                width: 100%;
+              }
+            }
+          }
+          .txt-box {
+            text-align: center;
+            margin-top: 5.625em;
+            p {
+              font-size: 1.125em;
+            }
+          }
         }
       }
     }
-  }
 
-  .mockup-box {
-    .mockup-card {
-      width: 17.5em;
-      overflow: hidden;
-      margin: 0 auto;
-      border-radius: 1.25em;
-      .swiper-container {
-        border-radius: 1.25em;
-        overflow: hidden;
+    &.section05 {
+      .section-title {
+        h3 {
+          font-size: 1.5em;
+          font-weight: 400;
+          line-height: 1.4;
+        }
       }
-      figure {
-        img {
-          display: block;
-          width: 100%;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border: 1px solid #707070;
+      border-radius: 2.5em;
+      width: 18em;
+      height: 2.875em;
+      font-weight: 500;
+      padding: 0 1.25em;
+      margin: 0 auto;
+
+      .search-keyword {
+        font-size: 1.25em;
+      }
+
+      .icon-search {
+        fill: #707070;
+      }
+
+      .cursor {
+        margin-left: 0.05em;
+        border-right: 0.05em solid;
+        animation: caret 1s steps(1) infinite;
+      }
+    }
+
+    .tag-box {
+      margin: 2.5em auto;
+      .row-box {
+        margin-top: 1em;
+      }
+      .tags {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        max-width: 20em;
+        margin: 0 auto;
+        .tag {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 25%;
+          height: 1.875em;
+          font-size: 1em;
+          color: #707070;
+          z-index: 2;
+          transition: all 1s ease;
+
+          &.is-active {
+            color: #fff;
+            font-weight: 500;
+          }
+
+          &.is-selected {
+            position: absolute;
+            top: 0;
+            background: #004d8a;
+            border-radius: 2.5em;
+            z-index: 1;
+          }
+        }
+      }
+    }
+
+    .mockup-box {
+      .mockup-card {
+        width: 17.5em;
+        overflow: hidden;
+        margin: 0 auto;
+        border-radius: 1.25em;
+        .swiper-container {
+          border-radius: 1.25em;
+          overflow: hidden;
+        }
+        figure {
+          img {
+            display: block;
+            width: 100%;
+          }
         }
       }
     }
   }
 }
-
 @media screen and (min-width: 1200px) {
   .article-section {
     &.section03 {
