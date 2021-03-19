@@ -568,6 +568,8 @@ export default class Result extends BaseComponent {
         color: #0b538d;
         h3 {
           font-weight: 200;
+          font-size: 1.875em;
+          line-height: 1.6;
           strong {
             font-weight: 600;
           }
@@ -601,7 +603,11 @@ export default class Result extends BaseComponent {
           display: flex;
           align-items: center;
           justify-content: center;
+          text-align: center;
+          font-size: 0.875em;
+          padding: 0.5em;
           height: 5.875em;
+          line-height: 1.5;
         }
         .percent-box {
           height: 100%;
@@ -675,6 +681,8 @@ export default class Result extends BaseComponent {
         color: #0b538d;
         h3 {
           font-weight: 200;
+          font-size: 1.875em;
+          line-height: 1.6;
           strong {
             font-weight: 600;
           }
