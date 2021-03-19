@@ -180,6 +180,7 @@ export default class NavBar extends BaseComponent {
 }
 @media screen and (min-width: 992px) {
   .navbar {
+    height: 3.75em;
     .navbar-nav {
       margin-left: auto;
       margin-right: 1.5em;

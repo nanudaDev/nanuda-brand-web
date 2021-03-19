@@ -102,7 +102,7 @@ export default class MainLayout extends BaseComponent {
   &:not(.app-main) {
     .main-article {
       min-height: calc(100vh - 17.125em);
-      padding: 5em 0 3.375em;
+      padding: 3.375em 0 3.375em;
     }
   }
 }
