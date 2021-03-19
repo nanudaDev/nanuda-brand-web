@@ -2,25 +2,49 @@
   <article class="main-article">
     <div class="video-wrapper">
       <div class="video-container">
-        <video
-          autoplay
-          muted
-          loop
-          playsinline
-          id="vid"
-          ref="videoRef"
-          class="video"
-        >
-          해당 브라우저는 video 태그를 지원하지 않습니다.
-          <source
-            src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
-            type="video/webm"
-          />
-          <source
-            src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
-            type="video/mp4"
-          />
-        </video>
+        <!-- ?isFnbVideo=true 로 접속시 FNB 비디오 출력 -->
+        <template v-if="!isFnbVideo">
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            id="vid"
+            ref="videoRef"
+            class="video"
+          >
+            해당 브라우저는 video 태그를 지원하지 않습니다.
+            <source
+              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
+              type="video/webm"
+            />
+            <source
+              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </template>
+        <template v-else>
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            id="vid"
+            ref="videoRef"
+            class="video"
+          >
+            해당 브라우저는 video 태그를 지원하지 않습니다.
+            <source
+              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video02.mp4"
+              type="video/webm"
+            />
+            <source
+              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video02.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </template>
       </div>
       <div class="title-container">
         <div>
@@ -376,6 +400,7 @@ export default class Main extends BaseComponent {
     tagRef: HTMLFormElement;
   };
   navbarHeight: any = 0;
+  private isFnbVideo = false;
   private currentIdx = 0;
   private tagList: any = [
     {
@@ -514,6 +539,19 @@ export default class Main extends BaseComponent {
   }
 
   mounted() {
+    // TODO :  나중에 util 함수로 옮기기
+    const urlQuery = location.search;
+    if (!urlQuery) {
+      return;
+    } else {
+      const params = Object.fromEntries(new URLSearchParams(urlQuery));
+      if (params.isFnbVideo) {
+        this.isFnbVideo = true;
+      } else {
+        this.isFnbVideo = false;
+      }
+    }
+
     const target = document.querySelector('.navbar');
     this.navbarHeight = target.getBoundingClientRect().height;
     this.onStartTextAnimation(0);
