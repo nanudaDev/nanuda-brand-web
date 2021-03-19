@@ -25,10 +25,10 @@
           </header>
           <div class="section-content">
             <p>
-              픽쿡은 고객이 어떤 것을 선호하는지, 어떻게 소비하는지,
-              <br />그리고 어떻게 변화하는지에 대한 상권 정보를 제공하고
-              <br />그변화에 맞는 메뉴와 솔루션을 드립니다. <br />그고객이
-              선호하는 메뉴를 추가하여 매출을 올리세요.
+              픽쿡은 여러분의 가게가 위치한 곳의 고객이 <br />
+              어떤 것을 선호하는지, 어떻게 소비하는지를 분석하고
+              <br />제공합니다. 빠르게 변화하는 내 상권의 트렌드를 가장 <br />
+              빠르게 알 수 있습니다.
             </p>
           </div>
         </div>
@@ -44,23 +44,23 @@
           </header>
           <div class="section-content">
             <p>
-              픽쿡은 사장님의 운영상황을 상권 정보와 함께 분석하여 <br />
-              조리가 쉽고 식자재 비용이 낮은 메뉴를 제공합니다. <br />
-              추가 인력 없이 원하시는 메뉴와 부가서비스를 <br />
-              픽쿡에서 한 번에 이용하세요.
+              픽쿡은 고객과 상권 정보를 바탕으로 공정이 쉽고<br />
+              비용율이 낮은 메뉴를 제공합니다. <br />
+              픽쿡의 솔루션은 가장 낮은 비용으로 가장 높은<br />
+              효과를 지향합니다.
             </p>
           </div>
         </div>
       </section>
       <section class="article-section text-lg-center">
         <div class="container">
-          <!-- TODO: 리뷰 이름 , 운영 수정 필요 -->
+          <!-- TODO: 리뷰 이름  -->
           <swiper :options="swiperOption" ref="mySwiper">
             <swiper-slide>
               <div class="review-box">
                 <div class="info-box row-box">
                   <div class="img-box">
-                    <img src="@/assets/images/icon_logo_symbol.svg" alt="" />
+                    <img src="@/assets/images/about_us_review_01.png" alt="" />
                   </div>
                   <div class="txt-box">
                     이지원 예비사장님 <br />
@@ -69,13 +69,12 @@
                 </div>
                 <div class="cont-box row-box">
                   <p>
-                    픽쿡은 사장님의 운영상황을 상권 정보와 함께 분석하여
+                    창업 초기부터 픽쿡에 가입했습니다. <br class="d-xl-none" />
+                    좋은 아이템만 골라서 초간단 레시피로 3일만에 메뉴를
                     <br class="d-xl-none" />
-                    조리가 쉽고 식자재 비용이 낮은 메뉴를 제공합니다.
+                    모두 배웠습니다. 공유주방에서 지금 운영하는데
                     <br class="d-xl-none" />
-                    추가 인력 없이 원하시는 메뉴와 부가서비스를
-                    <br class="d-xl-none" />
-                    픽쿡에서 한 번에 이용하세요.
+                    주문이 많아서 힘드네요. 행복한 고민입니다.
                   </p>
                 </div>
               </div>
@@ -84,11 +83,11 @@
               <div class="review-box">
                 <div class="info-box row-box">
                   <div class="img-box">
-                    <img src="@/assets/images/icon_logo_symbol.svg" alt="" />
+                    <img src="@/assets/images/about_us_review_02.png" alt="" />
                   </div>
                   <div class="txt-box">
-                    이지원 예비사장님 <br />
-                    <strong>논현동 한식 운영</strong>
+                    박지홍 예비사장님 <br />
+                    <strong>망원동 치킨 운영</strong>
                   </div>
                 </div>
                 <div class="cont-box row-box">
@@ -107,11 +106,11 @@
               <div class="review-box">
                 <div class="info-box row-box">
                   <div class="img-box">
-                    <img src="@/assets/images/icon_logo_symbol.svg" alt="" />
+                    <img src="@/assets/images/about_us_review_03.png" alt="" />
                   </div>
                   <div class="txt-box">
-                    이지원 예비사장님 <br />
-                    <strong>논현동 한식 운영</strong>
+                    전지연 예비사장님 <br />
+                    <strong>성수동 분식 운영</strong>
                   </div>
                 </div>
                 <div class="cont-box row-box">

@@ -650,9 +650,12 @@ body {
 
 .app-about-us .review-box .info-box .img-box {
   width: 4em;
+  margin-right: 1em;
+}
+
+.app-about-us .review-box .info-box .img-box img {
   border-radius: 50%;
   box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.05);
-  margin-right: 1em;
 }
 
 .app-about-us .review-box .info-box .txt-box {

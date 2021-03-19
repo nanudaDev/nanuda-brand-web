@@ -677,9 +677,11 @@ body {
       text-align: left;
       .img-box {
         width: 4em;
-        border-radius: 50%;
-        box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.05);
         margin-right: 1em;
+        img {
+          border-radius: 50%;
+          box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.05);
+        }
       }
       .txt-box {
         line-height: 1.4;
