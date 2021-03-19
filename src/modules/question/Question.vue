@@ -190,7 +190,6 @@
                           class="rounded-pill"
                         />
                       </b-form-group>
-
                       <div class="text-center mt-4">
                         <b-btn
                           @click="getFirstQuestion()"
@@ -201,6 +200,16 @@
                           pill
                           >다음</b-btn
                         >
+                      </div>
+                      <div
+                        class="txt-box text-center mt-5"
+                        v-if="isAvailableLocation"
+                      >
+                        <p class="text-light">
+                          현재 상권분석이 가능한 지역은<br />
+                          <strong>{{ availableLocation }}</strong>
+                          <br />입니다
+                        </p>
                       </div>
                       <b-modal id="post-code" hide-footer no-close-on-backdrop>
                         <template #modal-title>
@@ -334,6 +343,7 @@ import { ADDRESS_LEVEL, YN } from '@/common';
   components: { VueDaumPostcode, Result },
 })
 export default class Question extends BaseComponent {
+  [x: string]: any;
   // private userType: USER = null;
 
   private firstQuestionDto = new FirstQuestionDto();
@@ -351,6 +361,8 @@ export default class Question extends BaseComponent {
   private question = '나는 현재';
   private FNB_OWNER = FNB_OWNER;
   private aggregateResultResponseDto: AggregateResultResponse = null;
+  private isAvailableLocation = false;
+  private availableLocation = '';
   private firstGivens = [
     {
       id: 1,
@@ -382,6 +394,13 @@ export default class Question extends BaseComponent {
       this.question = '음식점 주소를 알려주세요!';
       this.$nextTick(() => {
         this.$bvModal.show('post-code');
+      });
+      codeHdongService.getSido().subscribe(res => {
+        this.isLoading = false;
+        this.addressGivens = res.data;
+        const locationArray = this.addressGivens.map(e => e.sidoName);
+        const locationArrayText = locationArray.join(', ');
+        this.availableLocation = locationArrayText;
       });
     } else {
       this.question = '어떤 곳에서 창업을 희망하나요?';
@@ -592,12 +611,23 @@ export default class Question extends BaseComponent {
   onPostCodeComplete(event: any) {
     this.selectedRoadAddress = event.roadAddress;
     const geocoder = new window.kakao.maps.services.Geocoder();
+    const availableLocationCodeArray = ['11', '41', '28', '26', '50'];
     const callback = (results: any, status: any) => {
       if (status === window.kakao.maps.services.Status.OK) {
         this.resultRequestDto.hdongCode = results[0].address.h_code;
+        const hdongCodeSido = this.resultRequestDto.hdongCode.substring(0, 2);
+        availableLocationCodeArray.includes(hdongCodeSido);
+        if (!availableLocationCodeArray.includes(hdongCodeSido)) {
+          this.isAvailableLocation = true;
+        } else {
+          this.isAvailableLocation = false;
+        }
+
+        console.log(hdongCodeSido);
       }
     };
     geocoder.addressSearch(this.selectedRoadAddress, callback);
+
     this.$bvModal.hide('post-code');
   }
   onMultipleAnswerClicked(given: Given) {
