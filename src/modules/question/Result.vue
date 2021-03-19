@@ -27,44 +27,85 @@
       </div>
     </header>
     <div class="article-content">
-      <section class="article-section" v-if="result.newFnbOwnerPieChartData">
-        <div class="container">
-          <header class="section-header">
-            <h3>
-              현재 {{ codeHdongSearchDto.hdongName }} 에서 <br />
-              <strong>{{ newFnbBestCategory }}의 매출이 높습니다</strong>
-            </h3>
-            <p>
-              {{ codeHdongSearchDto.hdongName }} 에서는
-              <strong>{{ newFnbOwnerCategoryList }}</strong> 순으로 <br />매출이
-              높습니다.
-            </p>
-          </header>
-          <div class="section-content">
-            <!-- 차트 영역 -->
-            <div>
-              <FoodCategoryRatioChart
-                :chartData="result.newFnbOwnerPieChartData"
-                style="height:600px"
-              />
-            </div>
-
-            <div class="txt-box text-center mt-5">
-              <p class="txt-lg txt-primary">
-                창업을 시작하기 앞서 <br />{{ codeHdongSearchDto.hdongName }} 의
-                상권 현황을 알려 드리겠습니다.
+      <!-- 신규 창업자 차트 -->
+      <template v-if="resultRequestDto.fnbOwnerStatus === 'NEW_FNB_OWNER'">
+        <section class="article-section" v-if="result.newFnbOwnerPieChartData">
+          <div class="container">
+            <header class="section-header">
+              <h3>
+                현재 {{ codeHdongSearchDto.hdongName }} 에서 <br />
+                <strong>{{ newFnbBestCategory }}의 매출이 높습니다</strong>
+              </h3>
+              <p>
+                {{ codeHdongSearchDto.hdongName }} 에서는
+                <strong>{{ newFnbOwnerCategoryList }}</strong> 순으로
+                <br />매출이 높습니다.
               </p>
-            </div>
+            </header>
+            <div class="section-content">
+              <!-- 차트 영역 -->
+              <div>
+                <FoodCategoryRatioChart
+                  :chartData="result.newFnbOwnerPieChartData"
+                  style="height:600px"
+                />
+              </div>
 
-            <button
-              class="btn-scroll-down"
-              v-scroll-to="{ el: '#detail-info', offset: 0 }"
-            >
-              <BaseArrow />
-            </button>
+              <div class="txt-box text-center mt-5">
+                <p class="txt-lg txt-primary">
+                  창업을 시작하기 앞서 <br />{{ codeHdongSearchDto.hdongName }}
+                  의 상권 현황을 알려 드리겠습니다.
+                </p>
+              </div>
+
+              <button
+                class="btn-scroll-down"
+                v-scroll-to="{ el: '#detail-info', offset: 0 }"
+              >
+                <BaseArrow />
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </template>
+      <!-- 기존 창업자 차트 -->
+      <template v-else>
+        <section class="article-section">
+          <div class="container">
+            <header class="section-header">
+              <h3>
+                상권 평균 매출보다 <br />
+                <strong>다소 저조합니다</strong>
+              </h3>
+              <p>
+                논현동은 최대 2800만원의 수익이 발생하고 있으며 <br />
+                평균 월 매출은 1000만원입니다.
+              </p>
+            </header>
+            <div class="section-content">
+              <!-- 차트 영역 -->
+              <div>
+                <ResultRevenueChart />
+              </div>
+
+              <div class="txt-box text-center mt-5">
+                <p class="txt-lg txt-primary">
+                  창업을 시작하기 앞서 <br />{{ codeHdongSearchDto.hdongName }}
+                  의 상권 현황을 알려 드리겠습니다.
+                </p>
+              </div>
+
+              <button
+                class="btn-scroll-down"
+                v-scroll-to="{ el: '#detail-info', offset: 0 }"
+              >
+                <BaseArrow />
+              </button>
+            </div>
+          </div>
+        </section>
+      </template>
+      <!-- 공통 정보 -->
       <section class="article-section bg-light" id="detail-info">
         <div class="container">
           <header class="section-header">
@@ -376,10 +417,11 @@ import {
 import { ResultRequestDto } from '@/dto/question';
 import { CodeHdongSearchDto } from '@/dto/code-hdong';
 import FoodCategoryRatioChart from '@/modules/_components/charts/FoodCategoryRatioChart.vue';
+import ResultRevenueChart from '@/modules/_components/charts/ResultRevenueChart.vue';
 
 @Component({
   name: 'Result',
-  components: { FoodCategoryRatioChart },
+  components: { FoodCategoryRatioChart, ResultRevenueChart },
 })
 export default class Result extends BaseComponent {
   [x: string]: any;
