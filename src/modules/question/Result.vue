@@ -430,6 +430,7 @@ export default class Result extends BaseComponent {
   get newFnbBestCategory() {
     if (this.result.newFnbOwnerPieChartData) {
       return this.result.newFnbOwnerPieChartData.labels[0];
+    } else {
     }
   }
 

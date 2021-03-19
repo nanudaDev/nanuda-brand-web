@@ -62,7 +62,7 @@ import ResultRevenueChart from '@/modules/_components/charts/ResultRevenueChart.
 import FoodCategoryRatioChart from '@/modules/_components/charts/FoodCategoryRatioChart.vue';
 import { ConsultRequestDto } from '@/dto/question';
 import authService from '@/services/auth.service';
-import toast from '../../../resources/assets/js/services/toast.js';
+// import toast from '../../../resources/assets/js/services/toast.js';
 import questionService from '@/services/question.service.js';
 @Component({
   name: 'Solution',
@@ -109,7 +109,7 @@ export default class Solution extends BaseComponent {
         this.isSMSCodeSent = true;
       })
       .catch(err => {
-        toast.error('휴대폰 번호를 정확히 입력해주세요');
+        // toast.error('휴대폰 번호를 정확히 입력해주세요');
       });
   }
   checkSMSCode() {
@@ -122,7 +122,7 @@ export default class Solution extends BaseComponent {
         this.isVerified = res;
       })
       .catch(err => {
-        toast.error('인증번호가 올바르지않거나 유효기간이 초과했습니다');
+        // toast.error('인증번호가 올바르지않거나 유효기간이 초과했습니다');
       });
   }
   onConsultBtnClicked() {
