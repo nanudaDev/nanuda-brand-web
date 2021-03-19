@@ -17,17 +17,17 @@
               <strong>{{
                 resultRequestDto.kbFoodCategory | enumTransformer
               }}</strong>
-              입니다.
+              입니다
             </p>
           </template>
           <template v-else>
-            <p>사장님의 평균 매출은 <strong>1000~2000만원</strong> 입니다.</p>
+            <p>입력해주신 매출을 기준으로 산정하였습니다</p>
           </template>
         </div>
       </div>
     </header>
     <div class="article-content">
-      <section class="article-section">
+      <section class="article-section" v-if="result.newFnbOwnerPieChartData">
         <div class="container">
           <header class="section-header">
             <h3>
@@ -428,15 +428,11 @@ export default class Result extends BaseComponent {
   }
 
   get newFnbBestCategory() {
-    if (this.result.newFnbOwnerPieChartData) {
-      return this.result.newFnbOwnerPieChartData.labels[0];
-    }
+    return this.result.newFnbOwnerPieChartData.labels[0];
   }
 
   get newFnbOwnerCategoryList() {
-    if (this.result.newFnbOwnerPieChartData) {
-      return this.result.newFnbOwnerPieChartData.labels.join(', ');
-    }
+    return this.result.newFnbOwnerPieChartData.labels.join(', ');
   }
 
   created() {
