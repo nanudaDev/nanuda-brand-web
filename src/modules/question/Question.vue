@@ -591,6 +591,13 @@ export default class Question extends BaseComponent {
   }
   onPostCodeComplete(event: any) {
     this.selectedRoadAddress = event.roadAddress;
+    const geocoder = new window.kakao.maps.services.Geocoder();
+    const callback = (results: any, status: any) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        this.resultRequestDto.hdongCode = results[0].address.h_code;
+      }
+    };
+    geocoder.addressSearch(this.selectedRoadAddress, callback);
     this.$bvModal.hide('post-code');
   }
   onMultipleAnswerClicked(given: Given) {
