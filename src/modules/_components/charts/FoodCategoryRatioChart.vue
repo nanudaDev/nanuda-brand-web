@@ -47,7 +47,7 @@ export default class FoodCategoryRatioChart extends Vue {
         display: true,
         position: 'bottom',
         labels: {
-          padding: 40,
+          padding: 20,
         },
       },
     });
