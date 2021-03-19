@@ -1,0 +1,512 @@
+html {
+  font-family: Arial, sans-serif;
+}
+body {
+  color: #707070;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a,
+a:hover,
+a:-webkit-any-link {
+  text-decoration: none;
+  color: inherit;
+}
+p {
+  line-height: 1.4;
+}
+img {
+  max-width: 100%;
+}
+
+button {
+  border-style: none;
+  background: none;
+  padding: 0;
+}
+button:focus {
+  outline: 0;
+}
+// html {
+//   font-size: 10px;
+// }
+body {
+  font-size: 1rem;
+  font-family: 'Gotham', 'YoonGothic', sans-serif;
+  letter-spacing: -0.03em;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBook.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBook.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBook.ttf')
+      format('truetype');
+}
+
+@font-face {
+  font-family: 'Gotham';
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamMedium.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamMedium.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamMedium.ttf')
+      format('truetype');
+}
+
+@font-face {
+  font-family: 'Gotham';
+  font-style: normal;
+  font-weight: 800;
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBold.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBold.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBold.ttf')
+      format('truetype');
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.ttf')
+      format('truetype');
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 500;
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.ttf')
+      format('truetype');
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.ttf')
+      format('truetype');
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.ttf')
+      format('truetype');
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 800;
+  src: url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff2')
+      format('woff2'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff')
+      format('woff'),
+    url('https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.ttf')
+      format('truetype');
+}
+
+.form-group {
+  position: relative;
+  .icon-search {
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.form-control-lg {
+  font-size: 1.125em;
+  height: 3.33em;
+  padding: 0 1.25em;
+}
+
+.rounded-lg {
+  border-radius: 1.25em !important;
+}
+
+.gutter-sm {
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  [class^='col-'] {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1em;
+  font-size: 1em;
+  height: 3em;
+  line-height: 1.2;
+
+  &.btn-sm {
+    font-size: 0.75em;
+    padding: 0 1em;
+    height: 2.5em;
+  }
+
+  &.btn-lg {
+    font-size: 1.125em;
+    height: 3.33em;
+  }
+
+  &.btn-xl {
+    font-size: 1.625em;
+    height: 2.3076em;
+    min-width: 8.4615em;
+  }
+
+  .icon-arrow-right {
+    width: 1em;
+    height: 1em;
+    margin-left: 0.5em;
+  }
+}
+.btn-primary {
+  border-color: #0b538d;
+  background-color: #0b538d;
+  font-weight: 700;
+  .icon {
+    fill: #fff;
+  }
+}
+
+.btn-outline-primary {
+  border-color: #0b538d;
+  background-color: transparent;
+  font-weight: 700;
+  .icon {
+    fill: #0b538d;
+  }
+}
+
+.txt-bold {
+  font-weight: 600;
+}
+
+.txt-bolder {
+  font-weight: 800;
+}
+
+.is-blind {
+  display: none;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  &.icon-arrow-right {
+    transform: rotate(-90deg);
+  }
+  &.icon-arrow-left {
+    transform: rotate(90deg);
+  }
+}
+
+.bg-primary {
+  background-color: #0b538d !important;
+}
+
+.bg-light {
+  background-color: #f5f5f5 !important;
+}
+
+.txt-primary {
+  color: #0b538d;
+}
+
+.txt-underline {
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid #0b538d;
+}
+
+.icon {
+  display: inline-flex;
+  width: 1.5em;
+  height: 1.5em;
+  svg {
+    fill: inherit;
+    width: inherit;
+    height: inherit;
+  }
+}
+
+.txt-lg {
+  font-size: 1.125em;
+}
+.txt-xl {
+  font-size: 1.25em;
+}
+.txt-big {
+  font-size: 1.5em;
+}
+
+.app-agreement,
+.app-privacy {
+  .main-header {
+    h1 {
+      font-size: 1em;
+      img {
+        width: 8em;
+      }
+    }
+  }
+  .article-section {
+    .section-header {
+      h3 {
+        padding-bottom: 1em;
+        margin-bottom: 1em;
+        border-bottom: 2px solid #545454;
+        font-size: 1.5em;
+        color: #545454;
+      }
+    }
+    .agree-box {
+      font-size: 0.875em;
+      line-height: 1.4;
+      + .agree-box {
+        margin-top: 2em;
+      }
+      h4 {
+        font-size: 1.25em;
+        color: #545454;
+        font-weight: 600;
+        margin: 1em 0;
+      }
+      .o-list {
+        margin: 1em 0;
+        li {
+          position: relative;
+          margin: 0.5em 0;
+          padding-left: 0.75em;
+          &:before {
+            position: absolute;
+            left: 0;
+            top: 0.5em;
+            display: block;
+            content: '';
+            width: 0.25em;
+            height: 0.25em;
+            background-color: #0b538d;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* animation */
+
+.fadeIn-enter-active {
+  animation: fadeIn 0.3s ease;
+}
+.fadeIn-leave-active {
+  animation: fadeIn 0.3s ease reverse;
+}
+
+.slideInUp-enter-active {
+  animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.slideInUp-leave-active {
+  animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) reverse;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  body {
+    font-size: 1.2rem;
+  }
+}
+
+@keyframes animated-mouse {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(1em);
+    -ms-transform: translateY(1em);
+    transform: translateY(1em);
+  }
+}
