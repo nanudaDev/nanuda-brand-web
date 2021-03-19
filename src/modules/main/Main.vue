@@ -164,7 +164,7 @@
         <div class="container">
           <div class="row">
             <div
-              class="col-12 col-xl-4 pb-5 mb-5 d-md-flex d-xl-block align-items-center"
+              class="col-12 col-xl-4 pb-5 mb-5 pb-lg-0 mb-lg-0 d-md-flex d-xl-block align-items-center"
             >
               <header class="section-title col-12 col-md-6 col-xl-12">
                 <h3
@@ -191,7 +191,7 @@
               </div>
             </div>
             <div
-              class="col-12 col-xl-4 pb-5 mb-5 d-md-flex flex-row-reverse d-xl-block align-items-center"
+              class="col-12 col-xl-4 pb-5 mb-5 pb-lg-0 mb-lg-0 d-md-flex flex-row-reverse d-xl-block align-items-center"
             >
               <header class="section-title col-12 col-md-6 col-xl-12">
                 <h3
@@ -218,7 +218,7 @@
               </div>
             </div>
             <div
-              class="col-12 col-xl-4 pb-5 mb-5 d-md-flex d-xl-block align-items-center"
+              class="col-12 col-xl-4 pb-5 mb-5 pb-lg-0 mb-lg-0 d-md-flex d-xl-block align-items-center"
             >
               <header class="section-title col-12 col-md-6 col-xl-12">
                 <h3
@@ -670,7 +670,7 @@ export default class Main extends BaseComponent {
           margin: 0 auto;
           .mask-box {
             position: relative;
-            padding-bottom: 125%;
+            padding-bottom: 96%;
             overflow: hidden;
 
             img {

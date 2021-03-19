@@ -332,7 +332,7 @@
         <div class="container">
           <div class="row-box">
             <div class="img-box">
-              <img src="@/assets/images/icon_logo_simbol.png" />
+              <img src="@/assets/images/icon_logo_symbol.png" />
             </div>
             <div class="txt-box">
               <h4>이용자 후기</h4>

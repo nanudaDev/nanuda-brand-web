@@ -64,14 +64,14 @@
                 <div class="container">
                   <span>
                     <img
-                      src="@/assets/images/logo_simbol.svg"
+                      src="@/assets/images/logo_symbol.svg"
                       alt="픽쿡"
                       v-if="
                         bgLightQuestionId.includes(nextQuestionDto.questionId)
                       "
                     />
                     <img
-                      src="@/assets/images/logo_simbol_w.svg"
+                      src="@/assets/images/logo_symbol_w.svg"
                       alt="픽쿡"
                       v-else
                     />
