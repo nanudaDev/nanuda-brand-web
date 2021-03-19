@@ -650,6 +650,10 @@ export default class Question extends BaseComponent {
       this.nextQuestionDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
     });
   }
+  updated() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
 }
 </script>
 <style lang="scss">
