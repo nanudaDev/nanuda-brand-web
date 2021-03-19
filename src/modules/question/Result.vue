@@ -428,11 +428,15 @@ export default class Result extends BaseComponent {
   }
 
   get newFnbBestCategory() {
-    return this.result.newFnbOwnerPieChartData.labels[0];
+    if (this.result.newFnbOwnerPieChartData) {
+      return this.result.newFnbOwnerPieChartData.labels[0];
+    }
   }
 
   get newFnbOwnerCategoryList() {
-    return this.result.newFnbOwnerPieChartData.labels.join(', ');
+    if (this.result.newFnbOwnerPieChartData) {
+      return this.result.newFnbOwnerPieChartData.labels.join(', ');
+    }
   }
 
   created() {

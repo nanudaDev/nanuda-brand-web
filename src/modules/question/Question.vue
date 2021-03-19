@@ -81,7 +81,7 @@
               </header>
               <div class="section-content">
                 <div class="container">
-                  <template v-if="givens.length > 0">
+                  <template v-if="givens && givens.length > 0">
                     <b-btn
                       @click="goToPrevious()"
                       size="sm"
@@ -190,7 +190,7 @@
                             v-model="selectedRoadAddress"
                             placeholder="운영하고 있는 음식점 위치 검색"
                             @click="$bvModal.show('post-code')"
-                            class="rounded-lg"
+                            class="rounded-pill"
                           />
                         </b-form-group>
 
