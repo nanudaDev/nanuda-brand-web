@@ -72,17 +72,26 @@
           <header class="section-header">
             <h3>
               상권 평균 매출보다 <br />
-              <strong>다소 저조합니다</strong>
+              <strong>{{ result.revenueGradeSentence }}</strong>
             </h3>
             <p>
-              논현동은 최대 2800만원의 수익이 발생하고 있으며 <br />
-              평균 월 매출은 1000만원입니다.
+              <strong>{{ result.hdong.hdongName }}</strong
+              >은 월 매출 최대 <strong>{{ result.highestRevenue }}</strong
+              >만원의 수익이 발생하고 있으며
+              <br />
+              평균 월 매출은
+              <strong>{{
+                Math.round((result.highestRevenue + result.lowestRevenue) / 2)
+              }}</strong
+              >만원입니다.
             </p>
           </header>
           <div class="section-content">
             <!-- 차트 영역 -->
             <div class="chart-container">
-              <ResultRevenueChart />
+              <ResultRevenueChart
+                :chartData="result.curFnbOwnerLineChartData"
+              />
             </div>
             <div class="bg-gradient">
               <div class="txt-box text-center">
@@ -390,7 +399,18 @@
           </div>
         </div>
       </section>
-      <b-btn variant="primary" block size="lg" class=" rounded-0">
+      <b-btn
+        variant="primary"
+        block
+        size="lg"
+        class=" rounded-0"
+        @click="
+          $router.push({
+            name: 'solution',
+            params: { proformaId: result.proformaId },
+          })
+        "
+      >
         <span>픽쿡 플래너 만나기</span>
         <span class="icon icon-arrow-right"><BaseArrow /></span>
       </b-btn>
@@ -460,9 +480,7 @@ export default class Result extends BaseComponent {
   }
 
   getCategory(category: string) {
-    console.log(category);
     this.selectedFoodCategory = category;
-    console.log('selectedFoodCategory', this.selectedFoodCategory);
   }
 
   get newFnbBestCategory() {
