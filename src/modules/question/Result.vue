@@ -189,7 +189,18 @@
           </div>
         </div>
       </section>
-      <b-btn variant="primary" block size="lg" class=" rounded-0">
+      <b-btn
+        variant="primary"
+        block
+        size="lg"
+        class=" rounded-0"
+        @click="
+          $router.push({
+            name: 'solution',
+            params: { proformaId: result.proformaId },
+          })
+        "
+      >
         내게 맞는 솔루션 보러가기
       </b-btn>
     </div>

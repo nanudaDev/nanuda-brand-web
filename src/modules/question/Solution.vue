@@ -63,7 +63,7 @@ import FoodCategoryRatioChart from '@/modules/_components/charts/FoodCategoryRat
 import { ConsultRequestDto } from '@/dto/question';
 import authService from '@/services/auth.service';
 import toast from '../../../resources/assets/js/services/toast.js';
-import questionService from '@/services/question.service.js';
+import questionService from '@/services/question.service';
 @Component({
   name: 'Solution',
   components: { ResultRevenueChart, FoodCategoryRatioChart },
@@ -126,7 +126,11 @@ export default class Solution extends BaseComponent {
       });
   }
   onConsultBtnClicked() {
-    // questionService.postConsult()
+    questionService.postConsult(this.consultRequestDto);
+  }
+  mounted() {
+    this.consultRequestDto.proformaConsultResultId = +this.$route.params
+      .proformaId;
   }
 }
 </script>

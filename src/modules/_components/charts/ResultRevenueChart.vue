@@ -46,6 +46,8 @@ export default class ResultRevenueChart extends Vue {
               size: 12,
             },
             formatter: (value: any, context: any) => {
+              console.log('context', context);
+
               if (context.dataIndex == 0) {
                 return null;
               } else if (context.dataIndex == 5) {

@@ -19,28 +19,21 @@ export default class FoodCategoryRatioChart extends Vue {
     this.renderChart(this.chartData, {
       plugins: {
         datalabels: {
-          labels: {
-            index: {
-              align: 'end',
-              anchor: 'center',
-              // color: function(ctx: any) {
-              //   return 'rgba(11,83,141,1)';
-              // },
-              font: { size: 14, align: 'center' },
-              backgroundColor: 'white',
-              textAlign: 'center',
-              formatter: function(value: any, ctx: any) {
-                return `${ctx.chart.data.labels[ctx.dataIndex]}\n${value}%`;
-              },
-            },
+          align: 'end',
+          anchor: 'center',
+          // color: function(ctx: any) {
+          //   return 'rgba(11,83,141,1)';
+          // },
+          font: { size: 14, align: 'center', weight: 'bold' },
+          backgroundColor: 'white',
+          textAlign: 'center',
+          formatter: function(value: any, ctx: any) {
+            return `${ctx.chart.data.labels[ctx.dataIndex]}\n${value}%`;
           },
           borderRadius: 500,
           borderWidth: 3,
           borderColor: 'rgba(245,245,245,1)',
           padding: 15,
-          font: {
-            weight: 'bold',
-          },
           offset: 5,
           color: 'rgba(11,83,141,1)',
         },
