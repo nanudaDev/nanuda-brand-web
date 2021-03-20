@@ -31,6 +31,9 @@ export default class ResultRevenueChart extends Vue {
     // Overwriting base render method with actual data.
 
     this.renderChart(this.chartData, {
+      animation: {
+        easing: 'easeInOutBack',
+      },
       plugins: {
         datalabels: {
           backgroundColor: 'transparent',

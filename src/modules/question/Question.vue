@@ -181,7 +181,11 @@
                         <span class="is-blind">뒤로가기</span>
                       </b-btn>
                       <b-form-group>
-                        <span class="icon icon-search"><BaseSearch /></span>
+                        <span
+                          class="icon icon-search"
+                          @click="$bvModal.show('post-code')"
+                          ><BaseSearch
+                        /></span>
                         <b-form-input
                           size="lg"
                           v-model="selectedRoadAddress"
@@ -190,7 +194,7 @@
                           class="rounded-pill"
                         />
                       </b-form-group>
-                      <div class="text-center mt-4">
+                      <div class="text-center mt-4" v-if="!isAvailableLocation">
                         <b-btn
                           @click="getFirstQuestion()"
                           :disabled="!selectedRoadAddress"
@@ -611,6 +615,7 @@ export default class Question extends BaseComponent {
   onPostCodeComplete(event: any) {
     this.selectedRoadAddress = event.roadAddress;
     const geocoder = new window.kakao.maps.services.Geocoder();
+    // 상권분석 가능한 지역 안내
     const availableLocationCodeArray = ['11', '41', '28', '26', '50'];
     const callback = (results: any, status: any) => {
       if (status === window.kakao.maps.services.Status.OK) {
@@ -622,13 +627,11 @@ export default class Question extends BaseComponent {
         } else {
           this.isAvailableLocation = false;
         }
-
-        console.log(hdongCodeSido);
+        // console.log(hdongCodeSido);
+        this.$bvModal.hide('post-code');
       }
     };
     geocoder.addressSearch(this.selectedRoadAddress, callback);
-
-    this.$bvModal.hide('post-code');
   }
   onMultipleAnswerClicked(given: Given) {
     if (this.selectedAnswers.includes(given)) {
@@ -647,6 +650,10 @@ export default class Question extends BaseComponent {
       this.nextQuestionDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
     });
   }
+  updated() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
 }
 </script>
 <style lang="scss">
@@ -660,6 +667,7 @@ export default class Question extends BaseComponent {
   }
   .form-group {
     .icon-search {
+      cursor: pointer;
       fill: #6c8fb7;
       ~ input[type='text'] {
         padding-right: 3em;
@@ -691,6 +699,9 @@ export default class Question extends BaseComponent {
         width: 4em;
         height: 4em;
         background-color: transparent;
+        &.btn-light {
+          border-color: transparent;
+        }
         .icon {
           fill: #6c8fb7;
         }

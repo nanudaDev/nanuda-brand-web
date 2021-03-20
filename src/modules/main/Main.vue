@@ -2,25 +2,49 @@
   <article class="main-article">
     <div class="video-wrapper">
       <div class="video-container">
-        <video
-          autoplay
-          muted
-          loop
-          playsinline
-          id="vid"
-          ref="videoRef"
-          class="video"
-        >
-          해당 브라우저는 video 태그를 지원하지 않습니다.
-          <source
-            src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
-            type="video/webm"
-          />
-          <source
-            src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
-            type="video/mp4"
-          />
-        </video>
+        <!-- ?isFnbVideo=true 로 접속시 FNB 비디오 출력 -->
+        <template v-if="!isFnbVideo">
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            id="vid"
+            ref="videoRef"
+            class="video"
+          >
+            해당 브라우저는 video 태그를 지원하지 않습니다.
+            <source
+              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
+              type="video/webm"
+            />
+            <source
+              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </template>
+        <template v-else>
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            id="vid"
+            ref="videoRef"
+            class="video"
+          >
+            해당 브라우저는 video 태그를 지원하지 않습니다.
+            <source
+              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video02.mp4"
+              type="video/webm"
+            />
+            <source
+              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video02.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </template>
       </div>
       <div class="title-container">
         <div>
@@ -260,7 +284,7 @@
           data-aos-duration="1500"
         >
           <b-tabs align="center">
-            <b-tab title="분석하기" active>
+            <b-tab title="진단하기" active>
               <div class="img-box">
                 <div class="mask-box">
                   <img
@@ -270,12 +294,12 @@
               </div>
               <div class="txt-box">
                 <p>
-                  창업지역의 고객, 경쟁자, 잘 팔리는 업종을 <br />
-                  꼼꼼하게 분석합니다.
+                  간단한 설문을 통해 창업지역과 <br />
+                  현재 상황을 진단할 수 있어요.
                 </p>
               </div>
             </b-tab>
-            <b-tab title="진단하기">
+            <b-tab title="결과보기">
               <div class="img-box">
                 <div class="mask-box">
                   <img
@@ -285,12 +309,12 @@
               </div>
               <div class="txt-box">
                 <p>
-                  창업지역의 시간대별 소비현황과 <br />
-                  매장의 상황을 세부적으로 진단합니다.
+                  빅데이터로 분석된 고객, 경쟁사, 시간대별 <br />
+                  소비메뉴를 세부적으로 확인하세요.
                 </p>
               </div>
             </b-tab>
-            <b-tab title="추천하기">
+            <b-tab title="추천받기">
               <div class="img-box">
                 <div class="mask-box">
                   <img
@@ -300,12 +324,12 @@
               </div>
               <div class="txt-box">
                 <p>
-                  창업 지역에 딱맞는 시간대별 <br />
-                  메뉴와 판매 방법을 제공합니다.
+                  창업지역에 딱 맞는 시간대별 메뉴와 <br />
+                  운영 방법을 추천 받으세요.
                 </p>
               </div>
             </b-tab>
-            <b-tab title="실행하기">
+            <b-tab title="신청하기">
               <div class="img-box">
                 <div class="mask-box">
                   <img
@@ -315,8 +339,8 @@
               </div>
               <div class="txt-box">
                 <p>
-                  메뉴와 운영 교육, 관리를 <br />
-                  픽쿡이 함께 합니다.
+                  픽쿡플래너를 통해 자신에게 <br />
+                  딱 맞는 창업을 시작해보세요.
                 </p>
               </div>
             </b-tab>
@@ -376,6 +400,7 @@ export default class Main extends BaseComponent {
     tagRef: HTMLFormElement;
   };
   navbarHeight: any = 0;
+  private isFnbVideo = false;
   private currentIdx = 0;
   private tagList: any = [
     {
@@ -514,6 +539,17 @@ export default class Main extends BaseComponent {
   }
 
   mounted() {
+    // TODO :  나중에 util 함수로 옮기기
+    const urlQuery = location.search;
+    const params = Object.fromEntries(new URLSearchParams(urlQuery));
+    if (urlQuery) {
+      if (params.isFnbVideo) {
+        this.isFnbVideo = true;
+      } else {
+        this.isFnbVideo = false;
+      }
+    }
+
     const target = document.querySelector('.navbar');
     this.navbarHeight = target.getBoundingClientRect().height;
     this.onStartTextAnimation(0);
@@ -524,280 +560,282 @@ export default class Main extends BaseComponent {
 }
 </script>
 <style lang="scss">
-.video-wrapper {
-  position: relative;
-  .video-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    &:after {
-      display: block;
-      content: '';
-      background-color: rgba(0, 0, 0, 0.35);
+.app-main {
+  .video-wrapper {
+    position: relative;
+    .video-container {
       position: absolute;
       left: 0;
       top: 0;
-      width: 100%;
-      height: 100%;
-    }
-    video {
-      object-fit: cover;
-      position: absolute;
-      top: 0;
-      z-index: -10;
       width: 100%;
       height: 100vh;
-    }
-    img {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      object-fit: cover;
-      height: 100%;
-    }
-  }
-  .title-container {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    color: #fff;
-    text-align: center;
-    h2 {
-      font-size: 2.1875em;
-      font-weight: bold;
-      line-height: 1.3;
-    }
-    p {
-      font-size: 1.25em;
-      margin-top: 1em;
-    }
-    .btn-box {
-      margin-top: 5em;
-    }
-  }
-  .btn-scroll-down {
-    position: absolute;
-    bottom: 2.5em;
-    left: 50%;
-    margin-left: -0.75em;
-    z-index: 10;
-    animation: animated-mouse 1s ease-in-out infinite;
-    svg {
-      width: 1.5em;
-      height: 1.5em;
-      fill: white;
-    }
-  }
-}
-.article-section {
-  padding: 5em 0;
-  .section-title {
-    text-align: center;
-    h3 {
-      font-size: 1.5em;
-      font-weight: bold;
-      line-height: 1.4;
-
-      + p {
-        font-size: 1em;
-        margin-top: 1.25em;
-      }
-    }
-    .title-en {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 0.5em;
-    }
-    + .section-content {
-      margin-top: 3em;
-    }
-  }
-
-  &.section04 {
-    .tabs {
-      position: relative;
-      .nav-tabs {
+      &:after {
+        display: block;
+        content: '';
+        background-color: rgba(0, 0, 0, 0.35);
         position: absolute;
-        bottom: 5.625em;
         left: 0;
-        right: 0;
-        border: 0;
-        .nav-item {
-          .nav-link {
-            position: relative;
-            border: 0;
-            background: 0;
-            color: #acacac;
-            font-size: 1em;
-            padding: 0.625em 0;
-            margin: 0 1em;
-            &.active {
-              font-weight: 800;
-              color: #2140a3;
-              &:before {
-                display: block;
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 0.25em;
-                background: #2140a3;
-                border-radius: 1.5em;
-              }
-            }
-          }
-        }
+        top: 0;
+        width: 100%;
+        height: 100%;
       }
-      .tab-content {
-        .tab-pane {
-          &.active {
-            .mask-box {
-              img {
-                animation: slideInUp 0.6s ease-out forwards;
-              }
-            }
-          }
-        }
-        .img-box {
-          text-align: center;
-          max-width: 25em;
-          margin: 0 auto;
-          .mask-box {
-            position: relative;
-            padding-bottom: 96%;
-            overflow: hidden;
-
-            img {
-              position: absolute;
-              bottom: -20%;
-              left: 0;
-              width: 100%;
-            }
-          }
-        }
-        .txt-box {
-          text-align: center;
-          margin-top: 5.625em;
-          p {
-            font-size: 1.125em;
-          }
-        }
+      video {
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        z-index: -10;
+        width: 100%;
+        height: 100vh;
+      }
+      img {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        object-fit: cover;
+        height: 100%;
+      }
+    }
+    .title-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #fff;
+      text-align: center;
+      h2 {
+        font-size: 2.1875em;
+        font-weight: bold;
+        line-height: 1.3;
+      }
+      p {
+        font-size: 1.25em;
+        margin-top: 1em;
+      }
+      .btn-box {
+        margin-top: 5em;
+      }
+    }
+    .btn-scroll-down {
+      position: absolute;
+      bottom: 2.5em;
+      left: 50%;
+      margin-left: -0.75em;
+      z-index: 10;
+      animation: animated-mouse 1s ease-in-out infinite;
+      svg {
+        width: 1.5em;
+        height: 1.5em;
+        fill: white;
       }
     }
   }
-
-  &.section05 {
+  .article-section {
+    padding: 5em 0;
     .section-title {
+      text-align: center;
       h3 {
         font-size: 1.5em;
-        font-weight: 400;
+        font-weight: bold;
         line-height: 1.4;
+
+        + p {
+          font-size: 1em;
+          margin-top: 1.25em;
+        }
+      }
+      .title-en {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5em;
+      }
+      + .section-content {
+        margin-top: 3em;
       }
     }
-  }
 
-  .search-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    border: 1px solid #707070;
-    border-radius: 2.5em;
-    width: 18em;
-    height: 2.875em;
-    font-weight: 500;
-    padding: 0 1.25em;
-    margin: 0 auto;
-
-    .search-keyword {
-      font-size: 1.25em;
-    }
-
-    .icon-search {
-      fill: #707070;
-    }
-
-    .cursor {
-      margin-left: 0.05em;
-      border-right: 0.05em solid;
-      animation: caret 1s steps(1) infinite;
-    }
-  }
-
-  .tag-box {
-    margin: 2.5em auto;
-    .row-box {
-      margin-top: 1em;
-    }
-    .tags {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      max-width: 20em;
-      margin: 0 auto;
-      .tag {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 25%;
-        height: 1.875em;
-        font-size: 1em;
-        color: #707070;
-        z-index: 2;
-        transition: all 1s ease;
-
-        &.is-active {
-          color: #fff;
-          font-weight: 500;
-        }
-
-        &.is-selected {
+    &.section04 {
+      .tabs {
+        position: relative;
+        .nav-tabs {
           position: absolute;
-          top: 0;
-          background: #004d8a;
-          border-radius: 2.5em;
-          z-index: 1;
+          bottom: 5.625em;
+          left: 0;
+          right: 0;
+          border: 0;
+          .nav-item {
+            .nav-link {
+              position: relative;
+              border: 0;
+              background: 0;
+              color: #acacac;
+              font-size: 1em;
+              padding: 0.625em 0;
+              margin: 0 1em;
+              outline: none !important;
+              &.active {
+                font-weight: 800;
+                color: #2140a3;
+                &:before {
+                  display: block;
+                  content: '';
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 0.25em;
+                  background: #2140a3;
+                  border-radius: 1.5em;
+                }
+              }
+            }
+          }
+        }
+        .tab-content {
+          .tab-pane {
+            &.active {
+              .mask-box {
+                img {
+                  animation: slideInUp 0.6s ease-out forwards;
+                }
+              }
+            }
+          }
+          .img-box {
+            text-align: center;
+            max-width: 25em;
+            margin: 0 auto;
+            .mask-box {
+              position: relative;
+              padding-bottom: 96%;
+              overflow: hidden;
+
+              img {
+                position: absolute;
+                bottom: -20%;
+                left: 0;
+                width: 100%;
+              }
+            }
+          }
+          .txt-box {
+            text-align: center;
+            margin-top: 5.625em;
+            p {
+              font-size: 1.125em;
+            }
+          }
         }
       }
     }
-  }
 
-  .mockup-box {
-    .mockup-card {
-      width: 17.5em;
-      overflow: hidden;
+    &.section05 {
+      .section-title {
+        h3 {
+          font-size: 1.5em;
+          font-weight: 400;
+          line-height: 1.4;
+        }
+      }
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border: 1px solid #707070;
+      border-radius: 2.5em;
+      width: 18em;
+      height: 2.875em;
+      font-weight: 500;
+      padding: 0 1.25em;
       margin: 0 auto;
-      border-radius: 1.25em;
-      .swiper-container {
-        border-radius: 1.25em;
-        overflow: hidden;
+
+      .search-keyword {
+        font-size: 1.25em;
       }
-      figure {
-        img {
-          display: block;
-          width: 100%;
+
+      .icon-search {
+        fill: #707070;
+      }
+
+      .cursor {
+        margin-left: 0.05em;
+        border-right: 0.05em solid;
+        animation: caret 1s steps(1) infinite;
+      }
+    }
+
+    .tag-box {
+      margin: 2.5em auto;
+      .row-box {
+        margin-top: 1em;
+      }
+      .tags {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        max-width: 20em;
+        margin: 0 auto;
+        .tag {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 25%;
+          height: 1.875em;
+          font-size: 1em;
+          color: #707070;
+          z-index: 2;
+          transition: all 1s ease;
+
+          &.is-active {
+            color: #fff;
+            font-weight: 500;
+          }
+
+          &.is-selected {
+            position: absolute;
+            top: 0;
+            background: #004d8a;
+            border-radius: 2.5em;
+            z-index: 1;
+          }
+        }
+      }
+    }
+
+    .mockup-box {
+      .mockup-card {
+        width: 17.5em;
+        overflow: hidden;
+        margin: 0 auto;
+        border-radius: 1.25em;
+        .swiper-container {
+          border-radius: 1.25em;
+          overflow: hidden;
+        }
+        figure {
+          img {
+            display: block;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .article-section {
+      &.section03 {
+        .container {
+          max-width: 1400px;
         }
       }
     }
   }
 }
-
-@media screen and (min-width: 1200px) {
-  .article-section {
-    &.section03 {
-      .container {
-        max-width: 1400px;
-      }
-    }
-  }
-}
-
 @keyframes caret {
   50% {
     border-color: transparent;

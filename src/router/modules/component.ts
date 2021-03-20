@@ -19,15 +19,15 @@ export const componentRoutes: RouteConfig[] = [
       title: '서비스소개',
     },
   },
-  {
-    path: '/faq',
-    name: 'faq',
-    component: () => import('../../modules/faq/Faq.vue'),
-    meta: {
-      layout: 'MainLayout',
-      title: '자주묻는질문',
-    },
-  },
+  // {
+  //   path: '/faq',
+  //   name: 'faq',
+  //   component: () => import('../../modules/faq/Faq.vue'),
+  //   meta: {
+  //     layout: 'MainLayout',
+  //     title: '자주묻는질문',
+  //   },
+  // },
 
   // {
   //   path: '/reviews',
