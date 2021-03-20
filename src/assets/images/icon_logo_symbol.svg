@@ -4,74 +4,68 @@
 	 y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#FFFFFF;}
-	.st1{opacity:0.89;fill:url(#패스_194_1_);enable-background:new    ;}
+	.st1{opacity:0.89;fill:url(#패스_194_2_);enable-background:new    ;}
 	.st2{clip-path:url(#SVGID_2_);}
 	.st3{fill:#FFFFFF;stroke:#231815;stroke-width:0.25;stroke-miterlimit:10;}
 	.st4{opacity:0.55;}
-	.st5{opacity:0.91;fill:url(#타원_2_1_);enable-background:new    ;}
+	.st5{opacity:0.91;fill:url(#타원_2_2_);enable-background:new    ;}
 </style>
 <g transform="matrix(1, 0, 0, 1, 0, 0)">
 	<circle id="타원_24-2" class="st0" cx="30" cy="30" r="30"/>
 </g>
-<g id="그룹_144" transform="translate(17.974 22.771)">
-	<g id="그룹_143" transform="translate(0)">
-		
-			<linearGradient id="패스_194_1_" gradientUnits="userSpaceOnUse" x1="-475.0727" y1="293.7672" x2="-474.0727" y2="293.7672" gradientTransform="matrix(33.0222 0 0 -19.0779 15683.6855 5611.5703)">
-			<stop  offset="0" style="stop-color:#C5D8DE"/>
-			<stop  offset="0.071" style="stop-color:#B1C4D1"/>
-			<stop  offset="0.287" style="stop-color:#788DAD"/>
-			<stop  offset="0.392" style="stop-color:#6378A0"/>
-			<stop  offset="0.511" style="stop-color:#4E6A97"/>
-			<stop  offset="0.705" style="stop-color:#31588B"/>
-			<stop  offset="0.875" style="stop-color:#204C83"/>
-			<stop  offset="1" style="stop-color:#1A4981"/>
-		</linearGradient>
-		<path id="패스_194" class="st1" d="M19.21-2.43c-1.19,0.01-2.37,0.23-3.47,0.67c-2.16,0.86-4.55,0.91-6.74,0.13L8.76-1.7
-			C3.87-3.63-1.65-1.23-3.57,3.65C-5.5,8.53-3.1,14.05,1.78,15.98c2.4,0.95,5.08,0.88,7.43-0.19l-0.45,0.19
-			c2.28-0.93,4.83-0.93,7.12-0.02l0,0c4.91,1.87,10.4-0.59,12.27-5.49s-0.59-10.4-5.49-12.27C21.56-2.23,20.39-2.44,19.21-2.43
-			L19.21-2.43z"/>
-		<g id="그룹_68">
-			<path id="패스_196" class="st0" d="M19.14-2.5c-1.2,0.01-2.38,0.24-3.49,0.68c-2.17,0.87-4.59,0.92-6.79,0.13L8.62-1.76
-				C3.7-3.7-1.86-1.29-3.8,3.63C-5.73,8.54-3.32,14.1,1.6,16.04c2.42,0.95,5.12,0.88,7.48-0.19l-0.45,0.19
-				c2.3-0.93,4.86-0.94,7.17-0.02l0,0c4.94,1.89,10.47-0.59,12.36-5.53c1.89-4.94-0.59-10.47-5.53-12.36
-				C21.51-2.29,20.33-2.51,19.14-2.5L19.14-2.5z"/>
-			<g>
-				<defs>
-					<path id="SVGID_1_" d="M19.14-2.5c-1.2,0.01-2.38,0.24-3.49,0.68c-2.17,0.87-4.59,0.92-6.79,0.13L8.62-1.76
-						C3.7-3.7-1.86-1.29-3.8,3.63C-5.73,8.54-3.32,14.1,1.6,16.04c2.42,0.95,5.12,0.88,7.48-0.19l-0.45,0.19
-						c2.3-0.93,4.86-0.94,7.17-0.02l0,0c4.94,1.89,10.47-0.59,12.36-5.53c1.89-4.94-0.59-10.47-5.53-12.36
-						C21.51-2.29,20.33-2.51,19.14-2.5L19.14-2.5z"/>
-				</defs>
-				<clipPath id="SVGID_2_">
-					<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
-				</clipPath>
-				<g id="그룹_67" class="st2">
-					<path id="패스_197" class="st3" d="M15.8,16.01"/>
-					<path id="패스_198" class="st3" d="M8.63,16.04"/>
-					<g id="그룹_66" transform="translate(8.599 -4.198)" class="st4">
+<g id="그룹_143_1_" transform="translate(0)">
+	
+		<linearGradient id="패스_194_2_" gradientUnits="userSpaceOnUse" x1="-457.5059" y1="316.3297" x2="-456.3769" y2="316.3297" gradientTransform="matrix(33.0222 0 0 -19.0779 15119.3174 6064.9111)">
+		<stop  offset="0" style="stop-color:#C5D8DE"/>
+		<stop  offset="0.071" style="stop-color:#B1C4D1"/>
+		<stop  offset="0.287" style="stop-color:#788DAD"/>
+		<stop  offset="0.392" style="stop-color:#6378A0"/>
+		<stop  offset="0.511" style="stop-color:#4E6A97"/>
+		<stop  offset="0.705" style="stop-color:#31588B"/>
+		<stop  offset="0.875" style="stop-color:#204C83"/>
+		<stop  offset="1" style="stop-color:#1A4981"/>
+	</linearGradient>
+	<path id="패스_194_1_" class="st1" d="M37.96,19.23c-1.34,0.01-2.67,0.26-3.92,0.76c-2.43,0.97-5.14,1.03-7.61,0.15l-0.27-0.08
+		c-5.51-2.18-11.75,0.53-13.92,6.04c-2.18,5.51,0.53,11.75,6.04,13.92c2.71,1.07,5.74,0.99,8.39-0.22l-0.5,0.22
+		c2.58-1.04,5.45-1.05,8.04-0.03l0,0c5.54,2.11,11.74-0.66,13.85-6.2s-0.66-11.74-6.2-13.86C40.61,19.46,39.29,19.22,37.96,19.23
+		L37.96,19.23z"/>
+	<g id="그룹_68_1_">
+		<g>
+			<defs>
+				<path id="SVGID_1_" d="M37.88,19.16c-1.35,0.01-2.69,0.27-3.95,0.77c-2.45,0.98-5.18,1.03-7.66,0.15L26,19.99
+					c-5.55-2.19-11.83,0.53-14.02,6.09c-2.19,5.55,0.53,11.83,6.09,14.02c2.73,1.08,5.78,1,8.45-0.22l-0.51,0.22
+					c2.59-1.05,5.49-1.06,8.09-0.03l0,0c5.58,2.13,11.82-0.67,13.95-6.24c2.13-5.58-0.66-11.82-6.24-13.95
+					C40.56,19.39,39.23,19.15,37.88,19.16L37.88,19.16z"/>
+			</defs>
+			<clipPath id="SVGID_2_">
+				<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+			</clipPath>
+			<g id="그룹_67_1_" class="st2">
+				<path id="패스_197_1_" class="st3" d="M34.11,40.06"/>
+				<path id="패스_198_1_" class="st3" d="M26.01,40.09"/>
+				<g id="그룹_66_1_" transform="translate(8.599 -4.198)" class="st4">
+					
+						<image style="overflow:visible;opacity:0.69;enable-background:new    ;" width="404" height="403" id="사각형_87_1_" xlink:href="30F08A0E.png"  transform="matrix(0.0771 0 0 0.0771 12.3012 18.6152)">
+					</image>
+					<g id="그룹_65_1_" transform="translate(5.853 4.241)">
 						
-							<image style="overflow:visible;opacity:0.69;enable-background:new    ;" width="404" height="403" id="사각형_87" xlink:href="C4600D7E.png"  transform="matrix(0.0683 0 0 0.0683 -4.4997 -2.5)">
-						</image>
-						<g id="그룹_65" transform="translate(5.853 4.241)">
-							
-								<ellipse id="타원_1" transform="matrix(1 -5.270869e-03 5.270869e-03 1 -0.0369 0.0267)" class="st0" cx="5.05" cy="7.02" rx="9.5" ry="9.47"/>
-						</g>
+							<ellipse id="타원_1_1_" transform="matrix(1 -5.270869e-03 5.270869e-03 1 -0.1573 0.126)" class="st0" cx="23.83" cy="29.91" rx="10.72" ry="10.69"/>
 					</g>
 				</g>
 			</g>
 		</g>
-		
-			<linearGradient id="타원_2_1_" gradientUnits="userSpaceOnUse" x1="-466.3919" y1="293.4652" x2="-465.3919" y2="293.4652" gradientTransform="matrix(18.8617 -0.0994 -0.0992 -18.8137 8835.9844 5481.9634)">
-			<stop  offset="0" style="stop-color:#6C8FB7"/>
-			<stop  offset="0.066" style="stop-color:#5D86B0"/>
-			<stop  offset="0.241" style="stop-color:#3B71A2"/>
-			<stop  offset="0.421" style="stop-color:#216197"/>
-			<stop  offset="0.604" style="stop-color:#004D8A"/>
-			<stop  offset="0.794" style="stop-color:#12547C"/>
-			<stop  offset="1" style="stop-color:#12547C"/>
-		</linearGradient>
-		<path id="타원_2" class="st5" d="M19.3-2.3c5.21-0.03,9.45,4.16,9.48,9.36c0.03,5.2-4.17,9.43-9.38,9.46s-9.45-4.16-9.48-9.36
-			C9.89,1.96,14.09-2.28,19.3-2.3z"/>
 	</g>
+	
+		<linearGradient id="타원_2_2_" gradientUnits="userSpaceOnUse" x1="-448.7715" y1="316.0272" x2="-447.6425" y2="316.0272" gradientTransform="matrix(18.8617 -0.0994 -0.0992 -18.8137 8523.4229 5931.0918)">
+		<stop  offset="0" style="stop-color:#6C8FB7"/>
+		<stop  offset="0.066" style="stop-color:#5D86B0"/>
+		<stop  offset="0.241" style="stop-color:#3B71A2"/>
+		<stop  offset="0.421" style="stop-color:#216197"/>
+		<stop  offset="0.604" style="stop-color:#004D8A"/>
+		<stop  offset="0.794" style="stop-color:#12547C"/>
+		<stop  offset="1" style="stop-color:#12547C"/>
+	</linearGradient>
+	<path id="타원_2_1_" class="st5" d="M38.06,19.38c5.88-0.03,10.67,4.7,10.7,10.56c0.03,5.87-4.71,10.65-10.59,10.68
+		c-5.88,0.03-10.67-4.7-10.7-10.56C27.44,24.19,32.18,19.41,38.06,19.38z"/>
 </g>
 </svg>
