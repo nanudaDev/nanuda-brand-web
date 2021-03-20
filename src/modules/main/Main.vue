@@ -541,10 +541,8 @@ export default class Main extends BaseComponent {
   mounted() {
     // TODO :  나중에 util 함수로 옮기기
     const urlQuery = location.search;
-    if (!urlQuery) {
-      return;
-    } else {
-      const params = Object.fromEntries(new URLSearchParams(urlQuery));
+    const params = Object.fromEntries(new URLSearchParams(urlQuery));
+    if (urlQuery) {
       if (params.isFnbVideo) {
         this.isFnbVideo = true;
       } else {
