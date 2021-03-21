@@ -285,7 +285,7 @@
           신청이 완료되었습니다
         </h2>
         <p data-aos="fade-in" data-aos-duration="1500">
-          담당 플래너가 배정되는데로 <br />
+          담당 플래너가 배정되는대로 <br />
           입력해주신 연락처로 안내드리겠습니다.
         </p>
         <div
@@ -305,7 +305,7 @@
         </div>
         <div class="row-box mt-4">
           <router-link to="/" class="txt-sm txt-underline"
-            >픽국에 대해 더 알아보기
+            >픽쿸에 대해 더 알아보기
           </router-link>
         </div>
       </header>
