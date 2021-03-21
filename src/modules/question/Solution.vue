@@ -1,5 +1,5 @@
 <template>
-  <article class=" bg-primary" id="question-solution" v-if="isComplete">
+  <article class="main-article" id="question-solution" v-if="!isComplete">
     <header class="article-header">
       <div class="container">
         <span>
@@ -199,10 +199,10 @@
           </div>
           <div class="form-container">
             <b-form-row>
-              <b-col cols="2">
+              <b-col cols="3">
                 <label class="txt-sm">이름</label>
               </b-col>
-              <b-col cols="10">
+              <b-col cols="9">
                 <b-form-input
                   v-model="consultRequestDto.name"
                   placeholder="이름을 적어주세요"
@@ -212,10 +212,10 @@
               </b-col>
             </b-form-row>
             <b-form-row class="mt-3">
-              <b-col cols="2">
+              <b-col cols="3">
                 <label class="txt-sm">휴대전화</label>
               </b-col>
-              <b-col cols="7">
+              <b-col cols="6">
                 <b-form-input
                   v-model="consultRequestDto.phone"
                   placeholder="ex) 01012345678"
@@ -236,10 +236,10 @@
               </b-col>
             </b-form-row>
             <b-form-row v-if="isSMSCodeSent" class="mt-3">
-              <b-col cols="2">
+              <b-col cols="3">
                 <label class="txt-sm">인증번호</label>
               </b-col>
-              <b-col cols="7">
+              <b-col cols="6">
                 <b-form-input
                   v-model="consultRequestDto.smsAuthCode"
                   placeholder="인증번호 숫자 6자리 입력"
@@ -254,6 +254,9 @@
                 }}</b-btn>
               </b-col>
             </b-form-row>
+            <div class="txt-box" v-if="errorText">
+              <p>{{ errorText }}</p>
+            </div>
           </div>
           <!-- // 폼 영역 -->
         </div>
@@ -337,6 +340,7 @@ export default class Solution extends BaseComponent {
   //
   private consultRequestDto = new ConsultRequestDto();
   private isVerified = false;
+  private errorText = '';
   private isSMSCodeSent = false;
   private isGetCodeBtnDisabled = false;
   private time = 30;
@@ -410,8 +414,9 @@ export default class Solution extends BaseComponent {
       this.consultRequestDto.smsAuthCode,
     );
     authService.checkSMSCode(this.smsAuthNotificationDto).subscribe(res => {
-      this.isVerified = true;
-      console.log('success');
+      if (res) {
+        this.isVerified = true;
+      }
     });
   }
   onConsultBtnClicked() {
