@@ -33,11 +33,15 @@
           <div class="container">
             <header class="section-header">
               <h3>
-                현재 {{ codeHdongSearchDto.hdongName }} 에서 <br />
+                현재
+                <strong class="txt-underline">{{
+                  codeHdongSearchDto.hdongName
+                }}</strong
+                >에서 <br />
                 <strong>{{ newFnbBestCategory }}의 매출이 높습니다</strong>
               </h3>
               <p>
-                {{ codeHdongSearchDto.hdongName }} 에서는
+                {{ codeHdongSearchDto.hdongName }}에서는
                 <strong>{{ newFnbOwnerCategoryList }}</strong> 순으로
                 <br />매출이 높습니다.
               </p>
@@ -112,14 +116,22 @@
         </section>
       </template>
       <!-- 공통 정보 -->
-      <section class="article-section bg-light" id="detail-info">
+      <section
+        class="article-section bg-light"
+        id="detail-info"
+        v-if="result.completeTimeData && result.completeTimeData.length > 1"
+      >
         <div class="container">
           <header class="section-header">
             <h3>
               <template
                 v-if="resultRequestDto.fnbOwnerStatus === 'NEW_FNB_OWNER'"
               >
-                현재 {{ codeHdongSearchDto.hdongName }} 에서의
+                현재
+                <strong class="txt-underline">{{
+                  codeHdongSearchDto.hdongName
+                }}</strong
+                >에서의
               </template>
               <template v-else> 내 가게 주변의 </template><br />
               <strong class="txt-underline">시간대별 매출</strong>을
@@ -129,8 +141,11 @@
           </header>
           <div class="section-content">
             <p class="txt-box text-center">
-              <strong class="txt-bold"
-                >{{ codeHdongSearchDto.hdongName }} 시간대별 매출 추이</strong
+              <strong class="txt-bold">
+                <strong class="txt-underline">{{
+                  codeHdongSearchDto.hdongName
+                }}</strong>
+                시간대별 매출 추이</strong
               >
             </p>
             <div class="complete-time-box mt-5">
@@ -173,7 +188,11 @@
               <template
                 v-if="resultRequestDto.fnbOwnerStatus === 'NEW_FNB_OWNER'"
               >
-                현재 {{ codeHdongSearchDto.hdongName }} 에서의
+                현재
+                <strong class="txt-underline">{{
+                  codeHdongSearchDto.hdongName
+                }}</strong
+                >에서의
               </template>
               <template v-else>
                 내 가게 주변의
