@@ -675,4 +675,12 @@ body {
 .app-about-us .review-box .cont-box p {
   font-size: 0.75em;
 }
+
+.video-wrapper {
+  background-image: url("../images/main_visuual.png");
+}
+
+.video-wrapper.fnb {
+  background-image: url("../images/main_visuual_02.png");
+}
 /*# sourceMappingURL=common.css.map */

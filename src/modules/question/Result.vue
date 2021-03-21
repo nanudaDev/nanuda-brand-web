@@ -116,8 +116,15 @@
         <div class="container">
           <header class="section-header">
             <h3>
-              내 가게 주변의 시간대별 매출을 <br />
-              <strong class="txt-underline">업태 별로 확인하세요</strong>
+              <template
+                v-if="resultRequestDto.fnbOwnerStatus === 'NEW_FNB_OWNER'"
+              >
+                현재 {{ codeHdongSearchDto.hdongName }} 에서의
+              </template>
+              <template v-else> 내 가게 주변의 </template><br />
+              <strong class="txt-underline">시간대별 매출</strong>을
+              <br class="d-lg-none" />
+              업태 별로 확인하세요
             </h3>
           </header>
           <div class="section-content">
@@ -163,7 +170,15 @@
         <div class="container">
           <header class="section-header">
             <h3>
-              내 가게 주변의<br />
+              <template
+                v-if="resultRequestDto.fnbOwnerStatus === 'NEW_FNB_OWNER'"
+              >
+                현재 {{ codeHdongSearchDto.hdongName }} 에서의
+              </template>
+              <template v-else>
+                내 가게 주변의
+              </template>
+              <br />
               <strong class="txt-underline">배달과 매장식사 비중 </strong>을
               <br class="d-lg-none" />업태별로 확인하세요
             </h3>

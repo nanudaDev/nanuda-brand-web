@@ -1,5 +1,5 @@
 <template>
-  <article class="main-article" id="question-solution">
+  <article class=" bg-primary" id="question-solution" v-if="isComplete">
     <header class="article-header">
       <div class="container">
         <span>
@@ -271,6 +271,43 @@
       </b-btn>
     </div>
   </article>
+  <!-- 신청 완료 -->
+  <article class="main-article bg-primary" id="question-complete" v-else>
+    <div class="container">
+      <header class="article-header">
+        <span data-aos="fade-in" data-aos-duration="1500"
+          ><img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w"
+        /></span>
+        <h2 data-aos="fade-in" data-aos-duration="1500">
+          신청이 완료되었습니다
+        </h2>
+        <p data-aos="fade-in" data-aos-duration="1500">
+          담당 플래너가 배정되는대로 <br />
+          입력해주신 연락처로 안내드리겠습니다.
+        </p>
+        <div
+          class="btn-box text-center"
+          data-aos="fade-in"
+          data-aos-duration="1000"
+        >
+          <b-btn
+            variant="light"
+            pill
+            size="xl"
+            class="shadow"
+            @click="$router.push('/question')"
+          >
+            처음으로
+          </b-btn>
+        </div>
+        <div class="row-box mt-4">
+          <router-link to="/" class="txt-sm txt-underline"
+            >픽국에 대해 더 알아보기
+          </router-link>
+        </div>
+      </header>
+    </div>
+  </article>
 </template>
 
 <script lang="ts">
@@ -295,6 +332,7 @@ export default class Solution extends BaseComponent {
   // TODO: result, resultRequestDto  세션스토리지로 바꿔야함 , 타입체크변경
   private result: any = null;
   private resultRequestDto: any = null;
+  private isComplete = false;
   //
   private consultRequestDto = new ConsultRequestDto();
   private isVerified = false;
@@ -380,7 +418,11 @@ export default class Solution extends BaseComponent {
       });
   }
   onConsultBtnClicked() {
-    questionService.postConsult(this.consultRequestDto);
+    questionService.postConsult(this.consultRequestDto).subscribe(res => {
+      if (res) {
+        this.isComplete = true;
+      }
+    });
   }
 
   created() {
@@ -519,6 +561,39 @@ export default class Solution extends BaseComponent {
           }
         }
       }
+    }
+  }
+}
+
+#question-complete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  height: 100vh;
+  .article-header {
+    text-align: center;
+    span {
+      display: block;
+      margin-bottom: 1em;
+      img {
+        display: block;
+        width: 6.25em;
+        margin: 0 auto;
+      }
+    }
+    h2 {
+      font-size: 2em;
+    }
+    p {
+      font-size: 1em;
+      margin-top: 1em;
+    }
+    .btn-box {
+      margin-top: 3.125em;
+    }
+    .txt-underline {
+      border-color: #fff;
     }
   }
 }
