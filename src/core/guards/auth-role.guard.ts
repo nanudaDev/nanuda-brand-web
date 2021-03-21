@@ -1,7 +1,7 @@
 import { Route } from 'vue-router';
 import router from '@/router';
 
-const getPageTitle = (title: string) => {
+const getPageTitle = (title?: string) => {
   const hasTitle = `${title}`;
   if (hasTitle) {
     return hasTitle;
@@ -11,5 +11,9 @@ const getPageTitle = (title: string) => {
 
 router.afterEach((to: Route) => {
   // set page title
-  document.title = getPageTitle(`${to.meta.title} - 픽쿡`);
+  if (to.meta.main) {
+    document.title = getPageTitle(`${to.meta.title}`);
+  } else {
+    document.title = getPageTitle(`${to.meta.title} - 픽쿡`);
+  }
 });

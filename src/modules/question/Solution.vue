@@ -320,6 +320,7 @@ import authService from '@/services/auth.service';
 // import toast from '../../../resources/assets/js/services/toast.js';
 import questionService from '@/services/question.service';
 import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
+import { SmsAuthNotificationDto } from '@/dto';
 @Component({
   name: 'Solution',
   components: { ResultRevenueChart, FoodCategoryRatioChart },
@@ -339,6 +340,7 @@ export default class Solution extends BaseComponent {
   private isSMSCodeSent = false;
   private isGetCodeBtnDisabled = false;
   private time = 30;
+  private smsAuthNotificationDto = new SmsAuthNotificationDto();
 
   private swiperOption: any = {
     slidesPerView: 1,
@@ -387,35 +389,30 @@ export default class Solution extends BaseComponent {
       }, 1000);
     }
   }
+
+  // get auth code
   getSMSCode() {
-    authService
-      .getSMSCode(this.consultRequestDto.phone)
-      .then(res => {
-        this.time = 30;
-        this.isSMSCodeSent = true;
-        this.isGetCodeBtnDisabled = true;
-        setTimeout(() => {
-          this.isGetCodeBtnDisabled = false;
-        }, this.time * 1000);
-        this.__countDownTimer();
-        this.isSMSCodeSent = true;
-      })
-      .catch(err => {
-        // toast.error('휴대폰 번호를 정확히 입력해주세요');
-      });
+    this.smsAuthNotificationDto.phone = this.consultRequestDto.phone;
+    authService.getSMSCode(this.smsAuthNotificationDto).subscribe(res => {
+      this.time = 30;
+      this.isSMSCodeSent = true;
+      this.isGetCodeBtnDisabled = true;
+      setTimeout(() => {
+        this.isGetCodeBtnDisabled = false;
+      }, this.time * 1000);
+      this.__countDownTimer();
+      this.isSMSCodeSent = true;
+    });
   }
   checkSMSCode() {
-    authService
-      .checkSMSCode(
-        this.consultRequestDto.phone,
-        this.consultRequestDto.smsAuthCode,
-      )
-      .then(res => {
-        this.isVerified = res;
-      })
-      .catch(err => {
-        // toast.error('인증번호가 올바르지않거나 유효기간이 초과했습니다');
-      });
+    this.smsAuthNotificationDto.phone = this.consultRequestDto.phone;
+    this.smsAuthNotificationDto.smsAuthCode = parseInt(
+      this.consultRequestDto.smsAuthCode,
+    );
+    authService.checkSMSCode(this.smsAuthNotificationDto).subscribe(res => {
+      this.isVerified = true;
+      console.log('success');
+    });
   }
   onConsultBtnClicked() {
     questionService.postConsult(this.consultRequestDto).subscribe(res => {
@@ -431,6 +428,7 @@ export default class Solution extends BaseComponent {
     this.resultRequestDto = this.$route.params.resultRequestDto;
     this.consultRequestDto.proformaConsultResultId = +this.$route.params
       .proformaId;
+    // reroute on reload
   }
 }
 </script>

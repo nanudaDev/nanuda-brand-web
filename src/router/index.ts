@@ -12,7 +12,8 @@ export const routes: RouteConfig[] = [
     component: () => import('../modules/main/Main.vue'),
     meta: {
       layout: 'MainLayout',
-      title: '메인',
+      title: '픽쿡 - 실패 없는 창업을 안내합니다',
+      main: true,
     },
   },
   ...componentRoutes,
