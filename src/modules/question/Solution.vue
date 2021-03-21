@@ -372,11 +372,14 @@ export default class Solution extends BaseComponent {
       this.consultRequestDto.smsAuthCode,
     );
     authService.checkSMSCode(this.smsAuthNotificationDto).subscribe(res => {
+      this.isVerified = true;
       console.log('success');
     });
   }
   onConsultBtnClicked() {
-    questionService.postConsult(this.consultRequestDto);
+    questionService.postConsult(this.consultRequestDto).subscribe(res => {
+      console.log('complete');
+    });
   }
 
   created() {
