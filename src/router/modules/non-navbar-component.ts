@@ -32,11 +32,12 @@ const nonNavBarRouter: RouteConfig[] = [
     },
   },
   {
-    path: '/solution/:proformaId',
+    path: '/solution/:proformaId([0-9]+)',
     name: 'solution',
     component: () => import('../../modules/question/Solution.vue'),
     meta: {
       layout: 'NonLayout',
+      title: '설문 조사 결과',
     },
   },
 ];
