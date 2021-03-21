@@ -130,7 +130,7 @@
             <swiper-slide>
               <div class="row-box">
                 <div class="img-box">
-                  <img src="@/assets/images/icon_logo_symbol.svg" />
+                  <img src="@/assets/images/about_us_review_01.png" />
                 </div>
                 <div class="txt-box">
                   <h4>이지원 이용자 후기</h4>
@@ -145,7 +145,7 @@
             <swiper-slide>
               <div class="row-box">
                 <div class="img-box">
-                  <img src="@/assets/images/icon_logo_symbol.svg" />
+                  <img src="@/assets/images/about_us_review_03.png" />
                 </div>
                 <div class="txt-box">
                   <h4>박지홍 이용자 후기</h4>
@@ -161,7 +161,7 @@
             <swiper-slide>
               <div class="row-box">
                 <div class="img-box">
-                  <img src="@/assets/images/icon_logo_symbol.svg" />
+                  <img src="@/assets/images/about_us_review_02.png" />
                 </div>
                 <div class="txt-box">
                   <h4>전지연 이용자 후기</h4>
