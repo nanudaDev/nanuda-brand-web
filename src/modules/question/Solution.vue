@@ -8,12 +8,11 @@
           /></router-link>
         </span>
         <h2 v-if="result && result.fnbOwnerStatus">
-          {{ result.fnbOwnerStatus | enumTransformer }}
-          의
+          {{ result.fnbOwnerStatus | enumTransformer }}의
           <template v-if="result.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
             업력,</template
           >
-          경험 그리고 상권분석을 <br />
+          경험 그리고 상권분석을 <br class="d-none d-sm-block" />
           종합하였을 때 아래의 메뉴가 가장 적합합니다
         </h2>
       </div>
@@ -581,13 +580,15 @@ export default class Solution extends BaseComponent {
           margin-top: 3em;
         }
         .img-box {
-          width: 5em;
+          width: 3em;
           text-align: center;
+          margin-right: 1em;
           img {
             height: 3.75em;
           }
         }
         .dscr-box {
+          width: calc(100% - 4em);
           h4 {
             font-size: 0.875em;
             font-weight: 600;
@@ -620,6 +621,7 @@ export default class Solution extends BaseComponent {
         .txt-box {
           text-align: left;
           color: #004d8a;
+          width: calc(100% - 6em);
           h4 {
             font-size: 0.875em;
             font-weight: 600;
