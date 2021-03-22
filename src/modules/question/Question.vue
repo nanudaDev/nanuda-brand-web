@@ -3,8 +3,12 @@
     <article class="main-article bg-primary" v-if="isStart" id="question-start">
       <header class="article-header">
         <span data-aos="fade-down" data-aos-duration="1500"
-          ><img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w"
-        /></span>
+          ><router-link to="/"
+            ><img
+              src="@/assets/images/logo_w.svg"
+              alt="픽쿡"
+              class="logo-w"/></router-link
+        ></span>
         <h2 data-aos="fade-down" data-aos-duration="1500">
           실패없는 창업을 <br />안내합니다
         </h2>
@@ -41,12 +45,14 @@
       >
         <header class="article-header">
           <h1>
-            <img
-              src="@/assets/images/logo.svg"
-              alt="픽쿡"
-              v-if="bgLightQuestionId.includes(nextQuestionDto.questionId)"
-            />
-            <img src="@/assets/images/logo_w.svg" alt="픽쿡" v-else />
+            <router-link to="/">
+              <img
+                src="@/assets/images/logo.svg"
+                alt="픽쿡"
+                v-if="bgLightQuestionId.includes(nextQuestionDto.questionId)"
+              />
+              <img src="@/assets/images/logo_w.svg" alt="픽쿡" v-else />
+            </router-link>
           </h1>
           <div class="progress-bar-rail">
             <span
@@ -62,18 +68,20 @@
             <header class="section-title">
               <div class="container">
                 <span>
-                  <img
-                    src="@/assets/images/logo_symbol.svg"
-                    alt="픽쿡"
-                    v-if="
-                      bgLightQuestionId.includes(nextQuestionDto.questionId)
-                    "
-                  />
-                  <img
-                    src="@/assets/images/logo_symbol_w.svg"
-                    alt="픽쿡"
-                    v-else
-                  />
+                  <router-link to="/">
+                    <img
+                      src="@/assets/images/logo_symbol.svg"
+                      alt="픽쿡"
+                      v-if="
+                        bgLightQuestionId.includes(nextQuestionDto.questionId)
+                      "
+                    />
+                    <img
+                      src="@/assets/images/logo_symbol_w.svg"
+                      alt="픽쿡"
+                      v-else
+                    />
+                  </router-link>
                 </span>
                 <h3>{{ question }}</h3>
               </div>
@@ -557,27 +565,30 @@ export default class Question extends BaseComponent {
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
         this.isLoadingResult = false;
+        this.isLoading = false;
         this.aggregateResultResponseDto = res.data;
         return;
       });
+    } else {
+      questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
+        if (res.data.isLastQuestion === YN.YES) {
+          this.isLastQuestion = true;
+        }
+        if (res) {
+          this.isLoading = false;
+          this.nextQuestionDto.order = res.data.order;
+          this.nextQuestionDto.questionId = res.data.id;
+          this.question = res.data.question;
+          this.questionOrder =
+            this.nextQuestionDto.order + (this.prevOrder - 1);
+          this.givens = res.data.givens;
+          this.nextQuestionDto.givenId = [];
+          this.isMultipleAnswer =
+            res.data.multipleAnswerYn === YN.YES ? true : false;
+          this.selectedAnswers = [];
+        }
+      });
     }
-    questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
-      if (res.data.isLastQuestion === YN.YES) {
-        this.isLastQuestion = true;
-      }
-      if (res) {
-        this.isLoading = false;
-        this.nextQuestionDto.order = res.data.order;
-        this.nextQuestionDto.questionId = res.data.id;
-        this.question = res.data.question;
-        this.questionOrder = this.nextQuestionDto.order + (this.prevOrder - 1);
-        this.givens = res.data.givens;
-        this.nextQuestionDto.givenId = [];
-        this.isMultipleAnswer =
-          res.data.multipleAnswerYn === YN.YES ? true : false;
-        this.selectedAnswers = [];
-      }
-    });
   }
   //level이 내려감에따라 showingLevel(보여줘야할 정보)이 변함
   getGuOrDong(given?: CodeHdongDto) {

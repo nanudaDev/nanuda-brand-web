@@ -11,6 +11,7 @@ import VueScrollTo from 'vue-scrollto';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import 'intersection-observer'; // Optional
+import '@/core/guards/auth-role.guard';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import {
   Swiper as SwiperClass,

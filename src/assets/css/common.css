@@ -308,6 +308,14 @@ body {
   fill: #0b538d;
 }
 
+.icon.icon-primary {
+  fill: #0b538d;
+}
+
+.icon.icon-white {
+  fill: #fff;
+}
+
 .txt-bold {
   font-weight: 600;
 }
@@ -349,6 +357,10 @@ body {
 .txt-underline {
   padding-bottom: 0.25em;
   border-bottom: 1px solid #0b538d;
+}
+
+.txt-underline.txt-white {
+  border-color: #fff;
 }
 
 .icon {
@@ -484,6 +496,12 @@ body {
 @media screen and (min-width: 1200px) {
   body {
     font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 359px) {
+  body {
+    font-size: 0.8rem;
   }
 }
 
@@ -674,5 +692,13 @@ body {
 
 .app-about-us .review-box .cont-box p {
   font-size: 0.75em;
+}
+
+.video-wrapper {
+  background-image: url("../images/main_visuual.png");
+}
+
+.video-wrapper.fnb {
+  background-image: url("../images/main_visuual_02.png");
 }
 /*# sourceMappingURL=common.css.map */

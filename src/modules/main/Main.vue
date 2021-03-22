@@ -1,49 +1,51 @@
 <template>
   <article class="main-article">
-    <div class="video-wrapper">
+    <div class="video-wrapper" :class="isFnbVideo ? 'fnb' : ''">
       <div class="video-container">
         <!-- ?isFnbVideo=true 로 접속시 FNB 비디오 출력 -->
-        <template v-if="!isFnbVideo">
-          <video
-            autoplay
-            muted
-            loop
-            playsinline
-            id="vid"
-            ref="videoRef"
-            class="video"
-          >
-            해당 브라우저는 video 태그를 지원하지 않습니다.
-            <source
-              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
-              type="video/webm"
-            />
-            <source
-              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
-              type="video/mp4"
-            />
-          </video>
-        </template>
-        <template v-else>
-          <video
-            autoplay
-            muted
-            loop
-            playsinline
-            id="vid"
-            ref="videoRef"
-            class="video"
-          >
-            해당 브라우저는 video 태그를 지원하지 않습니다.
-            <source
-              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video02.mp4"
-              type="video/webm"
-            />
-            <source
-              src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video02.mp4"
-              type="video/mp4"
-            />
-          </video>
+        <template v-if="!isMobile">
+          <template v-if="!isFnbVideo">
+            <video
+              autoplay
+              muted
+              loop
+              playsinline
+              id="vid"
+              ref="videoRef"
+              class="video"
+            >
+              해당 브라우저는 video 태그를 지원하지 않습니다.
+              <source
+                src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
+                type="video/webm"
+              />
+              <source
+                src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </template>
+          <template v-else>
+            <video
+              autoplay
+              muted
+              loop
+              playsinline
+              id="vid"
+              ref="videoRef"
+              class="video"
+            >
+              해당 브라우저는 video 태그를 지원하지 않습니다.
+              <source
+                src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video02.mp4"
+                type="video/webm"
+              />
+              <source
+                src="https://kr.object.ncloudstorage.com/common-nanuda/video/main_video02.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </template>
         </template>
       </div>
       <div class="title-container">
@@ -563,6 +565,8 @@ export default class Main extends BaseComponent {
 .app-main {
   .video-wrapper {
     position: relative;
+    background-position: center center;
+    background-size: cover;
     .video-container {
       position: absolute;
       left: 0;
@@ -578,14 +582,15 @@ export default class Main extends BaseComponent {
         top: 0;
         width: 100%;
         height: 100%;
+        z-index: 3;
       }
       video {
         object-fit: cover;
         position: absolute;
         top: 0;
-        z-index: -10;
         width: 100%;
         height: 100vh;
+        z-index: 2;
       }
       img {
         position: absolute;
@@ -597,7 +602,7 @@ export default class Main extends BaseComponent {
     }
     .title-container {
       position: relative;
-      z-index: 1;
+      z-index: 3;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -809,6 +814,7 @@ export default class Main extends BaseComponent {
     .mockup-box {
       .mockup-card {
         width: 17.5em;
+        max-width: 280px;
         overflow: hidden;
         margin: 0 auto;
         border-radius: 1.25em;
@@ -831,6 +837,15 @@ export default class Main extends BaseComponent {
       &.section03 {
         .container {
           max-width: 1400px;
+        }
+      }
+      &.section04 {
+        .tabs {
+          .tab-content {
+            .img-box {
+              max-width: 428px;
+            }
+          }
         }
       }
     }
