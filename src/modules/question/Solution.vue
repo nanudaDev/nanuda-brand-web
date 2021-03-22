@@ -345,7 +345,7 @@
         </div>
         <div class="row-box mt-4">
           <router-link to="/" class="txt-sm txt-underline"
-            >픽쿸에 대해 더 알아보기
+            >픽쿡에 대해 더 알아보기
           </router-link>
         </div>
       </header>
