@@ -582,6 +582,7 @@ export default class Main extends BaseComponent {
         top: 0;
         width: 100%;
         height: 100%;
+        z-index: 3;
       }
       video {
         object-fit: cover;
