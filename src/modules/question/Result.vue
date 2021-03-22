@@ -61,10 +61,10 @@
                 </p>
               </div>
               <button
-                class="btn-scroll-down"
+                class="btn-scroll-down btn-icon"
                 v-scroll-to="{ el: '#detail-info', offset: 0 }"
               >
-                <BaseArrow />
+                <span class="icon icon-primary"><BaseArrow /></span>
               </button>
             </div>
           </div>
@@ -109,7 +109,7 @@
                 class="btn-scroll-down"
                 v-scroll-to="{ el: '#detail-info', offset: 0 }"
               >
-                <BaseArrow />
+                <span class="icon icon-white"><BaseArrow /></span>
               </button>
             </div>
           </div>
@@ -421,7 +421,6 @@ export default class Result extends BaseComponent {
       svg {
         width: 1.5em;
         height: 1.5em;
-        fill: #fff;
       }
     }
     .article-header {

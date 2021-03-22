@@ -335,6 +335,15 @@ body {
   }
 }
 
+.icon {
+  &.icon-primary {
+    fill: #0b538d;
+  }
+  &.icon-white {
+    fill: #fff;
+  }
+}
+
 .txt-bold {
   font-weight: 600;
 }
@@ -501,6 +510,12 @@ body {
 @media screen and (min-width: 1200px) {
   body {
     font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 359px) {
+  body {
+    font-size: 0.8rem;
   }
 }
 
