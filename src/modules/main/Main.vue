@@ -813,6 +813,7 @@ export default class Main extends BaseComponent {
     .mockup-box {
       .mockup-card {
         width: 17.5em;
+        max-width: 280px;
         overflow: hidden;
         margin: 0 auto;
         border-radius: 1.25em;
@@ -835,6 +836,15 @@ export default class Main extends BaseComponent {
       &.section03 {
         .container {
           max-width: 1400px;
+        }
+      }
+      &.section04 {
+        .tabs {
+          .tab-content {
+            .img-box {
+              max-width: 428px;
+            }
+          }
         }
       }
     }

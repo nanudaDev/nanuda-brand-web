@@ -69,11 +69,12 @@
                 </div>
                 <div class="cont-box row-box">
                   <p>
-                    창업 초기부터 픽쿡에 가입했습니다. <br class="d-xl-none" />
+                    창업 초기부터 픽쿡에 가입했습니다.
+                    <br class="d-none d-sm-block d-xl-none" />
                     좋은 아이템만 골라서 초간단 레시피로 3일만에 메뉴를
-                    <br class="d-xl-none" />
+                    <br class="d-none d-sm-block d-xl-none" />
                     모두 배웠습니다. 공유주방에서 지금 운영하는데
-                    <br class="d-xl-none" />
+                    <br class="d-none d-sm-block d-xl-none" />
                     주문이 많아서 힘드네요. 행복한 고민입니다.
                   </p>
                 </div>
@@ -93,9 +94,9 @@
                 <div class="cont-box row-box">
                   <p>
                     맨처음 창업할 때부터 이 서비스가 있었다면 좀 더 잘 만들
-                    수<br class="d-xl-none" />
+                    수<br class="d-none d-sm-block d-xl-none" />
                     있었을텐데.. 상권도 모르고 가게 열어서 이제 메뉴 바꾸면서<br
-                      class="d-xl-none"
+                      class="d-none d-sm-block d-xl-none"
                     />
                     홍보물을 바꾸고 있네요. 정말 필요한 서비스 감사합니다!
                   </p>
@@ -116,10 +117,10 @@
                 <div class="cont-box row-box">
                   <p>
                     한식을 매장 운영하는데 배달은 픽쿡이 안내한 파스타를<br
-                      class="d-xl-none"
+                      class="d-none d-sm-block d-xl-none"
                     />
                     판매하고 있습니다. 만들기가 쉬워서 직원들도 곧 잘합니다.<br
-                      class="d-xl-none"
+                      class="d-none d-sm-block d-xl-none"
                     />
                     여름에 한 번 더 이용하려고 합니다.
                   </p>
