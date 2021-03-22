@@ -34,6 +34,13 @@
               <div class="cont-box">
                 <template v-if="timeData.aggregateData[0]">
                   <p>
+                    {{
+                      timeData.aggregateData[0].medium_category_nm.replace(
+                        '커피/음료',
+                        '카페',
+                      )
+                    }}
+                    <br />
                     {{ timeData.aggregateData[0].medium_small_category_nm }}
                   </p>
                 </template>
