@@ -10,15 +10,15 @@ export const componentRoutes: RouteConfig[] = [
       title: '회사소개',
     },
   },
-  {
-    path: '/services',
-    name: 'services',
-    component: () => import('../../modules/services/Services.vue'),
-    meta: {
-      layout: 'MainLayout',
-      title: '서비스소개',
-    },
-  },
+  // {
+  //   path: '/services',
+  //   name: 'services',
+  //   component: () => import('../../modules/services/Services.vue'),
+  //   meta: {
+  //     layout: 'MainLayout',
+  //     title: '서비스소개',
+  //   },
+  // },
   // {
   //   path: '/faq',
   //   name: 'faq',

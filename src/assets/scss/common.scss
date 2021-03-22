@@ -3,6 +3,9 @@ html {
 }
 body {
   color: #707070;
+  * {
+    word-break: keep-all;
+  }
 }
 
 html,
