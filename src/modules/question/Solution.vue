@@ -406,14 +406,21 @@ export default class Solution extends BaseComponent {
   getSMSCode() {
     this.smsAuthNotificationDto.phone = this.consultRequestDto.phone;
     authService.getSMSCode(this.smsAuthNotificationDto).subscribe(res => {
-      this.time = 30;
-      this.isSMSCodeSent = true;
-      this.isGetCodeBtnDisabled = true;
-      setTimeout(() => {
-        this.isGetCodeBtnDisabled = false;
-      }, this.time * 1000);
-      this.__countDownTimer();
-      this.isSMSCodeSent = true;
+      if (res) {
+        this.time = 30;
+        this.isSMSCodeSent = true;
+        this.isGetCodeBtnDisabled = true;
+        setTimeout(() => {
+          this.isGetCodeBtnDisabled = false;
+        }, this.time * 1000);
+        this.__countDownTimer();
+        this.isSMSCodeSent = true;
+      } else {
+        this.$bvToast.toast('휴대폰번호를 제대로 입력해주세요', {
+          variant: 'danger',
+          title: 'Error',
+        });
+      }
     });
   }
   checkSMSCode() {
@@ -424,6 +431,14 @@ export default class Solution extends BaseComponent {
     authService.checkSMSCode(this.smsAuthNotificationDto).subscribe(res => {
       if (res) {
         this.isVerified = true;
+      } else {
+        this.$bvToast.toast(
+          '인증번호가 올바르지않거나 유효기간이 초과했습니다',
+          {
+            variant: 'danger',
+            title: 'Error',
+          },
+        );
       }
     });
   }
@@ -441,7 +456,6 @@ export default class Solution extends BaseComponent {
       .getProformaConsultResult(this.$route.params.proformaId)
       .subscribe(res => {
         this.result = res.data;
-        console.log('this.result', this.result);
       });
 
     this.consultRequestDto.proformaConsultResultId = +this.$route.params
