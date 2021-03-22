@@ -3,11 +3,12 @@
     <header class="article-header">
       <div class="container">
         <span>
-          <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
+          <router-link to="/">
+            <img src="@/assets/images/logo_w.svg" alt="픽쿡"
+          /></router-link>
         </span>
         <h2 v-if="resultRequestDto">
-          {{ resultRequestDto.fnbOwnerStatus | enumTransformer }}
-          의
+          {{ resultRequestDto.fnbOwnerStatus | enumTransformer }}의
           <template v-if="resultRequestDto.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
             업력,</template
           >
@@ -51,16 +52,30 @@
       </section>
       <section class="article-section section01 bg-primary">
         <div class="container">
-          <div class="row-box" v-if="result && result.responses[0]">
+          <div
+            class="row-box"
+            v-if="result.responses && result.responses.length > 0"
+          >
             <h4>
               메뉴 전략
             </h4>
             <p>
-              {{ result.responses[0].koreanPrefSentence }}
-              {{ result.responses[0].modifiedResponse.response }}
+              현재 위치에서는 <br />
+              <span
+                v-for="resonse in result.responses"
+                :key="resonse.operationTime"
+                class="d-block"
+              >
+                {{ resonse.koreanPrefSentence }}
+                <strong class="txt-underline  txt-white">{{
+                  resonse.modifiedSufSentence.replace('커피/음료', '카페')
+                }}</strong>
+              </span>
+              메뉴로 도입하시면 <br class="d-lg-none" />
+              <strong>낮은 위험으로 매출을 상승시킬 수 있습니다</strong>
             </p>
           </div>
-          <div class="row-box">
+          <div class="row-box" v-if="result.operationSentenceResponse">
             <h4>
               운영 전략
             </h4>
@@ -294,8 +309,12 @@
     <div class="container">
       <header class="article-header">
         <span data-aos="fade-in" data-aos-duration="1500"
-          ><img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w"
-        /></span>
+          ><router-link to="/"
+            ><img
+              src="@/assets/images/logo_w.svg"
+              alt="픽쿡"
+              class="logo-w"/></router-link
+        ></span>
         <h2 data-aos="fade-in" data-aos-duration="1500">
           신청이 완료되었습니다
         </h2>
@@ -520,6 +539,11 @@ export default class Solution extends BaseComponent {
         }
         p {
           font-size: 1.5em;
+          line-height: 1.8;
+          font-weight: 300;
+          strong {
+            font-weight: 400;
+          }
         }
       }
     }

@@ -359,6 +359,10 @@ body {
   border-bottom: 1px solid #0b538d;
 }
 
+.txt-underline.txt-white {
+  border-color: #fff;
+}
+
 .icon {
   display: inline-flex;
   width: 1.5em;

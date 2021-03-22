@@ -4,7 +4,9 @@
       <div class="container">
         <div class="title-box">
           <span>
-            <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
+            <router-link to="/">
+              <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
+            </router-link>
           </span>
           <h2>
             맞춤 진단 결과
