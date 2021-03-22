@@ -1,0 +1,678 @@
+@charset "UTF-8";
+html {
+  font-family: Arial, sans-serif;
+}
+
+body {
+  color: #707070;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a,
+a:hover,
+a:-webkit-any-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+p {
+  line-height: 1.4;
+}
+
+img {
+  max-width: 100%;
+}
+
+button {
+  border-style: none;
+  background: none;
+  padding: 0;
+}
+
+button:focus {
+  outline: 0;
+}
+
+body {
+  font-size: 1rem;
+  font-family: 'Gotham', 'YoonGothic', sans-serif;
+  letter-spacing: -0.03em;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBook.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBook.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBook.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Gotham';
+  font-style: normal;
+  font-weight: 600;
+  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamMedium.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamMedium.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamMedium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Gotham';
+  font-style: normal;
+  font-weight: 800;
+  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBold.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBold.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/GothamBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 500;
+  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 600;
+  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 700;
+  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'YoonGothic';
+  font-style: normal;
+  font-weight: 800;
+  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.ttf") format("truetype");
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group .icon-search {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.form-control-lg {
+  font-size: 1.125em;
+  height: 3.33em;
+  padding: 0 1.25em;
+}
+
+.rounded-lg {
+  border-radius: 1.25em !important;
+}
+
+.gutter-sm {
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+}
+
+.gutter-sm [class^='col-'] {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1em;
+  font-size: 1em;
+  height: 3em;
+  line-height: 1.2;
+}
+
+.btn.btn-sm {
+  font-size: 0.75em;
+  padding: 0 1em;
+  height: 2.5em;
+}
+
+.btn.btn-lg {
+  font-size: 1.125em;
+  height: 3.33em;
+}
+
+.btn.btn-xl {
+  font-size: 1.625em;
+  height: 2.3076em;
+  min-width: 8.4615em;
+}
+
+.btn .icon-arrow-right {
+  width: 1em;
+  height: 1em;
+  margin-left: 0.5em;
+}
+
+.btn-primary {
+  border-color: #0b538d;
+  background-color: #0b538d;
+  font-weight: 700;
+}
+
+.btn-primary .icon {
+  fill: #fff;
+}
+
+.btn-outline-primary {
+  border-color: #0b538d;
+  background-color: transparent;
+  font-weight: 700;
+}
+
+.btn-outline-primary .icon {
+  fill: #0b538d;
+}
+
+.txt-bold {
+  font-weight: 600;
+}
+
+.txt-bolder {
+  font-weight: 800;
+}
+
+.is-blind {
+  display: none;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon.icon-arrow-right {
+  transform: rotate(-90deg);
+}
+
+.icon.icon-arrow-left {
+  transform: rotate(90deg);
+}
+
+.bg-primary {
+  background-color: #0b538d !important;
+}
+
+.bg-light {
+  background-color: #f5f5f5 !important;
+}
+
+.txt-primary {
+  color: #0b538d;
+}
+
+.txt-underline {
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid #0b538d;
+}
+
+.icon {
+  display: inline-flex;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.icon svg {
+  fill: inherit;
+  width: inherit;
+  height: inherit;
+}
+
+.txt-xs {
+  font-size: 0.75rem;
+}
+
+.txt-sm {
+  font-size: 0.875rem;
+}
+
+.txt-lg {
+  font-size: 1.125em;
+}
+
+.txt-xl {
+  font-size: 1.25em;
+}
+
+.txt-big {
+  font-size: 1.5em;
+}
+
+.app-agreement .main-header h1,
+.app-privacy .main-header h1 {
+  font-size: 1em;
+}
+
+.app-agreement .main-header h1 img,
+.app-privacy .main-header h1 img {
+  width: 8em;
+}
+
+.app-agreement .article-section .section-header h3,
+.app-privacy .article-section .section-header h3 {
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid #545454;
+  font-size: 1.5em;
+  color: #545454;
+}
+
+.app-agreement .article-section .agree-box,
+.app-privacy .article-section .agree-box {
+  font-size: 0.875em;
+  line-height: 1.4;
+}
+
+.app-agreement .article-section .agree-box + .agree-box,
+.app-privacy .article-section .agree-box + .agree-box {
+  margin-top: 2em;
+}
+
+.app-agreement .article-section .agree-box h4,
+.app-privacy .article-section .agree-box h4 {
+  font-size: 1.25em;
+  color: #545454;
+  font-weight: 600;
+  margin: 1em 0;
+}
+
+.app-agreement .article-section .agree-box .o-list,
+.app-privacy .article-section .agree-box .o-list {
+  margin: 1em 0;
+}
+
+.app-agreement .article-section .agree-box .o-list li,
+.app-privacy .article-section .agree-box .o-list li {
+  position: relative;
+  margin: 0.5em 0;
+  padding-left: 0.75em;
+}
+
+.app-agreement .article-section .agree-box .o-list li:before,
+.app-privacy .article-section .agree-box .o-list li:before {
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  display: block;
+  content: '';
+  width: 0.25em;
+  height: 0.25em;
+  background-color: #0b538d;
+  border-radius: 50%;
+}
+
+/* animation */
+.fadeIn-enter-active {
+  animation: fadeIn 0.3s ease;
+}
+
+.fadeIn-leave-active {
+  animation: fadeIn 0.3s ease reverse;
+}
+
+.slideInUp-enter-active {
+  animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.slideInUp-leave-active {
+  animation: slideInUp 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) reverse;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  body {
+    font-size: 1.2rem;
+  }
+}
+
+@keyframes animated-mouse {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(1em);
+  }
+}
+
+.vue-daum-postcode {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-body {
+  background: url("../images/loading.gif") no-repeat center center;
+  background-size: 5em 5em;
+  min-height: 400px;
+}
+
+.loading-layer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.6);
+  background-image: url("../images/loading.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 5em 5em;
+}
+
+.loading-layer .loading-container video {
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  z-index: -10;
+  width: 100%;
+  height: 100vh;
+}
+
+.complete-time-box .row > div + div {
+  border-left: 1px solid #0b538d;
+}
+
+.complete-time-box .row > div .label-box {
+  padding: 1em 0;
+  font-size: 0.875em;
+  color: #020202;
+  text-align: center;
+  border-bottom: 1px solid #0b538d;
+  background-color: #f9f9f9;
+}
+
+.complete-time-box .row > div .cont-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 5.875em;
+  line-height: 1.5;
+}
+
+.complete-time-box .row > div .cont-box p {
+  padding: 0.5em;
+  font-size: 0.875em;
+}
+
+.complete-time-box .row > div .percent-box {
+  height: 100%;
+}
+
+.complete-time-box .row > div .percent-box.offline-ratio {
+  background: #a7bdd3;
+  background: linear-gradient(90deg, #a7bdd3 0%, #1c4d86 35%);
+  margin-left: auto;
+}
+
+.complete-time-box .row > div .percent-box.delivery-ratio {
+  background: #ddb028;
+  background: linear-gradient(90deg, #ddb028 0%, #e8d791 35%);
+  margin-right: auto;
+}
+
+.form-container label {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: #000000;
+}
+
+.form-container input {
+  border-radius: 0;
+  border-color: #707070;
+}
+
+.form-container .btn {
+  width: 100%;
+  border-radius: 0;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  color: #c4c4c4;
+  font-size: 1em !important;
+}
+
+/* 회사소개 - 추후 옮김 */
+.app-about-us .article-header {
+  height: 100vh;
+  background-color: #004d8a;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url("../images/bg_circle.svg");
+  background-size: cover;
+  text-align: center;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-about-us .article-header h2 {
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.app-about-us .article-header p {
+  margin-top: 1.5em;
+}
+
+.app-about-us .article-section {
+  padding: 4em 0;
+}
+
+.app-about-us .article-section .section-header h3 {
+  color: #004d8a;
+  line-height: 1.4;
+  font-weight: 600;
+  font-size: 1.25em;
+}
+
+.app-about-us .article-section .section-header + .section-content {
+  margin-top: 2em;
+}
+
+.app-about-us .review-box {
+  background-color: #f7fbff;
+  padding: 2em;
+}
+
+.app-about-us .review-box .info-box {
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+
+.app-about-us .review-box .info-box .img-box {
+  width: 4em;
+  margin-right: 1em;
+}
+
+.app-about-us .review-box .info-box .img-box img {
+  border-radius: 50%;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.05);
+}
+
+.app-about-us .review-box .info-box .txt-box {
+  line-height: 1.4;
+  font-size: 0.875em;
+}
+
+.app-about-us .review-box .info-box .txt-box strong {
+  font-weight: 600;
+}
+
+.app-about-us .review-box .cont-box {
+  margin-top: 1em;
+  text-align: left;
+}
+
+.app-about-us .review-box .cont-box p {
+  font-size: 0.75em;
+}
+/*# sourceMappingURL=common.css.map */
