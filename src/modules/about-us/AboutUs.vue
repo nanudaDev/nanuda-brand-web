@@ -36,11 +36,7 @@
       <section class="article-section text-lg-center pt-0">
         <div class="container">
           <header class="section-header">
-            <h3>
-              원하는 메뉴와 <br />
-              부가서비스를 <br class="d-lg-none" />
-              한 번에
-            </h3>
+            <h3>픽쿡은 가장 필요한메뉴와 <br />서비스를 드립니다</h3>
           </header>
           <div class="section-content">
             <p>
@@ -63,7 +59,7 @@
                     <img src="@/assets/images/about_us_review_01.png" alt="" />
                   </div>
                   <div class="txt-box">
-                    이지원 예비사장님 <br />
+                    이지원 사장님 <br />
                     <strong>논현동 한식 운영</strong>
                   </div>
                 </div>
@@ -87,7 +83,7 @@
                     <img src="@/assets/images/about_us_review_02.png" alt="" />
                   </div>
                   <div class="txt-box">
-                    박지홍 예비사장님 <br />
+                    박지홍 사장님 <br />
                     <strong>망원동 치킨 운영</strong>
                   </div>
                 </div>
@@ -110,7 +106,7 @@
                     <img src="@/assets/images/about_us_review_03.png" alt="" />
                   </div>
                   <div class="txt-box">
-                    전지연 예비사장님 <br />
+                    전지연 사장님 <br />
                     <strong>성수동 분식 운영</strong>
                   </div>
                 </div>
