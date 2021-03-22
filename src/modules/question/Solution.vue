@@ -7,7 +7,7 @@
             <img src="@/assets/images/logo_w.svg" alt="픽쿡"
           /></router-link>
         </span>
-        <h2 v-if="result">
+        <h2 v-if="result && result.fnbOwnerStatus">
           {{ result.fnbOwnerStatus | enumTransformer }}
           의
           <template v-if="result.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
@@ -18,9 +18,14 @@
         </h2>
       </div>
     </header>
-    <div class="article-content">
+    <div class="article-content" v-if="result">
       <section class="bg-light">
-        <div class="complete-time-box" v-if="result">
+        <div
+          class="complete-time-box"
+          v-if="
+            result.graphData && result.graphData.completeTimeData.length > 0
+          "
+        >
           <div class="row no-gutters">
             <div
               v-for="timeData in result.graphData.completeTimeData"
@@ -52,7 +57,7 @@
       </section>
       <section class="article-section section01 bg-primary">
         <div class="container">
-          <div class="row-box" v-if="result">
+          <div class="row-box" v-if="result && result.graphData">
             <h4>
               메뉴 전략
             </h4>
@@ -74,7 +79,9 @@
           </div>
           <div
             class="row-box"
-            v-if="result.graphData.operationSentenceResponse"
+            v-if="
+              result.graphData && result.graphData.operationSentenceResponse
+            "
           >
             <h4>
               운영 전략
