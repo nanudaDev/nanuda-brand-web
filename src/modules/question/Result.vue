@@ -292,8 +292,6 @@
             name: 'solution',
             params: {
               proformaId: result.proformaId,
-              resultRequestDto: resultRequestDto,
-              result: result,
             },
           })
         "

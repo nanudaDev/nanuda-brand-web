@@ -5,10 +5,10 @@
         <span>
           <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
         </span>
-        <h2 v-if="resultRequestDto">
-          {{ resultRequestDto.fnbOwnerStatus | enumTransformer }}
+        <h2 v-if="result">
+          {{ result.fnbOwnerStatus | enumTransformer }}
           의
-          <template v-if="resultRequestDto.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
+          <template v-if="result.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
             업력,</template
           >
           경험 그리고 상권분석을 <br />
@@ -18,15 +18,14 @@
     </header>
     <div class="article-content">
       <section class="bg-light">
-        <div
-          class="complete-time-box"
-          v-if="result.completeTimeData && result.completeTimeData.length > 0"
-        >
+        <div class="complete-time-box" v-if="result">
           <div class="row no-gutters">
             <div
-              v-for="timeData in result.completeTimeData"
+              v-for="timeData in result.graphData.completeTimeData"
               :key="timeData.hour"
-              :style="`width:${100 / result.completeTimeData.length}%`"
+              :style="
+                `width:${100 / result.graphData.completeTimeData.length}%`
+              "
             >
               <div class="label-box">
                 {{ timeData.hour | enumTransformer }}
@@ -44,13 +43,13 @@
       </section>
       <section class="article-section section01 bg-primary">
         <div class="container">
-          <div class="row-box" v-if="result && result.responses[0]">
+          <div class="row-box" v-if="result">
             <h4>
               메뉴 전략
             </h4>
             <p>
-              {{ result.responses[0].koreanPrefSentence }}
-              {{ result.responses[0].modifiedResponse.response }}
+              {{ result.graphData.responses[0].koreanPrefSentence }}
+              {{ result.graphData.responses[0].modifiedResponse.response }}
             </p>
           </div>
           <div class="row-box">
@@ -58,7 +57,7 @@
               운영 전략
             </h4>
             <p>
-              {{ result.operationSentenceResponse }}
+              {{ result.graphData.operationSentenceResponse }}
             </p>
           </div>
           <div class="btn-box text-center mt-5 pt-5">
@@ -332,6 +331,7 @@ import authService from '@/services/auth.service';
 import questionService from '@/services/question.service';
 import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 import { SmsAuthNotificationDto } from '@/dto';
+import { ProformaResponseDto } from '@/dto/question/proforma-response.dto';
 @Component({
   name: 'Solution',
   components: { ResultRevenueChart, FoodCategoryRatioChart },
@@ -342,7 +342,7 @@ export default class Solution extends BaseComponent {
     tagRef: HTMLFormElement;
   };
   // TODO: result, resultRequestDto  세션스토리지로 바꿔야함 , 타입체크변경
-  private result: any = null;
+  private result: ProformaResponseDto = null;
   private resultRequestDto: any = null;
   private isComplete = false;
   //
@@ -435,10 +435,15 @@ export default class Solution extends BaseComponent {
     });
   }
 
-  created() {
+  mounted() {
     // TODO : result , resultRequestDto 세션 스토리 저장? 필요
-    this.result = this.$route.params.result;
-    this.resultRequestDto = this.$route.params.resultRequestDto;
+    questionService
+      .getProformaConsultResult(this.$route.params.proformaId)
+      .subscribe(res => {
+        this.result = res.data;
+        console.log('this.result', this.result);
+      });
+
     this.consultRequestDto.proformaConsultResultId = +this.$route.params
       .proformaId;
     // reroute on reload
