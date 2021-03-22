@@ -7,9 +7,10 @@
             <img src="@/assets/images/logo_w.svg" alt="픽쿡"
           /></router-link>
         </span>
-        <h2 v-if="resultRequestDto">
-          {{ resultRequestDto.fnbOwnerStatus | enumTransformer }}의
-          <template v-if="resultRequestDto.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
+        <h2 v-if="result">
+          {{ result.fnbOwnerStatus | enumTransformer }}
+          의
+          <template v-if="result.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
             업력,</template
           >
           경험 그리고 상권분석을 <br />
@@ -19,15 +20,14 @@
     </header>
     <div class="article-content">
       <section class="bg-light">
-        <div
-          class="complete-time-box"
-          v-if="result.completeTimeData && result.completeTimeData.length > 0"
-        >
+        <div class="complete-time-box" v-if="result">
           <div class="row no-gutters">
             <div
-              v-for="timeData in result.completeTimeData"
+              v-for="timeData in result.graphData.completeTimeData"
               :key="timeData.hour"
-              :style="`width:${100 / result.completeTimeData.length}%`"
+              :style="
+                `width:${100 / result.graphData.completeTimeData.length}%`
+              "
             >
               <div class="label-box">
                 {{ timeData.hour | enumTransformer }}
@@ -52,17 +52,14 @@
       </section>
       <section class="article-section section01 bg-primary">
         <div class="container">
-          <div
-            class="row-box"
-            v-if="result.responses && result.responses.length > 0"
-          >
+          <div class="row-box" v-if="result">
             <h4>
               메뉴 전략
             </h4>
             <p>
               현재 위치에서는 <br />
               <span
-                v-for="resonse in result.responses"
+                v-for="resonse in result.graphData.responses"
                 :key="resonse.operationTime"
                 class="d-block"
               >
@@ -75,12 +72,15 @@
               <strong>낮은 위험으로 매출을 상승시킬 수 있습니다</strong>
             </p>
           </div>
-          <div class="row-box" v-if="result.operationSentenceResponse">
+          <div
+            class="row-box"
+            v-if="result.graphData.operationSentenceResponse"
+          >
             <h4>
               운영 전략
             </h4>
             <p>
-              {{ result.operationSentenceResponse }}
+              {{ result.graphData.operationSentenceResponse }}
             </p>
           </div>
           <div class="btn-box text-center mt-5 pt-5">
@@ -358,6 +358,7 @@ import authService from '@/services/auth.service';
 import questionService from '@/services/question.service';
 import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 import { SmsAuthNotificationDto } from '@/dto';
+import { ProformaResponseDto } from '@/dto/question/proforma-response.dto';
 @Component({
   name: 'Solution',
   components: { ResultRevenueChart, FoodCategoryRatioChart },
@@ -368,7 +369,7 @@ export default class Solution extends BaseComponent {
     tagRef: HTMLFormElement;
   };
   // TODO: result, resultRequestDto  세션스토리지로 바꿔야함 , 타입체크변경
-  private result: any = null;
+  private result: ProformaResponseDto = null;
   private resultRequestDto: any = null;
   private isComplete = false;
   //
@@ -432,14 +433,21 @@ export default class Solution extends BaseComponent {
   getSMSCode() {
     this.smsAuthNotificationDto.phone = this.consultRequestDto.phone;
     authService.getSMSCode(this.smsAuthNotificationDto).subscribe(res => {
-      this.time = 30;
-      this.isSMSCodeSent = true;
-      this.isGetCodeBtnDisabled = true;
-      setTimeout(() => {
-        this.isGetCodeBtnDisabled = false;
-      }, this.time * 1000);
-      this.__countDownTimer();
-      this.isSMSCodeSent = true;
+      if (res) {
+        this.time = 30;
+        this.isSMSCodeSent = true;
+        this.isGetCodeBtnDisabled = true;
+        setTimeout(() => {
+          this.isGetCodeBtnDisabled = false;
+        }, this.time * 1000);
+        this.__countDownTimer();
+        this.isSMSCodeSent = true;
+      } else {
+        this.$bvToast.toast('휴대폰번호를 제대로 입력해주세요', {
+          variant: 'danger',
+          title: 'Error',
+        });
+      }
     });
   }
   checkSMSCode() {
@@ -450,6 +458,14 @@ export default class Solution extends BaseComponent {
     authService.checkSMSCode(this.smsAuthNotificationDto).subscribe(res => {
       if (res) {
         this.isVerified = true;
+      } else {
+        this.$bvToast.toast(
+          '인증번호가 올바르지않거나 유효기간이 초과했습니다',
+          {
+            variant: 'danger',
+            title: 'Error',
+          },
+        );
       }
     });
   }
@@ -461,10 +477,14 @@ export default class Solution extends BaseComponent {
     });
   }
 
-  created() {
+  mounted() {
     // TODO : result , resultRequestDto 세션 스토리 저장? 필요
-    this.result = this.$route.params.result;
-    this.resultRequestDto = this.$route.params.resultRequestDto;
+    questionService
+      .getProformaConsultResult(this.$route.params.proformaId)
+      .subscribe(res => {
+        this.result = res.data;
+      });
+
     this.consultRequestDto.proformaConsultResultId = +this.$route.params
       .proformaId;
     // reroute on reload
