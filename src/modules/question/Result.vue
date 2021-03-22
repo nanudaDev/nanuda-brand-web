@@ -116,11 +116,7 @@
         </section>
       </template>
       <!-- 공통 정보 -->
-      <section
-        class="article-section bg-light"
-        id="detail-info"
-        v-if="result.completeTimeData && result.completeTimeData.length > 1"
-      >
+      <section class="article-section bg-light" id="detail-info">
         <div class="container">
           <header class="section-header">
             <h3>
