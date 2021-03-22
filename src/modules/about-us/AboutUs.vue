@@ -36,11 +36,7 @@
       <section class="article-section text-lg-center pt-0">
         <div class="container">
           <header class="section-header">
-            <h3>
-              원하는 메뉴와 <br />
-              부가서비스를 <br class="d-lg-none" />
-              한 번에
-            </h3>
+            <h3>픽쿡은 가장 필요한메뉴와 <br />서비스를 드립니다</h3>
           </header>
           <div class="section-content">
             <p>
@@ -63,17 +59,18 @@
                     <img src="@/assets/images/about_us_review_01.png" alt="" />
                   </div>
                   <div class="txt-box">
-                    이지원 예비사장님 <br />
+                    이지원 사장님 <br />
                     <strong>논현동 한식 운영</strong>
                   </div>
                 </div>
                 <div class="cont-box row-box">
                   <p>
-                    창업 초기부터 픽쿡에 가입했습니다. <br class="d-xl-none" />
+                    창업 초기부터 픽쿡에 가입했습니다.
+                    <br class="d-none d-sm-block d-xl-none" />
                     좋은 아이템만 골라서 초간단 레시피로 3일만에 메뉴를
-                    <br class="d-xl-none" />
+                    <br class="d-none d-sm-block d-xl-none" />
                     모두 배웠습니다. 공유주방에서 지금 운영하는데
-                    <br class="d-xl-none" />
+                    <br class="d-none d-sm-block d-xl-none" />
                     주문이 많아서 힘드네요. 행복한 고민입니다.
                   </p>
                 </div>
@@ -86,16 +83,16 @@
                     <img src="@/assets/images/about_us_review_02.png" alt="" />
                   </div>
                   <div class="txt-box">
-                    박지홍 예비사장님 <br />
+                    박지홍 사장님 <br />
                     <strong>망원동 치킨 운영</strong>
                   </div>
                 </div>
                 <div class="cont-box row-box">
                   <p>
                     맨처음 창업할 때부터 이 서비스가 있었다면 좀 더 잘 만들
-                    수<br class="d-xl-none" />
+                    수<br class="d-none d-sm-block d-xl-none" />
                     있었을텐데.. 상권도 모르고 가게 열어서 이제 메뉴 바꾸면서<br
-                      class="d-xl-none"
+                      class="d-none d-sm-block d-xl-none"
                     />
                     홍보물을 바꾸고 있네요. 정말 필요한 서비스 감사합니다!
                   </p>
@@ -109,17 +106,17 @@
                     <img src="@/assets/images/about_us_review_03.png" alt="" />
                   </div>
                   <div class="txt-box">
-                    전지연 예비사장님 <br />
+                    전지연 사장님 <br />
                     <strong>성수동 분식 운영</strong>
                   </div>
                 </div>
                 <div class="cont-box row-box">
                   <p>
                     한식을 매장 운영하는데 배달은 픽쿡이 안내한 파스타를<br
-                      class="d-xl-none"
+                      class="d-none d-sm-block d-xl-none"
                     />
                     판매하고 있습니다. 만들기가 쉬워서 직원들도 곧 잘합니다.<br
-                      class="d-xl-none"
+                      class="d-none d-sm-block d-xl-none"
                     />
                     여름에 한 번 더 이용하려고 합니다.
                   </p>

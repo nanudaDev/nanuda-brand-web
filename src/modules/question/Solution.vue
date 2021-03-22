@@ -1,14 +1,16 @@
 <template>
-  <article class="main-article" id="question-solution">
+  <article class="main-article" id="question-solution" v-if="!isComplete">
     <header class="article-header">
       <div class="container">
         <span>
-          <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
+          <router-link to="/">
+            <img src="@/assets/images/logo_w.svg" alt="픽쿡"
+          /></router-link>
         </span>
-        <h2 v-if="resultRequestDto">
-          {{ resultRequestDto.fnbOwnerStatus | enumTransformer }}
+        <h2 v-if="result && result.fnbOwnerStatus">
+          {{ result.fnbOwnerStatus | enumTransformer }}
           의
-          <template v-if="resultRequestDto.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
+          <template v-if="result.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
             업력,</template
           >
           경험 그리고 상권분석을 <br />
@@ -16,17 +18,21 @@
         </h2>
       </div>
     </header>
-    <div class="article-content">
+    <div class="article-content" v-if="result">
       <section class="bg-light">
         <div
           class="complete-time-box"
-          v-if="result.completeTimeData && result.completeTimeData.length > 0"
+          v-if="
+            result.graphData && result.graphData.completeTimeData.length > 0
+          "
         >
           <div class="row no-gutters">
             <div
-              v-for="timeData in result.completeTimeData"
+              v-for="timeData in result.graphData.completeTimeData"
               :key="timeData.hour"
-              :style="`width:${100 / result.completeTimeData.length}%`"
+              :style="
+                `width:${100 / result.graphData.completeTimeData.length}%`
+              "
             >
               <div class="label-box">
                 {{ timeData.hour | enumTransformer }}
@@ -34,6 +40,13 @@
               <div class="cont-box">
                 <template v-if="timeData.aggregateData[0]">
                   <p>
+                    {{
+                      timeData.aggregateData[0].medium_category_nm.replace(
+                        '커피/음료',
+                        '카페',
+                      )
+                    }}
+                    <br />
                     {{ timeData.aggregateData[0].medium_small_category_nm }}
                   </p>
                 </template>
@@ -44,21 +57,37 @@
       </section>
       <section class="article-section section01 bg-primary">
         <div class="container">
-          <div class="row-box" v-if="result && result.responses[0]">
+          <div class="row-box" v-if="result && result.graphData">
             <h4>
               메뉴 전략
             </h4>
             <p>
-              {{ result.responses[0].koreanPrefSentence }}
-              {{ result.responses[0].modifiedResponse.response }}
+              현재 위치에서는 <br />
+              <span
+                v-for="resonse in result.graphData.responses"
+                :key="resonse.operationTime"
+                class="d-block"
+              >
+                {{ resonse.koreanPrefSentence }}
+                <strong class="txt-underline  txt-white">{{
+                  resonse.modifiedSufSentence.replace('커피/음료', '카페')
+                }}</strong>
+              </span>
+              메뉴로 도입하시면 <br class="d-lg-none" />
+              <strong>낮은 위험으로 매출을 상승시킬 수 있습니다</strong>
             </p>
           </div>
-          <div class="row-box">
+          <div
+            class="row-box"
+            v-if="
+              result.graphData && result.graphData.operationSentenceResponse
+            "
+          >
             <h4>
               운영 전략
             </h4>
             <p>
-              {{ result.operationSentenceResponse }}
+              {{ result.graphData.operationSentenceResponse }}
             </p>
           </div>
           <div class="btn-box text-center mt-5 pt-5">
@@ -87,7 +116,8 @@
                   현 매장에서 매출에 가장 유리한 메뉴 매칭
                 </h4>
                 <p>
-                  창업지역의 정밀한 상권분석을 통해 <br />
+                  창업지역의 정밀한 상권분석을 통해
+                  <br class="d-none d-sm-block" />
                   매출 상승에 유리한 메뉴를 매칭, 제공 드립니다
                 </p>
               </div>
@@ -101,7 +131,8 @@
                   메뉴, 운영 교육과 관리 서비스 제공
                 </h4>
                 <p>
-                  빠른 공정, 낮은 식자재율로 완성된 메뉴의 교육과 <br />
+                  빠른 공정, 낮은 식자재율로 완성된 메뉴의 교육과
+                  <br class="d-none d-sm-block" />
                   운영 방법, 디자인, 홍보물을 제공합니다
                 </p>
               </div>
@@ -115,7 +146,8 @@
                   대면 창업 진단과 상권리포트 제공
                 </h4>
                 <p>
-                  대면 미팅을 통해 상세 상권정보를 알려드립니다. <br />
+                  대면 미팅을 통해 상세 상권정보를 알려드립니다.
+                  <br class="d-none d-sm-block" />
                   가입시 정기적으로 상권 데이터를 제공합니다.
                 </p>
               </div>
@@ -130,12 +162,13 @@
             <swiper-slide>
               <div class="row-box">
                 <div class="img-box">
-                  <img src="@/assets/images/icon_logo_symbol.svg" />
+                  <img src="@/assets/images/about_us_review_01.png" />
                 </div>
                 <div class="txt-box">
-                  <h4>이지원 이용자 후기</h4>
+                  <h4>김성수 이용자 후기</h4>
                   <p>
-                    배달 메뉴를 추가하려고 픽쿡을 찾았는데 <br />
+                    배달 메뉴를 추가하려고 픽쿡을 찾았는데
+                    <br class="d-none d-sm-block" />
                     예상보다 매출이 잘나와서 좋았습니다.<br />
                     시간대별로 알려주는게 진짜 좋은것 같습니다
                   </p>
@@ -145,12 +178,14 @@
             <swiper-slide>
               <div class="row-box">
                 <div class="img-box">
-                  <img src="@/assets/images/icon_logo_symbol.svg" />
+                  <img src="@/assets/images/about_us_review_03.png" />
                 </div>
                 <div class="txt-box">
-                  <h4>박지홍 이용자 후기</h4>
+                  <h4>주상 이용자 후기</h4>
                   <p>
-                    한식을 매장 판매 하는데 배달은 픽쿡이 안내한 파스타를<br />
+                    한식을 매장 판매 하는데 배달은 픽쿡이 안내한 파스타를<br
+                      class="d-none d-sm-block"
+                    />
                     판매하고 있습니다. 만들기가 쉽게 만들어져서 편리합니다.
                     <br />
                     여름에 한번 더 이용하려구요
@@ -161,14 +196,16 @@
             <swiper-slide>
               <div class="row-box">
                 <div class="img-box">
-                  <img src="@/assets/images/icon_logo_symbol.svg" />
+                  <img src="@/assets/images/about_us_review_02.png" />
                 </div>
                 <div class="txt-box">
-                  <h4>전지연 이용자 후기</h4>
+                  <h4>강주연 이용자 후기</h4>
                   <p>
-                    맨처음 창업할 때 부터 이 서비스가 있었다면 좀 더 <br />잘
-                    만들 수 있었을 텐데ㅠㅠ. 상권도 모르고 가게 열어서
-                    <br />이제 메뉴 바꾸고 있습니다. 정말 필요하네요
+                    맨처음 창업할 때 부터 이 서비스가 있었다면 좀 더
+                    <br class="d-none d-sm-block" />잘 만들 수 있었을 텐데ㅠㅠ.
+                    상권도 모르고 가게 열어서
+                    <br class="d-none d-sm-block" />이제 메뉴 바꾸고 있습니다.
+                    정말 필요하네요
                   </p>
                 </div>
               </div>
@@ -199,10 +236,10 @@
           </div>
           <div class="form-container">
             <b-form-row>
-              <b-col cols="2">
+              <b-col cols="3">
                 <label class="txt-sm">이름</label>
               </b-col>
-              <b-col cols="10">
+              <b-col cols="9">
                 <b-form-input
                   v-model="consultRequestDto.name"
                   placeholder="이름을 적어주세요"
@@ -212,10 +249,10 @@
               </b-col>
             </b-form-row>
             <b-form-row class="mt-3">
-              <b-col cols="2">
+              <b-col cols="3">
                 <label class="txt-sm">휴대전화</label>
               </b-col>
-              <b-col cols="7">
+              <b-col cols="6">
                 <b-form-input
                   v-model="consultRequestDto.phone"
                   placeholder="ex) 01012345678"
@@ -236,10 +273,10 @@
               </b-col>
             </b-form-row>
             <b-form-row v-if="isSMSCodeSent" class="mt-3">
-              <b-col cols="2">
+              <b-col cols="3">
                 <label class="txt-sm">인증번호</label>
               </b-col>
-              <b-col cols="7">
+              <b-col cols="6">
                 <b-form-input
                   v-model="consultRequestDto.smsAuthCode"
                   placeholder="인증번호 숫자 6자리 입력"
@@ -254,6 +291,9 @@
                 }}</b-btn>
               </b-col>
             </b-form-row>
+            <div class="txt-box" v-if="errorText">
+              <p>{{ errorText }}</p>
+            </div>
           </div>
           <!-- // 폼 영역 -->
         </div>
@@ -271,6 +311,47 @@
       </b-btn>
     </div>
   </article>
+  <!-- 신청 완료 -->
+  <article class="main-article bg-primary" id="question-complete" v-else>
+    <div class="container">
+      <header class="article-header">
+        <span data-aos="fade-in" data-aos-duration="1500"
+          ><router-link to="/"
+            ><img
+              src="@/assets/images/logo_w.svg"
+              alt="픽쿡"
+              class="logo-w"/></router-link
+        ></span>
+        <h2 data-aos="fade-in" data-aos-duration="1500">
+          신청이 완료되었습니다
+        </h2>
+        <p data-aos="fade-in" data-aos-duration="1500">
+          담당 플래너가 배정되는대로 <br />
+          입력해주신 연락처로 안내드리겠습니다.
+        </p>
+        <div
+          class="btn-box text-center"
+          data-aos="fade-in"
+          data-aos-duration="1000"
+        >
+          <b-btn
+            variant="light"
+            pill
+            size="xl"
+            class="shadow"
+            @click="$router.push('/question')"
+          >
+            처음으로
+          </b-btn>
+        </div>
+        <div class="row-box mt-4">
+          <router-link to="/" class="txt-sm txt-underline"
+            >픽쿸에 대해 더 알아보기
+          </router-link>
+        </div>
+      </header>
+    </div>
+  </article>
 </template>
 
 <script lang="ts">
@@ -283,6 +364,8 @@ import authService from '@/services/auth.service';
 // import toast from '../../../resources/assets/js/services/toast.js';
 import questionService from '@/services/question.service';
 import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
+import { SmsAuthNotificationDto } from '@/dto';
+import { ProformaResponseDto } from '@/dto/question/proforma-response.dto';
 @Component({
   name: 'Solution',
   components: { ResultRevenueChart, FoodCategoryRatioChart },
@@ -293,14 +376,17 @@ export default class Solution extends BaseComponent {
     tagRef: HTMLFormElement;
   };
   // TODO: result, resultRequestDto  세션스토리지로 바꿔야함 , 타입체크변경
-  private result: any = null;
+  private result: ProformaResponseDto = null;
   private resultRequestDto: any = null;
+  private isComplete = false;
   //
   private consultRequestDto = new ConsultRequestDto();
   private isVerified = false;
+  private errorText = '';
   private isSMSCodeSent = false;
   private isGetCodeBtnDisabled = false;
   private time = 30;
+  private smsAuthNotificationDto = new SmsAuthNotificationDto();
 
   private swiperOption: any = {
     slidesPerView: 1,
@@ -349,10 +435,12 @@ export default class Solution extends BaseComponent {
       }, 1000);
     }
   }
+
+  // get auth code
   getSMSCode() {
-    authService
-      .getSMSCode(this.consultRequestDto.phone)
-      .then(res => {
+    this.smsAuthNotificationDto.phone = this.consultRequestDto.phone;
+    authService.getSMSCode(this.smsAuthNotificationDto).subscribe(res => {
+      if (res) {
         this.time = 30;
         this.isSMSCodeSent = true;
         this.isGetCodeBtnDisabled = true;
@@ -361,34 +449,52 @@ export default class Solution extends BaseComponent {
         }, this.time * 1000);
         this.__countDownTimer();
         this.isSMSCodeSent = true;
-      })
-      .catch(err => {
-        // toast.error('휴대폰 번호를 정확히 입력해주세요');
-      });
+      } else {
+        this.$bvToast.toast('휴대폰번호를 제대로 입력해주세요', {
+          variant: 'danger',
+          title: 'Error',
+        });
+      }
+    });
   }
   checkSMSCode() {
-    authService
-      .checkSMSCode(
-        this.consultRequestDto.phone,
-        this.consultRequestDto.smsAuthCode,
-      )
-      .then(res => {
-        this.isVerified = res;
-      })
-      .catch(err => {
-        // toast.error('인증번호가 올바르지않거나 유효기간이 초과했습니다');
-      });
+    this.smsAuthNotificationDto.phone = this.consultRequestDto.phone;
+    this.smsAuthNotificationDto.smsAuthCode = parseInt(
+      this.consultRequestDto.smsAuthCode,
+    );
+    authService.checkSMSCode(this.smsAuthNotificationDto).subscribe(res => {
+      if (res) {
+        this.isVerified = true;
+      } else {
+        this.$bvToast.toast(
+          '인증번호가 올바르지않거나 유효기간이 초과했습니다',
+          {
+            variant: 'danger',
+            title: 'Error',
+          },
+        );
+      }
+    });
   }
   onConsultBtnClicked() {
-    questionService.postConsult(this.consultRequestDto);
+    questionService.postConsult(this.consultRequestDto).subscribe(res => {
+      if (res) {
+        this.isComplete = true;
+      }
+    });
   }
 
-  created() {
+  mounted() {
     // TODO : result , resultRequestDto 세션 스토리 저장? 필요
-    this.result = this.$route.params.result;
-    this.resultRequestDto = this.$route.params.resultRequestDto;
+    questionService
+      .getProformaConsultResult(this.$route.params.proformaId)
+      .subscribe(res => {
+        this.result = res.data;
+      });
+
     this.consultRequestDto.proformaConsultResultId = +this.$route.params
       .proformaId;
+    // reroute on reload
   }
 }
 </script>
@@ -460,6 +566,11 @@ export default class Solution extends BaseComponent {
         }
         p {
           font-size: 1.5em;
+          line-height: 1.8;
+          font-weight: 300;
+          strong {
+            font-weight: 400;
+          }
         }
       }
     }
@@ -519,6 +630,39 @@ export default class Solution extends BaseComponent {
           }
         }
       }
+    }
+  }
+}
+
+#question-complete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  height: 100vh;
+  .article-header {
+    text-align: center;
+    span {
+      display: block;
+      margin-bottom: 1em;
+      img {
+        display: block;
+        width: 6.25em;
+        margin: 0 auto;
+      }
+    }
+    h2 {
+      font-size: 2em;
+    }
+    p {
+      font-size: 1em;
+      margin-top: 1em;
+    }
+    .btn-box {
+      margin-top: 3.125em;
+    }
+    .txt-underline {
+      border-color: #fff;
     }
   }
 }

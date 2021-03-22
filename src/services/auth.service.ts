@@ -1,4 +1,5 @@
 import { BaseService } from '@/core';
+import { SmsAuthNotificationDto } from '@/dto';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import Axios from 'axios-observable';
 
@@ -11,14 +12,14 @@ export class authService extends BaseService {
     });
   }
 
-  getSMSCode(phoneNum: string) {
-    return this.platfromAxios.post('register-sms-code', { phone: phoneNum });
+  getSMSCode(smsAuthNotificationDto: SmsAuthNotificationDto) {
+    return super.post(
+      'sms-notification/register-sms-code',
+      smsAuthNotificationDto,
+    );
   }
-  checkSMSCode(phoneNum: string, authCode: string): Promise<boolean> {
-    return this.platfromAxios.post('check-sms-code', {
-      phone: phoneNum,
-      authCode: authCode,
-    });
+  checkSMSCode(smsAuthNotificationDto: SmsAuthNotificationDto) {
+    return super.post('check-sms-code', smsAuthNotificationDto);
   }
 }
 export default new authService();

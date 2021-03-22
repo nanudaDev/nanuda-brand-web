@@ -4,7 +4,9 @@
       <div class="container">
         <div class="title-box">
           <span>
-            <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
+            <router-link to="/">
+              <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
+            </router-link>
           </span>
           <h2>
             맞춤 진단 결과
@@ -33,11 +35,15 @@
           <div class="container">
             <header class="section-header">
               <h3>
-                현재 {{ codeHdongSearchDto.hdongName }} 에서 <br />
+                현재
+                <strong class="txt-underline">{{
+                  codeHdongSearchDto.hdongName
+                }}</strong
+                >에서 <br />
                 <strong>{{ newFnbBestCategory }}의 매출이 높습니다</strong>
               </h3>
               <p>
-                {{ codeHdongSearchDto.hdongName }} 에서는
+                {{ codeHdongSearchDto.hdongName }}에서는
                 <strong>{{ newFnbOwnerCategoryList }}</strong> 순으로
                 <br />매출이 높습니다.
               </p>
@@ -57,10 +63,10 @@
                 </p>
               </div>
               <button
-                class="btn-scroll-down"
+                class="btn-scroll-down btn-icon"
                 v-scroll-to="{ el: '#detail-info', offset: 0 }"
               >
-                <BaseArrow />
+                <span class="icon icon-primary"><BaseArrow /></span>
               </button>
             </div>
           </div>
@@ -105,7 +111,7 @@
                 class="btn-scroll-down"
                 v-scroll-to="{ el: '#detail-info', offset: 0 }"
               >
-                <BaseArrow />
+                <span class="icon icon-white"><BaseArrow /></span>
               </button>
             </div>
           </div>
@@ -116,14 +122,28 @@
         <div class="container">
           <header class="section-header">
             <h3>
-              내 가게 주변의 시간대별 매출을 <br />
-              <strong class="txt-underline">업태 별로 확인하세요</strong>
+              <template
+                v-if="resultRequestDto.fnbOwnerStatus === 'NEW_FNB_OWNER'"
+              >
+                현재
+                <strong class="txt-underline">{{
+                  codeHdongSearchDto.hdongName
+                }}</strong
+                >에서의
+              </template>
+              <template v-else> 내 가게 주변의 </template><br />
+              <strong class="txt-underline">시간대별 매출</strong>을
+              <br class="d-lg-none" />
+              업태 별로 확인하세요
             </h3>
           </header>
           <div class="section-content">
             <p class="txt-box text-center">
-              <strong class="txt-bold"
-                >{{ codeHdongSearchDto.hdongName }} 시간대별 매출 추이</strong
+              <strong class="txt-bold">
+                <strong class="txt-underline">{{
+                  codeHdongSearchDto.hdongName
+                }}</strong>
+                시간대별 매출 추이</strong
               >
             </p>
             <div class="complete-time-box mt-5">
@@ -139,6 +159,13 @@
                   <div class="cont-box">
                     <template v-if="timeData.aggregateData[0]">
                       <p>
+                        {{
+                          timeData.aggregateData[0].medium_category_nm.replace(
+                            '커피/음료',
+                            '카페',
+                          )
+                        }}
+                        <br />
                         {{ timeData.aggregateData[0].medium_small_category_nm }}
                       </p>
                     </template>
@@ -163,7 +190,19 @@
         <div class="container">
           <header class="section-header">
             <h3>
-              내 가게 주변의<br />
+              <template
+                v-if="resultRequestDto.fnbOwnerStatus === 'NEW_FNB_OWNER'"
+              >
+                현재
+                <strong class="txt-underline">{{
+                  codeHdongSearchDto.hdongName
+                }}</strong
+                >에서의
+              </template>
+              <template v-else>
+                내 가게 주변의
+              </template>
+              <br />
               <strong class="txt-underline">배달과 매장식사 비중 </strong>을
               <br class="d-lg-none" />업태별로 확인하세요
             </h3>
@@ -262,8 +301,6 @@
             name: 'solution',
             params: {
               proformaId: result.proformaId,
-              resultRequestDto: resultRequestDto,
-              result: result,
             },
           })
         "
@@ -391,7 +428,6 @@ export default class Result extends BaseComponent {
       svg {
         width: 1.5em;
         height: 1.5em;
-        fill: #fff;
       }
     }
     .article-header {
