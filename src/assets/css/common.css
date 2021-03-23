@@ -730,4 +730,59 @@ body {
 .video-wrapper.fnb {
   background-image: url("../images/main_visuual_02.png");
 }
+
+/* services */
+.app-services .main-article {
+  padding-bottom: 0 !important;
+}
+
+.app-services .main-article .article-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #161a29;
+  background-image: url("../images/bg_service.svg");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: auto 90%;
+  color: #fff;
+  text-align: center;
+}
+
+.app-services .main-article .article-header h2 {
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.app-services .main-article .article-header p {
+  margin-top: 1.5em;
+}
+
+.app-services .main-article .article-section {
+  padding: 4em 0;
+}
+
+.app-services .main-article .article-section .section-header {
+  text-align: center;
+}
+
+.app-services .main-article .article-section .section-header h3 {
+  color: #004d8a;
+  line-height: 1.4;
+  font-weight: 700;
+  font-size: 1.75em;
+}
+
+.app-services .main-article .article-section .section-header p {
+  margin-top: 1.5em;
+}
+
+.app-services .main-article .article-section .section-header + .section-content {
+  margin-top: 2em;
+}
+
+.app-services .main-article .article-section .section-header + .section-content figure {
+  text-align: center;
+}
 /*# sourceMappingURL=common.css.map */

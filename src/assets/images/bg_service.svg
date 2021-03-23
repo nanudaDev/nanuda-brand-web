@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 476.02 805.35" style="enable-background:new 0 0 476.02 805.35;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.3;}
+	.st1{opacity:0.502;fill:url(#패스_1772_1_);enable-background:new    ;}
+	.st2{fill:none;stroke:#004D89;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+	.st3{fill:#FFFFFF;}
+	.st4{fill:#004D8A;}
+</style>
+<g id="그룹_1429" transform="translate(24.745 -247.295)" class="st0">
+	
+		<linearGradient id="패스_1772_1_" gradientUnits="userSpaceOnUse" x1="-274.4746" y1="968.6345" x2="-275.3206" y2="967.8914" gradientTransform="matrix(472.018 0 0 -805.355 130048.7109 780618.0625)">
+		<stop  offset="0" style="stop-color:#004D8A"/>
+		<stop  offset="0.542" style="stop-color:#002B4B"/>
+		<stop  offset="1" style="stop-color:#002745"/>
+	</linearGradient>
+	<path id="패스_1772" class="st1" d="M449.27,247.29c-22.31,8.8-50.88,67.3-114.48,140.73s-19.02,188.54-90.98,204.25
+		s-33.19,101.74-93.25,129.51s-26.89,20.37-92.03,49.92s-81.29,57.36-81.29,57.36v223.59h472.02V247.29z"/>
+	<path id="패스_1771" class="st2" d="M-22.75,833.01c0,0,16.15-27.82,81.29-57.36s31.97-22.15,92.03-49.92
+		s21.29-113.81,93.25-129.51s27.37-130.82,90.97-204.25s92.17-131.92,114.48-140.73"/>
+	<ellipse id="타원_9" class="st3" cx="48.26" cy="781.6" rx="10" ry="10.67"/>
+	<ellipse id="타원_10" class="st3" cx="186.26" cy="681.29" rx="10" ry="10.67"/>
+	<ellipse id="타원_11" class="st3" cx="397.26" cy="318.48" rx="10" ry="10.67"/>
+	<rect id="사각형_415" x="34.26" y="807.21" class="st4" width="67" height="245.43"/>
+	<rect id="사각형_416" x="129.26" y="753.86" class="st4" width="67" height="298.79"/>
+	<rect id="사각형_417" x="231.26" y="690.9" class="st4" width="67" height="361.75"/>
+	<rect id="사각형_418" x="326.26" y="619.4" class="st4" width="67" height="433.25"/>
+</g>
+</svg>
