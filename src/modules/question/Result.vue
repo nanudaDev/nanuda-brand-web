@@ -233,8 +233,13 @@
                               !info.deliveryRatio ? 100 : info.offlineRatio
                             }%`
                           "
-                        >
-                          <!-- {{ info.offlineRatio }} -->
+                        ></div>
+                        <div class="txt-box">
+                          <span
+                            >{{
+                              !info.deliveryRatio ? 100 : info.offlineRatio
+                            }}%</span
+                          >
                         </div>
                       </div>
                     </div>
@@ -250,8 +255,13 @@
                               !info.deliveryRatio ? 0 : info.deliveryRatio
                             }%`
                           "
-                        >
-                          <!-- {{ info.deliveryRatio }} -->
+                        ></div>
+                        <div class="txt-box">
+                          <span
+                            >{{
+                              !info.deliveryRatio ? 0 : info.deliveryRatio
+                            }}%</span
+                          >
                         </div>
                       </div>
                     </div>
@@ -259,7 +269,6 @@
                 </template>
               </div>
             </div>
-
             <div class="best-food-category mt-4">
               <div class="row gutter-sm">
                 <div
@@ -283,11 +292,11 @@
                 </div>
               </div>
             </div>
-            <div class="txt-box text-center mt-5">
+            <!-- <div class="txt-box text-center mt-5">
               <p v-if="result.operationSentenceResponse" class="txt-xl">
                 {{ result.operationSentenceResponse }}
               </p>
-            </div>
+            </div> -->
           </div>
         </div>
       </section>
@@ -361,11 +370,13 @@ export default class Result extends BaseComponent {
             }
           }
         });
+
         // filterArray = filterArray.filter((arr: any) => {
         //   if (arr.deliveryRatio && arr.offlineRatio) {
         //     return true;
         //   }
         // });
+
         this.selectedFoodCategory = filterArray[0].mediumCategoryName;
         this.locationDetailInfo = filterArray.splice(0, 5);
         // console.log(this.selectedFoodCategory, this.locationDetailInfo);

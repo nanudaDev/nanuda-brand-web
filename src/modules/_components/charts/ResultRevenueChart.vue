@@ -41,11 +41,12 @@ export default class ResultRevenueChart extends Vue {
           align: 'top',
           offset: '15',
           font: {
-            size: 12,
+            size: 20,
+            weight: 'bold',
           },
+          color: '#0b538d',
           formatter: (value: any, context: any) => {
-            console.log('context', context);
-
+            // console.log('context', context);
             if (context.dataIndex == 0) {
               return null;
             } else if (context.dataIndex == 5) {
