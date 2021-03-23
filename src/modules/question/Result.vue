@@ -13,6 +13,7 @@
           </h2>
         </div>
         <div class="txt-box">
+          <b-btn @click="$emit('onReset')">초기화</b-btn>
           <template v-if="resultRequestDto.fnbOwnerStatus === 'NEW_FNB_OWNER'">
             <p>
               예비사장님의 희망 업종은

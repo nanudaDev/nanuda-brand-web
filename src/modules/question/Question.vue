@@ -298,6 +298,7 @@
         :result="aggregateResultResponseDto"
         :resultRequestDto="resultRequestDto"
         :codeHdongSearchDto="codeHdongSearchDto"
+        @onReset="resetData"
       />
     </template>
     <template v-if="isLoading">
@@ -651,6 +652,51 @@ export default class Question extends BaseComponent {
     } else {
       this.selectedAnswers.push(given);
     }
+  }
+  resetData() {
+    const ipInfo = new NextQuestionDto();
+    ipInfo.ipAddress = this.nextQuestionDto.ipAddress;
+    ipInfo.uniqueSessionId = this.nextQuestionDto.uniqueSessionId;
+    this.nextQuestionDto = ipInfo;
+    this.firstQuestionDto = new FirstQuestionDto();
+
+    this.codeHdongSearchDto = new CodeHdongSearchDto();
+    this.resultRequestDto = new ResultRequestDto();
+
+    this.isStart = true;
+    this.isLastQuestion = false;
+    this.smallSizeQuestionId = [1, 4, 5, 10, 12];
+    this.bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
+    this.questionTotalCount = 9;
+    this.questionOrder = 0;
+    this.prevOrder = 0;
+    this.question = '나는 현재';
+    this.FNB_OWNER = FNB_OWNER;
+    this.aggregateResultResponseDto = null;
+    this.isAvailableLocation = false;
+    this.availableLocation = '';
+    this.firstGivens = [
+      {
+        id: 1,
+        userType: FNB_OWNER.CUR_FNB_OWNER,
+        given: '음식점 사장님입니다',
+      },
+      {
+        id: 2,
+        userType: FNB_OWNER.NEW_FNB_OWNER,
+        given: '창업을 생각하고 있습니다',
+      },
+    ];
+    this.givens = [];
+    this.addressGivens = [];
+    this.showingLevel = ADDRESS_LEVEL.sidoName;
+    this.selectedRoadAddress = '';
+    this.isMultipleAnswer = false;
+    this.selectedAnswers = [];
+    this.isLoading = false;
+    this.isLoadingResult = false;
+    this.previousQuestionDtoArr = [];
+    this.questionGivenArray = [];
   }
   async mounted() {
     // this.isLoading = true;
