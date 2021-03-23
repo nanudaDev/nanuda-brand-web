@@ -568,6 +568,7 @@ body {
 }
 
 .complete-time-box .row > div .cont-box {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -581,8 +582,32 @@ body {
   font-size: 0.875em;
 }
 
-.complete-time-box .row > div .percent-box {
+.complete-time-box .row > div .txt-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   height: 100%;
+}
+
+.complete-time-box .row > div .txt-box span {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0.25em 0.5em;
+  border-radius: 10em;
+  color: #000000;
+  font-weight: 600;
+}
+
+.complete-time-box .row > div .percent-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  height: 100%;
+  transition-duration: 1s;
 }
 
 .complete-time-box .row > div .percent-box.offline-ratio {
