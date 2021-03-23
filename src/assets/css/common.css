@@ -568,6 +568,7 @@ body {
 }
 
 .complete-time-box .row > div .cont-box {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -581,8 +582,32 @@ body {
   font-size: 0.875em;
 }
 
-.complete-time-box .row > div .percent-box {
+.complete-time-box .row > div .txt-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   height: 100%;
+}
+
+.complete-time-box .row > div .txt-box span {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0.25em 0.5em;
+  border-radius: 10em;
+  color: #000000;
+  font-weight: 600;
+}
+
+.complete-time-box .row > div .percent-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  height: 100%;
+  transition-duration: 1s;
 }
 
 .complete-time-box .row > div .percent-box.offline-ratio {
@@ -704,5 +729,60 @@ body {
 
 .video-wrapper.fnb {
   background-image: url("../images/main_visuual_02.png");
+}
+
+/* services */
+.app-services .main-article {
+  padding-bottom: 0 !important;
+}
+
+.app-services .main-article .article-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #161a29;
+  background-image: url("../images/bg_service.svg");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: auto 90%;
+  color: #fff;
+  text-align: center;
+}
+
+.app-services .main-article .article-header h2 {
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.app-services .main-article .article-header p {
+  margin-top: 1.5em;
+}
+
+.app-services .main-article .article-section {
+  padding: 4em 0;
+}
+
+.app-services .main-article .article-section .section-header {
+  text-align: center;
+}
+
+.app-services .main-article .article-section .section-header h3 {
+  color: #004d8a;
+  line-height: 1.4;
+  font-weight: 700;
+  font-size: 1.75em;
+}
+
+.app-services .main-article .article-section .section-header p {
+  margin-top: 1.5em;
+}
+
+.app-services .main-article .article-section .section-header + .section-content {
+  margin-top: 2em;
+}
+
+.app-services .main-article .article-section .section-header + .section-content figure {
+  text-align: center;
 }
 /*# sourceMappingURL=common.css.map */
