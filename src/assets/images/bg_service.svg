@@ -1,31 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 25.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-	 y="0px" viewBox="0 0 476.02 805.35" style="enable-background:new 0 0 476.02 805.35;" xml:space="preserve">
+	 y="0px" viewBox="0 0 1920 1002" style="enable-background:new 0 0 1920 1002;" xml:space="preserve">
 <style type="text/css">
-	.st0{opacity:0.3;}
-	.st1{opacity:0.502;fill:url(#패스_1772_1_);enable-background:new    ;}
-	.st2{fill:none;stroke:#004D89;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
-	.st3{fill:#FFFFFF;}
-	.st4{fill:#004D8A;}
+	.st0{fill:#161A29;}
+	.st1{opacity:0.6;}
+	.st2{clip-path:url(#SVGID_2_);}
+	.st3{opacity:0.2;fill:#004D8A;enable-background:new    ;}
+	.st4{fill:none;}
+	.st5{opacity:0.5;}
+	.st6{fill:none;stroke:#004D8A;stroke-width:3;stroke-miterlimit:10;}
+	.st7{opacity:0.3;fill:#004D8A;enable-background:new    ;}
+	.st8{fill:#FFFFFF;}
 </style>
-<g id="그룹_1429" transform="translate(24.745 -247.295)" class="st0">
-	
-		<linearGradient id="패스_1772_1_" gradientUnits="userSpaceOnUse" x1="-274.4746" y1="968.6345" x2="-275.3206" y2="967.8914" gradientTransform="matrix(472.018 0 0 -805.355 130048.7109 780618.0625)">
-		<stop  offset="0" style="stop-color:#004D8A"/>
-		<stop  offset="0.542" style="stop-color:#002B4B"/>
-		<stop  offset="1" style="stop-color:#002745"/>
-	</linearGradient>
-	<path id="패스_1772" class="st1" d="M449.27,247.29c-22.31,8.8-50.88,67.3-114.48,140.73s-19.02,188.54-90.98,204.25
-		s-33.19,101.74-93.25,129.51s-26.89,20.37-92.03,49.92s-81.29,57.36-81.29,57.36v223.59h472.02V247.29z"/>
-	<path id="패스_1771" class="st2" d="M-22.75,833.01c0,0,16.15-27.82,81.29-57.36s31.97-22.15,92.03-49.92
-		s21.29-113.81,93.25-129.51s27.37-130.82,90.97-204.25s92.17-131.92,114.48-140.73"/>
-	<ellipse id="타원_9" class="st3" cx="48.26" cy="781.6" rx="10" ry="10.67"/>
-	<ellipse id="타원_10" class="st3" cx="186.26" cy="681.29" rx="10" ry="10.67"/>
-	<ellipse id="타원_11" class="st3" cx="397.26" cy="318.48" rx="10" ry="10.67"/>
-	<rect id="사각형_415" x="34.26" y="807.21" class="st4" width="67" height="245.43"/>
-	<rect id="사각형_416" x="129.26" y="753.86" class="st4" width="67" height="298.79"/>
-	<rect id="사각형_417" x="231.26" y="690.9" class="st4" width="67" height="361.75"/>
-	<rect id="사각형_418" x="326.26" y="619.4" class="st4" width="67" height="433.25"/>
+<g id="그룹_1441" transform="translate(10.005 0)">
+	<path id="패스_1785" class="st0" d="M-10.01,0h1920v1002h-1920V0z"/>
+	<g id="그룹_1440" class="st1">
+		<g>
+			<defs>
+				<rect id="SVGID_1_" x="-10.01" width="1920" height="1002"/>
+			</defs>
+			<clipPath id="SVGID_2_">
+				<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+			</clipPath>
+			<g id="그룹_1439" class="st2">
+				<rect id="사각형_441" x="136.83" y="981.79" class="st3" width="63.04" height="20.21"/>
+				<rect id="사각형_442" x="267.1" y="967.81" class="st3" width="63.04" height="34.19"/>
+				<rect id="사각형_443" x="397.38" y="927.84" class="st3" width="63.04" height="74.17"/>
+				<rect id="사각형_444" x="527.65" y="863.58" class="st3" width="63.04" height="138.42"/>
+				<rect id="사각형_445" x="657.92" y="811.88" class="st3" width="63.04" height="190.12"/>
+				<rect id="사각형_446" x="788.2" y="763.94" class="st3" width="63.04" height="238.06"/>
+				<rect id="사각형_447" x="918.47" y="719.81" class="st3" width="63.04" height="282.19"/>
+				<rect id="사각형_448" x="1048.75" y="640.2" class="st3" width="63.04" height="361.8"/>
+				<rect id="사각형_449" x="1179.02" y="583.07" class="st3" width="63.04" height="418.93"/>
+				<rect id="사각형_450" x="1309.3" y="522.12" class="st3" width="63.04" height="479.88"/>
+				<rect id="사각형_451" x="1439.57" y="467.7" class="st3" width="63.04" height="534.3"/>
+				<rect id="사각형_452" x="1569.84" y="378" class="st3" width="63.04" height="624"/>
+				<rect id="사각형_453" x="1700.12" y="308.74" class="st3" width="63.04" height="693.26"/>
+				<rect id="사각형_454" x="-10.01" class="st4" width="1920" height="1002"/>
+				<g id="그룹_1438" transform="translate(-130.071 137.814)" class="st5">
+					<path id="패스_1783" class="st6" d="M-10.01,830c96.77-2.3,212.69-70.51,308.43-83.97c82.25-11.57,183.6-23.72,260.55-54.8
+						c64.41-26.02,86.27-61.47,143.73-98.44c41.59-26.76,117-12.07,163.37-26.9c45.79-14.64,79.65-48.69,116.17-76.52
+						c16.85-12.84,35.03-24.22,54.96-32.53c15.44-6.44,32.29-7.69,48.76-10.36c48.79-7.92,79.87-41.49,112.2-73.12
+						c28.02-27.41,57.38-60.09,95.91-74.94c85.57-32.98,159.83-23.05,239.2-67.76c55.79-31.42,100.91-72.43,151.71-109.71
+						c48.43-35.53,109.08-54.88,167.26-71.72c73.86-21.26,149.02-37.69,225.02-49.19"/>
+					<path id="패스_1784" class="st7" d="M-10.01,829.95c96.77-2.29,212.69-70.51,308.43-83.97
+						c82.25-11.57,183.6-23.72,260.55-54.8c64.41-26.02,86.28-61.47,143.73-98.44c41.59-26.76,117-12.07,163.37-26.9
+						c45.79-14.64,79.65-48.69,116.17-76.52c16.85-12.84,35.03-24.22,54.96-32.53c15.44-6.44,32.29-7.69,48.76-10.36
+						c48.79-7.92,79.87-41.49,112.2-73.12c28.02-27.41,57.38-60.09,95.91-74.94c85.57-32.98,159.83-23.05,239.2-67.76
+						c55.79-31.42,100.91-72.43,151.71-109.71c48.43-35.53,109.08-54.88,167.26-71.72c73.86-21.26,149.02-37.69,225.02-49.19v911.46
+						H-10.01V829.95z"/>
+					<ellipse id="타원_21" class="st8" cx="1019.63" cy="467.11" rx="9" ry="8.35"/>
+					<ellipse id="타원_22" class="st8" cx="1861.71" cy="48.3" rx="9" ry="8.35"/>
+					<ellipse id="타원_23" class="st8" cx="1470.89" cy="258.08" rx="9" ry="8.35"/>
+					<ellipse id="타원_24" class="st8" cx="1238.04" cy="335.17" rx="9" ry="8.35"/>
+					<ellipse id="타원_25" class="st8" cx="298.42" cy="745.16" rx="9" ry="8.35"/>
+					<ellipse id="타원_26" class="st8" cx="558.97" cy="692.71" rx="9" ry="8.35"/>
+					<ellipse id="타원_27" class="st8" cx="920.08" cy="540.96" rx="9" ry="8.35"/>
+					<ellipse id="타원_28" class="st8" cx="736.34" cy="581.99" rx="9" ry="8.35"/>
+				</g>
+			</g>
+		</g>
+	</g>
 </g>
 </svg>
