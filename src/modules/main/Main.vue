@@ -271,6 +271,22 @@
               </div>
             </div>
           </div>
+          <div
+            class="section-content"
+            data-aos="fade-up"
+            data-aos-duration="2500"
+          >
+            <div class="btn-box text-center mt-5">
+              <button
+                class="btn btn-primary rounded-pill btn-lg shawdow"
+                id="bottom-button"
+                @click="$router.push('/services')"
+              >
+                <span>서비스 더 알아보기</span>
+                <span class="icon icon-arrow-right"><BaseArrow /></span>
+              </button>
+            </div>
+          </div>
         </div>
       </section>
       <section class="article-section section04 bg-light">
