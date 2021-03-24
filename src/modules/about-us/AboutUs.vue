@@ -2,28 +2,42 @@
   <article class="main-article">
     <header class="article-header">
       <div class="container">
-        <h2>
+        <h2 data-aos="fade-down" data-aos-duration="1000">
           상권 분석 시스템을 토대로 <br />
           실패 없는 창업을 안내합니다
         </h2>
-        <p>
+        <p data-aos="fade-up" data-aos-duration="1000">
           픽쿡은 창업자가 원하는 지역에 <br />
           예상 방문객, 예상 매출액등을 <br />
           미리 살펴 창업의 성장에 함께합니다.
         </p>
+        <button
+          class="btn-scroll-down"
+          v-scroll-to="{ el: '#content-wrapper', offset: -navbarHeight }"
+        >
+          <span class="icon icon-white"><BaseArrow /></span>
+        </button>
       </div>
     </header>
-    <div class="article-content">
+    <div class="article-content" id="content-wrapper">
       <section class="article-section text-lg-center">
         <div class="container">
-          <header class="section-header">
+          <header
+            class="section-header"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+          >
             <h3>
               창업할 때 <br />
               가장 중요한 것은 <br class="d-lg-none" />
               고객입니다
             </h3>
           </header>
-          <div class="section-content">
+          <div
+            class="section-content"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+          >
             <p>
               픽쿡은 여러분의 가게가 위치한 곳의 고객이 <br />
               어떤 것을 선호하는지, 어떻게 소비하는지를 분석하고
@@ -35,10 +49,18 @@
       </section>
       <section class="article-section text-lg-center pt-0">
         <div class="container">
-          <header class="section-header">
+          <header
+            class="section-header"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+          >
             <h3>픽쿡은 가장 필요한메뉴와 <br />서비스를 드립니다</h3>
           </header>
-          <div class="section-content">
+          <div
+            class="section-content"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+          >
             <p>
               픽쿡은 고객과 상권 정보를 바탕으로 공정이 쉽고<br />
               비용율이 낮은 메뉴를 제공합니다. <br />
@@ -53,7 +75,12 @@
           <!-- TODO: 리뷰 이름  -->
           <swiper :options="swiperOption" ref="mySwiper">
             <swiper-slide>
-              <div class="review-box">
+              <div
+                class="review-box"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                data-aos-delay="0"
+              >
                 <div class="info-box row-box">
                   <div class="img-box">
                     <img src="@/assets/images/about_us_review_01.png" alt="" />
@@ -77,7 +104,12 @@
               </div>
             </swiper-slide>
             <swiper-slide>
-              <div class="review-box">
+              <div
+                class="review-box"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                data-aos-delay="300"
+              >
                 <div class="info-box row-box">
                   <div class="img-box">
                     <img src="@/assets/images/about_us_review_02.png" alt="" />
@@ -100,7 +132,12 @@
               </div>
             </swiper-slide>
             <swiper-slide>
-              <div class="review-box">
+              <div
+                class="review-box"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                data-aos-delay="600"
+              >
                 <div class="info-box row-box">
                   <div class="img-box">
                     <img src="@/assets/images/about_us_review_03.png" alt="" />
@@ -137,6 +174,7 @@ import { Component } from 'vue-property-decorator';
   name: 'AboutUs',
 })
 export default class AboutUs extends BaseComponent {
+  navbarHeight: any = 0;
   private swiperOption: any = {
     slidesPerView: 1,
     loop: true,
@@ -154,5 +192,10 @@ export default class AboutUs extends BaseComponent {
       },
     },
   };
+
+  mounted() {
+    const target = document.querySelector('.navbar');
+    this.navbarHeight = target.getBoundingClientRect().height;
+  }
 }
 </script>
