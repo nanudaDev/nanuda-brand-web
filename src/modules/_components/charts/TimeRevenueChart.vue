@@ -10,7 +10,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
   mixins: [mixins.reactiveProp],
   components: { ChartDataLabels },
 })
-export default class ResultRevenueChart extends Vue {
+export default class TimeRevenueChart extends Vue {
   public renderChart!: (chartData: any, options?: any) => void;
   private gradient: any;
   @Prop() private readonly chartData: any;
@@ -20,14 +20,15 @@ export default class ResultRevenueChart extends Vue {
     const ctx = canvas.getContext('2d');
 
     const gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
-    gradientStroke.addColorStop(0, '#80b6f4');
-    gradientStroke.addColorStop(1, '#f49080');
+    gradientStroke.addColorStop(0, 'rgba(11,83,141,1)');
+    gradientStroke.addColorStop(1, 'rgba(103,186,208,1)');
 
     const gradientFill = ctx.createLinearGradient(0, 0, 0, 500);
     gradientFill.addColorStop(0, 'rgba(103,186,208,1)');
     gradientFill.addColorStop(1, 'rgba(11,83,141,1)');
 
-    this.chartData.datasets[0].backgroundColor = gradientFill;
+    this.chartData.datasets[0].borderColor = gradientStroke;
+    this.chartData.datasets[0].backgroundColor = 'transparent';
     // Overwriting base render method with actual data.
 
     this.renderChart(this.chartData, {
@@ -36,31 +37,47 @@ export default class ResultRevenueChart extends Vue {
       },
       plugins: {
         datalabels: {
+          display: false,
           backgroundColor: 'transparent',
           anchor: 'end',
           align: 'top',
           offset: '15',
           font: {
-            size: 20,
+            size: 14,
             weight: 'bold',
           },
           color: '#004D8A',
-          formatter: (value: any, context: any) => {
-            // console.log('context', context);
-            if (context.dataIndex == 0) {
-              return null;
-            } else if (context.dataIndex == 5) {
-              return null;
-            } else {
-              return `${value} 만원`;
-            }
-          },
+          //   formatter: function(number: any) {
+          //     // 단위 추가
+          //     let inputNumber: any = number < 0 ? false : number;
+          //     const unitWords = ['원', '만', '억', '조', '경'];
+          //     const splitUnit = 10000;
+          //     const splitCount = unitWords.length;
+          //     const resultArray = [];
+          //     let resultString = '';
+          //     for (let i = 0; i < splitCount; i++) {
+          //       let unitResult =
+          //         (inputNumber % Math.pow(splitUnit, i + 1)) /
+          //         Math.pow(splitUnit, i);
+          //       unitResult = Math.floor(unitResult);
+          //       if (i !== 0 && unitResult > 0) {
+          //         resultArray[i] = unitResult;
+          //       }
+          //     }
+          //     for (let i = 0; i < resultArray.length; i++) {
+          //       if (!resultArray[i]) continue;
+          //       resultString =
+          //         String(resultArray[i]) + unitWords[i] + resultString;
+          //     }
+
+          //     return resultString;
+          //   },
         },
       },
       layout: {
         padding: {
+          top: 80,
           // Any unspecified dimensions are assumed to be 0
-          top: 35,
         },
       },
       tooltips: {
@@ -76,15 +93,17 @@ export default class ResultRevenueChart extends Vue {
         xAxes: [
           {
             ticks: {
-              padding: -410,
+              padding: 0,
               fontSize: 15,
+            },
+            gridLines: {
+              display: false,
             },
           },
         ],
         yAxes: [
           {
             ticks: {
-              fontColor: ['white', 'white', 'black', 'white', 'white', 'white'],
               beginAtZero: true,
               display: false,
             },

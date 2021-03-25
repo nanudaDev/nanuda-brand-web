@@ -25,6 +25,7 @@
     "regenerator-runtime": "^0.13.7",
     "swiper": "^6.5.0",
     "vue": "^2.6.11",
+    "vue-analytics-facebook-pixel": "^1.0.1",
     "vue-awesome-swiper": "^4.1.1",
     "vue-chartjs": "^3.5.1",
     "vue-class-component": "^7.2.3",
