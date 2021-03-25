@@ -18,7 +18,7 @@
       </div>
     </header>
     <div class="article-content" v-if="result">
-      <section class="bg-light">
+      <!-- <section class="bg-light">
         <div
           class="complete-time-box"
           v-if="
@@ -53,7 +53,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
       <section class="article-section section01 bg-primary">
         <div class="container">
           <div class="row-box" v-if="result && result.graphData">
@@ -538,7 +538,7 @@ export default class Solution extends BaseComponent {
     padding: 6.25em 0;
     .section-header {
       text-align: center;
-      color: #0b538d;
+      color: #004d8a;
       h3 {
         font-weight: 200;
         font-size: 1.875em;

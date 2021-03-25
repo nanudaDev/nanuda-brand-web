@@ -140,9 +140,9 @@
           <div class="section-content">
             <p class="txt-box text-center">
               <strong class="txt-bold">
-                <strong class="txt-underline">{{
-                  codeHdongSearchDto.hdongName
-                }}</strong>
+                <span class="txt-primary txt-underline">{{
+                  result.hdong.hdongName
+                }}</span>
                 시간대별 매출 추이</strong
               >
             </p>
@@ -405,24 +405,23 @@ export default class Result extends BaseComponent {
 <style lang="scss">
 .app-question {
   .bg-gradient {
-    background: #0b538d;
-    background: rgb(11, 83, 141);
+    background: #004d8a;
     background: -moz-linear-gradient(
       360deg,
-      rgba(11, 83, 141, 1) 0%,
+      rgba(0, 77, 138) 0%,
       rgba(30, 104, 155, 1) 100%
     );
     background: -webkit-linear-gradient(
       360deg,
-      rgba(11, 83, 141, 1) 0%,
+      rgba(0, 77, 138) 0%,
       rgba(30, 104, 155, 1) 100%
     );
     background: linear-gradient(
       360deg,
-      rgba(11, 83, 141, 1) 0%,
+      rgba(0, 77, 138) 0%,
       rgba(30, 104, 155, 1) 100%
     );
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0b538d",endColorstr="#1e689b",GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#004D8A",endColorstr="#1e689b",GradientType=1);
     padding-top: 3.25em;
     padding-bottom: 6.25em;
     color: #fff;
@@ -467,27 +466,27 @@ export default class Result extends BaseComponent {
       background: rgb(11, 83, 141);
       background: -moz-linear-gradient(
         360deg,
-        rgba(11, 83, 141, 1) 0%,
+        rgba(0, 77, 138) 0%,
         rgba(108, 143, 183, 1) 100%
       );
       background: -webkit-linear-gradient(
         360deg,
-        rgba(11, 83, 141, 1) 0%,
+        rgba(0, 77, 138) 0%,
         rgba(108, 143, 183, 1) 100%
       );
       background: linear-gradient(
         360deg,
-        rgba(11, 83, 141, 1) 0%,
+        rgba(0, 77, 138) 0%,
         rgba(108, 143, 183, 1) 100%
       );
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0b538d",endColorstr="#6c8fb7",GradientType=1);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#004D8A",endColorstr="#6c8fb7",GradientType=1);
     }
     .article-section {
       position: relative;
       padding: 6.25em 0;
       .section-header {
         text-align: center;
-        color: #0b538d;
+        color: #004d8a;
         h3 {
           font-weight: 200;
           font-size: 1.875em;

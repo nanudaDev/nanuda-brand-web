@@ -44,7 +44,7 @@ export default class ResultRevenueChart extends Vue {
             size: 20,
             weight: 'bold',
           },
-          color: '#0b538d',
+          color: '#004D8A',
           formatter: (value: any, context: any) => {
             // console.log('context', context);
             if (context.dataIndex == 0) {
