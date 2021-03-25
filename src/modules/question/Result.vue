@@ -132,23 +132,47 @@
                 >에서의
               </template>
               <template v-else> 내 가게 주변의 </template><br />
-              <strong class="txt-underline">시간대별 매출</strong>을
-              <br class="d-lg-none" />
-              업태 별로 확인하세요
+              업태/성별<br />
+              <strong class="txt-underline">시간대별 매출</strong>을 확인하세요
             </h3>
           </header>
           <div class="section-content">
-            <p class="txt-box text-center">
-              <strong class="txt-bold">
-                <span class="txt-primary txt-underline">{{
-                  result.hdong.hdongName
-                }}</span>
-                시간대별 매출 추이</strong
-              >
-            </p>
             <div class="complete-time-box mt-5">
-              <div class="row no-gutters">
-                <div
+              <div class="row-box">
+                <p class="txt-box text-center mb-3">
+                  <strong class="txt-bold">
+                    <span
+                      class="txt-primary"
+                      v-if="resultRequestDto.kbFoodCategory"
+                    >
+                      {{
+                        resultRequestDto.kbFoodCategory | enumTransformer
+                      }}</span
+                    >
+                    시간대별 매출 추이</strong
+                  >
+                </p>
+
+                <div class="p-4 bg-white border rounded-lg">
+                  <TimeRevenueChart
+                    :chartData="result.timeGraphChoseByCategory"
+                  />
+                </div>
+              </div>
+              <div class="row-box mt-5">
+                <p class="txt-box text-center mb-3">
+                  <strong class="txt-bold">
+                    <span class="txt-primary">남성/여성</span> 시간대별 매출
+                    추이</strong
+                  >
+                </p>
+                <div class="p-4 bg-white border rounded-lg">
+                  <GenderRevenueChart
+                    :chartData="result.genderGraphChosenByCategory"
+                  />
+                </div>
+              </div>
+              <!-- <div
                   v-for="timeData in result.completeTimeData"
                   :key="timeData.hour"
                   :style="`width:${100 / result.completeTimeData.length}%`"
@@ -170,8 +194,7 @@
                       </p>
                     </template>
                   </div>
-                </div>
-              </div>
+                </div> -->
             </div>
             <!-- <div class="txt-box text-center mt-4" v-if="result.responses[0]">
               <p class="txt-xl">
@@ -337,10 +360,17 @@ import { ResultRequestDto } from '@/dto/question';
 import { CodeHdongSearchDto } from '@/dto/code-hdong';
 import FoodCategoryRatioChart from '@/modules/_components/charts/FoodCategoryRatioChart.vue';
 import ResultRevenueChart from '@/modules/_components/charts/ResultRevenueChart.vue';
+import TimeRevenueChart from '@/modules/_components/charts/TimeRevenueChart.vue';
+import GenderRevenueChart from '@/modules/_components/charts/GenderRevenueChart.vue';
 
 @Component({
   name: 'Result',
-  components: { FoodCategoryRatioChart, ResultRevenueChart },
+  components: {
+    FoodCategoryRatioChart,
+    ResultRevenueChart,
+    TimeRevenueChart,
+    GenderRevenueChart,
+  },
 })
 export default class Result extends BaseComponent {
   [x: string]: any;
