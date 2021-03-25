@@ -106,9 +106,9 @@
       <section class="article-section section02" id="detail-info">
         <div class="container">
           <div class="title-box text-center">
-            <h4 class="txt-md txt-bold">픽쿡 플래너의 맞춤 서비스</h4>
+            <h4 class="txt-bold">픽쿡 플래너의 맞춤 서비스</h4>
           </div>
-          <div class="card p-5 shadow-sm rounded-lg mt-4">
+          <div class="card p-5 shadow-sm rounded-lg mt-5">
             <div class="row-box">
               <div class="img-box">
                 <img src="@/assets/images/icon_solution_01.svg" alt="" />
@@ -598,13 +598,13 @@ export default class Solution extends BaseComponent {
         .dscr-box {
           width: calc(100% - 4em);
           h4 {
-            font-size: 0.875em;
+            font-size: 1.25em;
             font-weight: 600;
             color: #004d8a;
             margin-bottom: 0.5em;
           }
           p {
-            font-size: 0.75em;
+            font-size: 1em;
             color: #000000;
             line-height: 1.6;
           }
