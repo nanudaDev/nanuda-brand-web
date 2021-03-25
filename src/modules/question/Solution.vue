@@ -370,6 +370,7 @@ import { ProformaResponseDto } from '@/dto/question/proforma-response.dto';
   components: { ResultRevenueChart, FoodCategoryRatioChart },
 })
 export default class Solution extends BaseComponent {
+  [x: string]: any;
   $refs!: {
     mySwiper: HTMLFormElement;
     tagRef: HTMLFormElement;
@@ -479,6 +480,10 @@ export default class Solution extends BaseComponent {
     questionService.postConsult(this.consultRequestDto).subscribe(res => {
       if (res) {
         this.isComplete = true;
+        // send pixel event
+        this.$analytics.fbq.event('Purchased', {
+          content_name: `픽쿡 신청 - ${res.data.name}`,
+        });
       }
     });
   }
