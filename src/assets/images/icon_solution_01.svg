@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 25.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-	 y="0px" viewBox="0 0 43.67 60.96" style="enable-background:new 0 0 43.67 60.96;" xml:space="preserve">
+	 y="0px" viewBox="0 0 46.9 55.34" style="enable-background:new 0 0 46.9 55.34;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#F5F5F5;}
 	.st1{fill:#6C8FB7;}
-	.st2{fill:#004D8A;}
+	.st2{fill:#A7BDD3;}
 	.st3{fill:#FFFFFF;}
+	.st4{fill:#004D8A;}
 </style>
-<g id="그룹_165" transform="translate(-51.334 -1577.064)">
-	<g id="그룹_141" transform="translate(8.074 260.777)">
-		<g id="그룹_139" transform="translate(47.76 1318.786)">
-			<g transform="matrix(1, 0, 0, 1, -4.5, -2.5)">
-				<path id="패스_237-2" class="st0" d="M21.84,17.29c12.06,0,21.84,9.78,21.84,21.84S33.9,60.96,21.84,60.96S0,51.18,0,39.12
-					C0,27.06,9.78,17.29,21.84,17.29C21.84,17.29,21.84,17.29,21.84,17.29z"/>
-			</g>
-			<g transform="matrix(1, 0, 0, 1, -4.5, -2.5)">
-				<circle id="타원_20-2" class="st1" cx="21.83" cy="39.13" r="12.39"/>
-			</g>
-			<g id="그룹_134" transform="translate(9.042)">
-				<g transform="matrix(1, 0, 0, 1, -13.54, -2.5)">
-					<path id="패스_228-2" class="st2" d="M10.48,19.21c-4.29-8.5,1.52-18.81,11.03-19.2C21.7,0.01,21.9,0,22.09,0l0,0
-						c0.2,0,0.39,0,0.58,0.01c9.52,0.39,15.32,10.69,11.03,19.2l-9.73,19.3c-0.52,1.04-1.79,1.46-2.84,0.94
-						c-0.41-0.2-0.73-0.53-0.94-0.94L10.48,19.21z"/>
-				</g>
-				<ellipse id="타원_23" class="st3" cx="8.55" cy="10.4" rx="5.93" ry="5.93"/>
-			</g>
+<g id="그룹_183" transform="translate(-2911.732 -1850)">
+	<g id="그룹_177" transform="translate(2571.923 1239.98)">
+		<g transform="matrix(1, 0, 0, 1, 339.81, 610.02)">
+			<path id="사각형_190-2" class="st0" d="M0.23,7.17H46.9l0,0v45.49c0,1.48-1.2,2.68-2.68,2.68H2.92c-1.48,0-2.68-1.2-2.68-2.68
+				V7.17L0.23,7.17z"/>
 		</g>
+		<path id="사각형_191" class="st1" d="M342.49,610.02h41.3c1.48,0,2.68,1.2,2.68,2.68v4.41l0,0h-46.67l0,0v-4.41
+			C339.81,611.22,341.01,610.02,342.49,610.02C342.49,610.02,342.49,610.02,342.49,610.02z"/>
+		<path id="사각형_192" class="st2" d="M346.98,637.84h31.64c1.48,0,2.68,1.2,2.68,2.68c0,0,0,0,0,0v16.08l0,0H344.3l0,0v-16.08
+			C344.3,639.04,345.5,637.84,346.98,637.84C346.98,637.84,346.98,637.84,346.98,637.84z"/>
+		<rect id="사각형_155" x="347.05" y="647.81" class="st3" width="4.29" height="8.79"/>
+		<rect id="사각형_156" x="353.89" y="646.02" class="st3" width="4.29" height="10.58"/>
+		<rect id="사각형_157" x="360.9" y="642.14" class="st4" width="4.29" height="14.47"/>
+		<rect id="사각형_157-2" x="367.9" y="648.71" class="st3" width="4.29" height="7.9"/>
+		<rect id="사각형_157-3" x="374.9" y="646.68" class="st3" width="4.29" height="9.92"/>
+		<circle id="타원_36" class="st4" cx="372.19" cy="631.89" r="10.55"/>
+		<circle id="타원_37" class="st0" cx="372.19" cy="631.89" r="8.59"/>
+		<circle id="타원_38" class="st1" cx="372.03" cy="632.29" r="1.25"/>
+		<g id="그룹_176">
+			<path id="패스_279" class="st1" d="M372.14,633.33l-4.7-2.68c-0.37-0.18-0.52-0.63-0.34-1s0.63-0.52,1-0.34
+				c0.03,0.01,0.05,0.03,0.08,0.04l3.8,2.17l4.35-3.6c0.32-0.26,0.79-0.22,1.06,0.1c0.26,0.32,0.22,0.79-0.1,1.06l0,0L372.14,633.33
+				z"/>
+		</g>
+		<rect id="사각형_163" x="344.3" y="656.6" class="st1" width="37.01" height="3.77"/>
 	</g>
 </g>
 </svg>

@@ -18,7 +18,7 @@
       </div>
     </header>
     <div class="article-content" v-if="result">
-      <section class="bg-light">
+      <!-- <section class="bg-light">
         <div
           class="complete-time-box"
           v-if="
@@ -53,7 +53,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
       <section class="article-section section01 bg-primary">
         <div class="container">
           <div class="row-box" v-if="result && result.graphData">
@@ -105,19 +105,22 @@
       </section>
       <section class="article-section section02" id="detail-info">
         <div class="container">
-          <div class="card p-4 shadow-sm rounded-lg">
+          <div class="title-box text-center">
+            <h4 class="txt-md txt-bold">픽쿡 플래너의 맞춤 서비스</h4>
+          </div>
+          <div class="card p-5 shadow-sm rounded-lg mt-4">
             <div class="row-box">
               <div class="img-box">
                 <img src="@/assets/images/icon_solution_01.svg" alt="" />
               </div>
               <div class="dscr-box">
                 <h4>
-                  현 매장에서 매출에 가장 유리한 메뉴 매칭
+                  시간대별로 현 매장에서 가장 유리한 메뉴 제안
                 </h4>
                 <p>
                   창업지역의 정밀한 상권분석을 통해
                   <br class="d-none d-sm-block" />
-                  매출 상승에 유리한 메뉴를 매칭, 제공 드립니다
+                  시간대별로 매출상승에 가장 유리한 메뉴를 제공합니다
                 </p>
               </div>
             </div>
@@ -226,12 +229,12 @@
       <section class="article-section section04">
         <div class="container">
           <!-- 폼 영역 -->
-          <div class="title-box text-center txt-primary mb-4">
-            <p>
+          <div class="title-box text-center txt-primary mb-5">
+            <h4 class="txt-md">
               아래 성함과 연락처를 남겨주시면 <br />
               담당 픽쿡 플래너가 고객님께 안내 드립니다. <br />
               데이터로 하는 창업의 시작, 픽쿡과 함께 하세요.
-            </p>
+            </h4>
           </div>
           <div class="form-container">
             <b-form-row>
@@ -540,7 +543,7 @@ export default class Solution extends BaseComponent {
     padding: 6.25em 0;
     .section-header {
       text-align: center;
-      color: #0b538d;
+      color: #004d8a;
       h3 {
         font-weight: 200;
         font-size: 1.875em;
@@ -614,19 +617,21 @@ export default class Solution extends BaseComponent {
         display: flex;
         align-items: center;
         justify-content: center;
+        padding: 0 2.5em;
         .img-box {
-          width: 6em;
+          width: 4em;
+          margin-right: 1em;
           text-align: center;
           img {
             border-radius: 50%;
             box-shadow: 0 0 1em rgba(0, 0, 0, 0.05);
-            width: 70%;
+            width: 100%;
           }
         }
         .txt-box {
           text-align: left;
           color: #004d8a;
-          width: calc(100% - 6em);
+          width: calc(100% - 5em);
           h4 {
             font-size: 0.875em;
             font-weight: 600;
@@ -636,6 +641,12 @@ export default class Solution extends BaseComponent {
             font-size: 0.75em;
           }
         }
+      }
+    }
+    &.section04 {
+      .form-container {
+        max-width: 480px;
+        margin: 0 auto;
       }
     }
   }
