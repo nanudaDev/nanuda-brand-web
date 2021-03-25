@@ -50,6 +50,9 @@
       </div>
       <div class="title-container">
         <div>
+          <div class="symbol">
+            <img src="@/assets/images/favicon.png" alt="" />
+          </div>
           <span
             class="d-inline-block txt-sm txt-underline txt-white txt-bold mb-2 pb-2"
             >스마트하게 창업하기</span
@@ -629,6 +632,11 @@ export default class Main extends BaseComponent {
       height: 100vh;
       color: #fff;
       text-align: center;
+      .symbol {
+        img {
+          width: 3.5em;
+        }
+      }
       h2 {
         font-size: 2.1875em;
         font-weight: bold;
