@@ -54,7 +54,7 @@
             data-aos="fade-up"
             data-aos-duration="1000"
           >
-            <h3>픽쿡은 가장 필요한메뉴와 <br />서비스를 드립니다</h3>
+            <h3>픽쿡은 가장 필요한 메뉴와 <br />서비스를 드립니다</h3>
           </header>
           <div
             class="section-content"
