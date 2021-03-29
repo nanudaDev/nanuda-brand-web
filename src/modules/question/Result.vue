@@ -132,23 +132,47 @@
                 >에서의
               </template>
               <template v-else> 내 가게 주변의 </template><br />
-              <strong class="txt-underline">시간대별 매출</strong>을
-              <br class="d-lg-none" />
-              업태 별로 확인하세요
+              업태/성별<br />
+              <strong class="txt-underline">시간대별 매출</strong>을 확인하세요
             </h3>
           </header>
           <div class="section-content">
-            <p class="txt-box text-center">
-              <strong class="txt-bold">
-                <strong class="txt-underline">{{
-                  codeHdongSearchDto.hdongName
-                }}</strong>
-                시간대별 매출 추이</strong
-              >
-            </p>
             <div class="complete-time-box mt-5">
-              <div class="row no-gutters">
-                <div
+              <div class="row-box">
+                <p class="txt-box text-center mb-3">
+                  <strong class="txt-bold">
+                    <span
+                      class="txt-primary"
+                      v-if="resultRequestDto.kbFoodCategory"
+                    >
+                      {{
+                        resultRequestDto.kbFoodCategory | enumTransformer
+                      }}</span
+                    >
+                    시간대별 매출 추이</strong
+                  >
+                </p>
+
+                <div class="p-4 bg-white border rounded-lg">
+                  <TimeRevenueChart
+                    :chartData="result.timeGraphChoseByCategory"
+                  />
+                </div>
+              </div>
+              <div class="row-box mt-5">
+                <p class="txt-box text-center mb-3">
+                  <strong class="txt-bold">
+                    <span class="txt-primary">남성/여성</span> 시간대별 매출
+                    추이</strong
+                  >
+                </p>
+                <div class="p-4 bg-white border rounded-lg">
+                  <GenderRevenueChart
+                    :chartData="result.genderGraphChosenByCategory"
+                  />
+                </div>
+              </div>
+              <!-- <div
                   v-for="timeData in result.completeTimeData"
                   :key="timeData.hour"
                   :style="`width:${100 / result.completeTimeData.length}%`"
@@ -170,8 +194,7 @@
                       </p>
                     </template>
                   </div>
-                </div>
-              </div>
+                </div> -->
             </div>
             <!-- <div class="txt-box text-center mt-4" v-if="result.responses[0]">
               <p class="txt-xl">
@@ -337,10 +360,17 @@ import { ResultRequestDto } from '@/dto/question';
 import { CodeHdongSearchDto } from '@/dto/code-hdong';
 import FoodCategoryRatioChart from '@/modules/_components/charts/FoodCategoryRatioChart.vue';
 import ResultRevenueChart from '@/modules/_components/charts/ResultRevenueChart.vue';
+import TimeRevenueChart from '@/modules/_components/charts/TimeRevenueChart.vue';
+import GenderRevenueChart from '@/modules/_components/charts/GenderRevenueChart.vue';
 
 @Component({
   name: 'Result',
-  components: { FoodCategoryRatioChart, ResultRevenueChart },
+  components: {
+    FoodCategoryRatioChart,
+    ResultRevenueChart,
+    TimeRevenueChart,
+    GenderRevenueChart,
+  },
 })
 export default class Result extends BaseComponent {
   [x: string]: any;
@@ -405,24 +435,23 @@ export default class Result extends BaseComponent {
 <style lang="scss">
 .app-question {
   .bg-gradient {
-    background: #0b538d;
-    background: rgb(11, 83, 141);
+    background: #004d8a;
     background: -moz-linear-gradient(
       360deg,
-      rgba(11, 83, 141, 1) 0%,
+      rgba(0, 77, 138) 0%,
       rgba(30, 104, 155, 1) 100%
     );
     background: -webkit-linear-gradient(
       360deg,
-      rgba(11, 83, 141, 1) 0%,
+      rgba(0, 77, 138) 0%,
       rgba(30, 104, 155, 1) 100%
     );
     background: linear-gradient(
       360deg,
-      rgba(11, 83, 141, 1) 0%,
+      rgba(0, 77, 138) 0%,
       rgba(30, 104, 155, 1) 100%
     );
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0b538d",endColorstr="#1e689b",GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#004D8A",endColorstr="#1e689b",GradientType=1);
     padding-top: 3.25em;
     padding-bottom: 6.25em;
     color: #fff;
@@ -467,27 +496,27 @@ export default class Result extends BaseComponent {
       background: rgb(11, 83, 141);
       background: -moz-linear-gradient(
         360deg,
-        rgba(11, 83, 141, 1) 0%,
+        rgba(0, 77, 138) 0%,
         rgba(108, 143, 183, 1) 100%
       );
       background: -webkit-linear-gradient(
         360deg,
-        rgba(11, 83, 141, 1) 0%,
+        rgba(0, 77, 138) 0%,
         rgba(108, 143, 183, 1) 100%
       );
       background: linear-gradient(
         360deg,
-        rgba(11, 83, 141, 1) 0%,
+        rgba(0, 77, 138) 0%,
         rgba(108, 143, 183, 1) 100%
       );
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0b538d",endColorstr="#6c8fb7",GradientType=1);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#004D8A",endColorstr="#6c8fb7",GradientType=1);
     }
     .article-section {
       position: relative;
       padding: 6.25em 0;
       .section-header {
         text-align: center;
-        color: #0b538d;
+        color: #004d8a;
         h3 {
           font-weight: 200;
           font-size: 1.875em;
