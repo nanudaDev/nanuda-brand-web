@@ -484,9 +484,7 @@ export default class Solution extends BaseComponent {
       if (res) {
         this.isComplete = true;
         // send pixel event
-        this.$analytics.fbq.event('Purchased', {
-          content_name: `픽쿡 신청 - ${res.data.name}`,
-        });
+        this.$analytics.fbq.event('SubmitApplication');
       }
     });
   }
