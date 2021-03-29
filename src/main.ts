@@ -26,13 +26,16 @@ const { Swiper, SwiperSlide } = getAwesomeSwiper(SwiperClass);
 import 'swiper/swiper-bundle.css';
 import BaseArrow from '@/modules/_components/svg/BaseArrow.vue';
 import BaseSearch from '@/modules/_components/svg/BaseSearch.vue';
+// facebook pixel
 
+import VueFacebookPixel from 'vue-analytics-facebook-pixel';
 Vue.config.productionTip = false;
 Vue.component('MainLayout', MainLayout);
 Vue.component('NonLayout', NonLayout);
 Vue.component('BaseArrow', BaseArrow);
 Vue.component('BaseSearch', BaseSearch);
-
+Vue.use(VueFacebookPixel);
+// Vue.use(VueFacebookPixel);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 Vue.use(VueScrollTo, {
@@ -41,7 +44,9 @@ Vue.use(VueScrollTo, {
   offset: -100,
 });
 Vue.use(VueAwesomeSwiper /* { default global options } */);
-
+(Vue as any).analytics.fbq.init('932827054153408', {
+  em: 'lsj@widaehan.com',
+});
 new Vue({
   router,
   render: h => h(App),

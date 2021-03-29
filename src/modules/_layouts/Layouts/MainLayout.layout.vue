@@ -135,6 +135,9 @@ export default class MainLayout extends BaseComponent {
           float: left;
           font-size: 0.875em;
           line-height: 1.2;
+          a {
+            color: #707070;
+          }
           + li {
             margin-left: 2.2857em;
           }

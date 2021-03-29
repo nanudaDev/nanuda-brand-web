@@ -16,7 +16,6 @@ const nonNavBarRouter: RouteConfig[] = [
     name: 'privacy',
     component: () => import('../../modules/privacy/Privacy.vue'),
     meta: {
-      authRequired: true,
       layout: 'NonLayout',
       title: '개인정보취급',
     },
@@ -38,6 +37,15 @@ const nonNavBarRouter: RouteConfig[] = [
     meta: {
       layout: 'NonLayout',
       title: '설문 조사 결과',
+    },
+  },
+  {
+    path: '/reservation',
+    name: 'reservation',
+    component: () => import('../../modules/reservation/Reservation.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '예약하기',
     },
   },
 ];

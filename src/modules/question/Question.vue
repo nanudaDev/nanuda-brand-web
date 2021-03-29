@@ -717,9 +717,9 @@ export default class Question extends BaseComponent {
 .app-question {
   .btn {
     &.btn-light {
-      border: 1px solid #0b538d;
+      border: 1px solid #004d8a;
       background-color: #fff;
-      color: #0b538d;
+      color: #004d8a;
     }
   }
   .form-group {
@@ -830,7 +830,7 @@ export default class Question extends BaseComponent {
     &.bg-light {
       .article-section {
         .section-title {
-          color: #0b538d;
+          color: #004d8a;
         }
       }
     }

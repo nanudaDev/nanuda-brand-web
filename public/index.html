@@ -3,7 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta
+      name="naver-site-verification"
+      content="5c7b48ed0891477f4bf783eeb546ff376b99a8df"
+    />
+    <meta
+      name="facebook-domain-verification"
+      content="fnqrnqqdcex4tpd5a49gw7t8s3kq6q"
+    />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <link
       rel="stylesheet"
@@ -45,5 +56,38 @@
       type="text/javascript"
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=05bd95996429076cf3d7d687db931c3e&libraries=services"
     ></script>
+    <script>
+      !(function(f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function() {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        'script',
+        'https://connect.facebook.net/en_US/fbevents.js',
+      );
+      fbq('init', '422533925552381');
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display:none"
+        src="https://www.facebook.com/tr?id=422533925552381&ev=PageView&noscript=1"
+    /></noscript>
   </body>
 </html>
