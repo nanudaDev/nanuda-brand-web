@@ -29,6 +29,7 @@ import BaseSearch from '@/modules/_components/svg/BaseSearch.vue';
 // facebook pixel
 
 import VueFacebookPixel from 'vue-analytics-facebook-pixel';
+import VueMoment from 'vue-moment';
 Vue.config.productionTip = false;
 Vue.component('MainLayout', MainLayout);
 Vue.component('NonLayout', NonLayout);
@@ -38,6 +39,9 @@ Vue.use(VueFacebookPixel);
 // Vue.use(VueFacebookPixel);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
+
+Vue.use(VueMoment);
+
 Vue.use(VueScrollTo, {
   duration: 700,
   easing: [0, 0, 0.1, 1],

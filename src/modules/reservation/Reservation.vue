@@ -1,3 +1,24 @@
+<template>
+  <div class="demo-app">
+    <div class="demo-app-main">
+      <FullCalendar class="demo-app-calendar" :options="calendarOptions">
+        <!-- <template v-slot:eventContent="arg">
+          <b>{{ arg.timeText }}</b>
+          <i>{{ arg.event.title }}</i>
+        </template> -->
+      </FullCalendar>
+    </div>
+    <b-modal id="select-time" hide-footer>
+      <template #modal-title>
+        <strong class="txt-primary">예약하기</strong>
+      </template>
+      <div v-for="item in terms" :key="item.id">
+        <b-btn block class="mt-2">{{ item.name }}</b-btn>
+      </div>
+    </b-modal>
+  </div>
+</template>
+
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import FullCalendar, {
@@ -5,6 +26,8 @@ import FullCalendar, {
   EventApi,
   DateSelectArg,
   EventClickArg,
+  DateRangeInput,
+  DateSpanApi,
 } from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -17,7 +40,22 @@ import { INITIAL_EVENTS, createEventId } from '@/common';
     FullCalendar, // make the <FullCalendar> tag available
   },
 })
-export default class DemoApp extends Vue {
+export default class Reservation extends Vue {
+  private terms = [
+    { id: 10, name: '오전 10시' },
+    {
+      id: 11,
+      name: '오전 11시',
+    },
+    {
+      id: 12,
+      name: '오전 12시',
+    },
+    {
+      id: 13,
+      name: '오후 1시',
+    },
+  ];
   private calendarOptions: CalendarOptions = {
     plugins: [
       dayGridPlugin,
@@ -36,19 +74,29 @@ export default class DemoApp extends Vue {
       month: '월',
     },
     initialView: 'dayGridMonth',
-    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    // initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     editable: true,
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    weekends: false,
+    weekends: true,
     select: this.handleDateSelect,
-    eventClick: this.handleEventClick,
+    // eventClick: this.handleEventClick,
     eventsSet: this.handleEvents,
+    selectAllow: this.selectAllow,
     locale: 'ko',
     slotMinTime: '10:00:00',
     slotMaxTime: '19:00:00',
     allDaySlot: false,
+    slotDuration: '01:00:00',
+    events: [
+      {
+        start: '1970-01-01',
+        end: new Date().toISOString().slice(0, 10),
+        color: '#ff9f89',
+        display: 'background',
+      },
+    ],
     /* you can update a remote database when these fire:
     eventAdd:
     eventChange:
@@ -60,46 +108,44 @@ export default class DemoApp extends Vue {
     this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
   }
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
-    const calendarApi = selectInfo.view.calendar;
-    calendarApi.unselect(); // clear date selection
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-      });
-    }
+    // const title = prompt('Please enter a new title for your event');
+    // const calendarApi = selectInfo.view.calendar;
+    // calendarApi.unselect(); // clear date selection
+    // if (title) {
+    //   calendarApi.addEvent({
+    //     id: createEventId(),
+    //     title,
+    //     start: selectInfo.startStr,
+    //     end: selectInfo.endStr,
+    //     allDay: selectInfo.allDay,
+    //   });
+    // }
+    this.$bvModal.show('select-time');
   }
-  handleEventClick(clickInfo: EventClickArg) {
-    if (
-      confirm(
-        `Are you sure you want to delete the event '${clickInfo.event.title}'`,
-      )
-    ) {
-      clickInfo.event.remove();
-    }
-  }
+  // handleEventClick(clickInfo: EventClickArg) {
+  //   if (
+  //     confirm(
+  //       `Are you sure you want to delete the event '${clickInfo.event.title}'`,
+  //     )
+  //   ) {
+  //     clickInfo.event.remove();
+  //   }
+  // }
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
   }
+  selectAllow(info: DateSpanApi) {
+    if (this.$moment(info.startStr).isBefore(new Date())) {
+      return false;
+    }
+    const isWeekend = info.start.getDay() === 6 || info.start.getDay() === 0;
+    if (isWeekend) {
+      return false;
+    }
+    return true;
+  }
 }
 </script>
-
-<template>
-  <div class="demo-app">
-    <div class="demo-app-main">
-      <FullCalendar class="demo-app-calendar" :options="calendarOptions">
-        <template v-slot:eventContent="arg">
-          <b>{{ arg.timeText }}</b>
-          <i>{{ arg.event.title }}</i>
-        </template>
-      </FullCalendar>
-    </div>
-  </div>
-</template>
 
 <style lang="scss">
 h2 {
@@ -141,5 +187,9 @@ b {
   /* the calendar root */
   max-width: 1100px;
   margin: 0 auto;
+}
+.fc-day-sun,
+.fc-day-sat {
+  background-color: rgb(255, 193, 170);
 }
 </style>

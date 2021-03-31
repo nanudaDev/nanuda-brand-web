@@ -48,6 +48,16 @@ const nonNavBarRouter: RouteConfig[] = [
       title: '예약하기',
     },
   },
+  {
+    // UserProfile은 User의 <router-view> 내에 렌더링 됩니다.
+    path: '/reserv-check',
+    name: 'check',
+    component: () => import('../../modules/reservation/ReservCheck.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '예약확인',
+    },
+  },
 ];
 
 export default nonNavBarRouter;
