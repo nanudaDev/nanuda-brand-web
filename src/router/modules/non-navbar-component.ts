@@ -50,7 +50,7 @@ const nonNavBarRouter: RouteConfig[] = [
   },
   {
     // UserProfile은 User의 <router-view> 내에 렌더링 됩니다.
-    path: '/reserv-check',
+    path: '/reservation/check',
     name: 'check',
     component: () => import('../../modules/reservation/ReservCheck.vue'),
     meta: {

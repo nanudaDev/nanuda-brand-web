@@ -63,9 +63,9 @@ export default class Reservation extends Vue {
       interactionPlugin, // needed for dateClick
     ],
     headerToolbar: {
-      left: 'prev,next today',
+      left: 'prev,next',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay',
+      right: 'today',
     },
     buttonText: {
       today: '오늘',
@@ -75,11 +75,11 @@ export default class Reservation extends Vue {
     },
     initialView: 'dayGridMonth',
     // initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
-    editable: true,
+    // editable: true,
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    weekends: true,
+    weekends: false,
     select: this.handleDateSelect,
     // eventClick: this.handleEventClick,
     eventsSet: this.handleEvents,
@@ -89,6 +89,7 @@ export default class Reservation extends Vue {
     slotMaxTime: '19:00:00',
     allDaySlot: false,
     slotDuration: '01:00:00',
+    //오늘 이전 배경색 분홍색으로
     events: [
       {
         start: '1970-01-01',
@@ -135,9 +136,11 @@ export default class Reservation extends Vue {
     this.currentEvents = events;
   }
   selectAllow(info: DateSpanApi) {
+    //오늘 이전 날짜들 클릭안됨
     if (this.$moment(info.startStr).isBefore(new Date())) {
       return false;
     }
+    //주말 클릭안됨
     const isWeekend = info.start.getDay() === 6 || info.start.getDay() === 0;
     if (isWeekend) {
       return false;
