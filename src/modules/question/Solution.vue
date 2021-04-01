@@ -444,6 +444,9 @@ export default class Solution extends BaseComponent {
     this.smsAuthNotificationDto.phone = this.consultRequestDto.phone;
     authService.getSMSCode(this.smsAuthNotificationDto).subscribe(res => {
       if (res) {
+        this.$gtag.event('get_sms_code', {
+          description: '문자 인증번호 요청',
+        });
         this.time = 30;
         this.isSMSCodeSent = true;
         this.isGetCodeBtnDisabled = true;
@@ -468,6 +471,9 @@ export default class Solution extends BaseComponent {
     authService.checkSMSCode(this.smsAuthNotificationDto).subscribe(res => {
       if (res) {
         this.isVerified = true;
+        this.$gtag.event('complete_sms_auth', {
+          description: '인증번호 확인 완료',
+        });
       } else {
         this.$bvToast.toast(
           '인증번호가 올바르지않거나 유효기간이 초과했습니다',
@@ -485,6 +491,9 @@ export default class Solution extends BaseComponent {
         this.isComplete = true;
         // send pixel event
         this.$analytics.fbq.event('SubmitApplication');
+        this.$gtag.event('complete_application', {
+          description: '신청 완료',
+        });
       }
     });
   }
