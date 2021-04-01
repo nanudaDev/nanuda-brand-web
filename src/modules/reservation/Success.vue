@@ -2,8 +2,8 @@
   <div class="container">
     <h2>예약 완료</h2>
     <h3>예약 정보~~~~~~~~~~~~~~~</h3>
-    <b-btn>변경하기</b-btn>
-    <b-btn>취소하기</b-btn>
+
+    <b-btn>돌아가기</b-btn>
   </div>
 </template>
 

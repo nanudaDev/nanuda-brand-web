@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
+import '@/router/router-guard';
 import MainLayout from './modules/_layouts/Layouts/MainLayout.layout.vue';
 import NonLayout from './modules/_layouts/Layouts/NonLayout.layout.vue';
 import BootstrapVue, { BootstrapVueIcons } from 'bootstrap-vue';

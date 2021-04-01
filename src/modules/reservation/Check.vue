@@ -1,37 +1,8 @@
 <template>
   <div>
-    <div class="container" v-if="!isVerified">
-      <b-form-row class="mt-3">
-        <b-col cols="3">
-          <label class="txt-sm">휴대전화</label>
-        </b-col>
-        <b-col cols="6">
-          <b-form-input
-            label="휴대전화 번호"
-            placeholder="ex) 01012345678"
-            v-model="phone"
-          ></b-form-input>
-        </b-col>
-      </b-form-row>
-      <b-form-row class="mt-3">
-        <b-col cols="3">
-          <label class="txt-sm">예약코드</label>
-        </b-col>
-        <b-col cols="6">
-          <b-form-input
-            label="예약 코드"
-            placeholder="PC1234-12-1242"
-            v-model="code"
-          ></b-form-input>
-        </b-col>
-      </b-form-row>
-      <b-btn :disabled="!phone || !code" @click="isVerified = true">
-        확인
-      </b-btn>
-    </div>
-    <div v-else class="container">
+    <div class="container">
       <div>예약시간 12398</div>
-      <b-btn>변경하기</b-btn>
+      <b-btn @click="$router.push('/reservation')">변경하기</b-btn>
       <b-btn @click="$bvModal.show('cancel')">취소하기</b-btn>
     </div>
     <b-modal id="cancel">
@@ -75,9 +46,6 @@ import { Component, Vue } from 'vue-property-decorator';
   name: 'ReservCheck',
 })
 export default class ReservCheck extends BaseComponent {
-  private name = '';
-  private code = '';
-  private isVerified = false;
   private selectedCancelReason = '';
   private othersText = '';
   private cancelReasons = [

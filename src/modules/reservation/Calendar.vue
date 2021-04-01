@@ -13,7 +13,9 @@
         <strong class="txt-primary">예약하기</strong>
       </template>
       <div v-for="item in terms" :key="item.id">
-        <b-btn block class="mt-2">{{ item.name }}</b-btn>
+        <b-btn block class="mt-2" @click="onClickTime(item.value)">{{
+          item.name
+        }}</b-btn>
       </div>
     </b-modal>
   </div>
@@ -33,27 +35,36 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { INITIAL_EVENTS, createEventId } from '@/common';
+import { PostReservationRequestDto } from '@/dto/reservation/post-reservation-request.dto';
+import reservationService from '@/services/reservation.service';
+import EventDto from '@/dto/reservation/event.dto';
 // import krLocale from '@fullcalendar/core/locales/ko';
 
 @Component({
+  name: 'Calendar',
   components: {
     FullCalendar, // make the <FullCalendar> tag available
   },
 })
-export default class Reservation extends Vue {
+export default class Calendar extends Vue {
+  private postReserationRequestDto = new PostReservationRequestDto();
+  private eventDto: EventDto[] = [];
   private terms = [
-    { id: 10, name: '오전 10시' },
+    { id: 10, name: '오전 10시', value: '10:00AM' },
     {
       id: 11,
       name: '오전 11시',
+      value: '11:00AM',
     },
     {
       id: 12,
       name: '오전 12시',
+      value: '12:00AM',
     },
     {
       id: 13,
       name: '오후 1시',
+      value: '01:00PM',
     },
   ];
   private calendarOptions: CalendarOptions = {
@@ -80,6 +91,7 @@ export default class Reservation extends Vue {
     selectMirror: true,
     dayMaxEvents: true,
     weekends: false,
+    showNonCurrentDates: false,
     select: this.handleDateSelect,
     // eventClick: this.handleEventClick,
     eventsSet: this.handleEvents,
@@ -90,6 +102,7 @@ export default class Reservation extends Vue {
     allDaySlot: false,
     slotDuration: '01:00:00',
     //오늘 이전 배경색 분홍색으로
+    eventSources: [{ url: 'http://localhost:4700/reservation/holidays' }],
     events: [
       {
         start: '1970-01-01',
@@ -109,29 +122,17 @@ export default class Reservation extends Vue {
     this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
   }
   handleDateSelect(selectInfo: DateSelectArg) {
-    // const title = prompt('Please enter a new title for your event');
-    // const calendarApi = selectInfo.view.calendar;
-    // calendarApi.unselect(); // clear date selection
-    // if (title) {
-    //   calendarApi.addEvent({
-    //     id: createEventId(),
-    //     title,
-    //     start: selectInfo.startStr,
-    //     end: selectInfo.endStr,
-    //     allDay: selectInfo.allDay,
-    //   });
-    // }
+    this.postReserationRequestDto.reservationDate = selectInfo.start;
     this.$bvModal.show('select-time');
   }
-  // handleEventClick(clickInfo: EventClickArg) {
-  //   if (
-  //     confirm(
-  //       `Are you sure you want to delete the event '${clickInfo.event.title}'`,
-  //     )
-  //   ) {
-  //     clickInfo.event.remove();
-  //   }
-  // }
+  onClickTime(time: string) {
+    this.postReserationRequestDto.reservationTime = time;
+    reservationService
+      .postReservation(this.postReserationRequestDto)
+      .subscribe(res => {
+        this.$router.push('/reservation/success');
+      });
+  }
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
   }
@@ -145,7 +146,23 @@ export default class Reservation extends Vue {
     if (isWeekend) {
       return false;
     }
+    //공휴일 클릭안됨
+    const include = this.eventDto.some(e => e.start == info.startStr);
+    if (include) {
+      return false;
+    }
     return true;
+  }
+  created() {
+    const code = sessionStorage.getItem('reservationCode');
+    if (!code) {
+      this.$router.push('/reservation');
+    } else {
+      this.postReserationRequestDto.reservationCode = code;
+    }
+    reservationService.getHoliday().subscribe(res => {
+      this.eventDto = this.eventDto.concat(res.data);
+    });
   }
 }
 </script>

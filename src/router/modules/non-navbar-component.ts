@@ -42,7 +42,16 @@ const nonNavBarRouter: RouteConfig[] = [
   {
     path: '/reservation',
     name: 'reservation',
-    component: () => import('../../modules/reservation/Reservation.vue'),
+    component: () => import('../../modules/reservation/CodeInputPage.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '코드입력',
+    },
+  },
+  {
+    path: '/reservation/calendar',
+    name: 'reservation',
+    component: () => import('../../modules/reservation/Calendar.vue'),
     meta: {
       layout: 'NonLayout',
       title: '예약하기',
@@ -52,10 +61,20 @@ const nonNavBarRouter: RouteConfig[] = [
     // UserProfile은 User의 <router-view> 내에 렌더링 됩니다.
     path: '/reservation/check',
     name: 'check',
-    component: () => import('../../modules/reservation/ReservCheck.vue'),
+    component: () => import('../../modules/reservation/Check.vue'),
     meta: {
       layout: 'NonLayout',
-      title: '예약확인',
+      title: '예약 확인',
+    },
+  },
+  {
+    // UserProfile은 User의 <router-view> 내에 렌더링 됩니다.
+    path: '/reservation/success',
+    name: 'check',
+    component: () => import('../../modules/reservation/Success.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '예약 성공',
     },
   },
 ];
