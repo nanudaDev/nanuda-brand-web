@@ -328,14 +328,7 @@
         block
         size="lg"
         class=" rounded-0"
-        @click="
-          $router.push({
-            name: 'solution',
-            params: {
-              proformaId: result.proformaId,
-            },
-          })
-        "
+        @click="goToSolution()"
       >
         <span>내게 맞는 시간대별 메뉴 보러가기</span>
         <span class="icon icon-arrow-right"><BaseArrow /></span>
@@ -412,6 +405,14 @@ export default class Result extends BaseComponent {
         // console.log(this.selectedFoodCategory, this.locationDetailInfo);
       }
     });
+  }
+
+  goToSolution() {
+    // gtag this area
+    this.$gtag.event('go_to_solution', {
+      description: '내게 맞는 시간대별 메뉴 보러가기',
+    });
+    this.$router.push({ path: `/solution/${this.result.proformaId}` });
   }
 
   getCategory(category: string) {
