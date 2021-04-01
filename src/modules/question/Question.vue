@@ -567,7 +567,9 @@ export default class Question extends BaseComponent {
         this.isLoadingResult = false;
         this.isLoading = false;
         this.aggregateResultResponseDto = res.data;
-        return;
+        this.$gtag.event('last_question', {
+          description: '마지막 질문',
+        });
       });
     } else {
       questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
@@ -578,6 +580,9 @@ export default class Question extends BaseComponent {
           this.isLoading = false;
           this.nextQuestionDto.order = res.data.order;
           this.nextQuestionDto.questionId = res.data.id;
+          this.$gtag.event(`question_${res.data.id}`, {
+            description: `${res.data.question}`,
+          });
           this.question = res.data.question;
           this.questionOrder =
             this.nextQuestionDto.order + (this.prevOrder - 1);
