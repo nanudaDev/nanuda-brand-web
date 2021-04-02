@@ -3,9 +3,8 @@
     <h2>예약 완료</h2>
     <p>이름: {{ reservationInfo.name }}</p>
     <p>휴대폰 번호: {{ reservationInfo.phone }}</p>
-    <p>예약 날짜:{{ reservationInfo.reservationDate }}</p>
-    <p>예약 시간:{{ reservationInfo.reservationTime }}</p>
-    <p>예약 코드:{{ reservationInfo.reservationCode }}</p>
+    <p>예약 시간: {{ formattedDate }} {{ reservationInfo.reservationTime }}</p>
+    <p>예약 코드: {{ reservationInfo.reservationCode }}</p>
     <b-btn @click="onReturnBtn">돌아가기</b-btn>
   </div>
 </template>
@@ -21,7 +20,7 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class ReservSuccess extends BaseComponent {
   private reservationInfo = new GetReservationResponseDto();
-
+  private formattedDate = '';
   onReturnBtn() {
     sessionStorage.removeItem('reservationCode');
     this.$router.push('/reservation');
@@ -30,13 +29,17 @@ export default class ReservSuccess extends BaseComponent {
     reservationService
       .getReservInfo(sessionStorage.getItem('reservationCode'))
       .subscribe(res => {
-        this.reservationInfo = res.data[0];
+        this.reservationInfo = res.data[res.data.length - 1];
+        this.formattedDate = this.reservationInfo.reservationDate.replace(
+          /T.*$/,
+          '',
+        );
       });
   }
 }
 </script>
 
-<style>
+<style scoped>
 .container {
   margin-top: 10rem;
   width: 400px;

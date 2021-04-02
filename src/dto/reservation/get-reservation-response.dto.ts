@@ -10,7 +10,7 @@ export default class GetReservationResponseDto extends BaseDto<
   phone: string;
   consultId: number;
   reservationCode: string;
-  reservationDate: Date;
+  reservationDate: string;
   reservationTime: string;
   isCancelYn: YN;
   consultResult: ResultResponseDto;
