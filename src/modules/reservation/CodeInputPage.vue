@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <b-form-row class="mt-3">
+    <!-- <b-form-row class="mt-3">
       <b-col cols="3">
         <label class="txt-sm">휴대전화</label>
       </b-col>
@@ -11,7 +11,14 @@
           v-model="phone"
         ></b-form-input>
       </b-col>
-    </b-form-row>
+    </b-form-row> -->
+    <span data-aos="fade-down" data-aos-duration="1500"
+      ><router-link to="/"
+        ><img
+          src="@/assets/images/logo_w.svg"
+          alt="픽쿡"
+          class="logo-w"/></router-link
+    ></span>
     <b-form-row class="mt-3">
       <b-col cols="3">
         <label class="txt-sm">예약코드</label>
@@ -19,12 +26,12 @@
       <b-col cols="6">
         <b-form-input
           label="예약 코드"
-          placeholder="PC1234-12-1242"
+          placeholder="ex)PC1234-12-1242"
           v-model="code"
         ></b-form-input>
       </b-col>
     </b-form-row>
-    <b-btn :disabled="!phone || !code" @click="onEnter()">
+    <b-btn :disabled="!code" @click="onEnter()">
       확인
     </b-btn>
   </div>
@@ -60,5 +67,8 @@ export default class CodeInputPage extends BaseComponent {
   margin-top: 10rem;
   width: 400px;
   border: 1px black solid;
+  background-color: #004d8a;
+  padding: 2rem;
+  border-radius: 20px;
 }
 </style>

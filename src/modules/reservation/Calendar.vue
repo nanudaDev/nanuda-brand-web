@@ -12,10 +12,15 @@
       <template #modal-title>
         <strong class="txt-primary">예약하기</strong>
       </template>
-      <div v-for="item in terms" :key="item.id">
-        <b-btn block class="mt-2" @click="onClickTime(item.value)">{{
-          item.name
-        }}</b-btn>
+      <div v-for="item in terms" :key="item.id" style="backgroundColor: #fff">
+        <b-btn
+          block
+          class="mt-2"
+          :disabled="!item.available"
+          variant="primary"
+          @click="onClickTime(item.value)"
+          >{{ item.value }}</b-btn
+        >
       </div>
     </b-modal>
   </div>
@@ -38,6 +43,7 @@ import { INITIAL_EVENTS, createEventId } from '@/common';
 import { PostReservationRequestDto } from '@/dto/reservation/post-reservation-request.dto';
 import reservationService from '@/services/reservation.service';
 import EventDto from '@/dto/reservation/event.dto';
+import GetReservTimesResponseDto from '@/dto/reservation/get-reserv-times-response.dto';
 // import krLocale from '@fullcalendar/core/locales/ko';
 
 @Component({
@@ -49,24 +55,7 @@ import EventDto from '@/dto/reservation/event.dto';
 export default class Calendar extends Vue {
   private postReserationRequestDto = new PostReservationRequestDto();
   private eventDto: EventDto[] = [];
-  private terms = [
-    { id: 10, name: '오전 10시', value: '10:00AM' },
-    {
-      id: 11,
-      name: '오전 11시',
-      value: '11:00AM',
-    },
-    {
-      id: 12,
-      name: '오전 12시',
-      value: '12:00AM',
-    },
-    {
-      id: 13,
-      name: '오후 1시',
-      value: '01:00PM',
-    },
-  ];
+  private terms: GetReservTimesResponseDto[] = [];
   private calendarOptions: CalendarOptions = {
     plugins: [
       dayGridPlugin,
@@ -123,6 +112,9 @@ export default class Calendar extends Vue {
   }
   handleDateSelect(selectInfo: DateSelectArg) {
     this.postReserationRequestDto.reservationDate = selectInfo.start;
+    reservationService.getTimeSlots(selectInfo.startStr).subscribe(res => {
+      this.terms = res.data;
+    });
     this.$bvModal.show('select-time');
   }
   onClickTime(time: string) {
@@ -130,7 +122,9 @@ export default class Calendar extends Vue {
     reservationService
       .postReservation(this.postReserationRequestDto)
       .subscribe(res => {
-        this.$router.push('/reservation/success');
+        if (res) {
+          this.$router.push('/reservation/success');
+        }
       });
   }
   handleEvents(events: EventApi[]) {

@@ -21,6 +21,11 @@ export class ReservationService extends BaseService {
   getHoliday() {
     return super.get<EventDto>('reservation/holidays');
   }
+  getTimeSlots(date: string) {
+    return super.get<any>('reservation/check-available-times', {
+      reservationDate: date,
+    });
+  }
 }
 
 export default new ReservationService();
