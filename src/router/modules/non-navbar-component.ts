@@ -50,7 +50,7 @@ const nonNavBarRouter: RouteConfig[] = [
   },
   {
     path: '/reservation/calendar',
-    name: 'reservation',
+    name: 'calendar',
     component: () => import('../../modules/reservation/Calendar.vue'),
     meta: {
       layout: 'NonLayout',
@@ -60,7 +60,7 @@ const nonNavBarRouter: RouteConfig[] = [
   },
   {
     // UserProfile은 User의 <router-view> 내에 렌더링 됩니다.
-    path: '/reservation/:id',
+    path: '/reservation/:id([0-9]+)',
     name: 'check',
     component: () => import('../../modules/reservation/Check.vue'),
     meta: {

@@ -16,9 +16,9 @@ import reservationService from '@/services/reservation.service';
 
 import { Component, Vue } from 'vue-property-decorator';
 @Component({
-  name: 'ReservSuccess',
+  name: 'Success',
 })
-export default class ReservSuccess extends BaseComponent {
+export default class Success extends BaseComponent {
   private reservationInfo = new GetReservationResponseDto();
   private formattedDate = '';
   onReturnBtn() {

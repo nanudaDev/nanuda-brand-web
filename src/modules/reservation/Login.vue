@@ -63,9 +63,9 @@ import { Component, Vue } from 'vue-property-decorator';
 import reservationService from '@/services/reservation.service';
 import LoginDto from '@/dto/reservation/login.dto';
 @Component({
-  name: 'CodeInputPage',
+  name: 'Login',
 })
-export default class CodeInputPage extends BaseComponent {
+export default class Login extends BaseComponent {
   private loginDto = new LoginDto();
 
   onEnter() {
