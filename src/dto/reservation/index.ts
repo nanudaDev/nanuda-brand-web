@@ -5,3 +5,4 @@ export * from './consult-result-response.dto';
 export * from './event.dto';
 export * from './login.dto';
 export * from './time-slot-response.dto';
+export * from './delete-reservation-request.dto';

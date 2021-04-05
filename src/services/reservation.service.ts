@@ -5,6 +5,7 @@ import {
   TimeSlotResponseDto,
 } from '@/dto/reservation';
 import ConsultResultResponseDto from '@/dto/reservation/consult-result-response.dto';
+import DeleteReservationRequestDto from '@/dto/reservation/delete-reservation-request.dto';
 import EventDto from '@/dto/reservation/event.dto';
 import GetReservationResponseDto from '@/dto/reservation/get-reservation-response.dto';
 import LoginDto from '@/dto/reservation/login.dto';
@@ -38,9 +39,18 @@ export class ReservationService extends BaseService {
       },
     );
   }
-  cancelReservation() {
-    //delete 작업중
-    return super.delete<GetReservationResponseDto>('reservation');
+  cancelReservation(deleteReservationRequestDto: DeleteReservationRequestDto) {
+    const params: any = {
+      params: { id: 12 },
+      // query: {
+      //   revervationCode: deleteReservationRequestDto.reservationCode,
+      //   phone: deleteReservationRequestDto.phone,
+      // },
+      // data: { deleteReason: deleteReservationRequestDto.deleteReason },
+    };
+    return super.delete<GetReservationResponseDto>('reservation', {
+      params: { id: 12 },
+    });
   }
 }
 
