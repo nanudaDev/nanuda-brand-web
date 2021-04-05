@@ -14,7 +14,7 @@
         </div>
       </div>
     </section>
-    <b-modal id="select-time" hide-footer>
+    <b-modal id="select-time" @ok="onTimeModalOk">
       <template #modal-title>
         <strong class="txt-primary">예약 하기</strong>
       </template>
@@ -38,10 +38,8 @@ import { Component, Vue } from 'vue-property-decorator';
 import FullCalendar, {
   CalendarOptions,
   EventApi,
-  DateSelectArg,
-  EventClickArg,
-  DateRangeInput,
   DateSpanApi,
+  DatePointApi,
 } from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -63,6 +61,7 @@ export default class Calendar extends Vue {
   private postReserationRequestDto = new PostReservationRequestDto();
   private eventDto: EventDto[] = [];
   private terms: GetReservTimesResponseDto[] = [];
+  private selectedTime = '';
   private calendarOptions: CalendarOptions = {
     plugins: [
       dayGridPlugin,
@@ -88,7 +87,7 @@ export default class Calendar extends Vue {
     dayMaxEvents: true,
     weekends: false,
     showNonCurrentDates: false,
-    select: this.handleDateSelect,
+    dateClick: this.handleDateSelect,
     // eventClick: this.handleEventClick,
     eventsSet: this.handleEvents,
     selectAllow: this.selectAllow,
@@ -97,6 +96,7 @@ export default class Calendar extends Vue {
     slotMaxTime: '19:00:00',
     allDaySlot: false,
     slotDuration: '01:00:00',
+
     //오늘 이전 배경색 분홍색으로
     eventSources: [{ url: 'http://localhost:4700/reservation/holidays' }],
     events: [
@@ -118,15 +118,18 @@ export default class Calendar extends Vue {
   handleWeekendsToggle() {
     this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
   }
-  handleDateSelect(selectInfo: DateSelectArg) {
-    this.postReserationRequestDto.reservationDate = selectInfo.start;
-    reservationService.getTimeSlots(selectInfo.startStr).subscribe(res => {
+  handleDateSelect(selectInfo: DatePointApi) {
+    this.postReserationRequestDto.reservationDate = selectInfo.date;
+    reservationService.getTimeSlots(selectInfo.dateStr).subscribe(res => {
       this.terms = res.data;
     });
     this.$bvModal.show('select-time');
   }
   onClickTime(time: string) {
-    this.postReserationRequestDto.reservationTime = time;
+    this.selectedTime = time;
+  }
+  onTimeModalOk() {
+    this.postReserationRequestDto.reservationTime = this.selectedTime;
     reservationService
       .postReservation(this.postReserationRequestDto)
       .subscribe(res => {
@@ -170,6 +173,9 @@ export default class Calendar extends Vue {
 </script>
 
 <style lang="scss">
+.selected {
+  border: 1px black solid;
+}
 .main-article {
   background: #004d8a;
   min-height: 100vh;
