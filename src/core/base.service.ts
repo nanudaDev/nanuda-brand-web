@@ -89,6 +89,7 @@ export class BaseService {
     method: Method,
     path: string,
     params?: any,
+    data?: any,
   ): AxiosObservable<T> {
     let baseUrl;
     if (process.env.NODE_ENV === EnvironmentType.development) {
@@ -146,7 +147,9 @@ export class BaseService {
     } else if (method === 'patch') {
       return Axios.patch(path, params, { headers }) as AxiosObservable<T>;
     } else if (method === 'delete') {
-      return Axios.delete(path, { params, headers }) as AxiosObservable<T>;
+      return Axios.delete(path, { params, headers, data }) as AxiosObservable<
+        T
+      >;
     }
   }
 
