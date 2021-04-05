@@ -12,7 +12,7 @@
       <b-btn @click="$bvModal.show('cancel')">취소하기</b-btn>
       <b-btn @click="onReturnBtn">돌아가기</b-btn>
     </div>
-    <b-modal id="cancel">
+    <b-modal id="cancel" @ok="onCancelOk">
       <template #modal-title>
         <strong class="txt-primary">취소하기</strong>
       </template>
@@ -27,7 +27,7 @@
             v-model="selectedCancelReason"
             :aria-describedby="ariaDescribedby"
             name="some-radios"
-            :value="reason.id"
+            :value="reason.value"
             >{{ reason.value }}</b-form-radio
           >
         </div>
@@ -53,6 +53,7 @@
 
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
+import DeleteReservationRequestDto from '@/dto/reservation/delete-reservation-request.dto';
 import GetReservationResponseDto from '@/dto/reservation/get-reservation-response.dto';
 import reservationService from '@/services/reservation.service';
 
@@ -62,6 +63,7 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class ReservCheck extends BaseComponent {
   private reservationInfo = new GetReservationResponseDto();
+  private deleteReservationRequestDto = new DeleteReservationRequestDto();
   private formattedDate = '';
   private selectedCancelReason = '';
   private othersText = '';
@@ -75,13 +77,27 @@ export default class ReservCheck extends BaseComponent {
     sessionStorage.removeItem('reservationCode');
     this.$router.push('/reservation');
   }
+  onCancelOk() {
+    this.deleteReservationRequestDto.id = +this.$route.params.id;
+    this.deleteReservationRequestDto.reservationCode = this.reservationInfo.reservationCode;
+    this.deleteReservationRequestDto.phone = this.reservationInfo.phone;
+    this.deleteReservationRequestDto.deleteReason = this.selectedCancelReason;
+    reservationService
+      .cancelReservation(this.deleteReservationRequestDto)
+      .subscribe(res => {
+        console.log('res', res);
+      });
+  }
   mounted() {
     reservationService
       .getReservInfo(sessionStorage.getItem('reservationCode'))
       .subscribe(res => {
         this.reservationInfo = res.data[res.data.length - 1];
+        this.reservationInfo.reservationDate = new Date(
+          this.reservationInfo.reservationDate,
+        ).toLocaleString();
         this.formattedDate = this.reservationInfo.reservationDate.replace(
-          /T.*$/,
+          /오.*$/,
           '',
         );
       });

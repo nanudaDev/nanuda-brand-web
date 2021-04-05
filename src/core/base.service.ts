@@ -137,6 +137,8 @@ export class BaseService {
     if (params) {
       params = this.__excludeNullParam(params);
     }
+    console.log('params', params);
+
     if (method === 'get') {
       return Axios.get(path, { params, headers }) as AxiosObservable<T>;
     } else if (method === 'post') {

@@ -66,7 +66,9 @@ export default class CodeInputPage extends BaseComponent {
           .getReservInfo(res.data.reservationCode)
           .subscribe(res => {
             if (res) {
-              this.$router.push('/reservation/check');
+              this.$router.push(
+                `/reservation/${res.data[res.data.length - 1].id}`,
+              );
             } else {
               this.$router.push('/reservation/calendar');
             }

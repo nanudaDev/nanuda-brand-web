@@ -30,8 +30,11 @@ export default class ReservSuccess extends BaseComponent {
       .getReservInfo(sessionStorage.getItem('reservationCode'))
       .subscribe(res => {
         this.reservationInfo = res.data[res.data.length - 1];
+        this.reservationInfo.reservationDate = new Date(
+          this.reservationInfo.reservationDate,
+        ).toLocaleString();
         this.formattedDate = this.reservationInfo.reservationDate.replace(
-          /T.*$/,
+          /오.*$/,
           '',
         );
       });
