@@ -40,17 +40,14 @@ export class ReservationService extends BaseService {
     );
   }
   cancelReservation(deleteReservationRequestDto: DeleteReservationRequestDto) {
-    const params: any = {
-      params: { id: 12 },
-      // query: {
-      //   revervationCode: deleteReservationRequestDto.reservationCode,
-      //   phone: deleteReservationRequestDto.phone,
-      // },
-      // data: { deleteReason: deleteReservationRequestDto.deleteReason },
-    };
-    return super.delete<GetReservationResponseDto>('reservation', {
-      params: { id: 12 },
-    });
+    return super.delete<GetReservationResponseDto>(
+      `reservation/${deleteReservationRequestDto.id}`,
+      {
+        reservationCode: deleteReservationRequestDto.reservationCode,
+        phone: deleteReservationRequestDto.phone,
+      },
+      { deleteReason: deleteReservationRequestDto.deleteReason },
+    );
   }
 }
 

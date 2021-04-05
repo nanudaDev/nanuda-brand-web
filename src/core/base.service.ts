@@ -202,7 +202,11 @@ export class BaseService {
     }
     return this.__api('get', path, request);
   }
-  protected delete<T>(path: string, params?: any): AxiosObservable<T> {
-    return this.__api('delete', path, params);
+  protected delete<T>(
+    path: string,
+    params?: any,
+    data?: any,
+  ): AxiosObservable<T> {
+    return this.__api('delete', path, params, data);
   }
 }

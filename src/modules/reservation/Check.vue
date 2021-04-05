@@ -59,9 +59,9 @@ import reservationService from '@/services/reservation.service';
 
 import { Component, Vue } from 'vue-property-decorator';
 @Component({
-  name: 'ReservCheck',
+  name: 'Check',
 })
-export default class ReservCheck extends BaseComponent {
+export default class Check extends BaseComponent {
   private reservationInfo = new GetReservationResponseDto();
   private deleteReservationRequestDto = new DeleteReservationRequestDto();
   private formattedDate = '';
@@ -81,11 +81,22 @@ export default class ReservCheck extends BaseComponent {
     this.deleteReservationRequestDto.id = +this.$route.params.id;
     this.deleteReservationRequestDto.reservationCode = this.reservationInfo.reservationCode;
     this.deleteReservationRequestDto.phone = this.reservationInfo.phone;
-    this.deleteReservationRequestDto.deleteReason = this.selectedCancelReason;
+    if (this.selectedCancelReason === '기타') {
+      this.deleteReservationRequestDto.deleteReason = this.othersText;
+    } else {
+      this.deleteReservationRequestDto.deleteReason = this.selectedCancelReason;
+    }
+
     reservationService
       .cancelReservation(this.deleteReservationRequestDto)
       .subscribe(res => {
-        console.log('res', res);
+        sessionStorage.removeItem('reservationCode');
+        this.$root.$bvToast.toast('예약 취소가 완료되었습니다', {
+          title: '성공',
+          variant: 'success',
+          solid: true,
+        });
+        this.$router.push('/reservation');
       });
   }
   mounted() {
