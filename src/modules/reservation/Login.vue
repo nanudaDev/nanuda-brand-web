@@ -17,7 +17,7 @@
           <div class="input-form">
             <b-form-row class="align-items-center">
               <b-col cols="3">
-                <label class="txt-sm">휴대전화</label>
+                <label class="txt-tiny">휴대전화</label>
               </b-col>
               <b-col cols="9">
                 <b-form-input
@@ -29,12 +29,12 @@
             </b-form-row>
             <b-form-row class="my-3 align-items-center">
               <b-col cols="3">
-                <label class="txt-sm">예약코드</label>
+                <label class="txt-tiny">예약코드</label>
               </b-col>
               <b-col cols="9">
                 <b-form-input
                   label="예약 코드"
-                  placeholder="ex)PC1234-12-1242"
+                  placeholder="ex) PC1234-12-1242"
                   v-model="loginDto.reservationCode"
                 ></b-form-input>
               </b-col>
@@ -42,6 +42,7 @@
             <div class="btn-box mt-3">
               <b-btn
                 variant="primary"
+                size="xs"
                 block
                 :disabled="!loginDto.reservationCode || !loginDto.phone"
                 @click="onEnter()"
