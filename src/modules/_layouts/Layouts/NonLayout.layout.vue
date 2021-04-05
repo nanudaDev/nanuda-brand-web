@@ -1,6 +1,8 @@
 <template>
   <div id="app" :class="`app-${$route.name}`">
-    <router-view></router-view>
+    <keep-alive include="Question">
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 <script lang="ts">

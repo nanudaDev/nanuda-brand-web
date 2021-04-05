@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
+import '@/router/router-guard';
 import MainLayout from './modules/_layouts/Layouts/MainLayout.layout.vue';
 import NonLayout from './modules/_layouts/Layouts/NonLayout.layout.vue';
 import BootstrapVue, { BootstrapVueIcons } from 'bootstrap-vue';
@@ -30,6 +31,13 @@ import VueGtag from 'vue-gtag';
 // facebook pixel
 
 import VueFacebookPixel from 'vue-analytics-facebook-pixel';
+import VueMoment from 'vue-moment';
+
+// pipe
+import { EnumPipeTransformer, PhonePipeTransformer } from './core';
+EnumPipeTransformer();
+PhonePipeTransformer();
+
 Vue.config.productionTip = false;
 Vue.component('MainLayout', MainLayout);
 Vue.component('NonLayout', NonLayout);
@@ -39,6 +47,9 @@ Vue.use(VueFacebookPixel);
 // Vue.use(VueFacebookPixel);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
+
+Vue.use(VueMoment);
+
 Vue.use(VueScrollTo, {
   duration: 700,
   easing: [0, 0, 0.1, 1],

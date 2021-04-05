@@ -89,6 +89,7 @@ export class BaseService {
     method: Method,
     path: string,
     params?: any,
+    data?: any,
   ): AxiosObservable<T> {
     let baseUrl;
     if (process.env.NODE_ENV === EnvironmentType.development) {
@@ -137,6 +138,8 @@ export class BaseService {
     if (params) {
       params = this.__excludeNullParam(params);
     }
+    console.log('params', params);
+
     if (method === 'get') {
       return Axios.get(path, { params, headers }) as AxiosObservable<T>;
     } else if (method === 'post') {
@@ -144,7 +147,9 @@ export class BaseService {
     } else if (method === 'patch') {
       return Axios.patch(path, params, { headers }) as AxiosObservable<T>;
     } else if (method === 'delete') {
-      return Axios.delete(path, { params, headers }) as AxiosObservable<T>;
+      return Axios.delete(path, { params, headers, data }) as AxiosObservable<
+        T
+      >;
     }
   }
 
@@ -197,7 +202,11 @@ export class BaseService {
     }
     return this.__api('get', path, request);
   }
-  protected delete<T>(path: string, params?: any): AxiosObservable<T> {
-    return this.__api('delete', path, params);
+  protected delete<T>(
+    path: string,
+    params?: any,
+    data?: any,
+  ): AxiosObservable<T> {
+    return this.__api('delete', path, params, data);
   }
 }
