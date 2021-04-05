@@ -720,6 +720,13 @@ export default class Question extends BaseComponent {
 </script>
 <style lang="scss">
 .app-question {
+  ~ [id*='post-code'] {
+    .modal-body {
+      background: url('../../assets/images/loading.gif') no-repeat center center;
+      background-size: 5em 5em;
+      min-height: 400px;
+    }
+  }
   .btn {
     &.btn-light {
       border: 1px solid #004d8a;

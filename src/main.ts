@@ -32,6 +32,12 @@ import VueGtag from 'vue-gtag';
 
 import VueFacebookPixel from 'vue-analytics-facebook-pixel';
 import VueMoment from 'vue-moment';
+
+// pipe
+import { EnumPipeTransformer, PhonePipeTransformer } from './core';
+EnumPipeTransformer();
+PhonePipeTransformer();
+
 Vue.config.productionTip = false;
 Vue.component('MainLayout', MainLayout);
 Vue.component('NonLayout', NonLayout);
