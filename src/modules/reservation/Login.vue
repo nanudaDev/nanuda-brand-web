@@ -1,47 +1,59 @@
 <template>
-  <div class="container">
-    <span data-aos="fade-down" data-aos-duration="1500"
-      ><router-link to="/"
-        ><img
-          src="@/assets/images/logo_w.svg"
-          alt="픽쿡"
-          class="logo-w"/></router-link
-    ></span>
-    <section class="input-form">
-      <b-form-row class="mt-3">
-        <b-col cols="2">
-          <label class="txt-sm">휴대전화</label>
-        </b-col>
-        <b-col cols="6">
-          <b-form-input
-            label="휴대전화 번호"
-            placeholder="ex) 01012345678"
-            v-model="loginDto.phone"
-          ></b-form-input>
-        </b-col>
-      </b-form-row>
-      <b-form-row class="mt-3">
-        <b-col cols="2">
-          <label class="txt-sm">예약코드</label>
-        </b-col>
-        <b-col cols="8">
-          <b-form-input
-            label="예약 코드"
-            placeholder="ex)PC1234-12-1242"
-            v-model="loginDto.reservationCode"
-          ></b-form-input>
-        </b-col>
-        <b-col cols="2">
-          <b-btn
-            :disabled="!loginDto.reservationCode || !loginDto.phone"
-            @click="onEnter()"
-          >
-            확인
-          </b-btn>
-        </b-col>
-      </b-form-row>
+  <article class="main-article">
+    <section class="article-section">
+      <div class="container">
+        <header class="section-header">
+          <h3>
+            <router-link to="/"
+              ><img
+                src="@/assets/images/logo_w.svg"
+                alt="픽쿡"
+                class="logo-w"
+                style="width:12rem"
+            /></router-link>
+          </h3>
+        </header>
+        <div class="section-content">
+          <div class="input-form">
+            <b-form-row class="align-items-center">
+              <b-col cols="3">
+                <label class="txt-sm">휴대전화</label>
+              </b-col>
+              <b-col cols="9">
+                <b-form-input
+                  label="휴대전화 번호"
+                  placeholder="ex) 01012345678"
+                  v-model="loginDto.phone"
+                ></b-form-input>
+              </b-col>
+            </b-form-row>
+            <b-form-row class="my-3 align-items-center">
+              <b-col cols="3">
+                <label class="txt-sm">예약코드</label>
+              </b-col>
+              <b-col cols="9">
+                <b-form-input
+                  label="예약 코드"
+                  placeholder="ex)PC1234-12-1242"
+                  v-model="loginDto.reservationCode"
+                ></b-form-input>
+              </b-col>
+            </b-form-row>
+            <div class="btn-box mt-3">
+              <b-btn
+                variant="primary"
+                block
+                :disabled="!loginDto.reservationCode || !loginDto.phone"
+                @click="onEnter()"
+              >
+                확인
+              </b-btn>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
-  </div>
+  </article>
 </template>
 
 <script lang="ts">
@@ -85,19 +97,28 @@ export default class CodeInputPage extends BaseComponent {
 }
 </script>
 
-<style scoped>
-.container {
-  margin-top: 10rem;
-  width: 600px;
-  border: 1px black solid;
-  background-color: #004d8a;
-  padding: 2rem;
-  border-radius: 20px;
-}
-.input-form {
-  background-color: #fff;
-  padding: 2rem;
-  margin: 1rem;
-  border-radius: 20px;
+<style lang="scss" scoped>
+.main-article {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #004d8a;
+  .article-section {
+    .section-header {
+      text-align: center;
+      h3 {
+        font-size: 1rem;
+      }
+    }
+    .section-content {
+      margin-top: 1em;
+      .input-form {
+        background-color: #fff;
+        padding: 1.5em;
+        border-radius: 0.25em;
+      }
+    }
+  }
 }
 </style>
