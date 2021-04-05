@@ -1,20 +1,27 @@
 <template>
-  <div class="demo-app">
-    <div class="demo-app-main">
-      <FullCalendar class="demo-app-calendar" :options="calendarOptions">
-        <!-- <template v-slot:eventContent="arg">
-          <b>{{ arg.timeText }}</b>
-          <i>{{ arg.event.title }}</i>
-        </template> -->
-      </FullCalendar>
-    </div>
+  <article class="main-article">
+    <section class="article-section">
+      <div class="demo-app">
+        <div class="demo-app-main">
+          <div class="container">
+            <FullCalendar class="demo-app-calendar" :options="calendarOptions">
+              <!-- <template v-slot:eventContent="arg">
+                <b>{{ arg.timeText }}</b>
+                <i>{{ arg.event.title }}</i>
+              </template> -->
+            </FullCalendar>
+          </div>
+        </div>
+      </div>
+    </section>
     <b-modal id="select-time" hide-footer>
       <template #modal-title>
-        <strong class="txt-primary">예약하기</strong>
+        <strong class="txt-primary">예약 하기</strong>
       </template>
       <div v-for="item in terms" :key="item.id" style="backgroundColor: #fff">
         <b-btn
           block
+          size="sm"
           class="mt-2"
           :disabled="!item.available"
           variant="primary"
@@ -23,7 +30,7 @@
         >
       </div>
     </b-modal>
-  </div>
+  </article>
 </template>
 
 <script lang="ts">
@@ -96,7 +103,8 @@ export default class Calendar extends Vue {
       {
         start: '1970-01-01',
         end: new Date().toISOString().slice(0, 10),
-        color: '#ff9f89',
+        // color: '#ff9f89',
+        color: '#d0d0d0',
         display: 'background',
       },
     ],
@@ -162,48 +170,41 @@ export default class Calendar extends Vue {
 </script>
 
 <style lang="scss">
-h2 {
-  margin: 0;
-  font-size: 16px;
-}
-ul {
-  margin: 0;
-  padding: 0 0 0 1.5em;
-}
-li {
-  margin: 1.5em 0;
-  padding: 0;
-}
-b {
-  /* used for event dates/times */
-  margin-right: 3px;
+.main-article {
+  background: #004d8a;
+  min-height: 100vh;
 }
 .demo-app {
   display: flex;
   min-height: 100%;
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 14px;
-}
-.demo-app-sidebar {
-  width: 300px;
-  line-height: 1.5;
-  background: #eaf9ff;
-  border-right: 1px solid #d3e2e8;
-}
-.demo-app-sidebar-section {
-  padding: 2em;
-}
-.demo-app-main {
-  flex-grow: 1;
-  padding: 3em;
-}
-.fc {
-  /* the calendar root */
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.fc-day-sun,
-.fc-day-sat {
-  background-color: rgb(255, 193, 170);
+  font-size: 1.2rem;
+
+  .demo-app-calendar {
+    background: #fff;
+    padding: 2em;
+    border-radius: 0.25em;
+  }
+
+  .demo-app-sidebar {
+    width: 300px;
+    line-height: 1.5;
+    background: #eaf9ff;
+    border-right: 1px solid #d3e2e8;
+  }
+  .demo-app-sidebar-section {
+    padding: 2em;
+  }
+  .demo-app-main {
+    flex-grow: 1;
+    padding: 3em 1em;
+    .fc-button-primary {
+      background-color: #004d8a !important;
+      border-color: #fff !important;
+    }
+    .fc-day-sun,
+    .fc-day-sat {
+      background-color: #d0d0d0;
+    }
+  }
 }
 </style>

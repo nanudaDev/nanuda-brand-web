@@ -367,6 +367,10 @@ body {
   color: #004d8a;
 }
 
+.txt-black {
+  color: #101010;
+}
+
 .txt-white {
   color: #fff;
 }
@@ -556,12 +560,6 @@ body {
 .vue-daum-postcode {
   max-height: 80vh;
   overflow-y: auto;
-}
-
-.modal-body {
-  background: url("../images/loading.gif") no-repeat center center;
-  background-size: 5em 5em;
-  min-height: 400px;
 }
 
 .loading-layer {
@@ -843,5 +841,9 @@ body {
 .app-services .main-article .article-section .section-header + .section-content figure img {
   display: block;
   margin: 0 auto;
+}
+
+.modal .btn {
+  font-size: 1rem;
 }
 /*# sourceMappingURL=common.css.map */

@@ -105,7 +105,10 @@ export default class Login extends BaseComponent {
   align-items: center;
   justify-content: center;
   background: #004d8a;
+  padding: 1em;
   .article-section {
+    width: 100%;
+    max-width: 400px;
     .section-header {
       text-align: center;
       h3 {
@@ -118,6 +121,11 @@ export default class Login extends BaseComponent {
         background-color: #fff;
         padding: 1.5em;
         border-radius: 0.25em;
+        label {
+          display: block;
+          color: #101010;
+          font-weight: 600;
+        }
       }
     }
   }
