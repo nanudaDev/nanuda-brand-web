@@ -27,7 +27,7 @@
                 ></b-form-input>
               </b-col>
             </b-form-row>
-            <b-form-row class="my-3 align-items-center">
+            <!-- <b-form-row class="my-3 align-items-center">
               <b-col cols="3">
                 <label class="txt-tiny">예약코드</label>
               </b-col>
@@ -38,14 +38,15 @@
                   v-model="loginDto.reservationCode"
                 ></b-form-input>
               </b-col>
-            </b-form-row>
+            </b-form-row> -->
             <div class="btn-box mt-3">
               <b-btn
                 variant="primary"
                 size="xs"
                 block
-                :disabled="!loginDto.reservationCode || !loginDto.phone"
+                :disabled="!loginDto.phone"
                 @click="onEnter()"
+                @keyup.enter="onEnter()"
               >
                 확인
               </b-btn>
@@ -69,8 +70,16 @@ export default class Login extends BaseComponent {
   private loginDto = new LoginDto();
 
   onEnter() {
+    if (this.$route.query.reservationCode) {
+      this.loginDto.reservationCode = this.$route.query
+        .reservationCode as string;
+    } else if (sessionStorage.getItem('reservationCode')) {
+      this.loginDto.reservationCode = sessionStorage.getItem('reservationCode');
+    }
+
     reservationService.login(this.loginDto).subscribe(res => {
       if (res) {
+        //정확한 정보를 입력했을때
         sessionStorage.setItem(
           'reservationCode',
           this.loginDto.reservationCode,
@@ -79,14 +88,17 @@ export default class Login extends BaseComponent {
           .getReservInfo(res.data.reservationCode)
           .subscribe(res => {
             if (res) {
+              //예약이 있으면
               this.$router.push(
                 `/reservation/${res.data[res.data.length - 1].id}`,
               );
             } else {
+              //예약이 없으면
               this.$router.push('/reservation/calendar');
             }
           });
       } else {
+        //핸드폰번호나 코드가 정확하지 않을때
         this.$bvToast.toast('휴대폰번호나 코드가 정확하지 않습니다', {
           title: 'Error',
           variant: 'danger',

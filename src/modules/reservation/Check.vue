@@ -74,7 +74,6 @@ export default class Check extends BaseComponent {
     { id: 4, value: '다른 서비스를 이용하게 되서' },
   ];
   onReturnBtn() {
-    sessionStorage.removeItem('reservationCode');
     this.$router.push('/reservation');
   }
   onCancelOk() {
@@ -90,7 +89,6 @@ export default class Check extends BaseComponent {
     reservationService
       .cancelReservation(this.deleteReservationRequestDto)
       .subscribe(res => {
-        sessionStorage.removeItem('reservationCode');
         this.$root.$bvToast.toast('예약 취소가 완료되었습니다', {
           title: '성공',
           variant: 'success',

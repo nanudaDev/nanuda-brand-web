@@ -22,7 +22,6 @@ export default class Success extends BaseComponent {
   private reservationInfo = new GetReservationResponseDto();
   private formattedDate = '';
   onReturnBtn() {
-    sessionStorage.removeItem('reservationCode');
     this.$router.push('/reservation');
   }
   mounted() {
