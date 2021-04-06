@@ -269,11 +269,18 @@ body {
     transform: translateY(-50%);
   }
 }
+.form-control {
+  font-size: 1rem;
+  height: 3em;
+  padding: 0 1em;
 
-.form-control-lg {
-  font-size: 1.125em;
-  height: 3.33em;
-  padding: 0 1.25em;
+  &.form-control-md {
+    font-size: 1.6rem;
+  }
+  &.form-control-lg {
+    font-size: 1.8rem;
+    height: 3.33em;
+  }
 }
 
 .rounded-lg {
@@ -294,7 +301,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 0 1em;
-  font-size: 1.6rem;
+  font-size: 1rem;
   height: 3em;
   line-height: 1.2;
 
@@ -305,6 +312,11 @@ body {
 
   &.btn-sm {
     font-size: 1.4rem;
+    padding: 0 1em;
+  }
+
+  &.btn-md {
+    font-size: 1.6rem;
     padding: 0 1em;
   }
 
