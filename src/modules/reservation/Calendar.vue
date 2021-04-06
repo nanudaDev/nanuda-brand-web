@@ -90,7 +90,6 @@ export default class Calendar extends Vue {
     dateClick: this.handleDateSelect,
     // eventClick: this.handleEventClick,
     eventsSet: this.handleEvents,
-    selectAllow: this.selectAllow,
     locale: 'ko',
     slotMinTime: '10:00:00',
     slotMaxTime: '19:00:00',
@@ -119,6 +118,20 @@ export default class Calendar extends Vue {
     this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
   }
   handleDateSelect(selectInfo: DatePointApi) {
+    if (this.$moment(selectInfo.dateStr).isBefore(new Date())) {
+      return false;
+    }
+    //주말 클릭안됨
+    const isWeekend =
+      selectInfo.date.getDay() === 6 || selectInfo.date.getDay() === 0;
+    if (isWeekend) {
+      return false;
+    }
+    //공휴일 클릭안됨
+    const include = this.eventDto.some(e => e.start == selectInfo.dateStr);
+    if (include) {
+      return false;
+    }
     this.postReserationRequestDto.reservationDate = selectInfo.date;
     reservationService.getTimeSlots(selectInfo.dateStr).subscribe(res => {
       this.terms = res.data;
@@ -140,23 +153,6 @@ export default class Calendar extends Vue {
   }
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
-  }
-  selectAllow(info: DateSpanApi) {
-    //오늘 이전 날짜들 클릭안됨
-    if (this.$moment(info.startStr).isBefore(new Date())) {
-      return false;
-    }
-    //주말 클릭안됨
-    const isWeekend = info.start.getDay() === 6 || info.start.getDay() === 0;
-    if (isWeekend) {
-      return false;
-    }
-    //공휴일 클릭안됨
-    const include = this.eventDto.some(e => e.start == info.startStr);
-    if (include) {
-      return false;
-    }
-    return true;
   }
   created() {
     const code = sessionStorage.getItem('reservationCode');
