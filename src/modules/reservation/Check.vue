@@ -57,7 +57,7 @@
         </label>
         <div
           v-for="reason in cancelReasons"
-          :key="reason.id"
+          :key="reason"
           class="mb-3 txt-tiny"
         >
           <b-form-radio
@@ -65,18 +65,8 @@
             v-model="selectedCancelReason"
             :aria-describedby="ariaDescribedby"
             name="some-radios"
-            :value="reason.value"
-            >{{ reason.value }}</b-form-radio
-          >
-        </div>
-        <div>
-          <b-form-radio
-            class="txt-tiny"
-            v-model="selectedCancelReason"
-            :aria-describedby="ariaDescribedby"
-            name="some-radios"
-            :value="'기타'"
-            >기타</b-form-radio
+            :value="reason"
+            >{{ reason }}</b-form-radio
           >
         </div>
         <b-form-textarea
@@ -92,6 +82,7 @@
 </template>
 
 <script lang="ts">
+import { CONST_RESERVATION_DELETE_REASON } from '@/common';
 import BaseComponent from '@/core/base.component';
 import DeleteReservationRequestDto from '@/dto/reservation/delete-reservation-request.dto';
 import GetReservationResponseDto from '@/dto/reservation/get-reservation-response.dto';
@@ -107,12 +98,7 @@ export default class Check extends BaseComponent {
   private formattedDate = '';
   private selectedCancelReason = '';
   private othersText = '';
-  private cancelReasons = [
-    { id: 1, value: '가용한 일정이 없어서' },
-    { id: 2, value: '서비스에 흥미를 잃어서' },
-    { id: 3, value: '직접 방문하는게 부담스러워서' },
-    { id: 4, value: '다른 서비스를 이용하게 되서' },
-  ];
+  private cancelReasons = CONST_RESERVATION_DELETE_REASON;
   onReturnBtn() {
     this.$router.push('/reservation');
   }
@@ -121,11 +107,11 @@ export default class Check extends BaseComponent {
     this.deleteReservationRequestDto.reservationCode = this.reservationInfo.reservationCode;
     this.deleteReservationRequestDto.phone = this.reservationInfo.phone;
     if (this.selectedCancelReason === '기타') {
-      this.deleteReservationRequestDto.deleteReason = this.othersText;
+      this.deleteReservationRequestDto.deleteReason = this.selectedCancelReason;
+      this.deleteReservationRequestDto.deleteReasonEtc = this.othersText;
     } else {
       this.deleteReservationRequestDto.deleteReason = this.selectedCancelReason;
     }
-
     reservationService
       .cancelReservation(this.deleteReservationRequestDto)
       .subscribe(res => {

@@ -46,7 +46,10 @@ export class ReservationService extends BaseService {
         reservationCode: deleteReservationRequestDto.reservationCode,
         phone: deleteReservationRequestDto.phone,
       },
-      { deleteReason: deleteReservationRequestDto.deleteReason },
+      {
+        deleteReason: deleteReservationRequestDto.deleteReason,
+        deleteReasonEtc: deleteReservationRequestDto.deleteReasonEtc,
+      },
     );
   }
 }
