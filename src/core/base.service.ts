@@ -145,9 +145,11 @@ export class BaseService {
     } else if (method === 'patch') {
       return Axios.patch(path, params, { headers }) as AxiosObservable<T>;
     } else if (method === 'delete') {
-      return Axios.delete(path, { params, headers, data }) as AxiosObservable<
-        T
-      >;
+      return Axios.delete(path, {
+        params,
+        headers,
+        data,
+      }) as AxiosObservable<T>;
     }
   }
 
