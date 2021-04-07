@@ -35,6 +35,7 @@ import VueMoment from 'vue-moment';
 
 // pipe
 import { EnumPipeTransformer, PhonePipeTransformer } from './core';
+import { isEnvProd } from './common/utils/base-url.util';
 EnumPipeTransformer();
 PhonePipeTransformer();
 
@@ -61,7 +62,12 @@ Vue.use(VueAwesomeSwiper /* { default global options } */);
   em: 'lsj@widaehan.com',
 });
 // use vue gtag
-Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
+if (isEnvProd()) {
+  Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
+} else {
+  Vue.use(VueGtag, { config: { id: 'notProd' } });
+}
+
 new Vue({
   router,
   render: h => h(App),

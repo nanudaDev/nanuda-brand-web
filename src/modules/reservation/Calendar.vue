@@ -50,6 +50,7 @@ import reservationService from '@/services/reservation.service';
 import EventDto from '@/dto/reservation/event.dto';
 import GetReservTimesResponseDto from '@/dto/reservation/get-reserv-times-response.dto';
 // import krLocale from '@fullcalendar/core/locales/ko';
+import { getBaseUrl } from '@/common/utils/base-url.util';
 import {
   DevelopmentEnvironment,
   StagingEnvironment,
@@ -102,7 +103,7 @@ export default class Calendar extends Vue {
     slotDuration: '01:00:00',
 
     //오늘 이전 배경색 분홍색으로
-    eventSources: [{ url: `${this.getBaseUrl()}reservation/holidays` }],
+    eventSources: [{ url: `${getBaseUrl()}reservation/holidays` }],
     events: [
       {
         start: '1970-01-01',
@@ -159,19 +160,7 @@ export default class Calendar extends Vue {
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
   }
-  getBaseUrl() {
-    let baseUrl;
-    if (process.env.NODE_ENV === EnvironmentType.development) {
-      baseUrl = DevelopmentEnvironment.baseURL;
-    }
-    if (process.env.NODE_ENV === EnvironmentType.staging) {
-      baseUrl = StagingEnvironment.baseURL;
-    }
-    if (process.env.NODE_ENV === EnvironmentType.production) {
-      baseUrl = ProductionEnvironment.baseURL;
-    }
-    return baseUrl;
-  }
+
   created() {
     const code = sessionStorage.getItem('reservationCode');
     if (!code) {
