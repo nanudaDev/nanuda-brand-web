@@ -245,7 +245,7 @@
                 <b-form-input
                   v-model="consultRequestDto.name"
                   placeholder="이름을 적어주세요"
-                  size="sm"
+                  size="md"
                   required
                 ></b-form-input>
               </b-col>
@@ -260,12 +260,12 @@
                   placeholder="ex) 01012345678"
                   required
                   :disabled="isVerified"
-                  size="sm"
+                  size="md"
                 ></b-form-input>
               </b-col>
               <b-col cols="3">
                 <b-btn
-                  size="sm"
+                  size="md"
                   @click="getSMSCode"
                   :disabled="isGetCodeBtnDisabled"
                   v-if="!isVerified"
@@ -283,12 +283,12 @@
                   v-model="consultRequestDto.smsAuthCode"
                   placeholder="인증번호 숫자 6자리 입력"
                   required
-                  size="sm"
+                  size="md"
                   :disabled="isVerified"
                 ></b-form-input>
               </b-col>
               <b-col cols="3">
-                <b-btn size="sm" @click="checkSMSCode" :disabled="isVerified">{{
+                <b-btn size="md" @click="checkSMSCode" :disabled="isVerified">{{
                   isVerified ? '인증완료' : '인증하기'
                 }}</b-btn>
               </b-col>

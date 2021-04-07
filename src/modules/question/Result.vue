@@ -2,18 +2,24 @@
   <article class="main-article" id="question-result">
     <header class="article-header">
       <div class="container">
-        <div class="title-box">
-          <span>
-            <router-link to="/">
-              <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
-            </router-link>
-          </span>
-          <h2>
-            맞춤 진단 결과
-          </h2>
+        <div
+          class="title-box d-flex align-items-center justify-content-between"
+        >
+          <div>
+            <span>
+              <router-link to="/">
+                <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
+              </router-link>
+            </span>
+            <h2>
+              맞춤 진단 결과
+            </h2>
+          </div>
+          <div>
+            <b-btn variant="light" pill @click="$emit('onReset')">초기화</b-btn>
+          </div>
         </div>
         <div class="txt-box">
-          <b-btn @click="$emit('onReset')">초기화</b-btn>
           <template v-if="resultRequestDto.fnbOwnerStatus === 'NEW_FNB_OWNER'">
             <p>
               예비사장님의 희망 업종은
