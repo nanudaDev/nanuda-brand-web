@@ -7,4 +7,5 @@ export default class DeleteReservationRequestDto extends BaseDto<
   reservationCode: string;
   phone: string;
   deleteReason: string;
+  deleteReasonEtc: string;
 }
