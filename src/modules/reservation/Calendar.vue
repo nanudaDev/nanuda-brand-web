@@ -23,6 +23,7 @@
           block
           size="sm"
           class="mt-2"
+          :class="item.value === selectedTime ? 'selected' : null"
           :disabled="!item.available"
           variant="primary"
           @click="onClickTime(item.value)"
@@ -142,6 +143,7 @@ export default class Calendar extends Vue {
     reservationService.getTimeSlots(selectInfo.dateStr).subscribe(res => {
       this.terms = res.data;
     });
+    this.selectedTime = '';
     this.$bvModal.show('select-time');
   }
   onClickTime(time: string) {
@@ -177,7 +179,8 @@ export default class Calendar extends Vue {
 
 <style lang="scss">
 .selected {
-  border: 1px black solid;
+  background-color: rgb(221, 176, 40) !important;
+  border-color: #fff !important;
 }
 .main-article {
   background: #004d8a;
