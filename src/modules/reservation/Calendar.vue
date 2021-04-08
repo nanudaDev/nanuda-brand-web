@@ -23,6 +23,7 @@
           block
           size="sm"
           class="mt-2"
+          :class="item.value === selectedTime ? 'selected' : null"
           :disabled="!item.available"
           variant="primary"
           @click="onClickTime(item.value)"
@@ -50,6 +51,7 @@ import reservationService from '@/services/reservation.service';
 import EventDto from '@/dto/reservation/event.dto';
 import GetReservTimesResponseDto from '@/dto/reservation/get-reserv-times-response.dto';
 // import krLocale from '@fullcalendar/core/locales/ko';
+import { getBaseUrl } from '@/common/utils/base-url.util';
 import {
   DevelopmentEnvironment,
   StagingEnvironment,
@@ -102,7 +104,7 @@ export default class Calendar extends Vue {
     slotDuration: '01:00:00',
 
     //오늘 이전 배경색 분홍색으로
-    eventSources: [{ url: `${this.getBaseUrl()}reservation/holidays` }],
+    eventSources: [{ url: `${getBaseUrl()}reservation/holidays` }],
     events: [
       {
         start: '1970-01-01',
@@ -141,6 +143,7 @@ export default class Calendar extends Vue {
     reservationService.getTimeSlots(selectInfo.dateStr).subscribe(res => {
       this.terms = res.data;
     });
+    this.selectedTime = '';
     this.$bvModal.show('select-time');
   }
   onClickTime(time: string) {
@@ -159,19 +162,7 @@ export default class Calendar extends Vue {
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
   }
-  getBaseUrl() {
-    let baseUrl;
-    if (process.env.NODE_ENV === EnvironmentType.development) {
-      baseUrl = DevelopmentEnvironment.baseURL;
-    }
-    if (process.env.NODE_ENV === EnvironmentType.staging) {
-      baseUrl = StagingEnvironment.baseURL;
-    }
-    if (process.env.NODE_ENV === EnvironmentType.production) {
-      baseUrl = ProductionEnvironment.baseURL;
-    }
-    return baseUrl;
-  }
+
   created() {
     const code = sessionStorage.getItem('reservationCode');
     if (!code) {
@@ -188,7 +179,8 @@ export default class Calendar extends Vue {
 
 <style lang="scss">
 .selected {
-  border: 1px black solid;
+  background-color: rgb(221, 176, 40) !important;
+  border-color: #fff !important;
 }
 .main-article {
   background: #004d8a;
