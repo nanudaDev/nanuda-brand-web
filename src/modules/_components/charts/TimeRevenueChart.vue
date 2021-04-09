@@ -37,52 +37,36 @@ export default class TimeRevenueChart extends Vue {
       },
       plugins: {
         datalabels: {
-          display: false,
+          display: true,
           backgroundColor: 'transparent',
           anchor: 'end',
           align: 'top',
           offset: '15',
           font: {
-            size: 14,
+            size: 12,
             weight: 'bold',
           },
           color: '#004D8A',
-          //   formatter: function(number: any) {
-          //     // 단위 추가
-          //     let inputNumber: any = number < 0 ? false : number;
-          //     const unitWords = ['원', '만', '억', '조', '경'];
-          //     const splitUnit = 10000;
-          //     const splitCount = unitWords.length;
-          //     const resultArray = [];
-          //     let resultString = '';
-          //     for (let i = 0; i < splitCount; i++) {
-          //       let unitResult =
-          //         (inputNumber % Math.pow(splitUnit, i + 1)) /
-          //         Math.pow(splitUnit, i);
-          //       unitResult = Math.floor(unitResult);
-          //       if (i !== 0 && unitResult > 0) {
-          //         resultArray[i] = unitResult;
-          //       }
-          //     }
-          //     for (let i = 0; i < resultArray.length; i++) {
-          //       if (!resultArray[i]) continue;
-          //       resultString =
-          //         String(resultArray[i]) + unitWords[i] + resultString;
-          //     }
+          formatter: function(number: any) {
+            // 단위 추가
+            const resultString = `${number}%`;
 
-          //     return resultString;
-          //   },
+            return resultString;
+          },
         },
       },
       layout: {
         padding: {
           top: 80,
+          right: 20,
+          left: 20,
           // Any unspecified dimensions are assumed to be 0
         },
       },
       tooltips: {
         enabled: false,
         showAllTooltips: true,
+        tooltipEvents: [],
       },
       responsive: true,
       maintainAspectRatio: false,

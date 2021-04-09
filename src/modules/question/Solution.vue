@@ -183,7 +183,7 @@
                   <img src="@/assets/images/about_us_review_03.png" />
                 </div>
                 <div class="txt-box">
-                  <h4>주상 이용자 후기</h4>
+                  <h4>주상민 이용자 후기</h4>
                   <p>
                     한식을 매장 판매 하는데 배달은 픽쿡이 안내한 파스타를<br
                       class="d-none d-sm-block"
