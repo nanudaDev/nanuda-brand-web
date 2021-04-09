@@ -167,8 +167,12 @@ button:focus {
   outline: 0;
 }
 
+html {
+  font-size: 10px;
+}
+
 body {
-  font-size: 1rem;
+  font-size: 1.6rem;
   font-family: 'Gotham', 'YoonGothic', sans-serif;
   letter-spacing: -0.03em;
 }
@@ -240,10 +244,19 @@ body {
   transform: translateY(-50%);
 }
 
-.form-control-lg {
-  font-size: 1.125em;
+.form-control {
+  font-size: 1rem;
+  height: 3em;
+  padding: 0 1em;
+}
+
+.form-control.form-control-md {
+  font-size: 1.6rem;
+}
+
+.form-control.form-control-lg {
+  font-size: 1.8rem;
   height: 3.33em;
-  padding: 0 1.25em;
 }
 
 .rounded-lg {
@@ -265,25 +278,33 @@ body {
   align-items: center;
   justify-content: center;
   padding: 0 1em;
-  font-size: 1em;
+  font-size: 1rem;
   height: 3em;
   line-height: 1.2;
 }
 
-.btn.btn-sm {
-  font-size: 0.75em;
+.btn.btn-xs {
+  font-size: 1.2rem;
   padding: 0 1em;
-  height: 2.5em;
+}
+
+.btn.btn-sm {
+  font-size: 1.4rem;
+  padding: 0 1em;
+}
+
+.btn.btn-md {
+  font-size: 1.6rem;
+  padding: 0 1em;
 }
 
 .btn.btn-lg {
-  font-size: 1.125em;
+  font-size: 1.8rem;
   height: 3.33em;
 }
 
 .btn.btn-xl {
-  font-size: 1.625em;
-  height: 2.3076em;
+  font-size: 2rem;
   min-width: 8.4615em;
 }
 
@@ -293,6 +314,7 @@ body {
   margin-left: 0.5em;
 }
 
+/* theme color */
 .btn-primary {
   border-color: #004d8a;
   background-color: #004d8a;
@@ -359,6 +381,10 @@ body {
   color: #004d8a;
 }
 
+.txt-black {
+  color: #101010;
+}
+
 .txt-white {
   color: #fff;
 }
@@ -384,28 +410,44 @@ body {
   height: inherit;
 }
 
-.txt-xs {
-  font-size: 0.75em;
+.txt-mini {
+  font-size: 1rem;
 }
 
-.txt-sm {
-  font-size: 0.875em;
+.txt-tiny {
+  font-size: 1.2rem;
 }
 
-.txt-md {
-  font-size: 1em;
+.txt-small {
+  font-size: 1.4rem;
 }
 
-.txt-lg {
-  font-size: 1.125em;
+.txt-medium {
+  font-size: 1.6rem;
 }
 
-.txt-xl {
-  font-size: 1.25em;
+.txt-large {
+  font-size: 1.8rem;
+}
+
+.txt-xlarge {
+  font-size: 2rem;
+}
+
+.txt-xxlarge {
+  font-size: 2.2rem;
 }
 
 .txt-big {
-  font-size: 1.5em;
+  font-size: 2.6rem;
+}
+
+.txt-huge {
+  font-size: 3.2rem;
+}
+
+.txt-massive {
+  font-size: 3.6rem;
 }
 
 .app-agreement .main-header h1,
@@ -507,14 +549,14 @@ body {
 }
 
 @media screen and (min-width: 1200px) {
-  body {
-    font-size: 1.2rem;
+  html {
+    font-size: 12px;
   }
 }
 
 @media screen and (max-width: 359px) {
-  body {
-    font-size: 0.8rem;
+  html {
+    font-size: 8px;
   }
 }
 
@@ -532,12 +574,6 @@ body {
 .vue-daum-postcode {
   max-height: 80vh;
   overflow-y: auto;
-}
-
-.modal-body {
-  background: url("../images/loading.gif") no-repeat center center;
-  background-size: 5em 5em;
-  min-height: 400px;
 }
 
 .loading-layer {
@@ -819,5 +855,9 @@ body {
 .app-services .main-article .article-section .section-header + .section-content figure img {
   display: block;
   margin: 0 auto;
+}
+
+.modal .btn {
+  font-size: 1rem;
 }
 /*# sourceMappingURL=common.css.map */
