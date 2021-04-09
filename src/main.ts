@@ -57,12 +57,13 @@ Vue.use(VueScrollTo, {
   offset: -100,
 });
 Vue.use(VueAwesomeSwiper /* { default global options } */);
-// use facebook pixel
-(Vue as any).analytics.fbq.init('932827054153408', {
-  em: 'lsj@widaehan.com',
-});
+
 // use vue gtag
 if (isEnvProd()) {
+  // use facebook pixel
+  (Vue as any).analytics.fbq.init('932827054153408', {
+    em: 'lsj@widaehan.com',
+  });
   Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
 } else {
   Vue.use(VueGtag, { config: { id: 'notProd' } });
