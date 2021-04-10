@@ -3,8 +3,12 @@
     <article class="main-article bg-primary" v-if="isStart" id="question-start">
       <header class="article-header">
         <span data-aos="fade-down" data-aos-duration="1500"
-          ><img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w"
-        /></span>
+          ><router-link to="/"
+            ><img
+              src="@/assets/images/logo_w.svg"
+              alt="픽쿡"
+              class="logo-w"/></router-link
+        ></span>
         <h2 data-aos="fade-down" data-aos-duration="1500">
           실패없는 창업을 <br />안내합니다
         </h2>
@@ -28,7 +32,7 @@
         </div>
       </header>
     </article>
-    <template v-if="!result">
+    <template v-if="!aggregateResultResponseDto">
       <article
         class="main-article"
         :id="nextQuestionDto.questionId"
@@ -39,251 +43,291 @@
             : 'bg-primary'
         "
       >
-        <b-overlay :show="isLoading">
-          <header class="article-header">
-            <h1>
+        <header class="article-header">
+          <h1>
+            <router-link to="/">
               <img
                 src="@/assets/images/logo.svg"
                 alt="픽쿡"
                 v-if="bgLightQuestionId.includes(nextQuestionDto.questionId)"
               />
               <img src="@/assets/images/logo_w.svg" alt="픽쿡" v-else />
-            </h1>
-            <div class="progress-bar-rail">
-              <span
-                class="progress-bar"
-                :style="{
-                  width: (questionOrder / (questionTotalCount + 1)) * 100 + '%',
-                }"
-              ></span>
-            </div>
-          </header>
-          <div class="article-content">
-            <section class="article-section">
-              <header class="section-title">
-                <div class="container">
-                  <span>
+            </router-link>
+          </h1>
+          <div class="progress-bar-rail">
+            <span
+              class="progress-bar"
+              :style="{
+                width: (questionOrder / (questionTotalCount + 1)) * 100 + '%',
+              }"
+            ></span>
+          </div>
+        </header>
+        <div class="article-content">
+          <section class="article-section">
+            <header class="section-title">
+              <div class="container">
+                <span>
+                  <router-link to="/">
                     <img
-                      src="@/assets/images/logo_simbol.svg"
+                      src="@/assets/images/logo_symbol.svg"
                       alt="픽쿡"
                       v-if="
                         bgLightQuestionId.includes(nextQuestionDto.questionId)
                       "
                     />
                     <img
-                      src="@/assets/images/logo_simbol_w.svg"
+                      src="@/assets/images/logo_symbol_w.svg"
                       alt="픽쿡"
                       v-else
                     />
-                  </span>
-                  <h3>{{ question }}</h3>
-                </div>
-              </header>
-              <div class="section-content">
-                <div class="container">
-                  <template v-if="givens.length > 0">
-                    <b-btn
-                      @click="goToPrevious()"
-                      size="sm"
-                      class="btn-back"
-                      :variant="
-                        bgLightQuestionId.includes(nextQuestionDto.questionId)
-                          ? 'light'
-                          : 'primary'
-                      "
-                      pill
-                    >
-                      <span class="icon icon-arrow-left"><BaseArrow /></span>
-                      <span class="is-blind">뒤로가기</span>
-                    </b-btn>
-                    <template v-if="!isMultipleAnswer">
-                      <div class="row gutter-sm">
-                        <div
-                          :class="
-                            smallSizeQuestionId.includes(
-                              nextQuestionDto.questionId,
-                            )
-                              ? 'col-6 col-sm-4'
-                              : 'col-12'
-                          "
-                          v-for="given in givens"
-                          :key="given.id"
-                        >
-                          <b-btn
-                            variant="light"
-                            class="mb-4 shadow"
-                            block
-                            size="lg"
-                            pill
-                            @click="getNextQuestion(given)"
-                            >{{ given.givenDetails.displayName }}</b-btn
-                          >
-                        </div>
-                      </div>
-                    </template>
-                    <template v-else>
-                      <!-- 복수 선택 -->
-                      <div class="row">
-                        <div
-                          v-for="given in givens"
-                          :key="given.id"
-                          :class="
-                            smallSizeQuestionId.includes(
-                              nextQuestionDto.questionId,
-                            )
-                              ? 'col-6 col-sm-4'
-                              : 'col-12'
-                          "
-                        >
-                          <b-btn
-                            :variant="
-                              selectedAnswers.includes(given)
-                                ? 'primary'
-                                : 'light'
-                            "
-                            class="mb-4"
-                            block
-                            size="lg"
-                            pill
-                            @click="onMultipleAnswerClicked(given)"
-                            >{{ given.givenDetails.displayName }}
-                          </b-btn>
-                        </div>
-                      </div>
-                      <div class="btn-box mt-2">
+                  </router-link>
+                </span>
+                <h3>{{ question }}</h3>
+              </div>
+            </header>
+            <div class="section-content">
+              <div class="container">
+                <template v-if="givens && givens.length > 0">
+                  <b-btn
+                    @click="goToPrevious()"
+                    size="sm"
+                    class="btn-back"
+                    :variant="
+                      bgLightQuestionId.includes(nextQuestionDto.questionId)
+                        ? 'light'
+                        : 'primary'
+                    "
+                    pill
+                  >
+                    <span class="icon icon-arrow-left"><BaseArrow /></span>
+                    <span class="is-blind">뒤로가기</span>
+                  </b-btn>
+                  <template v-if="!isMultipleAnswer">
+                    <div class="row gutter-sm">
+                      <div
+                        :class="
+                          smallSizeQuestionId.includes(
+                            nextQuestionDto.questionId,
+                          )
+                            ? 'col-6 col-sm-4'
+                            : 'col-12'
+                        "
+                        v-for="given in givens"
+                        :key="given.id"
+                      >
                         <b-btn
-                          variant="success"
+                          variant="light"
+                          class="mb-4 shadow"
                           block
                           size="lg"
                           pill
-                          @click="getNextQuestion()"
-                          :disabled="!selectedAnswers.length > 0"
+                          @click="getNextQuestion(given)"
+                          >{{ given.givenDetails.displayName }}</b-btn
+                        >
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <!-- 복수 선택 -->
+                    <div class="row">
+                      <div
+                        v-for="given in givens"
+                        :key="given.id"
+                        :class="
+                          smallSizeQuestionId.includes(
+                            nextQuestionDto.questionId,
+                          )
+                            ? 'col-6 col-sm-4'
+                            : 'col-12'
+                        "
+                      >
+                        <b-btn
+                          :variant="
+                            selectedAnswers.includes(given)
+                              ? 'primary'
+                              : 'light'
+                          "
+                          class="mb-4"
+                          block
+                          size="lg"
+                          pill
+                          @click="onMultipleAnswerClicked(given)"
+                          >{{ given.givenDetails.displayName }}
+                        </b-btn>
+                      </div>
+                    </div>
+                    <div class="btn-box mt-2">
+                      <b-btn
+                        variant="success"
+                        block
+                        size="lg"
+                        pill
+                        @click="getNextQuestion()"
+                        :disabled="!selectedAnswers.length > 0"
+                        >다음</b-btn
+                      >
+                    </div>
+                  </template>
+                </template>
+                <template v-else>
+                  <template v-if="firstQuestionDto.userType">
+                    <div
+                      v-if="
+                        firstQuestionDto.userType === FNB_OWNER.CUR_FNB_OWNER
+                      "
+                    >
+                      <!-- 다음 주소 api -->
+                      <b-btn
+                        @click="goToPreviousAddr()"
+                        size="sm"
+                        class="btn-back"
+                        variant="primary"
+                        pill
+                      >
+                        <span class="icon icon-arrow-left"><BaseArrow /></span>
+                        <span class="is-blind">뒤로가기</span>
+                      </b-btn>
+                      <b-form-group>
+                        <span
+                          class="icon icon-search"
+                          @click="$bvModal.show('post-code')"
+                          ><BaseSearch
+                        /></span>
+                        <b-form-input
+                          size="lg"
+                          v-model="selectedRoadAddress"
+                          placeholder="운영하고 있는 음식점 위치 검색"
+                          @click="$bvModal.show('post-code')"
+                          class="rounded-pill"
+                        />
+                      </b-form-group>
+                      <div class="text-center mt-4" v-if="!isAvailableLocation">
+                        <b-btn
+                          @click="getFirstQuestion()"
+                          :disabled="!selectedRoadAddress"
+                          variant="success"
+                          size="lg"
+                          block
+                          pill
                           >다음</b-btn
                         >
                       </div>
-                    </template>
+                      <div
+                        class="txt-box text-center mt-5"
+                        v-if="isAvailableLocation"
+                      >
+                        <p class="text-light">
+                          현재 상권분석이 가능한 지역은<br />
+                          <strong>{{ availableLocation }}</strong>
+                          <br />입니다
+                        </p>
+                      </div>
+                      <b-modal id="post-code" hide-footer no-close-on-backdrop>
+                        <template #modal-title>
+                          <strong class="txt-primary">주소검색</strong>
+                        </template>
+                        <div>
+                          <vue-daum-postcode @complete="onPostCodeComplete" />
+                        </div>
+                      </b-modal>
+                    </div>
+                    <div v-else>
+                      <b-btn
+                        @click="goToPreviousAddr()"
+                        size="sm"
+                        class="btn-back"
+                        variant="primary"
+                        pill
+                      >
+                        <span class="icon icon-arrow-left"><BaseArrow /></span>
+                        <span class="is-blind">뒤로가기</span>
+                      </b-btn>
+                      <!-- 행정동 버튼 그룹 -->
+                      <div>
+                        <div class="row gutter-sm">
+                          <div
+                            class="col-6 col-sm-4"
+                            v-for="given in addressGivens"
+                            :key="given.id"
+                          >
+                            <b-btn
+                              size="lg"
+                              variant="light"
+                              block
+                              class="mb-4 shadow"
+                              pill
+                              @click="getGuOrDong(given)"
+                              >{{ given[showingLevel] }}</b-btn
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </template>
                   <template v-else>
-                    <template v-if="firstQuestionDto.userType">
+                    <!-- 첫번째 질문 (사장님 or 창업) -->
+                    <div class="row">
                       <div
-                        v-if="
-                          firstQuestionDto.userType === FNB_OWNER.CUR_FNB_OWNER
-                        "
+                        class="col-12"
+                        v-for="given in firstGivens"
+                        :key="given.id"
                       >
-                        <!-- 다음 주소 api -->
                         <b-btn
-                          @click="goToPreviousAddr()"
-                          size="sm"
-                          class="btn-back"
-                          variant="primary"
+                          variant="light"
+                          class="mb-4 shadow"
+                          block
                           pill
+                          size="lg"
+                          @click="saveUserType(given.userType)"
                         >
-                          <span class="icon icon-arrow-left"
-                            ><BaseArrow
-                          /></span>
-                          <span class="is-blind">뒤로가기</span>
+                          {{ given.given }}
                         </b-btn>
-                        <b-form-group>
-                          <span class="icon icon-search"><BaseSearch /></span>
-                          <b-form-input
-                            size="lg"
-                            v-model="selectedRoadAddress"
-                            placeholder="운영하고 있는 음식점 위치 검색"
-                            @click="$bvModal.show('post-code')"
-                            class="rounded-lg"
-                          />
-                        </b-form-group>
-
-                        <div class="text-center mt-4">
-                          <b-btn
-                            @click="getFirstQuestion()"
-                            :disabled="!selectedRoadAddress"
-                            variant="success"
-                            size="lg"
-                            block
-                            pill
-                            >다음</b-btn
-                          >
-                        </div>
-                        <b-modal
-                          id="post-code"
-                          hide-footer
-                          no-close-on-backdrop
-                        >
-                          <template #modal-title>
-                            <strong class="text-primary">주소검색</strong>
-                          </template>
-                          <div>
-                            <vue-daum-postcode @complete="onPostCodeComplete" />
-                          </div>
-                        </b-modal>
                       </div>
-                      <div v-else>
-                        <b-btn
-                          @click="goToPreviousAddr()"
-                          size="sm"
-                          class="btn-back"
-                          variant="primary"
-                          pill
-                        >
-                          <span class="icon icon-arrow-left"
-                            ><BaseArrow
-                          /></span>
-                          <span class="is-blind">뒤로가기</span>
-                        </b-btn>
-                        <!-- 행정동 버튼 그룹 -->
-                        <div>
-                          <div class="row gutter-sm">
-                            <div
-                              class="col-6 col-sm-4"
-                              v-for="given in addressGivens"
-                              :key="given.id"
-                            >
-                              <b-btn
-                                size="lg"
-                                variant="light"
-                                block
-                                class="mb-4 shadow"
-                                pill
-                                @click="getGuOrDong(given)"
-                                >{{ given[showingLevel] }}</b-btn
-                              >
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </template>
-                    <template v-else>
-                      <!-- 첫번째 질문 (사장님 or 창업) -->
-                      <div class="row">
-                        <div
-                          class="col-12"
-                          v-for="given in firstGivens"
-                          :key="given.id"
-                        >
-                          <b-btn
-                            variant="light"
-                            class="mb-4 shadow"
-                            block
-                            pill
-                            size="lg"
-                            @click="saveUserType(given.userType)"
-                          >
-                            {{ given.given }}
-                          </b-btn>
-                        </div>
-                      </div>
-                    </template>
+                    </div>
                   </template>
-                </div>
+                </template>
               </div>
-            </section>
-          </div>
-        </b-overlay>
+            </div>
+          </section>
+        </div>
       </article>
     </template>
     <template v-else>
-      <Result :result="result" />
+      <Result
+        :result="aggregateResultResponseDto"
+        :resultRequestDto="resultRequestDto"
+        :codeHdongSearchDto="codeHdongSearchDto"
+        @onReset="resetData"
+      />
+    </template>
+    <template v-if="isLoading">
+      <div class="loading-layer"></div>
+    </template>
+    <template v-if="isLoadingResult">
+      <div class="loading-layer">
+        <div class="loading-container">
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            id="vid"
+            ref="videoRef"
+            class="video"
+          >
+            해당 브라우저는 video 태그를 지원하지 않습니다.
+            <source
+              src=" https://kr.object.ncloudstorage.com/common-nanuda/video/loading.mp4"
+              type="video/webm"
+            />
+            <source
+              src=" https://kr.object.ncloudstorage.com/common-nanuda/video/loading.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -304,13 +348,15 @@ import {
 } from '@/dto/question';
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
-import { ADDRESS_LEVEL, YN } from '@/common';
+import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 import { COMMON_CODE_CATEGORY, FNB_OWNER } from '@/shared';
+import { ADDRESS_LEVEL, YN } from '@/common';
 @Component({
   name: 'Question',
   components: { VueDaumPostcode, Result },
 })
 export default class Question extends BaseComponent {
+  [x: string]: any;
   // private userType: USER = null;
 
   private firstQuestionDto = new FirstQuestionDto();
@@ -327,7 +373,9 @@ export default class Question extends BaseComponent {
   private prevOrder: any = 0;
   private question = '나는 현재';
   private FNB_OWNER = FNB_OWNER;
-  private result: any = null;
+  private aggregateResultResponseDto: AggregateResultResponse = null;
+  private isAvailableLocation = false;
+  private availableLocation = '';
   private firstGivens = [
     {
       id: 1,
@@ -347,6 +395,7 @@ export default class Question extends BaseComponent {
   private isMultipleAnswer = false;
   private selectedAnswers: Given[] = [];
   private isLoading = false;
+  private isLoadingResult = false;
   private previousQuestionDtoArr: NextQuestionDto[] = [];
   private questionGivenArray: any[] = [];
 
@@ -359,9 +408,18 @@ export default class Question extends BaseComponent {
       this.$nextTick(() => {
         this.$bvModal.show('post-code');
       });
+      codeHdongService.getSido().subscribe(res => {
+        this.isLoading = false;
+        this.addressGivens = res.data;
+        const locationArray = this.addressGivens.map(e => e.sidoName);
+        const locationArrayText = locationArray.join(', ');
+        this.availableLocation = locationArrayText;
+      });
     } else {
       this.question = '어떤 곳에서 창업을 희망하나요?';
+      this.isLoading = true;
       codeHdongService.getSido().subscribe(res => {
+        this.isLoading = false;
         this.addressGivens = res.data;
       });
     }
@@ -369,14 +427,18 @@ export default class Question extends BaseComponent {
     this.questionOrder += 1;
   }
   getFirstQuestion() {
+    this.isLoading = true;
     questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
-      this.givens = res.data.givens;
-      this.question = res.data.question;
-      this.nextQuestionDto.order = res.data.order;
-      this.nextQuestionDto.questionId = res.data.id;
-      this.nextQuestionDto.givenId = [];
-      this.isMultipleAnswer =
-        res.data.multipleAnswerYn === YN.YES ? true : false;
+      if (res) {
+        this.isLoading = false;
+        this.givens = res.data.givens;
+        this.question = res.data.question;
+        this.nextQuestionDto.order = res.data.order;
+        this.nextQuestionDto.questionId = res.data.id;
+        this.nextQuestionDto.givenId = [];
+        this.isMultipleAnswer =
+          res.data.multipleAnswerYn === YN.YES ? true : false;
+      }
     });
     // 이전 단계 저장 후 증가
     this.questionOrder += 1;
@@ -456,6 +518,7 @@ export default class Question extends BaseComponent {
     this.isLastQuestion = false;
   }
   getNextQuestion(given?: Given) {
+    this.isLoading = true;
     //이전 질문들 저장
     this.previousQuestionDtoArr.push({ ...this.nextQuestionDto });
     this.nextQuestionDto.givenId = [];
@@ -496,33 +559,46 @@ export default class Question extends BaseComponent {
       givenId: this.nextQuestionDto.givenId,
     });
     this.resultRequestDto.questionGivenArray = this.questionGivenArray;
+
     //마지막 질문일때
     if (this.isLastQuestion) {
-      this.isLoading = true;
+      this.isLoadingResult = true;
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
+        this.isLoadingResult = false;
         this.isLoading = false;
-        this.result = res.data;
-        return;
+        this.aggregateResultResponseDto = res.data;
+        this.$gtag.event('last_question', {
+          description: '마지막 질문',
+        });
+      });
+    } else {
+      questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
+        if (res.data.isLastQuestion === YN.YES) {
+          this.isLastQuestion = true;
+        }
+        if (res) {
+          this.isLoading = false;
+          this.nextQuestionDto.order = res.data.order;
+          this.nextQuestionDto.questionId = res.data.id;
+          this.$gtag.event(`question_${res.data.id}`, {
+            description: `${res.data.question}`,
+          });
+          this.question = res.data.question;
+          this.questionOrder =
+            this.nextQuestionDto.order + (this.prevOrder - 1);
+          this.givens = res.data.givens;
+          this.nextQuestionDto.givenId = [];
+          this.isMultipleAnswer =
+            res.data.multipleAnswerYn === YN.YES ? true : false;
+          this.selectedAnswers = [];
+        }
       });
     }
-    questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
-      if (res.data.isLastQuestion === YN.YES) {
-        this.isLastQuestion = true;
-      }
-      this.nextQuestionDto.order = res.data.order;
-      this.nextQuestionDto.questionId = res.data.id;
-      this.question = res.data.question;
-      this.questionOrder = this.nextQuestionDto.order + (this.prevOrder - 1);
-      this.givens = res.data.givens;
-      this.nextQuestionDto.givenId = [];
-      this.isMultipleAnswer =
-        res.data.multipleAnswerYn === YN.YES ? true : false;
-      this.selectedAnswers = [];
-    });
   }
   //level이 내려감에따라 showingLevel(보여줘야할 정보)이 변함
   getGuOrDong(given?: CodeHdongDto) {
+    this.isLoading = true;
     if (given) {
       this.codeHdongSearchDto.sidoName = given.sidoName;
       this.codeHdongSearchDto.hdongCode = given.hdongCode;
@@ -531,6 +607,7 @@ export default class Question extends BaseComponent {
     }
     if (this.showingLevel === ADDRESS_LEVEL.sidoName) {
       codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
+        this.isLoading = false;
         this.addressGivens = res.data;
         this.showingLevel = ADDRESS_LEVEL.guName;
         // 진행 단계 증가
@@ -538,6 +615,7 @@ export default class Question extends BaseComponent {
       });
     } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
       codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
+        this.isLoading = false;
         this.addressGivens = res.data;
         this.showingLevel = ADDRESS_LEVEL.hdongName;
         // 진행 단계 증가
@@ -553,7 +631,24 @@ export default class Question extends BaseComponent {
   }
   onPostCodeComplete(event: any) {
     this.selectedRoadAddress = event.roadAddress;
-    this.$bvModal.hide('post-code');
+    const geocoder = new window.kakao.maps.services.Geocoder();
+    // 상권분석 가능한 지역 안내
+    const availableLocationCodeArray = ['11', '41', '28', '26', '50'];
+    const callback = (results: any, status: any) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        this.resultRequestDto.hdongCode = results[0].address.h_code;
+        const hdongCodeSido = this.resultRequestDto.hdongCode.substring(0, 2);
+        availableLocationCodeArray.includes(hdongCodeSido);
+        if (!availableLocationCodeArray.includes(hdongCodeSido)) {
+          this.isAvailableLocation = true;
+        } else {
+          this.isAvailableLocation = false;
+        }
+        // console.log(hdongCodeSido);
+        this.$bvModal.hide('post-code');
+      }
+    };
+    geocoder.addressSearch(this.selectedRoadAddress, callback);
   }
   onMultipleAnswerClicked(given: Given) {
     if (this.selectedAnswers.includes(given)) {
@@ -563,28 +658,85 @@ export default class Question extends BaseComponent {
       this.selectedAnswers.push(given);
     }
   }
+  resetData() {
+    const ipInfo = new NextQuestionDto();
+    ipInfo.ipAddress = this.nextQuestionDto.ipAddress;
+    ipInfo.uniqueSessionId = this.nextQuestionDto.uniqueSessionId;
+    this.nextQuestionDto = ipInfo;
+    this.firstQuestionDto = new FirstQuestionDto();
+
+    this.codeHdongSearchDto = new CodeHdongSearchDto();
+    this.resultRequestDto = new ResultRequestDto();
+
+    this.isStart = true;
+    this.isLastQuestion = false;
+    this.smallSizeQuestionId = [1, 4, 5, 10, 12];
+    this.bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
+    this.questionTotalCount = 9;
+    this.questionOrder = 0;
+    this.prevOrder = 0;
+    this.question = '나는 현재';
+    this.FNB_OWNER = FNB_OWNER;
+    this.aggregateResultResponseDto = null;
+    this.isAvailableLocation = false;
+    this.availableLocation = '';
+    this.firstGivens = [
+      {
+        id: 1,
+        userType: FNB_OWNER.CUR_FNB_OWNER,
+        given: '음식점 사장님입니다',
+      },
+      {
+        id: 2,
+        userType: FNB_OWNER.NEW_FNB_OWNER,
+        given: '창업을 생각하고 있습니다',
+      },
+    ];
+    this.givens = [];
+    this.addressGivens = [];
+    this.showingLevel = ADDRESS_LEVEL.sidoName;
+    this.selectedRoadAddress = '';
+    this.isMultipleAnswer = false;
+    this.selectedAnswers = [];
+    this.isLoading = false;
+    this.isLoadingResult = false;
+    this.previousQuestionDtoArr = [];
+    this.questionGivenArray = [];
+  }
   async mounted() {
-    this.isLoading = true;
+    // this.isLoading = true;
     //get ip address
     await axios.get('https://api.ipify.org?format=json').then(res => {
-      this.isLoading = false;
+      // this.isLoading = false;
       this.nextQuestionDto.ipAddress = res.data.ip;
       this.nextQuestionDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
     });
+  }
+  updated() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 }
 </script>
 <style lang="scss">
 .app-question {
+  ~ [id*='post-code'] {
+    .modal-body {
+      background: url('../../assets/images/loading.gif') no-repeat center center;
+      background-size: 5em 5em;
+      min-height: 400px;
+    }
+  }
   .btn {
     &.btn-light {
-      border: 1px solid #0b538d;
+      border: 1px solid #004d8a;
       background-color: #fff;
-      color: #0b538d;
+      color: #004d8a;
     }
   }
   .form-group {
     .icon-search {
+      cursor: pointer;
       fill: #6c8fb7;
       ~ input[type='text'] {
         padding-right: 3em;
@@ -608,7 +760,7 @@ export default class Question extends BaseComponent {
   }
   .main-article {
     min-height: 100vh;
-    &:not(#question-start, #question-result) {
+    &:not(#question-start, #question-result, #question-solution) {
       .btn-back {
         position: fixed;
         left: 0.75em;
@@ -616,6 +768,9 @@ export default class Question extends BaseComponent {
         width: 4em;
         height: 4em;
         background-color: transparent;
+        &.btn-light {
+          border-color: transparent;
+        }
         .icon {
           fill: #6c8fb7;
         }
@@ -687,7 +842,7 @@ export default class Question extends BaseComponent {
     &.bg-light {
       .article-section {
         .section-title {
-          color: #0b538d;
+          color: #004d8a;
         }
       }
     }

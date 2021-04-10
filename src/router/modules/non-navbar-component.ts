@@ -16,7 +16,6 @@ const nonNavBarRouter: RouteConfig[] = [
     name: 'privacy',
     component: () => import('../../modules/privacy/Privacy.vue'),
     meta: {
-      authRequired: true,
       layout: 'NonLayout',
       title: '개인정보취급',
     },
@@ -29,6 +28,56 @@ const nonNavBarRouter: RouteConfig[] = [
       authRequired: true,
       layout: 'NonLayout',
       title: '설문',
+    },
+  },
+  {
+    path: '/solution/:proformaId([0-9]+)',
+    name: 'solution',
+    component: () => import('../../modules/question/Solution.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '설문 조사 결과',
+    },
+  },
+  {
+    path: '/reservation',
+    name: 'reservation',
+    component: () => import('../../modules/reservation/Login.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '코드 입력',
+    },
+  },
+  {
+    path: '/reservation/calendar',
+    name: 'calendar',
+    component: () => import('../../modules/reservation/Calendar.vue'),
+    meta: {
+      layout: 'NonLayout',
+      codeRequired: true,
+      title: '예약하기',
+    },
+  },
+  {
+    // UserProfile은 User의 <router-view> 내에 렌더링 됩니다.
+    path: '/reservation/:id([0-9]+)',
+    name: 'check',
+    component: () => import('../../modules/reservation/Check.vue'),
+    meta: {
+      layout: 'NonLayout',
+      codeRequired: true,
+      title: '예약 확인',
+    },
+  },
+  {
+    // UserProfile은 User의 <router-view> 내에 렌더링 됩니다.
+    path: '/reservation/success',
+    name: 'success',
+    component: () => import('../../modules/reservation/Success.vue'),
+    meta: {
+      layout: 'NonLayout',
+      codeRequired: true,
+      title: '예약 성공',
     },
   },
 ];

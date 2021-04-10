@@ -3,7 +3,7 @@ import { Environment, EnvironmentType } from './environment.type';
 
 export const ProductionEnvironment: Environment = {
   // baseURL: 'https://platform-api.nanudakitchen.com/',
-  baseURL: 'https://platform-api.nanudakitchen.com/',
+  baseURL: 'https://pickcook-api.nanudakitchen.com/',
   NODE_ENV: EnvironmentType.production,
   production: false,
   clientName: packageInfo.name,

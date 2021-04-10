@@ -1,9 +1,9 @@
 import Vue from 'vue';
-import Router, { RouteConfig } from 'vue-router';
+import VueRouter, { RouteConfig } from 'vue-router';
 import { componentRoutes } from './modules';
 import nonNavBarRouter from './modules/non-navbar-component';
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
 export const routes: RouteConfig[] = [
   {
@@ -12,14 +12,15 @@ export const routes: RouteConfig[] = [
     component: () => import('../modules/main/Main.vue'),
     meta: {
       layout: 'MainLayout',
-      title: '메인',
+      title: '픽쿡 - 실패 없는 창업을 안내합니다',
+      main: true,
     },
   },
   ...componentRoutes,
   ...nonNavBarRouter,
 ];
 
-const router = new Router({
+const router = new VueRouter({
   mode: 'history',
   routes: routes,
   scrollBehavior(to, from, savedPosition) {

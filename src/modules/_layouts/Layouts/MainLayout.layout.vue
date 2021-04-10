@@ -102,7 +102,7 @@ export default class MainLayout extends BaseComponent {
   &:not(.app-main) {
     .main-article {
       min-height: calc(100vh - 17.125em);
-      padding: 5em 0 3.375em;
+      padding: 3.375em 0 3.375em;
     }
   }
 }
@@ -135,6 +135,9 @@ export default class MainLayout extends BaseComponent {
           float: left;
           font-size: 0.875em;
           line-height: 1.2;
+          a {
+            color: #707070;
+          }
           + li {
             margin-left: 2.2857em;
           }
