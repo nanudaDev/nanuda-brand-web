@@ -59,15 +59,20 @@ Vue.use(VueScrollTo, {
 Vue.use(VueAwesomeSwiper /* { default global options } */);
 
 // use vue gtag
-if (isEnvProd()) {
-  // use facebook pixel
-  (Vue as any).analytics.fbq.init('932827054153408', {
-    em: 'lsj@widaehan.com',
-  });
-  Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
-} else {
-  Vue.use(VueGtag, { config: { id: 'notProd' } });
-}
+// if (isEnvProd()) {
+//   // use facebook pixel
+//   (Vue as any).analytics.fbq.init('932827054153408', {
+//     em: 'lsj@widaehan.com',
+//   });
+//   Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
+// } else {
+//   Vue.use(VueGtag, { config: { id: 'notProd' } });
+// }
+
+(Vue as any).analytics.fbq.init('932827054153408', {
+  em: 'lsj@widaehan.com',
+});
+Vue.use(VueGtag, { config: { id: 'G-12312312' } });
 
 new Vue({
   router,
