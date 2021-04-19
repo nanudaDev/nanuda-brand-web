@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { Pagination, PaginatedResponse } from '../common';
 // import toast from '../../resources/assets/js/services/toast.js';
 import { AxiosObservable } from 'axios-observable/dist/axios-observable.interface';
+import Router from '../router';
 
 // axios에서 사용할 메소드 타입
 type Method =
@@ -107,6 +108,9 @@ export class BaseService {
         return response;
       },
       error => {
+        if (error.response.data.statusCode === 500) {
+          Router.push('/site-under-construction');
+        }
         // if (typeof error.response.data.message === 'object') {
         //   Vue.toasted.global.custom_error({
         //     message:

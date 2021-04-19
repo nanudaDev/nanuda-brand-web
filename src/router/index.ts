@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import { componentRoutes } from './modules';
+import globalNonNavBarRouter from './modules/global-non-navbar-component';
 import nonNavBarRouter from './modules/non-navbar-component';
 
 Vue.use(VueRouter);
@@ -18,6 +19,7 @@ export const routes: RouteConfig[] = [
   },
   ...componentRoutes,
   ...nonNavBarRouter,
+  ...globalNonNavBarRouter,
 ];
 
 const router = new VueRouter({
