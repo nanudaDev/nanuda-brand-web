@@ -307,7 +307,7 @@
     <template v-if="isLoadingResult">
       <div class="loading-layer">
         <div class="loading-container">
-          <video
+          <!-- <video
             autoplay
             muted
             loop
@@ -325,7 +325,21 @@
               src=" https://kr.object.ncloudstorage.com/common-nanuda/video/loading.mp4"
               type="video/mp4"
             />
-          </video>
+          </video> -->
+          <vue-ellipse-progress
+            :progress="loadingProgress"
+            color="#7579ff"
+            empty-color="#324c7e"
+            :size="180"
+            thickness="5"
+            empty-thickness="3"
+            line-mode="out 5"
+            animation="default 700 1000"
+            font-size="1.5rem"
+            font-color="white"
+          >
+            <span slot="legend-value">%</span>
+          </vue-ellipse-progress>
         </div>
       </div>
     </template>
@@ -398,7 +412,7 @@ export default class Question extends BaseComponent {
   private isLoadingResult = false;
   private previousQuestionDtoArr: NextQuestionDto[] = [];
   private questionGivenArray: any[] = [];
-
+  private loadingProgress = 0;
   saveUserType(userType: FNB_OWNER) {
     this.resultRequestDto.fnbOwnerStatus = userType;
     this.$set(this.firstQuestionDto, 'userType', userType);
@@ -563,8 +577,14 @@ export default class Question extends BaseComponent {
     //마지막 질문일때
     if (this.isLastQuestion) {
       this.isLoadingResult = true;
+      setInterval(() => {
+        if (this.loadingProgress < 100) {
+          this.loadingProgress += 5;
+        }
+      }, 500);
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
+        this.loadingProgress = 100;
         this.isLoadingResult = false;
         this.isLoading = false;
         this.aggregateResultResponseDto = res.data;
@@ -702,6 +722,7 @@ export default class Question extends BaseComponent {
     this.isLoadingResult = false;
     this.previousQuestionDtoArr = [];
     this.questionGivenArray = [];
+    this.loadingProgress = 0;
   }
   async mounted() {
     // this.isLoading = true;
@@ -715,6 +736,12 @@ export default class Question extends BaseComponent {
   updated() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+  }
+  activated() {
+    //솔루션에서 처음으로가기 눌렀을때
+    if (this.$route.params.reset) {
+      this.resetData();
+    }
   }
 }
 </script>

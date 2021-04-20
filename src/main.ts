@@ -39,6 +39,8 @@ import { isEnvProd } from './common/utils/base-url.util';
 EnumPipeTransformer();
 PhonePipeTransformer();
 
+import VueEllipseProgress from 'vue-ellipse-progress';
+
 Vue.config.productionTip = false;
 Vue.component('MainLayout', MainLayout);
 Vue.component('NonLayout', NonLayout);
@@ -50,7 +52,7 @@ Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 
 Vue.use(VueMoment);
-
+Vue.use(VueEllipseProgress);
 Vue.use(VueScrollTo, {
   duration: 700,
   easing: [0, 0, 0.1, 1],
