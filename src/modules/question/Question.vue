@@ -598,7 +598,6 @@ export default class Question extends BaseComponent {
           const countEed = setInterval(() => {
             this.loadingProgress++;
             if (this.loadingProgress >= 100) {
-              console.log(this.loadingProgress);
               this.loadingProgress = 100;
               this.isLoadingResult = false;
               clearInterval(countEed);
