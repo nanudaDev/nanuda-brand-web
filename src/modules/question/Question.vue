@@ -344,8 +344,13 @@
           </div>
           <div class="mt-4 text-center">
             <p class="txt-large txt-white">
-              분석 중입니다 <br />
-              완료되면 상권 리포트를 확인하실 수 있습니다
+              <template v-if="loadingProgress < 91">
+                분석 중입니다 <br />
+                완료되면 상권 리포트를 확인하실 수 있습니다
+              </template>
+              <template v-else>
+                곧 상권 리포트가 완료됩니다
+              </template>
             </p>
           </div>
         </div>
@@ -585,24 +590,33 @@ export default class Question extends BaseComponent {
     //마지막 질문일때
     if (this.isLastQuestion) {
       this.isLoadingResult = true;
-      const countUp = setInterval(() => {
-        if (this.loadingProgress < 84) {
+      const countStart = setInterval(() => {
+        if (this.loadingProgress < 74) {
           this.loadingProgress += 5;
         }
-      }, 300);
+      }, 600);
 
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
         if (res) {
-          clearInterval(countUp);
-          const countEed = setInterval(() => {
-            this.loadingProgress++;
-            if (this.loadingProgress >= 100) {
-              this.loadingProgress = 100;
-              this.isLoadingResult = false;
-              clearInterval(countEed);
+          const countUp = setInterval(() => {
+            if (this.loadingProgress < 91) {
+              clearInterval(countStart);
+              this.loadingProgress++;
             }
           }, 300);
+
+          const countEnd = setInterval(() => {
+            if (this.loadingProgress < 100) {
+              clearInterval(countUp);
+              this.loadingProgress++;
+            } else {
+              clearInterval(countEnd);
+              if (this.loadingProgress === 100) {
+                this.isLoadingResult = false;
+              }
+            }
+          }, 200);
 
           this.isLoading = false;
           this.aggregateResultResponseDto = res.data;
