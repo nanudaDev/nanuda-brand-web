@@ -6,10 +6,26 @@
   >
     <div class="nav-logo">
       <h1>
-        <router-link to="/">
-          <img src="@/assets/images/logo.svg" alt="픽쿡" class="logo" />
-          <img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w" />
-        </router-link>
+        <span
+          @click="isToggleNav = false"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          class="d-block d-lg-none"
+        >
+          <router-link to="/">
+            <img src="@/assets/images/logo.svg" alt="픽쿡" class="logo" />
+            <img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w" />
+          </router-link>
+        </span>
+        <span class="d-none d-lg-block">
+          <router-link to="/">
+            <img src="@/assets/images/logo.svg" alt="픽쿡" class="logo" />
+            <img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w" />
+          </router-link>
+        </span>
       </h1>
     </div>
     <button
@@ -31,9 +47,24 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav py-lg-0">
         <li class="nav-item active" v-for="item in items" :key="item.path">
-          <router-link class="nav-link" :to="item.path">{{
-            item.meta.title
-          }}</router-link>
+          <span
+            @click="isToggleNav = false"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            class="d-block d-lg-none"
+          >
+            <router-link class="nav-link" :to="item.path">{{
+              item.meta.title
+            }}</router-link>
+          </span>
+          <span class="d-none d-lg-block">
+            <router-link class="nav-link" :to="item.path">{{
+              item.meta.title
+            }}</router-link>
+          </span>
         </li>
       </ul>
     </div>

@@ -305,9 +305,9 @@
       <div class="loading-layer"></div>
     </template>
     <template v-if="isLoadingResult">
-      <div class="loading-layer">
+      <div class="loading-progress-layer">
         <div class="loading-container">
-          <video
+          <!-- <video
             autoplay
             muted
             loop
@@ -325,7 +325,34 @@
               src=" https://kr.object.ncloudstorage.com/common-nanuda/video/loading.mp4"
               type="video/mp4"
             />
-          </video>
+          </video> -->
+          <div class="text-center">
+            <vue-ellipse-progress
+              :progress="loadingProgress"
+              color="#ffffff"
+              empty-color="#ffffff"
+              :size="180"
+              thickness="5"
+              empty-thickness="3"
+              line-mode="out 5"
+              animation="default 700 1000"
+              font-size="3rem"
+              font-color="#ffffff"
+            >
+              <span slot="legend-value">%</span>
+            </vue-ellipse-progress>
+          </div>
+          <div class="mt-4 text-center">
+            <p class="txt-large txt-white">
+              <template v-if="loadingProgress < 91">
+                분석 중입니다 <br />
+                완료되면 상권 리포트를 확인하실 수 있습니다
+              </template>
+              <template v-else>
+                곧 상권 리포트가 완료됩니다
+              </template>
+            </p>
+          </div>
         </div>
       </div>
     </template>
@@ -398,7 +425,7 @@ export default class Question extends BaseComponent {
   private isLoadingResult = false;
   private previousQuestionDtoArr: NextQuestionDto[] = [];
   private questionGivenArray: any[] = [];
-
+  private loadingProgress = 0;
   saveUserType(userType: FNB_OWNER) {
     this.resultRequestDto.fnbOwnerStatus = userType;
     this.$set(this.firstQuestionDto, 'userType', userType);
@@ -562,15 +589,39 @@ export default class Question extends BaseComponent {
 
     //마지막 질문일때
     if (this.isLastQuestion) {
+      this.loadingProgress = 0;
       this.isLoadingResult = true;
+      const countStart = setInterval(() => {
+        if (this.loadingProgress < 66) {
+          this.loadingProgress += 5;
+        }
+      }, 300);
+
+      const countUp = setInterval(() => {
+        if (this.loadingProgress < 91) {
+          this.loadingProgress++;
+        }
+      }, 350);
+
+      const countEnd = setInterval(() => {
+        if (this.loadingProgress < 100) {
+          this.loadingProgress++;
+        }
+      }, 400);
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
-        this.isLoadingResult = false;
-        this.isLoading = false;
-        this.aggregateResultResponseDto = res.data;
-        this.$gtag.event('last_question', {
-          description: '마지막 질문',
-        });
+        if (res) {
+          this.loadingProgress = 0;
+          this.isLoadingResult = false;
+          this.isLoading = false;
+          clearInterval(countStart);
+          clearInterval(countUp);
+          clearInterval(countEnd);
+          this.aggregateResultResponseDto = res.data;
+          this.$gtag.event('last_question', {
+            description: '마지막 질문',
+          });
+        }
       });
     } else {
       questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
@@ -702,6 +753,7 @@ export default class Question extends BaseComponent {
     this.isLoadingResult = false;
     this.previousQuestionDtoArr = [];
     this.questionGivenArray = [];
+    this.loadingProgress = 0;
   }
   async mounted() {
     // this.isLoading = true;
@@ -715,6 +767,12 @@ export default class Question extends BaseComponent {
   updated() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+  }
+  activated() {
+    //솔루션에서 처음으로가기 눌렀을때
+    if (this.$route.params.reset) {
+      this.resetData();
+    }
   }
 }
 </script>

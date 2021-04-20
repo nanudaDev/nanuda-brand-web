@@ -341,7 +341,7 @@
             pill
             size="xl"
             class="shadow"
-            @click="$router.push('/question')"
+            @click="$router.push({ name: 'question', params: { reset: true } })"
           >
             처음으로
           </b-btn>
