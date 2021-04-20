@@ -305,7 +305,7 @@
       <div class="loading-layer"></div>
     </template>
     <template v-if="isLoadingResult">
-      <div class="loading-layer">
+      <div class="loading-progress-layer">
         <div class="loading-container">
           <!-- <video
             autoplay
@@ -326,20 +326,28 @@
               type="video/mp4"
             />
           </video> -->
-          <vue-ellipse-progress
-            :progress="loadingProgress"
-            color="#7579ff"
-            empty-color="#324c7e"
-            :size="180"
-            thickness="5"
-            empty-thickness="3"
-            line-mode="out 5"
-            animation="default 700 1000"
-            font-size="1.5rem"
-            font-color="white"
-          >
-            <span slot="legend-value">%</span>
-          </vue-ellipse-progress>
+          <div class="text-center">
+            <vue-ellipse-progress
+              :progress="loadingProgress"
+              color="#ffffff"
+              empty-color="#ffffff"
+              :size="180"
+              thickness="5"
+              empty-thickness="3"
+              line-mode="out 5"
+              animation="default 700 1000"
+              font-size="3rem"
+              font-color="#ffffff"
+            >
+              <span slot="legend-value">%</span>
+            </vue-ellipse-progress>
+          </div>
+          <div class="mt-4 text-center">
+            <p class="txt-large txt-white">
+              분석 중입니다 <br />
+              완료되면 상권 리포트를 확인하실 수 있습니다
+            </p>
+          </div>
         </div>
       </div>
     </template>
@@ -577,20 +585,32 @@ export default class Question extends BaseComponent {
     //마지막 질문일때
     if (this.isLastQuestion) {
       this.isLoadingResult = true;
-      setInterval(() => {
-        if (this.loadingProgress < 100) {
+      const countUp = setInterval(() => {
+        if (this.loadingProgress < 84) {
           this.loadingProgress += 5;
         }
-      }, 500);
+      }, 300);
+
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
-        this.loadingProgress = 100;
-        this.isLoadingResult = false;
-        this.isLoading = false;
-        this.aggregateResultResponseDto = res.data;
-        this.$gtag.event('last_question', {
-          description: '마지막 질문',
-        });
+        if (res) {
+          clearInterval(countUp);
+          const countEed = setInterval(() => {
+            this.loadingProgress++;
+            if (this.loadingProgress >= 100) {
+              console.log(this.loadingProgress);
+              this.loadingProgress = 100;
+              this.isLoadingResult = false;
+              clearInterval(countEed);
+            }
+          }, 300);
+
+          this.isLoading = false;
+          this.aggregateResultResponseDto = res.data;
+          this.$gtag.event('last_question', {
+            description: '마지막 질문',
+          });
+        }
       });
     } else {
       questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {

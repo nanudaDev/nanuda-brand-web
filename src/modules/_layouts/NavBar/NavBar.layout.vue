@@ -6,7 +6,21 @@
   >
     <div class="nav-logo">
       <h1>
-        <span @click="onToggleNav()">
+        <span
+          @click="isToggleNav = false"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          class="d-block d-lg-none"
+        >
+          <router-link to="/">
+            <img src="@/assets/images/logo.svg" alt="픽쿡" class="logo" />
+            <img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w" />
+          </router-link>
+        </span>
+        <span class="d-none d-lg-block">
           <router-link to="/">
             <img src="@/assets/images/logo.svg" alt="픽쿡" class="logo" />
             <img src="@/assets/images/logo_w.svg" alt="픽쿡" class="logo-w" />
@@ -33,7 +47,20 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav py-lg-0">
         <li class="nav-item active" v-for="item in items" :key="item.path">
-          <span @click="onToggleNav()">
+          <span
+            @click="isToggleNav = false"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            class="d-block d-lg-none"
+          >
+            <router-link class="nav-link" :to="item.path">{{
+              item.meta.title
+            }}</router-link>
+          </span>
+          <span class="d-none d-lg-block">
             <router-link class="nav-link" :to="item.path">{{
               item.meta.title
             }}</router-link>
@@ -57,10 +84,6 @@ export default class NavBar extends BaseComponent {
 
   onToggleNav() {
     this.isToggleNav = !this.isToggleNav;
-    const navDropdown = document.getElementById('navbarSupportedContent');
-    if (navDropdown.classList.contains('show')) {
-      navDropdown.classList.remove('show');
-    }
   }
 }
 </script>
