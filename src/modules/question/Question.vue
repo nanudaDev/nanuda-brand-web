@@ -589,6 +589,7 @@ export default class Question extends BaseComponent {
 
     //마지막 질문일때
     if (this.isLastQuestion) {
+      this.loadingProgress = 0;
       this.isLoadingResult = true;
       const countStart = setInterval(() => {
         if (this.loadingProgress < 66) {
@@ -607,13 +608,15 @@ export default class Question extends BaseComponent {
           this.loadingProgress++;
         }
       }, 400);
-
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
         if (res) {
-          this.loadingProgress = 100;
+          this.loadingProgress = 0;
           this.isLoadingResult = false;
           this.isLoading = false;
+          clearInterval(countStart);
+          clearInterval(countUp);
+          clearInterval(countEnd);
           this.aggregateResultResponseDto = res.data;
           this.$gtag.event('last_question', {
             description: '마지막 질문',
