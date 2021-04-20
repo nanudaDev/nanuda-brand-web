@@ -591,33 +591,28 @@ export default class Question extends BaseComponent {
     if (this.isLastQuestion) {
       this.isLoadingResult = true;
       const countStart = setInterval(() => {
-        if (this.loadingProgress < 74) {
+        if (this.loadingProgress < 66) {
           this.loadingProgress += 5;
         }
-      }, 600);
+      }, 300);
+
+      const countUp = setInterval(() => {
+        if (this.loadingProgress < 91) {
+          this.loadingProgress++;
+        }
+      }, 350);
+
+      const countEnd = setInterval(() => {
+        if (this.loadingProgress < 100) {
+          this.loadingProgress++;
+        }
+      }, 400);
 
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
         if (res) {
-          const countUp = setInterval(() => {
-            if (this.loadingProgress < 91) {
-              clearInterval(countStart);
-              this.loadingProgress++;
-            }
-          }, 300);
-
-          const countEnd = setInterval(() => {
-            if (this.loadingProgress < 100) {
-              clearInterval(countUp);
-              this.loadingProgress++;
-            } else {
-              clearInterval(countEnd);
-              if (this.loadingProgress === 100) {
-                this.isLoadingResult = false;
-              }
-            }
-          }, 200);
-
+          this.loadingProgress = 100;
+          this.isLoadingResult = false;
           this.isLoading = false;
           this.aggregateResultResponseDto = res.data;
           this.$gtag.event('last_question', {
