@@ -97,7 +97,7 @@
             <button
               class="btn btn-primary rounded-pill btn-lg shawdow"
               id="bottom-button"
-              @click="$router.push('/question')"
+              @click="startQuestions('service_page')"
             >
               <span>원하는 지역의 내 메뉴 찾기</span>
               <span class="icon icon-arrow-right"><BaseArrow /></span>
@@ -117,6 +117,15 @@ import { Component } from 'vue-property-decorator';
 })
 export default class Services extends BaseComponent {
   navbarHeight: any = 0;
+
+  startQuestions(location?: string) {
+    if (!location) location = 'header';
+    this.$router.push('/question');
+    this.$gtag.event(`start_question_${location}`, {
+      description: '질문 시작하기',
+    });
+  }
+
   mounted() {
     const target = document.querySelector('.navbar');
     this.navbarHeight = target.getBoundingClientRect().height;
