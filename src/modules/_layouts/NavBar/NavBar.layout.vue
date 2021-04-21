@@ -7,8 +7,8 @@
     <div class="nav-logo">
       <h1>
         <span
-          @click="isToggleNav = false"
-          data-toggle="collapse"
+          @click="homeToggleNav()"
+          :data-toggle="isCollapsed"
           data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
@@ -81,9 +81,16 @@ import { Component } from 'vue-property-decorator';
 export default class NavBar extends BaseComponent {
   private items = componentRoutes;
   private isToggleNav = false;
+  private isCollapsed = '';
 
   onToggleNav() {
     this.isToggleNav = !this.isToggleNav;
+  }
+
+  homeToggleNav() {
+    if (this.isToggleNav) this.isCollapsed = 'collapse';
+    else this.isCollapsed = '';
+    this.isToggleNav = false;
   }
 }
 </script>

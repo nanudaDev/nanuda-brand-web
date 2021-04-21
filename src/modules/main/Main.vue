@@ -66,7 +66,7 @@
             <button
               class="btn btn-primary rounded-pill btn-lg shawdow"
               id="top-button"
-              @click="$router.push('/question')"
+              @click="startQuestions()"
             >
               <span>원하는 지역의 내 메뉴 찾기</span>
               <span class="icon icon-arrow-right icon-align-right"
@@ -389,7 +389,7 @@
               <button
                 class="btn btn-primary rounded-pill btn-lg shawdow"
                 id="bottom-button"
-                @click="$router.push('/question')"
+                @click="startQuestions('bottom')"
               >
                 <span>원하는 지역의 내 메뉴 찾기</span>
                 <span class="icon icon-arrow-right"><BaseArrow /></span>
@@ -404,7 +404,7 @@
         v-if="isStickyBtnVisible"
         class="position-fixed fixed-bottom text-center p-4 btn btn-lg btn-primary btn-block rounded-0"
         id="sticky-button"
-        @click="$router.push('/question')"
+        @click="startQuestions('sticky_bottom')"
       >
         원하는 지역의 내 메뉴 찾기
       </button>
@@ -552,6 +552,14 @@ export default class Main extends BaseComponent {
     } else {
       this.isStickyBtnVisible = false;
     }
+  }
+
+  startQuestions(location?: string) {
+    if (!location) location = 'header';
+    this.$router.push('/question');
+    this.$gtag.event(`start_question_${location}`, {
+      description: '질문 시작하기',
+    });
   }
 
   created() {
