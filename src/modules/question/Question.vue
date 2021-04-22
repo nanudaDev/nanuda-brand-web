@@ -592,22 +592,22 @@ export default class Question extends BaseComponent {
       this.loadingProgress = 0;
       this.isLoadingResult = true;
       const countStart = setInterval(() => {
-        if (this.loadingProgress < 66) {
+        if (this.loadingProgress < 79) {
           this.loadingProgress += 5;
         }
-      }, 300);
+      }, 120);
 
       const countUp = setInterval(() => {
-        if (this.loadingProgress < 91) {
-          this.loadingProgress++;
-        }
-      }, 350);
-
-      const countEnd = setInterval(() => {
         if (this.loadingProgress < 100) {
           this.loadingProgress++;
         }
-      }, 400);
+      }, 650);
+
+      // const countEnd = setInterval(() => {
+      //   if (this.loadingProgress > 96 && this.loadingProgress < 100) {
+      //     this.loadingProgress++;
+      //   }
+      // }, 400);
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
         if (res) {
@@ -616,7 +616,7 @@ export default class Question extends BaseComponent {
           this.isLoading = false;
           clearInterval(countStart);
           clearInterval(countUp);
-          clearInterval(countEnd);
+          // clearInterval(countEnd);
           this.aggregateResultResponseDto = res.data;
           this.$gtag.event('last_question', {
             description: '마지막 질문',
