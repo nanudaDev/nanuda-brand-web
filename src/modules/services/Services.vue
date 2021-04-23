@@ -121,8 +121,8 @@ export default class Services extends BaseComponent {
   startQuestions(location?: string) {
     if (!location) location = 'header';
     this.$router.push('/question');
-    this.$gtag.event(`start_question_${location}`, {
-      description: '질문 시작하기',
+    this.$gtag.event(`go_to_question_${location}`, {
+      description: '질문지로 이동',
     });
   }
 

@@ -25,7 +25,7 @@
             pill
             size="xl"
             class="shadow"
-            @click="isStart = false"
+            @click="startQuestion()"
           >
             시작하기
           </b-btn>
@@ -426,6 +426,12 @@ export default class Question extends BaseComponent {
   private previousQuestionDtoArr: NextQuestionDto[] = [];
   private questionGivenArray: any[] = [];
   private loadingProgress = 0;
+
+  startQuestion() {
+    this.isStart = false;
+    this.$gtag.event('start_question_button', { description: '질문 시작' });
+  }
+
   saveUserType(userType: FNB_OWNER) {
     this.resultRequestDto.fnbOwnerStatus = userType;
     this.$set(this.firstQuestionDto, 'userType', userType);
@@ -434,6 +440,9 @@ export default class Question extends BaseComponent {
       this.question = '음식점 주소를 알려주세요!';
       this.$nextTick(() => {
         this.$bvModal.show('post-code');
+      });
+      this.$gtag.event(`user_type_${userType}`, {
+        description: '기창업자로 질문 시작',
       });
       codeHdongService.getSido().subscribe(res => {
         this.isLoading = false;
@@ -444,6 +453,9 @@ export default class Question extends BaseComponent {
       });
     } else {
       this.question = '어떤 곳에서 창업을 희망하나요?';
+      this.$gtag.event(`user_type_${userType}`, {
+        description: '신규창업자로 질문 시작',
+      });
       this.isLoading = true;
       codeHdongService.getSido().subscribe(res => {
         this.isLoading = false;
@@ -453,6 +465,7 @@ export default class Question extends BaseComponent {
     // 진행 단계 증가
     this.questionOrder += 1;
   }
+
   getFirstQuestion() {
     this.isLoading = true;
     questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
@@ -471,6 +484,7 @@ export default class Question extends BaseComponent {
     this.questionOrder += 1;
     this.prevOrder = this.questionOrder;
   }
+
   // 주소 선택화면일때 뒤로가기
   goToPreviousAddr() {
     if (this.showingLevel === ADDRESS_LEVEL.hdongName) {
@@ -492,6 +506,7 @@ export default class Question extends BaseComponent {
     this.questionOrder -= 1;
     this.isLastQuestion = false;
   }
+
   // 질문 화면일때 뒤로가기
   goToPrevious() {
     if (this.previousQuestionDtoArr.length == 0) {
@@ -544,6 +559,7 @@ export default class Question extends BaseComponent {
     this.questionOrder -= 1;
     this.isLastQuestion = false;
   }
+
   getNextQuestion(given?: Given) {
     this.isLoading = true;
     //이전 질문들 저장
@@ -618,8 +634,8 @@ export default class Question extends BaseComponent {
           clearInterval(countUp);
           // clearInterval(countEnd);
           this.aggregateResultResponseDto = res.data;
-          this.$gtag.event('last_question', {
-            description: '마지막 질문',
+          this.$gtag.event(`last_question_${res.data.userType}`, {
+            description: `${res.data.commonCode.comment} 마지막 질문`,
           });
         }
       });
@@ -632,8 +648,8 @@ export default class Question extends BaseComponent {
           this.isLoading = false;
           this.nextQuestionDto.order = res.data.order;
           this.nextQuestionDto.questionId = res.data.id;
-          this.$gtag.event(`question_${res.data.id}`, {
-            description: `${res.data.question}`,
+          this.$gtag.event(`question_${res.data.userType}_${res.data.id}`, {
+            description: `${res.data.commonCode.comment} : ${res.data.question}`,
           });
           this.question = res.data.question;
           this.questionOrder =
@@ -647,6 +663,7 @@ export default class Question extends BaseComponent {
       });
     }
   }
+
   //level이 내려감에따라 showingLevel(보여줘야할 정보)이 변함
   getGuOrDong(given?: CodeHdongDto) {
     this.isLoading = true;
@@ -680,6 +697,7 @@ export default class Question extends BaseComponent {
     }
     this.prevOrder = this.questionOrder;
   }
+
   onPostCodeComplete(event: any) {
     this.selectedRoadAddress = event.roadAddress;
     const geocoder = new window.kakao.maps.services.Geocoder();
@@ -699,8 +717,14 @@ export default class Question extends BaseComponent {
         this.$bvModal.hide('post-code');
       }
     };
+    if (callback) {
+      this.$gtag.event('kakao_address_complete', {
+        description: '카카오 주소 입력 완료',
+      });
+    }
     geocoder.addressSearch(this.selectedRoadAddress, callback);
   }
+
   onMultipleAnswerClicked(given: Given) {
     if (this.selectedAnswers.includes(given)) {
       const theIndex = this.selectedAnswers.findIndex(e => e === given);
@@ -709,6 +733,7 @@ export default class Question extends BaseComponent {
       this.selectedAnswers.push(given);
     }
   }
+
   resetData() {
     const ipInfo = new NextQuestionDto();
     ipInfo.ipAddress = this.nextQuestionDto.ipAddress;
@@ -755,6 +780,7 @@ export default class Question extends BaseComponent {
     this.questionGivenArray = [];
     this.loadingProgress = 0;
   }
+
   async mounted() {
     // this.isLoading = true;
     //get ip address
@@ -764,10 +790,12 @@ export default class Question extends BaseComponent {
       this.nextQuestionDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
     });
   }
+
   updated() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   }
+
   activated() {
     //솔루션에서 처음으로가기 눌렀을때
     if (this.$route.params.reset) {
