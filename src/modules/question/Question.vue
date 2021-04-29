@@ -293,39 +293,12 @@
         </div>
       </article>
     </template>
-    <template v-else>
-      <Result
-        :result="aggregateResultResponseDto"
-        :resultRequestDto="resultRequestDto"
-        :codeHdongSearchDto="codeHdongSearchDto"
-        @onReset="resetData"
-      />
-    </template>
     <template v-if="isLoading">
       <div class="loading-layer"></div>
     </template>
     <template v-if="isLoadingResult">
       <div class="loading-progress-layer">
         <div class="loading-container">
-          <!-- <video
-            autoplay
-            muted
-            loop
-            playsinline
-            id="vid"
-            ref="videoRef"
-            class="video"
-          >
-            해당 브라우저는 video 태그를 지원하지 않습니다.
-            <source
-              src=" https://kr.object.ncloudstorage.com/common-nanuda/video/loading.mp4"
-              type="video/webm"
-            />
-            <source
-              src=" https://kr.object.ncloudstorage.com/common-nanuda/video/loading.mp4"
-              type="video/mp4"
-            />
-          </video> -->
           <div class="text-center">
             <vue-ellipse-progress
               :progress="loadingProgress"
@@ -366,7 +339,6 @@ import { VueDaumPostcode } from 'vue-daum-postcode';
 import questionService from '@/services/question.service';
 import codeHdongService from '@/services/code-hdong.service';
 import axios from 'axios';
-import Result from './Result.vue';
 import {
   FirstQuestionDto,
   Given,
@@ -380,7 +352,7 @@ import { COMMON_CODE_CATEGORY, FNB_OWNER } from '@/shared';
 import { ADDRESS_LEVEL, YN } from '@/common';
 @Component({
   name: 'Question',
-  components: { VueDaumPostcode, Result },
+  components: { VueDaumPostcode },
 })
 export default class Question extends BaseComponent {
   [x: string]: any;
@@ -634,8 +606,11 @@ export default class Question extends BaseComponent {
           clearInterval(countUp);
           // clearInterval(countEnd);
           this.aggregateResultResponseDto = res.data;
-          this.$gtag.event(`last_question_${res.data.userType}`, {
-            description: `${res.data.commonCode.comment} 마지막 질문`,
+          // this.$gtag.event(`last_question_${res.data.userType}`, {
+          //   description: `${res.data.commonCode.comment} 마지막 질문`,
+          // });
+          this.$router.push({
+            path: `/solution/${this.aggregateResultResponseDto.proformaId}`,
           });
         }
       });
@@ -794,13 +769,6 @@ export default class Question extends BaseComponent {
   updated() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-  }
-
-  activated() {
-    //솔루션에서 처음으로가기 눌렀을때
-    if (this.$route.params.reset) {
-      this.resetData();
-    }
   }
 }
 </script>

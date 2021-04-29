@@ -18,212 +18,103 @@
       </div>
     </header>
     <div class="article-content" v-if="result">
-      <!-- <section class="bg-light">
-        <div
-          class="complete-time-box"
-          v-if="
-            result.graphData && result.graphData.completeTimeData.length > 0
-          "
-        >
-          <div class="row no-gutters">
-            <div
-              v-for="timeData in result.graphData.completeTimeData"
-              :key="timeData.hour"
-              :style="
-                `width:${100 / result.graphData.completeTimeData.length}%`
-              "
-            >
-              <div class="label-box">
-                {{ timeData.hour | enumTransformer }}
-              </div>
-              <div class="cont-box">
-                <template v-if="timeData.aggregateData[0]">
-                  <p>
-                    {{
-                      timeData.aggregateData[0].medium_category_nm.replace(
-                        '커피/음료',
-                        '카페',
-                      )
-                    }}
-                    <br />
-                    {{ timeData.aggregateData[0].medium_small_category_nm }}
-                  </p>
-                </template>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> -->
-      <section class="article-section section01 bg-primary">
+      <section class="article-section">
         <div class="container">
-          <div class="row-box" v-if="result && result.graphData">
-            <h4>
-              메뉴 전략
+          <div class="row-box">
+            <h4 class="pa-2">
+              최적 메뉴 안내
             </h4>
-            <p>
-              현재 위치에서는 <br />
-              <span
-                v-for="resonse in result.graphData.responses"
-                :key="resonse.operationTime"
-                class="d-block"
-              >
-                {{ resonse.koreanPrefSentence }}
-                <strong class="txt-underline  txt-white">{{
-                  resonse.modifiedSufSentence.replace('커피/음료', '카페')
-                }}</strong>
-              </span>
-              메뉴로 도입하시면 <br class="d-lg-none" />
-              <strong>낮은 위험으로 매출을 상승시킬 수 있습니다</strong>
-            </p>
+            <b-card tag="article" class="mb-2">
+              <b-row no-gutters>
+                <b-col md="6">
+                  <b-card-img
+                    src="https://picsum.photos/600/300/?image=25"
+                    alt="Image"
+                    width="100"
+                  ></b-card-img>
+                </b-col>
+                <b-col md="6">
+                  <b-card-body>
+                    <b-badge pill variant="success">최고적합률</b-badge>
+                    <b-card-text>
+                      부대찌개
+                    </b-card-text>
+                    <b-card-text>
+                      적합률 95%
+                    </b-card-text>
+                    <b-button v-b-toggle="'collapse-2'" class="m-1"
+                      >Toggle Collapse</b-button
+                    >
+                  </b-card-body>
+                </b-col>
+              </b-row>
+              <b-collapse id="collapse-2">
+                <b-card-text
+                  >토글 내용 토글 내용토글 내용토글 내용토글 내용토글 내용토글
+                  내용토글 내용토글 내용토글 내용토글 내용</b-card-text
+                >
+              </b-collapse>
+            </b-card>
           </div>
-          <div
-            class="row-box"
-            v-if="
-              result.graphData && result.graphData.operationSentenceResponse
-            "
-          >
-            <h4>
-              운영 전략
-            </h4>
-            <p>
-              {{ result.graphData.operationSentenceResponse }}
-            </p>
-          </div>
-          <div class="btn-box text-center mt-5 pt-5">
-            <p>
-              자세한 상권분석과 운영 전략을 <br />
-              신청하실 수 있습니다
-            </p>
-          </div>
-          <button
-            class="btn-scroll-down"
-            v-scroll-to="{ el: '#detail-info', offset: 0 }"
-          >
-            <BaseArrow />
-          </button>
         </div>
       </section>
-      <section class="article-section section02" id="detail-info">
+      <section class="article-section section02">
         <div class="container">
           <div class="title-box text-center">
-            <h4 class="txt-bold">픽쿡 플래너의 맞춤 서비스</h4>
+            <h4 class="txt-bold">매장/배달소비현황</h4>
           </div>
-          <div class="card p-5 shadow-sm rounded-lg mt-5">
-            <div class="row-box">
-              <div class="img-box">
-                <img src="@/assets/images/icon_solution_01.svg" alt="" />
-              </div>
-              <div class="dscr-box">
-                <h4>
-                  시간대별로 현 매장에서 가장 유리한 메뉴 제안
-                </h4>
-                <p>
-                  창업지역의 정밀한 상권분석을 통해
-                  <br class="d-none d-sm-block" />
-                  시간대별로 매출상승에 가장 유리한 메뉴를 제공합니다
-                </p>
-              </div>
-            </div>
-            <div class="row-box">
-              <div class="img-box">
-                <img src="@/assets/images/icon_solution_02.svg" alt="" />
-              </div>
-              <div class="dscr-box">
-                <h4>
-                  메뉴, 운영 교육과 관리 서비스 제공
-                </h4>
-                <p>
-                  빠른 공정, 낮은 식자재율로 완성된 메뉴의 교육과
-                  <br class="d-none d-sm-block" />
-                  운영 방법, 디자인, 홍보물을 제공합니다
-                </p>
-              </div>
-            </div>
-            <div class="row-box">
-              <div class="img-box">
-                <img src="@/assets/images/icon_solution_03.svg" alt="" />
-              </div>
-              <div class="dscr-box">
-                <h4>
-                  대면 창업 진단과 상권리포트 제공
-                </h4>
-                <p>
-                  대면 미팅을 통해 상세 상권정보를 알려드립니다.
-                  <br class="d-none d-sm-block" />
-                  가입시 정기적으로 상권 데이터를 제공합니다.
-                </p>
-              </div>
-            </div>
+          <div class="section-content">
+            <b-card>
+              <b-row align-h="between">
+                <b-col><p>매장</p></b-col>
+                <b-col><p style="text-align:right">배달</p></b-col>
+              </b-row>
+              <b-row>
+                <b-col>
+                  <b-progress class="mt-2" :max="max" show-value height="5rem">
+                    <b-progress-bar :value="68" variant="success"
+                      >68%</b-progress-bar
+                    >
+                    <b-progress-bar :value="32" variant="warning"
+                      >32%</b-progress-bar
+                    >
+                  </b-progress>
+                </b-col>
+              </b-row>
+            </b-card>
           </div>
         </div>
       </section>
-      <section class="article-section section03 bg-light">
+      <section>
         <div class="container">
-          <!-- TODO: 이용자 후기 이름 변경 필요 -->
-          <swiper :options="swiperOption" ref="mySwiper">
-            <swiper-slide>
-              <div class="row-box">
-                <div class="img-box">
-                  <img src="@/assets/images/about_us_review_01.png" />
-                </div>
-                <div class="txt-box">
-                  <h4>김성수 이용자 후기</h4>
-                  <p>
-                    배달 메뉴를 추가하려고 픽쿡을 찾았는데
-                    <br class="d-none d-sm-block" />
-                    예상보다 매출이 잘나와서 좋았습니다.<br />
-                    시간대별로 알려주는게 진짜 좋은것 같습니다
-                  </p>
-                </div>
-              </div>
-            </swiper-slide>
-            <swiper-slide>
-              <div class="row-box">
-                <div class="img-box">
-                  <img src="@/assets/images/about_us_review_03.png" />
-                </div>
-                <div class="txt-box">
-                  <h4>주상민 이용자 후기</h4>
-                  <p>
-                    한식을 매장 판매 하는데 배달은 픽쿡이 안내한 파스타를<br
-                      class="d-none d-sm-block"
-                    />
-                    판매하고 있습니다. 만들기가 쉽게 만들어져서 편리합니다.
-                    <br />
-                    여름에 한번 더 이용하려구요
-                  </p>
-                </div>
-              </div>
-            </swiper-slide>
-            <swiper-slide>
-              <div class="row-box">
-                <div class="img-box">
-                  <img src="@/assets/images/about_us_review_02.png" />
-                </div>
-                <div class="txt-box">
-                  <h4>강주연 이용자 후기</h4>
-                  <p>
-                    맨처음 창업할 때 부터 이 서비스가 있었다면 좀 더
-                    <br class="d-none d-sm-block" />잘 만들 수 있었을 텐데ㅠㅠ.
-                    상권도 모르고 가게 열어서
-                    <br class="d-none d-sm-block" />이제 메뉴 바꾸고 있습니다.
-                    정말 필요하네요
-                  </p>
-                </div>
-              </div>
-            </swiper-slide>
-            <!-- 네비게이션 -->
-            <div
-              class="swiper-button-next"
-              slot="button-next"
-              @click="onSwiperNext()"
-            ></div>
-            <div
-              class="swiper-button-prev"
-              slot="button-prev"
-              @click="onSwiperPrev()"
-            ></div>
-          </swiper>
+          <h1>예상 추가 월 매출</h1>
+          <b-card>
+            <div>12827만원</div>
+          </b-card>
+        </div>
+        <div class="container">
+          <h1>전 분기 대비 매출상승율</h1>
+          <b-card>
+            <div>
+              <b-row>
+                <b-col>
+                  <div>+32%</div>
+                  <div style="backgroundColor:blue;height:2rem"></div>
+                  <div>부대찌개</div>
+                </b-col>
+                <b-col>
+                  <div>+32%</div>
+                  <div style="backgroundColor:blue;height:2rem"></div>
+                  <div>부대찌개</div>
+                </b-col>
+                <b-col>
+                  <div>+32%</div>
+                  <div style="backgroundColor:blue;height:2rem"></div>
+                  <div>부대찌개</div>
+                </b-col>
+              </b-row>
+            </div>
+          </b-card>
         </div>
       </section>
       <section class="article-section section04">
@@ -341,7 +232,7 @@
             pill
             size="xl"
             class="shadow"
-            @click="$router.push({ name: 'question', params: { reset: true } })"
+            @click="$router.push('/question')"
           >
             처음으로
           </b-btn>
@@ -390,7 +281,7 @@ export default class Solution extends BaseComponent {
   private isGetCodeBtnDisabled = false;
   private time = 30;
   private smsAuthNotificationDto = new SmsAuthNotificationDto();
-
+  private info: any = { deliveryRatio: 67, offlineRatio: 33 };
   private swiperOption: any = {
     slidesPerView: 1,
     loop: true,
