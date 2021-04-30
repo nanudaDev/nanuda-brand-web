@@ -32,7 +32,7 @@
         </div>
       </header>
     </article>
-    <template v-if="!aggregateResultResponseDto">
+    <template v-if="!resultResponseDto">
       <article
         class="main-article"
         :id="nextQuestionDto.questionId"
@@ -123,7 +123,7 @@
                           size="lg"
                           pill
                           @click="getNextQuestion(given)"
-                          >{{ given.givenDetails.displayName }}</b-btn
+                          >{{ given.given }}</b-btn
                         >
                       </div>
                     </div>
@@ -153,7 +153,7 @@
                           size="lg"
                           pill
                           @click="onMultipleAnswerClicked(given)"
-                          >{{ given.givenDetails.displayName }}
+                          >{{ given.given }}
                         </b-btn>
                       </div>
                     </div>
@@ -293,6 +293,9 @@
         </div>
       </article>
     </template>
+    <template v-else>
+      <Solution :result="resultResponseDto" />
+    </template>
     <template v-if="isLoading">
       <div class="loading-layer"></div>
     </template>
@@ -344,15 +347,17 @@ import {
   Given,
   NextQuestionDto,
   ResultRequestDto,
+  ResultResponseDto,
 } from '@/dto/question';
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
 import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 import { COMMON_CODE_CATEGORY, FNB_OWNER } from '@/shared';
 import { ADDRESS_LEVEL, YN } from '@/common';
+import Solution from './Solution.vue';
 @Component({
   name: 'Question',
-  components: { VueDaumPostcode },
+  components: { VueDaumPostcode, Solution },
 })
 export default class Question extends BaseComponent {
   [x: string]: any;
@@ -372,7 +377,7 @@ export default class Question extends BaseComponent {
   private prevOrder: any = 0;
   private question = '나는 현재';
   private FNB_OWNER = FNB_OWNER;
-  private aggregateResultResponseDto: AggregateResultResponse = null;
+  private resultResponseDto: ResultResponseDto = null;
   private isAvailableLocation = false;
   private availableLocation = '';
   private firstGivens = [
@@ -541,32 +546,33 @@ export default class Question extends BaseComponent {
     // 답변을 하나만 선택할때
     if (given) {
       this.nextQuestionDto.givenId.push(given.id);
-      if (
-        given.givenDetails.category === COMMON_CODE_CATEGORY.KB_MEDIUM_CATEGORY
-      ) {
-        this.resultRequestDto.kbFoodCategory = given.givenDetails.value;
-      }
-      if (given.givenDetails.category === COMMON_CODE_CATEGORY.AGE_GROUP) {
-        this.resultRequestDto.ageGroupCode = given.givenDetails.key;
-      }
-      if (given.givenDetails.category === COMMON_CODE_CATEGORY.REVENUE_RANGE) {
-        this.resultRequestDto.revenueRangeCode = given.givenDetails.key;
-      }
+      console.log('given', given);
+      // if (
+      //   given.givenDetails.category === COMMON_CODE_CATEGORY.KB_MEDIUM_CATEGORY
+      // ) {
+      //   this.resultRequestDto.kbFoodCategory = given.givenDetails.value;
+      // }
+      // if (given.givenDetails.category === COMMON_CODE_CATEGORY.AGE_GROUP) {
+      //   this.resultRequestDto.ageGroupCode = given.givenDetails.key;
+      // }
+      // if (given.givenDetails.category === COMMON_CODE_CATEGORY.REVENUE_RANGE) {
+      //   this.resultRequestDto.revenueRangeCode = given.givenDetails.key;
+      // }
     } else {
       //답변을 여러개 선택할때
       this.$set(this.nextQuestionDto, 'givenId', this.selectedAnswers);
       const selectedGivenId = this.selectedAnswers.map(e => e.id);
       this.nextQuestionDto.givenId = selectedGivenId;
       //영업 시간
-      if (
-        this.givens[0].givenDetails.category ===
-        COMMON_CODE_CATEGORY.OPERATION_TIME
-      ) {
-        this.resultRequestDto.operationTimes = [];
-        this.selectedAnswers.forEach(e => {
-          this.resultRequestDto.operationTimes.push(e.givenDetails.value);
-        });
-      }
+      // if (
+      //   this.givens[0].givenDetails.category ===
+      //   COMMON_CODE_CATEGORY.OPERATION_TIME
+      // ) {
+      //   this.resultRequestDto.operationTimes = [];
+      //   this.selectedAnswers.forEach(e => {
+      //     this.resultRequestDto.operationTimes.push(e.givenDetails.value);
+      //   });
+      // }
     }
     //questionGivenArray에 지금까지의 질문과 답변 저장
     this.questionGivenArray.push({
@@ -583,7 +589,7 @@ export default class Question extends BaseComponent {
         if (this.loadingProgress < 79) {
           this.loadingProgress += 5;
         }
-      }, 120);
+      }, 20);
 
       const countUp = setInterval(() => {
         if (this.loadingProgress < 100) {
@@ -604,14 +610,7 @@ export default class Question extends BaseComponent {
           this.isLoading = false;
           clearInterval(countStart);
           clearInterval(countUp);
-          // clearInterval(countEnd);
-          this.aggregateResultResponseDto = res.data;
-          // this.$gtag.event(`last_question_${res.data.userType}`, {
-          //   description: `${res.data.commonCode.comment} 마지막 질문`,
-          // });
-          this.$router.push({
-            path: `/solution/${this.aggregateResultResponseDto.proformaId}`,
-          });
+          this.resultResponseDto = res.data;
         }
       });
     } else {
@@ -623,9 +622,9 @@ export default class Question extends BaseComponent {
           this.isLoading = false;
           this.nextQuestionDto.order = res.data.order;
           this.nextQuestionDto.questionId = res.data.id;
-          this.$gtag.event(`question_${res.data.userType}_${res.data.id}`, {
-            description: `${res.data.commonCode.comment} : ${res.data.question}`,
-          });
+          // this.$gtag.event(`question_${res.data.userType}_${res.data.id}`, {
+          //   description: `${res.data.commonCode.comment} : ${res.data.question}`,
+          // });
           this.question = res.data.question;
           this.questionOrder =
             this.nextQuestionDto.order + (this.prevOrder - 1);
@@ -761,8 +760,9 @@ export default class Question extends BaseComponent {
     //get ip address
     await axios.get('https://api.ipify.org?format=json').then(res => {
       // this.isLoading = false;
-      this.nextQuestionDto.ipAddress = res.data.ip;
-      this.nextQuestionDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
+      this.nextQuestionDto.ipAddress = this.resultRequestDto.ipAddress =
+        res.data.ip;
+      this.nextQuestionDto.uniqueSessionId = this.resultRequestDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
     });
   }
 

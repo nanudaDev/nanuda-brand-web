@@ -17,14 +17,21 @@
         </h2>
       </div>
     </header>
-    <div class="article-content" v-if="result">
+    <div class="article-content">
       <section class="article-section">
         <div class="container">
+          <div>{{ result.hdong.hdongName }}</div>
           <div class="row-box">
             <h4 class="pa-2">
               최적 메뉴 안내
             </h4>
-            <b-card tag="article" class="mb-2">
+
+            <b-card
+              tag="article"
+              class="mb-2"
+              v-for="(item, index) in result.rankDataWCScore"
+              :key="index"
+            >
               <b-row no-gutters>
                 <b-col md="6">
                   <b-card-img
@@ -37,7 +44,7 @@
                   <b-card-body>
                     <b-badge pill variant="success">최고적합률</b-badge>
                     <b-card-text>
-                      부대찌개
+                      {{ item.attributeValues.sSmallCategoryName }}
                     </b-card-text>
                     <b-card-text>
                       적합률 95%
@@ -71,12 +78,20 @@
               </b-row>
               <b-row>
                 <b-col>
-                  <b-progress class="mt-2" :max="max" show-value height="5rem">
-                    <b-progress-bar :value="68" variant="success"
-                      >68%</b-progress-bar
+                  <b-progress class="mt-2" show-value height="5rem">
+                    <b-progress-bar
+                      :value="result.deliveryRatioData.restaurantRatio"
+                      variant="success"
+                      >{{
+                        result.deliveryRatioData.restaurantRatio
+                      }}%</b-progress-bar
                     >
-                    <b-progress-bar :value="32" variant="warning"
-                      >32%</b-progress-bar
+                    <b-progress-bar
+                      :value="result.deliveryRatioData.deliveryRatio"
+                      variant="warning"
+                      >{{
+                        result.deliveryRatioData.deliveryRatio
+                      }}%</b-progress-bar
                     >
                   </b-progress>
                 </b-col>
@@ -249,10 +264,10 @@
 
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
-import { Component } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 import ResultRevenueChart from '@/modules/_components/charts/ResultRevenueChart.vue';
 import FoodCategoryRatioChart from '@/modules/_components/charts/FoodCategoryRatioChart.vue';
-import { ConsultRequestDto } from '@/dto/question';
+import { ConsultRequestDto, ResultResponseDto } from '@/dto/question';
 import authService from '@/services/auth.service';
 // import toast from '../../../resources/assets/js/services/toast.js';
 import questionService from '@/services/question.service';
@@ -269,9 +284,10 @@ export default class Solution extends BaseComponent {
     mySwiper: HTMLFormElement;
     tagRef: HTMLFormElement;
   };
+  @Prop() readonly result: ResultResponseDto;
   // TODO: result, resultRequestDto  세션스토리지로 바꿔야함 , 타입체크변경
-  private result: ProformaResponseDto = null;
-  private resultRequestDto: any = null;
+  // private result: ProformaResponseDto = null;
+  // private resultRequestDto: any = null;
   private isComplete = false;
   //
   private consultRequestDto = new ConsultRequestDto();
@@ -387,19 +403,6 @@ export default class Solution extends BaseComponent {
         });
       }
     });
-  }
-
-  mounted() {
-    // TODO : result , resultRequestDto 세션 스토리 저장? 필요
-    questionService
-      .getProformaConsultResult(this.$route.params.proformaId)
-      .subscribe(res => {
-        this.result = res.data;
-      });
-
-    this.consultRequestDto.proformaConsultResultId = +this.$route.params
-      .proformaId;
-    // reroute on reload
   }
 }
 </script>
