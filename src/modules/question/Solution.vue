@@ -42,12 +42,21 @@
                 </b-col>
                 <b-col md="6">
                   <b-card-body>
-                    <b-badge pill variant="success">최고적합률</b-badge>
+                    <b-badge pill variant="success" v-if="index === 0"
+                      >최고적합률</b-badge
+                    >
+                    <b-badge pill variant="success" v-if="index === 1"
+                      >적합률높음</b-badge
+                    >
+                    <b-badge pill variant="success" v-if="index === 2"
+                      >적합률보통</b-badge
+                    >
+                    <b-badge pill>{{ item.mediumCategoryName }}</b-badge>
                     <b-card-text>
                       {{ item.attributeValues.sSmallCategoryName }}
                     </b-card-text>
                     <b-card-text>
-                      적합률 95%
+                      적합률 {{ Math.round(item.appliedFitnessScore) }}%
                     </b-card-text>
                     <b-button v-b-toggle="'collapse-2'" class="m-1"
                       >Toggle Collapse</b-button
