@@ -27,7 +27,7 @@ export class QuestionService extends BaseService {
     );
   }
   postConsult(consultRequestDto: ConsultRequestDto) {
-    return super.post<any>('consult-result', consultRequestDto);
+    return super.post<any>('v2/consult-result', consultRequestDto);
   }
 }
 

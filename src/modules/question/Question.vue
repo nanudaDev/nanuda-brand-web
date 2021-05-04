@@ -294,7 +294,7 @@
       </article>
     </template>
     <template v-else>
-      <Solution :result="resultResponseDto" />
+      <Solution :result="resultResponseDto" @reset="resetData" />
     </template>
     <template v-if="isLoading">
       <div class="loading-layer"></div>
@@ -351,7 +351,6 @@ import {
 } from '@/dto/question';
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
-import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 import { COMMON_CODE_CATEGORY, FNB_OWNER } from '@/shared';
 import { ADDRESS_LEVEL, YN } from '@/common';
 import Solution from './Solution.vue';
@@ -546,33 +545,11 @@ export default class Question extends BaseComponent {
     // 답변을 하나만 선택할때
     if (given) {
       this.nextQuestionDto.givenId.push(given.id);
-      console.log('given', given);
-      // if (
-      //   given.givenDetails.category === COMMON_CODE_CATEGORY.KB_MEDIUM_CATEGORY
-      // ) {
-      //   this.resultRequestDto.kbFoodCategory = given.givenDetails.value;
-      // }
-      // if (given.givenDetails.category === COMMON_CODE_CATEGORY.AGE_GROUP) {
-      //   this.resultRequestDto.ageGroupCode = given.givenDetails.key;
-      // }
-      // if (given.givenDetails.category === COMMON_CODE_CATEGORY.REVENUE_RANGE) {
-      //   this.resultRequestDto.revenueRangeCode = given.givenDetails.key;
-      // }
     } else {
       //답변을 여러개 선택할때
       this.$set(this.nextQuestionDto, 'givenId', this.selectedAnswers);
       const selectedGivenId = this.selectedAnswers.map(e => e.id);
       this.nextQuestionDto.givenId = selectedGivenId;
-      //영업 시간
-      // if (
-      //   this.givens[0].givenDetails.category ===
-      //   COMMON_CODE_CATEGORY.OPERATION_TIME
-      // ) {
-      //   this.resultRequestDto.operationTimes = [];
-      //   this.selectedAnswers.forEach(e => {
-      //     this.resultRequestDto.operationTimes.push(e.givenDetails.value);
-      //   });
-      // }
     }
     //questionGivenArray에 지금까지의 질문과 답변 저장
     this.questionGivenArray.push({
@@ -727,7 +704,7 @@ export default class Question extends BaseComponent {
     this.prevOrder = 0;
     this.question = '나는 현재';
     this.FNB_OWNER = FNB_OWNER;
-    this.aggregateResultResponseDto = null;
+    this.resultResponseDto = null;
     this.isAvailableLocation = false;
     this.availableLocation = '';
     this.firstGivens = [
