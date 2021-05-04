@@ -391,7 +391,7 @@
                   </div>
                 </div>
                 <div
-                  class="txt-box txt-lg-center"
+                  class="txt-box txt-md-center"
                   data-aos="fade-up"
                   data-aos-duration="2000"
                 >
@@ -471,6 +471,7 @@
                 </b-col>
                 <b-col cols="3">
                   <b-btn
+                    variant="primary"
                     size="md"
                     @click="checkSMSCode"
                     :disabled="isVerified"
@@ -563,9 +564,13 @@
                 ></b-form-input>
               </b-col>
               <b-col cols="3">
-                <b-btn size="md" @click="checkSMSCode" :disabled="isVerified">{{
-                  isVerified ? '인증완료' : '인증하기'
-                }}</b-btn>
+                <b-btn
+                  variant="white"
+                  size="md"
+                  @click="checkSMSCode"
+                  :disabled="isVerified"
+                  >{{ isVerified ? '인증완료' : '인증하기' }}</b-btn
+                >
               </b-col>
             </b-form-row>
             <div class="txt-box" v-if="errorText">
