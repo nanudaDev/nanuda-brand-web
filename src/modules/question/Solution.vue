@@ -39,8 +39,8 @@
                   <b-icon icon="question-circle"></b-icon>
                 </span>
               </p>
-              <b-modal id="info" title="추천지수" size="sm" hide-footer>
-                <p>
+              <b-modal id="info" title="추천지수" size="md" hide-footer>
+                <p class="txt-small">
                   설명설명
                 </p>
               </b-modal>
@@ -60,10 +60,10 @@
                       data-aos-duration="1000"
                       v-b-toggle="toggleId(index)"
                     >
-                      <div class="card-img-left">
+                      <div class="card-img-left" v-if="item.sSmallCategoryCode">
                         <b-img-lazy
                           :src="
-                            require('@/assets/images/about_us_review_01.png')
+                            `https://kr.object.ncloudstorage.com/common-storage-pickcook/menu/${item.sSmallCategoryCode}.jpg`
                           "
                           alt=""
                         />
@@ -73,20 +73,26 @@
                           <b-badge pill variant="primary" v-if="index === 0"
                             >최고적합률</b-badge
                           >
+                          <b-badge pill variant="blue" v-if="index === 1"
+                            >적합률높음</b-badge
+                          >
+                          <b-badge pill variant="lightblue" v-if="index === 2"
+                            >적합률보통</b-badge
+                          >
                           <b-badge pill variant="secondary">{{
                             item.mediumCategoryName
                           }}</b-badge>
-                          <b-badge pill variant="outline-secondary"
-                            >찌개/전골류</b-badge
-                          >
+                          <b-badge pill variant="outline-secondary">{{
+                            item.pickcookSmallCategoryInfo.pkSmallCategoryName
+                          }}</b-badge>
                         </div>
                         <h4 class="card-title">
-                          {{ item.attributeValues.sSmallCategoryName }}
+                          {{ item.pickcookSmallCategoryInfo.pkMenuName }}
                         </h4>
                         <p class="card-text">
                           <b-icon icon="graph-up"></b-icon>
                           <span class="mx-1"
-                            >적합률
+                            >추천지수
                             <strong
                               >{{
                                 Math.round(item.appliedFitnessScore)
@@ -105,19 +111,22 @@
                     <b-collapse class="card-collapse" :id="`item0${index}`">
                       <div class="card-desc">
                         <b-row no-gutters align-v="center">
-                          <b-col cols="2">
+                          <b-col cols="2" lg="12">
                             <img
                               src="@/assets/images/logo.svg"
                               alt="픽쿡"
-                              class="logo"
+                              class="logo w-8"
                             />
                           </b-col>
-                          <b-col cols="10">
+                          <b-col cols="10" lg="12">
                             <p class="txt-tiny">
                               빅데이터 상권지수(97%)와 조리경험 (90%),
-                              운영경험(80%), 창업자금(70%)를 종합하였을때,
-                              <strong class="txt-primary txt-bold"
-                                >가장 추천하는 아이템</strong
+                              운영경험(80%), 창업자금(70%)을 종합하였을때
+                              <strong class="txt-primary txt-bold">
+                                <template v-if="index === 0">
+                                  가장
+                                </template>
+                                추천하는 아이템</strong
                               >
                               입니다.
                             </p>
@@ -141,15 +150,15 @@
                     <template
                       v-if="result.deliveryRatioData.restaurantRatio > 30"
                     >
-                      <strong>배달로 더 많이 이용하고 있어요</strong>
+                      <strong>배달로 더 많이 이용하고 있어요!</strong>
                     </template>
                     <template
                       v-else-if="result.deliveryRatioData.restaurantRatio < 30"
                     >
-                      <strong>매장을 더 많이 이용하고 있어요</strong>
+                      <strong>매장을 더 많이 이용하고 있어요!</strong>
                     </template>
                     <template v-else>
-                      <strong>매장과 배달을 비슷하게 이용하고 있어요</strong>
+                      <strong>매장과 배달을 비슷하게 이용하고 있어요!</strong>
                     </template>
                   </h3>
                 </header>
@@ -192,7 +201,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="txt-box">
+                      <div class="txt-box mt-3">
                         <p>
                           <span class="icon-tip">TIP</span>
                           <span class="txt-tiny">
@@ -265,58 +274,60 @@
                     <h3>
                       추천 아이템은
                       <br />
-                      <strong>전 분기대비 매출이 증가</strong> 하고 있습니다.
+                      <strong>전 분기보다 매출이 올라가고 있어요!</strong>
                     </h3>
                   </header>
                   <div class="section-content">
                     <div class="card p-5 shadow-sm">
-                      <div class="chart-container chart-vertical-arrow">
-                        <div class="chart-bars">
-                          <div
-                            class="chart-bar "
-                            :class="{
-                              'bar-rank-max':
-                                maxRevenue ===
-                                Math.abs(
-                                  item.estimatedIncreasedRevenuePercentage,
-                                ),
-                              'bar-rank-min':
-                                minRevenue ===
-                                Math.abs(
-                                  item.estimatedIncreasedRevenuePercentage,
-                                ),
-                            }"
-                            v-for="(item, index) in result.rankDataWCScore"
-                            :key="index"
-                            :style="{
-                              height:
-                                (Math.abs(
-                                  item.estimatedIncreasedRevenuePercentage,
-                                ) /
-                                  maxRevenue) *
-                                  100 +
-                                '%',
-                            }"
-                          >
-                            <div class="bar-stack">
-                              <span class="bar-percent"
-                                >{{
+                      <div data-aos="fade-in" data-aos-duration="1000">
+                        <div class="chart-container chart-vertical-arrow">
+                          <div class="chart-bars">
+                            <div
+                              class="chart-bar "
+                              :class="{
+                                'bar-rank-max':
+                                  maxRevenue ===
                                   Math.abs(
                                     item.estimatedIncreasedRevenuePercentage,
-                                  ).toFixed(0)
-                                }}%
-                              </span>
+                                  ),
+                                'bar-rank-min':
+                                  minRevenue ===
+                                  Math.abs(
+                                    item.estimatedIncreasedRevenuePercentage,
+                                  ),
+                              }"
+                              v-for="(item, index) in result.rankDataWCScore"
+                              :key="index"
+                              :style="{
+                                height:
+                                  (Math.abs(
+                                    item.estimatedIncreasedRevenuePercentage,
+                                  ) /
+                                    maxRevenue) *
+                                    100 +
+                                  '%',
+                              }"
+                            >
+                              <div class="bar-stack">
+                                <span class="bar-percent"
+                                  >+{{
+                                    Math.abs(
+                                      item.estimatedIncreasedRevenuePercentage,
+                                    ).toFixed(0)
+                                  }}%
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="chart-labels">
-                          <span
-                            class="chart-label"
-                            v-for="(item, index) in result.rankDataWCScore"
-                            :key="index"
-                          >
-                            {{ item.attributeValues.sSmallCategoryName }}
-                          </span>
+                          <div class="chart-labels">
+                            <span
+                              class="chart-label"
+                              v-for="(item, index) in result.rankDataWCScore"
+                              :key="index"
+                            >
+                              {{ item.attributeValues.sSmallCategoryName }}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -330,13 +341,13 @@
                 <div>
                   <header class="section-header">
                     <h3>
-                      추천 아이템으로 <br class="d-block d-lg-none" />
-                      <strong>추가 매출을 올릴 수</strong> 있어요!
+                      추천 아이템으로 <br />
+                      <strong>추가 매출을 올릴 수 있어요!</strong>
                     </h3>
                   </header>
                   <div class="section-content">
-                    <div class="card p-5 shadow-sm">
-                      <div class="odometer-container my-8">
+                    <div class="card p-10 shadow-sm">
+                      <div class="odometer-container">
                         <div class="odometer-box">
                           <span class="odometer-count">
                             <vue-odometer :value="revenueCount"> </vue-odometer>
@@ -381,12 +392,12 @@
                 </div>
                 <div
                   class="txt-box txt-lg-center"
-                  data-aos="fade-in"
+                  data-aos="fade-up"
                   data-aos-duration="2000"
                 >
                   <p>
                     상권의 고객 정보부터 시간에 따른 매출변화까지 <br />
-                    어려운 데이터를 한눈에 쉽게 안내드립니다.
+                    어려운 데이터를 한눈에 쉽게 알 수 있어요!
                   </p>
                 </div>
               </div>
@@ -604,7 +615,7 @@
             pill
             size="xl"
             class="shadow"
-            @click="$router.push('/question')"
+            @click="isComplete = false"
           >
             처음으로
           </b-btn>
@@ -656,7 +667,7 @@ export default class Solution extends BaseComponent {
   private time = 30;
   private smsAuthNotificationDto = new SmsAuthNotificationDto();
 
-  private revenueCount = 12000000;
+  private revenueCount = 0;
   private isToggleForm = false;
   private isFormVisible = false;
 
@@ -777,6 +788,8 @@ export default class Solution extends BaseComponent {
       const winHeight = window.outerHeight;
       if (rect < winHeight / 2) {
         this.revenueCount = this.maxRevenueValue;
+      } else {
+        this.revenueCount = 0;
       }
     }
   }
@@ -786,7 +799,6 @@ export default class Solution extends BaseComponent {
     if (target) {
       const rect = target.getBoundingClientRect().top;
       const winHeight = window.outerHeight;
-      console.log(rect, winHeight / 2);
       if (rect < winHeight - target.offsetHeight) {
         this.isFormVisible = true;
       } else {
@@ -961,6 +973,7 @@ export default class Solution extends BaseComponent {
         font-size: $h5;
         color: $primary;
         font-weight: 300;
+        line-height: 1.4;
         strong {
           font-weight: 700;
         }
@@ -1047,6 +1060,15 @@ export default class Solution extends BaseComponent {
         box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.075);
         padding: 2.5em 1.5em 1.25em;
         min-height: 7em;
+      }
+    }
+
+    &.section01 {
+      .section-content {
+        > .row {
+          margin-top: -0.5em;
+          margin-bottom: -0.5em;
+        }
       }
     }
   }
@@ -1136,7 +1158,7 @@ export default class Solution extends BaseComponent {
       align-items: flex-end;
       justify-content: space-around;
       border-bottom: 1px solid $gray;
-      height: 8em;
+      height: 7em;
     }
     .chart-bar {
       position: relative;
@@ -1169,9 +1191,10 @@ export default class Solution extends BaseComponent {
         bottom: 0;
         margin-top: 3em;
         width: 100%;
-        height: calc(100% - 3em);
+        height: 0%;
         background-color: $blue;
         border-color: $blue;
+        transition: height 1s ease 0.5s;
         &:before {
           position: absolute;
           left: 50%;
@@ -1216,10 +1239,17 @@ export default class Solution extends BaseComponent {
   }
 }
 
+// chart animated
 .aos-animate {
-  .bar-stack {
+  .chart-horizontal-stacked .bar-stack {
     &:before {
       width: 100% !important;
+    }
+  }
+
+  .chart-vertical-arrow {
+    .bar-stack {
+      height: calc(100% - 3em) !important;
     }
   }
 }
@@ -1297,6 +1327,7 @@ export default class Solution extends BaseComponent {
       .card {
         .card-img-left {
           width: auto;
+          height: 8.5em;
         }
         .card-body {
           width: auto;
