@@ -14,6 +14,9 @@ export class QuestionService extends BaseService {
   constructor() {
     super();
   }
+  getKBCategoryQuestion(firstQuestionDto: FirstQuestionDto) {
+    return super.get<QuestionResponseDto>('question', firstQuestionDto);
+  }
   getFirstQuestion(firstQuestionDto: FirstQuestionDto) {
     return super.get<QuestionResponseDto>('v2/question', firstQuestionDto);
   }
@@ -27,7 +30,7 @@ export class QuestionService extends BaseService {
     );
   }
   postConsult(consultRequestDto: ConsultRequestDto) {
-    return super.post<any>('consult-result', consultRequestDto);
+    return super.post<any>('v2/consult-result', consultRequestDto);
   }
 }
 

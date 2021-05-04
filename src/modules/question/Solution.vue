@@ -615,7 +615,7 @@
             pill
             size="xl"
             class="shadow"
-            @click="isComplete = false"
+            @click="$emit('reset')"
           >
             처음으로
           </b-btn>
@@ -769,6 +769,7 @@ export default class Solution extends BaseComponent {
 
   //
   onConsultBtnClicked() {
+    this.consultRequestDto.proformaConsultResultId = this.result.id;
     questionService.postConsult(this.consultRequestDto).subscribe(res => {
       if (res) {
         this.isComplete = true;
