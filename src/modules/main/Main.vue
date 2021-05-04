@@ -309,7 +309,7 @@
             <b-tab title="진단하기" active>
               <div class="img-box">
                 <div class="mask-box">
-                  <b-img-lazy
+                  <img
                     src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_section04_img01.png"
                   />
                 </div>
@@ -324,7 +324,7 @@
             <b-tab title="결과보기">
               <div class="img-box">
                 <div class="mask-box">
-                  <b-img-lazy
+                  <img
                     src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_section04_img02.png"
                   />
                 </div>
@@ -339,7 +339,7 @@
             <b-tab title="플래너 만나기">
               <div class="img-box">
                 <div class="mask-box">
-                  <b-img-lazy
+                  <img
                     src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_section04_img03.png"
                   />
                 </div>
@@ -354,7 +354,7 @@
             <!-- <b-tab title="신청하기">
               <div class="img-box">
                 <div class="mask-box">
-                  <b-img-lazy
+                  <img
                     src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_section04_img04.png"
                   />
                 </div>
