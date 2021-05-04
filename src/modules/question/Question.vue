@@ -10,10 +10,10 @@
               class="logo-w"/></router-link
         ></span>
         <h2 data-aos="fade-down" data-aos-duration="1500">
-          실패없는 창업을 <br />안내합니다
+          상권에 딱 맞는 <br />창업 아이템을 확인하세요!
         </h2>
         <p data-aos="fade-down" data-aos-duration="1500">
-          원하는 위치에서 무슨 메뉴로 창업해야 할지 <br />빅데이터로 분석합니다.
+          단 1분만에 빅데이터로 <br />최적 창업 아이템을 추천합니다.
         </p>
         <div
           class="btn-box text-center"
@@ -365,11 +365,13 @@
           <div class="mt-4 text-center">
             <p class="txt-large txt-white">
               <template v-if="loadingProgress < 91">
-                분석 중입니다 <br />
-                완료되면 상권 리포트를 확인하실 수 있습니다
+                분석이 진행되고 있어요 <br />
+                응답하신 내용과 빅데이터로 <br />상권에 딱 맞는 창업 아이템을
+                알려드릴게요
               </template>
               <template v-else>
-                곧 상권 리포트가 완료됩니다
+                거의 완료되었어요 <br />
+                이제 결과를 보여드릴게요
               </template>
             </p>
           </div>
@@ -857,7 +859,7 @@ export default class Question extends BaseComponent {
       .btn-back {
         position: fixed;
         left: 0.75em;
-        top: 1.25em;
+        top: 0.75em;
         width: 4em;
         height: 4em;
         background-color: transparent;

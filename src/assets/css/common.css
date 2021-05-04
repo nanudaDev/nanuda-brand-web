@@ -13088,6 +13088,10 @@ img {
   border-style: none;
 }
 
+figure {
+  margin: 0;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -18046,6 +18050,7 @@ template {
   right: 1em;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 2;
 }
 
 .form-control {
@@ -18508,12 +18513,17 @@ template {
   font-size: 1em !important;
 }
 
+.article-section .section-content p + p {
+  margin-top: 1.5em;
+}
+
 /* 회사소개 - 추후 옮김 */
 .app-about-us .article-header {
   height: calc(100vh - 3.375em);
   background-color: #004d8a;
   background-repeat: no-repeat;
   background-position: center center;
+  background-image: url("https://kr.object.ncloudstorage.com/common-storage-pickcook/main/bg_circle.svg");
   background-size: cover;
   text-align: center;
   color: #fff;
@@ -18595,11 +18605,11 @@ template {
 }
 
 .video-wrapper {
-  background-image: url("/assets/images/main_visuual.png");
+  background-image: url("https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_visuual.png");
 }
 
 .video-wrapper.fnb {
-  background-image: url("/assets/images/main_visuual_02.png");
+  background-image: url("https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_visuual_02.png");
 }
 
 /* services */
@@ -18613,6 +18623,7 @@ template {
   justify-content: center;
   height: calc(100vh - 3.375em);
   background-color: #161a29;
+  background-image: url("https://kr.object.ncloudstorage.com/common-storage-pickcook/main/bg_service.svg");
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: cover;
