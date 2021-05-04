@@ -781,6 +781,7 @@ export default class Question extends BaseComponent {
       },
     ];
     this.givens = [];
+    this.KBCategoryGivens = [];
     this.addressGivens = [];
     this.showingLevel = ADDRESS_LEVEL.sidoName;
     this.selectedRoadAddress = '';
