@@ -417,7 +417,7 @@ export default class Question extends BaseComponent {
   private isLastQuestion = false;
   private smallSizeQuestionId = [1, 4, 5, 12];
   private bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
-  private questionTotalCount: any = 9;
+  private questionTotalCount: any = 10;
   private questionOrder: any = 0;
   private prevOrder: any = 0;
   private question = '나는 현재';

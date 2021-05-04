@@ -13575,7 +13575,8 @@ template {
   height: 3em;
   line-height: 1;
   background-color: transparent;
-  border: 1px solid transparent;
+  border-width: 1px;
+  border-style: solid;
   border-radius: 0.5rem;
   box-sizing: border-box;
   transition: background-color ease-in-out 0.25s, color ease-in-out 0.25s, border-color ease-in-out 0.25s;

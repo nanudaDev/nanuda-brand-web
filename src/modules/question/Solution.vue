@@ -58,6 +58,7 @@
                       class="card shadow-sm  flex-row d-lg-block"
                       data-aos="fade-up"
                       data-aos-duration="1000"
+                      :data-aos-delay="300 * index"
                       v-b-toggle="toggleId(index)"
                     >
                       <div class="card-img-left" v-if="item.sSmallCategoryCode">
@@ -346,7 +347,7 @@
                     </h3>
                   </header>
                   <div class="section-content">
-                    <div class="card p-10 shadow-sm">
+                    <div class="card py-10 px-2 shadow-sm">
                       <div class="odometer-container">
                         <div class="odometer-box">
                           <span class="odometer-count">
@@ -383,6 +384,7 @@
                     <img
                       data-aos="fade-up"
                       :data-aos-duration="500 * (1 * (4 - n))"
+                      :data-aos-delay="300 * (1 * (4 - n))"
                       :src="
                         `https://kr.object.ncloudstorage.com/common-nanuda/images/report_img_0${n}.png`
                       "
@@ -410,9 +412,11 @@
           <!-- 폼 영역 -->
           <header class="section-header">
             <h3 class="txt-center">
-              <strong class="txt-big txt-bold">
-                픽쿡플래너가 쉽고 빠르게 <br class="d-block d-lg-none" />
-                추가 매출을 올려드릴게요!
+              <strong class="txt-big ">
+                <span class="txt-bold">
+                  픽쿡플래너가 쉽고 빠르게 <br class="d-block d-lg-none" />
+                  추가 매출을 올려드릴게요!
+                </span>
               </strong>
             </h3>
           </header>
@@ -1271,13 +1275,13 @@ export default class Solution extends BaseComponent {
     display: inline-flex;
     align-items: baseline;
     .odometer-count {
-      font-size: 4.8rem;
+      font-size: 4.4rem;
       font-weight: $txt-bolder;
       line-height: 1;
       color: $primary;
       * {
         font-family: 'Gotham', sans-serif !important;
-        min-width: 0.7em;
+        min-width: 0.68em;
       }
     }
     .odometer-unit {
