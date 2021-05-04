@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+//adjust hue(색상)
+@mixin adjust-hue($property, $color, $percent) {
+	#{$property}: adjust-hue($color, $percent);
+}
+
+//saturation(채도 증가)
+@mixin saturate($property, $color, $percent) {
+	#{$property}: saturate($color, $percent);
+}
+
+//desaturate(채도 감소)
+@mixin desaturate($property, $color, $percent) {
+	#{$property}: desaturate($color, $percent);
+}
+
+//lightness(휘도 감소)
+@mixin darken($property, $color, $percent) {
+	#{$property}: darken($color, $percent);
+}
+
+//lightness(휘도 증가)
+@mixin lighten($property, $color, $percent) {
+	#{$property}: lighten($color, $percent);
+}
+
+//shade
+@mixin shade($property, $color, $percent) {
+	#{$property}: shade($color, $percent);
+}
+
+//tint
+@mixin tint($property, $color, $percent) {
+	#{$property}: tint($color, $percent);
+}

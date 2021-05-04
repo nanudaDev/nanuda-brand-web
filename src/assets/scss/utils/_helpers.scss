@@ -1,0 +1,238 @@
+@charset "utf-8";
+
+@mixin maxLayout {
+  @media screen and (min-width: 1025px) and (orientation: landscape) {
+    // max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+@mixin gradientBlack {
+  background: -moz-linear-gradient(
+    top,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0) 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    top,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0) 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0) 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+  border-bottom: 0;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+@mixin blind {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
+.is-blind {
+  @include blind();
+}
+
+.is-ellipsis {
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+}
+
+.is-nowrap {
+  white-space: nowrap !important;
+}
+
+@each $grid-breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($grid-breakpoint) {
+    $infix: breakpoint-infix($grid-breakpoint, $grid-breakpoints);
+
+    @each $prop, $abbrev in (margin: m, padding: p) {
+      @for $i from 0 through 40 {
+        .#{$abbrev}#{$infix}-#{$i} {
+          #{$prop}: $i * $spacer !important;
+        }
+        .#{$abbrev}t#{$infix}-#{$i},
+        .#{$abbrev}y#{$infix}-#{$i} {
+          #{$prop}-top: $i * $spacer !important;
+        }
+        .#{$abbrev}r#{$infix}-#{$i},
+        .#{$abbrev}x#{$infix}-#{$i} {
+          #{$prop}-right: $i * $spacer !important;
+        }
+        .#{$abbrev}b#{$infix}-#{$i},
+        .#{$abbrev}y#{$infix}-#{$i} {
+          #{$prop}-bottom: $i * $spacer !important;
+        }
+        .#{$abbrev}l#{$infix}-#{$i},
+        .#{$abbrev}x#{$infix}-#{$i} {
+          #{$prop}-left: $i * $spacer !important;
+        }
+      }
+
+      @each $size, $length in $spacers {
+        .#{$abbrev}t#{$infix}-#{$size},
+        .#{$abbrev}y#{$infix}-#{$size} {
+          #{$prop}-top: $length !important;
+        }
+        .#{$abbrev}r#{$infix}-#{$size},
+        .#{$abbrev}x#{$infix}-#{$size} {
+          #{$prop}-right: $length !important;
+        }
+        .#{$abbrev}b#{$infix}-#{$size},
+        .#{$abbrev}y#{$infix}-#{$size} {
+          #{$prop}-bottom: $length !important;
+        }
+        .#{$abbrev}l#{$infix}-#{$size},
+        .#{$abbrev}x#{$infix}-#{$size} {
+          #{$prop}-left: $length !important;
+        }
+      }
+    }
+
+    // Some special margin utils
+    .m#{$infix}-auto {
+      margin: auto !important;
+    }
+    .mt#{$infix}-auto,
+    .my#{$infix}-auto {
+      margin-top: auto !important;
+    }
+    .mr#{$infix}-auto,
+    .mx#{$infix}-auto {
+      margin-right: auto !important;
+    }
+    .mb#{$infix}-auto,
+    .my#{$infix}-auto {
+      margin-bottom: auto !important;
+    }
+    .ml#{$infix}-auto,
+    .mx#{$infix}-auto {
+      margin-left: auto !important;
+    }
+  }
+}
+
+@each $prop, $abbrev in (width: w, height: h) {
+  @for $i from 1 through 100 {
+    .#{$abbrev}-#{$i} {
+      #{$prop}: $i * ($spacer * 2) !important;
+    }
+  }
+
+  @for $i from 10 through 100 {
+    @if ($i%10 == 0) {
+      .#{$abbrev}-#{$i}p {
+        #{$prop}: percentage($i/100) !important;
+      }
+    }
+  }
+}
+
+// Border
+
+.border {
+  border: $border-width solid $border-color !important;
+}
+.border-top {
+  border-top: $border-width solid $border-color !important;
+}
+.border-right {
+  border-right: $border-width solid $border-color !important;
+}
+.border-bottom {
+  border-bottom: $border-width solid $border-color !important;
+}
+.border-left {
+  border-left: $border-width solid $border-color !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+.border-top-0 {
+  border-top: 0 !important;
+}
+.border-right-0 {
+  border-right: 0 !important;
+}
+.border-bottom-0 {
+  border-bottom: 0 !important;
+}
+.border-left-0 {
+  border-left: 0 !important;
+}
+
+@each $color, $value in $colors {
+  .border-#{$color} {
+    border-color: $value !important;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .border-#{$color} {
+    border-color: $value !important;
+  }
+}
+
+.border-white {
+  border-color: $white !important;
+}
+
+// Border-radius
+
+.rounded-sm {
+  border-radius: $border-radius-sm !important;
+}
+
+.rounded {
+  border-radius: $border-radius !important;
+}
+
+.rounded-top {
+  border-top-left-radius: $border-radius !important;
+  border-top-right-radius: $border-radius !important;
+}
+
+.rounded-right {
+  border-top-right-radius: $border-radius !important;
+  border-bottom-right-radius: $border-radius !important;
+}
+
+.rounded-bottom {
+  border-bottom-right-radius: $border-radius !important;
+  border-bottom-left-radius: $border-radius !important;
+}
+
+.rounded-left {
+  border-top-left-radius: $border-radius !important;
+  border-bottom-left-radius: $border-radius !important;
+}
+
+.rounded-lg {
+  border-radius: $border-radius-lg !important;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.rounded-pill {
+  border-radius: $rounded-pill !important;
+}
+
+.rounded-0 {
+  border-radius: 0 !important;
+}

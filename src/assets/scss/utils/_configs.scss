@@ -1,0 +1,279 @@
+@charset "utf-8";
+
+// confings
+
+// Unit Settings
+$unit: 'rem';
+
+// Font Settings
+$txt-mini: rempx(1, 10);
+$txt-tiny: rempx(1.2, 12);
+$txt-small: rempx(1.4, 14);
+$txt-medium: rempx(1.6, 16);
+$txt-large: rempx(2.3, 23);
+$txt-big: rempx(2.6, 26);
+$txt-huge: rempx(3, 30);
+$txt-massive: rempx(3.6, 36);
+$h1: rempx(3.6, 36);
+$h2: rempx(3, 30);
+$h3: rempx(2.6, 26);
+$h4: rempx(2.3, 23);
+$h5: rempx(2, 20);
+$h6: rempx(1.8, 18);
+
+$font-sizes: () !default;
+$font-sizes: map-merge(
+  (
+    'mini': $txt-mini,
+    'tiny': $txt-tiny,
+    'small': $txt-small,
+    'medium': $txt-medium,
+    'large': $txt-large,
+    'big': $txt-big,
+    'huge': $txt-huge,
+    'massive': $txt-massive,
+  ),
+  $font-sizes
+);
+
+$line-height-default: 1.6;
+
+// Font Weight
+
+$txt-normal: 400 !default;
+$txt-bold: 600 !default;
+$txt-bolder: 800 !default;
+
+$font-weight: () !default;
+$font-weight: map-merge(
+  (
+    'normal': $txt-normal,
+    'bold': $txt-bold,
+    'bolder': $txt-bolder,
+  ),
+  $font-weight
+);
+
+//Color Settings
+$white: #fff !default;
+$black: #212121 !default;
+$gray-100: #f0f0f0 !default;
+$gray-200: #e4e4e4 !default;
+$gray-300: #dddddd !default;
+$gray-400: #969696 !default;
+$gray-500: #707070 !default;
+$gray-600: #646464 !default;
+$gray-700: #424242 !default;
+$gray-800: #323232 !default;
+$gray-900: #212121 !default;
+
+$grays: () !default;
+$grays: map-merge(
+  (
+    '100': $gray-100,
+    '200': $gray-200,
+    '300': $gray-300,
+    '400': $gray-400,
+    '500': $gray-500,
+    '600': $gray-600,
+    '700': $gray-700,
+    '800': $gray-800,
+    '900': $gray-900,
+  ),
+  $grays
+);
+
+$blue: #6c8fb7 !default;
+$lightblue: #a7bdd3 !default;
+$darkblue: #004d8a !default;
+$indigo: #1a1448 !default;
+$purple: #7e5cdf !default;
+$lightpurple: #b0b6f3 !default;
+$pink: #ea4c89 !default;
+$red: #e4111d !default;
+$orange: #ff7a00 !default;
+$lightorange: #ff9931 !default;
+$darkorange: #e26e42 !default;
+$yellow: #fec001 !default;
+$green: #46b266 !default;
+$teal: #33cabb !default;
+$cyan: #17a2b8 !default;
+$darknavy: #1e3142 !default;
+$brown: #d1a62c !default;
+
+$colors: () !default;
+$colors: map-merge(
+  (
+    'blue': $blue,
+    'lightblue': $lightblue,
+    'darkblue': $darkblue,
+    'black': $black,
+    'indigo': $indigo,
+    'purple': $purple,
+    'lightpurple': $lightpurple,
+    'pink': $pink,
+    'red': $red,
+    'orange': $orange,
+    'lightorange': $lightorange,
+    'darkorange': $darkorange,
+    'yellow': $yellow,
+    'green': $green,
+    'teal': $teal,
+    'cyan': $cyan,
+    'darknavy': $darknavy,
+    'white': $white,
+    'light': $gray-100,
+    'lightgray': $gray-400,
+    'darkgray': $gray-800,
+    'brown': $brown,
+    'gray': $gray-500,
+    'gray-100': $gray-100,
+    'gray-200': $gray-200,
+    'gray-300': $gray-300,
+    'gray-400': $gray-400,
+    'gray-500': $gray-500,
+    'gray-600': $gray-600,
+    'gray-700': $gray-700,
+    'gray-800': $gray-800,
+    'gray-900': $gray-900,
+  ),
+  $colors
+);
+
+$primary: $darkblue !default;
+$secondary: $gray-500 !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$gray: $gray-500 !default;
+$light: $gray-100 !default;
+$dark: $gray-900 !default;
+
+$theme-colors: () !default;
+$theme-colors: map-merge(
+  (
+    'primary': $primary,
+    'secondary': $secondary,
+    'success': $success,
+    'info': $info,
+    'warning': $warning,
+    'danger': $danger,
+  ),
+  $theme-colors
+);
+
+$yiq-text-dark: $gray-800 !default;
+$yiq-text-light: $white !default;
+$yiq-contrasted-threshold: 191 !default;
+
+//Component Settings
+$border-color: $gray-300 !default;
+$border-width: 1px !default;
+$border-radius: 1rem !default;
+$border-radius-lg: 2.5rem !default;
+$border-radius-sm: 0.25rem !default;
+$rounded-pill: 50rem !default;
+
+// Table Settings
+$table-border-top-color: $black;
+$table-border-color: $border-color;
+$thead-th-bg-color: $white;
+$thead-td-bg-color: $white;
+$tbody-th-bg-color: $white;
+$tbody-td-bg-color: $white;
+
+$table-head-bg: $gray-200 !default;
+$table-head-color: $gray-700 !default;
+$table-dark-color: $white !default;
+$table-dark-bg: $gray-800 !default;
+$table-dark-accent-bg: rgba($white, 0.05) !default;
+$table-dark-hover-color: $table-dark-color !default;
+$table-dark-hover-bg: rgba($white, 0.075) !default;
+$table-dark-border-color: lighten($table-dark-bg, 7.5%) !default;
+
+//Grid Settings
+$enable-grid-classes: true !default;
+$enable-responsive-grid-classes: true !default;
+$grid-type: 'flex';
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1480px,
+) !default;
+
+@include _assert-ascending($grid-breakpoints, '$grid-breakpoints');
+@include _assert-starts-at-zero($grid-breakpoints, '$grid-breakpoints');
+
+$container-max-widths: (
+  // sm: 540px,
+    // md: 720px,
+    lg: 1000px,
+  xl: 1140px
+);
+
+@if $unit== 'px' {
+  $container-max-widths: (
+    // sm: 540px,
+      // md:720px,
+      lg:
+      1000px,
+    xl: 1140px
+  );
+}
+
+@include _assert-ascending($container-max-widths, '$container-max-widths');
+
+$grid-columns: 12;
+$grid-gutter-width: 1.5em;
+$container-max-width: 72em;
+
+@if $unit== 'px' {
+  $grid-gutter-width: 32px;
+  $container-max-width: 1140px;
+}
+
+//z-index Settings
+$zindex-gnb: 900 !default;
+$zindex-header: 990 !default;
+$zindex-dropdown: 1000 !default;
+$zindex-sticky: 1020 !default;
+$zindex-fixed: 1030 !default;
+$zindex-modal-backdrop: 1040 !default;
+$zindex-modal: 1050 !default;
+$zindex-popover: 1060 !default;
+$zindex-tooltip: 1070 !default;
+$zindex-skip: 1080 !default;
+
+// Spacer Settings
+$spacer: 1em / 4;
+
+@if $unit== 'px' {
+  $spacer: 4px;
+}
+
+$spacers: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$spacers: map-merge(
+  (
+    tight: (
+      $spacer / 2,
+    ),
+    base: (
+      $spacer * 2,
+    ),
+    wide: (
+      $spacer * 4,
+    ),
+  ),
+  $spacers
+);
+
+$displays: none, inline, inline-block, block, table, table-row, table-cell, flex,
+  inline-flex !default;
+
+//form
+$form-grid-gutter-width: 10px;

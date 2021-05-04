@@ -1,0 +1,73 @@
+/* tab */
+.tab {
+	position: relative;
+	
+	.tab-nav {
+		position: relative;
+		border-width: 0;
+		border-bottom-width: 1px;
+		border-style: solid;
+		border-color: $border-color;
+		white-space: nowrap;
+
+		@include clearfix();
+	}
+	
+	.tab-item {
+		position: relative;
+		display: block;
+		float: left;
+		height: 3em;
+		padding: 0 1em;
+		line-height: 3;
+		text-align: center;
+		text-decoration: none;
+		box-sizing: border-box;
+		user-select: none;
+		
+		&:hover {
+			color: $primary;
+		}
+		
+		&.is-active {
+			font-weight: 500;
+			color: $primary;
+			z-index: 1;
+		}
+		
+		&.is-active:after {
+			content: '';
+			position: absolute;
+			right: 0;
+			bottom: -1px;
+			left: 0;
+			display: block;
+			border-width: 0;
+			border-bottom-width: 3px;
+			border-style: solid;
+			border-color: $primary;
+		}
+	}
+	
+	.tab-content {
+		
+		&:not(.is-blind) {
+			position: relative;
+			margin-top: 1em;
+		}
+	}
+	
+	.btn-copy {
+		position: absolute;
+		right: 0;
+		padding: .5em;
+    width: 3em;
+    height: 3em;
+		border-width: 0;
+	}
+}
+
+* + .tab {
+	margin-top: 1em;
+}
+/* tab */

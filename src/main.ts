@@ -22,14 +22,14 @@ import {
 } from 'swiper';
 import getAwesomeSwiper from 'vue-awesome-swiper/dist/exporter';
 SwiperClass.use([Pagination, Mousewheel, Autoplay]);
-Vue.use(getAwesomeSwiper(SwiperClass));
 const { Swiper, SwiperSlide } = getAwesomeSwiper(SwiperClass);
 import 'swiper/swiper-bundle.css';
+
 import BaseArrow from '@/modules/_components/svg/BaseArrow.vue';
 import BaseSearch from '@/modules/_components/svg/BaseSearch.vue';
 import VueGtag from 'vue-gtag';
-// facebook pixel
 
+// facebook pixel
 import VueFacebookPixel from 'vue-analytics-facebook-pixel';
 import VueMoment from 'vue-moment';
 
@@ -41,15 +41,23 @@ PhonePipeTransformer();
 
 import VueEllipseProgress from 'vue-ellipse-progress';
 
+// odometer
+import VueOdometer from 'vue-odometer';
+import 'odometer/themes/odometer-theme-default.css';
+
 Vue.config.productionTip = false;
+
 Vue.component('MainLayout', MainLayout);
 Vue.component('NonLayout', NonLayout);
 Vue.component('BaseArrow', BaseArrow);
 Vue.component('BaseSearch', BaseSearch);
+Vue.component('VueOdometer', VueOdometer);
+
 Vue.use(VueFacebookPixel);
 // Vue.use(VueFacebookPixel);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
+Vue.use(getAwesomeSwiper(SwiperClass));
 
 Vue.use(VueMoment);
 Vue.use(VueEllipseProgress);
