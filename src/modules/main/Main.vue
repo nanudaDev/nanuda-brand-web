@@ -425,7 +425,7 @@ export default class Main extends BaseComponent {
     tagRef: HTMLFormElement;
   };
   navbarHeight: any = 0;
-  private isFnbVideo = false;
+  private isFnbVideo = true;
   private currentIdx = 0;
   private tagList: any = [
     {
@@ -577,9 +577,9 @@ export default class Main extends BaseComponent {
     const params = Object.fromEntries(new URLSearchParams(urlQuery));
     if (urlQuery) {
       if (params.isFnbVideo) {
-        this.isFnbVideo = true;
-      } else {
         this.isFnbVideo = false;
+      } else {
+        this.isFnbVideo = true;
       }
     }
 

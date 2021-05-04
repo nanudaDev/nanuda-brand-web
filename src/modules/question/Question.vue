@@ -814,7 +814,7 @@ export default class Question extends BaseComponent {
   }
   .main-article {
     min-height: 100vh;
-    &:not(#question-start, #question-result) {
+    &:not(#question-start, #question-result, #question-solution, #question-complete) {
       .btn-back {
         position: fixed;
         left: 0.75em;

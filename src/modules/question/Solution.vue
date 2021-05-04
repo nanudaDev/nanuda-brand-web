@@ -1,5 +1,5 @@
 <template>
-  <article class="main-article" id="question-solution" v-if="isComplete">
+  <article class="main-article" id="question-solution" v-if="!isComplete">
     <header class="article-header">
       <div class="container">
         <h2>
@@ -50,77 +50,82 @@
                 <b-col
                   cols="12"
                   lg="4"
-                  class="my-2"
                   v-for="(item, index) in result.rankDataWCScore"
                   :key="index"
                 >
-                  <div
-                    class="card flex-row d-lg-block shadow-sm"
-                    data-aos="fade-up"
-                    data-aos-duration="1000"
-                    v-b-toggle="toggleId(index)"
-                  >
-                    <div class="card-img-left">
-                      <b-img-lazy
-                        :src="require('@/assets/images/about_us_review_01.png')"
-                        alt=""
-                      />
-                    </div>
-                    <div class="card-body">
-                      <div class="card-badge">
-                        <b-badge pill variant="primary" v-if="index === 0"
-                          >최고적합률</b-badge
-                        >
-                        <b-badge pill variant="secondary">{{
-                          item.mediumCategoryName
-                        }}</b-badge>
-                        <b-badge pill variant="outline-secondary"
-                          >찌개/전골류</b-badge
-                        >
+                  <div class="my-2">
+                    <div
+                      class="card shadow-sm  flex-row d-lg-block"
+                      data-aos="fade-up"
+                      data-aos-duration="1000"
+                      v-b-toggle="toggleId(index)"
+                    >
+                      <div class="card-img-left">
+                        <b-img-lazy
+                          :src="
+                            require('@/assets/images/about_us_review_01.png')
+                          "
+                          alt=""
+                        />
                       </div>
-                      <h4 class="card-title">
-                        {{ item.attributeValues.sSmallCategoryName }}
-                      </h4>
-                      <p class="card-text">
-                        <b-icon icon="graph-up"></b-icon>
-                        <span class="mx-1"
-                          >적합률
-                          <strong
-                            >{{ Math.round(item.appliedFitnessScore) }}%</strong
-                          ></span
-                        >
-                      </p>
-                      <span class="btn-toggle">
-                        <span class="txt-tiny">더 보기</span>
-                        <span class="icon-toggle-arrow">
-                          <b-icon icon="chevron-down"></b-icon>
+                      <div class="card-body">
+                        <div class="card-badge">
+                          <b-badge pill variant="primary" v-if="index === 0"
+                            >최고적합률</b-badge
+                          >
+                          <b-badge pill variant="secondary">{{
+                            item.mediumCategoryName
+                          }}</b-badge>
+                          <b-badge pill variant="outline-secondary"
+                            >찌개/전골류</b-badge
+                          >
+                        </div>
+                        <h4 class="card-title">
+                          {{ item.attributeValues.sSmallCategoryName }}
+                        </h4>
+                        <p class="card-text">
+                          <b-icon icon="graph-up"></b-icon>
+                          <span class="mx-1"
+                            >적합률
+                            <strong
+                              >{{
+                                Math.round(item.appliedFitnessScore)
+                              }}%</strong
+                            ></span
+                          >
+                        </p>
+                        <span class="btn-toggle">
+                          <span class="txt-tiny">더 보기</span>
+                          <span class="icon-toggle-arrow">
+                            <b-icon icon="chevron-down"></b-icon>
+                          </span>
                         </span>
-                      </span>
+                      </div>
                     </div>
+                    <b-collapse class="card-collapse" :id="`item0${index}`">
+                      <div class="card-desc">
+                        <b-row no-gutters align-v="center">
+                          <b-col cols="2">
+                            <img
+                              src="@/assets/images/logo.svg"
+                              alt="픽쿡"
+                              class="logo"
+                            />
+                          </b-col>
+                          <b-col cols="10">
+                            <p class="txt-tiny">
+                              빅데이터 상권지수(97%)와 조리경험 (90%),
+                              운영경험(80%), 창업자금(70%)를 종합하였을때,
+                              <strong class="txt-primary txt-bold"
+                                >가장 추천하는 아이템</strong
+                              >
+                              입니다.
+                            </p>
+                          </b-col>
+                        </b-row>
+                      </div>
+                    </b-collapse>
                   </div>
-                  <b-collapse class="card-collapse" :id="`item0${index}`">
-                    <div class="card-desc">
-                      <b-row no-gutters align-v="center">
-                        <b-col cols="2">
-                          <img
-                            src="@/assets/images/logo.svg"
-                            alt="픽쿡"
-                            class="logo"
-                          />
-                        </b-col>
-                        <b-col cols="10">
-                          <p class="txt-tiny">
-                            빅데이터 상권지수(97%)와 조리경험 (90%),
-                            운영경험(80%), 창업자금(70%)를 종합하였을때,
-                            <strong class="txt-primary txt-bold"
-                              >가장 추천하는 아이템</strong
-                            >
-                            입니다.
-                          </p>
-                        </b-col>
-                      </b-row>
-                    </div>
-                  </b-collapse>
                 </b-col>
               </b-row>
             </div>
@@ -132,7 +137,7 @@
               <div>
                 <header class="section-header">
                   <h3>
-                    {{ result.hdong.hdongName }}의 고객들은
+                    {{ result.hdong.hdongName }}의 고객들은 <br />
                     <template
                       v-if="result.deliveryRatioData.restaurantRatio > 30"
                     >
@@ -259,7 +264,7 @@
                   <header class="section-header">
                     <h3>
                       추천 아이템은
-                      <br class="d-block d-lg-none" />
+                      <br />
                       <strong>전 분기대비 매출이 증가</strong> 하고 있습니다.
                     </h3>
                   </header>
@@ -375,7 +380,7 @@
                   </div>
                 </div>
                 <div
-                  class="txt-box"
+                  class="txt-box txt-lg-center"
                   data-aos="fade-in"
                   data-aos-duration="2000"
                 >
@@ -389,14 +394,14 @@
           </div>
         </section>
       </div>
-      <section class="article-section bg-white" ref="bottomForm">
+      <section class="article-section" ref="bottomForm" id="bottom-form">
         <div class="container">
           <!-- 폼 영역 -->
           <header class="section-header">
             <h3 class="txt-center">
               <strong class="txt-big txt-bold">
-                무료로 안내받고 <br class="d-block d-lg-none" />빠르게 추가
-                매출을 올리세요!
+                픽쿡플래너가 쉽고 빠르게 <br class="d-block d-lg-none" />
+                추가 매출을 올려드릴게요!
               </strong>
             </h3>
           </header>
@@ -430,6 +435,7 @@
                 </b-col>
                 <b-col cols="3">
                   <b-btn
+                    variant="primary"
                     size="md"
                     @click="getSMSCode"
                     :disabled="isGetCodeBtnDisabled"
@@ -464,21 +470,22 @@
               <div class="txt-box" v-if="errorText">
                 <p>{{ errorText }}</p>
               </div>
+              <div class="mt-6">
+                <b-btn
+                  variant="primary"
+                  block
+                  size="xl"
+                  :disabled="isConsultBtnDisabled"
+                  @click="onConsultBtnClicked"
+                >
+                  <span>신청하기</span>
+                </b-btn>
+              </div>
             </div>
           </div>
           <!-- // 폼 영역 -->
         </div>
       </section>
-      <b-btn
-        variant="primary"
-        block
-        size="xl"
-        class=" rounded-0"
-        :disabled="isConsultBtnDisabled"
-        @click="onConsultBtnClicked"
-      >
-        <span>픽쿡 플래너 만나기</span>
-      </b-btn>
     </div>
     <!-- sticky 폼 -->
     <transition name="slideInUp">
@@ -561,7 +568,7 @@
                 :disabled="isConsultBtnDisabled"
                 @click="onConsultBtnClicked"
               >
-                <span>픽쿡 플래너 만나기</span>
+                <span>신청하기</span>
               </b-btn>
             </div>
           </div>
@@ -808,6 +815,19 @@ export default class Solution extends BaseComponent {
 <style lang="scss">
 @import '@/assets/scss/common.scss';
 
+#bottom-form {
+  .form-container {
+    label {
+      color: $primary;
+      font-weight: $txt-bold;
+    }
+    .form-control {
+      background-color: transparent;
+      border-color: $primary;
+    }
+  }
+}
+
 #sticky-form {
   background-color: $black;
   width: 100%;
@@ -884,6 +904,8 @@ export default class Solution extends BaseComponent {
 .report-container {
   display: flex;
   align-items: center;
+  max-width: 24em;
+  margin: 0 auto;
 
   .report {
     position: relative;
@@ -1024,7 +1046,7 @@ export default class Solution extends BaseComponent {
         overflow: hidden;
         box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.075);
         padding: 2.5em 1.5em 1.25em;
-        min-height: 8em;
+        min-height: 7em;
       }
     }
   }
@@ -1188,6 +1210,7 @@ export default class Solution extends BaseComponent {
       .chart-label {
         flex: 1;
         text-align: center;
+        font-size: 1.2rem;
       }
     }
   }
@@ -1236,6 +1259,7 @@ export default class Solution extends BaseComponent {
   color: #fff;
   height: 100vh;
   .article-header {
+    display: block;
     text-align: center;
     span {
       display: block;
@@ -1265,6 +1289,11 @@ export default class Solution extends BaseComponent {
 @media screen and (min-width: 1024px) {
   #question-solution {
     .article-section {
+      .section-header {
+        h3 {
+          text-align: center;
+        }
+      }
       .card {
         .card-img-left {
           width: auto;
