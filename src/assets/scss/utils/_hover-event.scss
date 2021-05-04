@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+@mixin hover-event($effect, $bg-color, $color, $percent) {
+	@if $effect == darken {
+		@include darken(background-color, $bg-color, $percent);
+		@include darken(border-color, $bg-color, $percent);
+	} @else if $effect == lighten {
+		@include lighten(background-color, $bg-color, $percent);
+		@include lighten(border-color, $bg-color, $percent);
+	}
+}

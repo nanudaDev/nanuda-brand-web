@@ -1,0 +1,117 @@
+@charset "utf-8";
+
+.o-list {
+  padding-left: 0.5em;
+
+  .o-list-title {
+    font-weight: 600;
+
+    + ol {
+      margin-top: 0.5em !important;
+    }
+  }
+
+  ol {
+    li {
+      position: relative;
+      line-height: 1.6;
+      padding-left: 1.5em;
+
+      .num {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 1.3rem;
+      }
+
+      + li {
+        margin-top: empx(0.5, 10);
+      }
+
+      p + ol {
+        margin-top: 0.5em;
+      }
+    }
+  }
+
+  .o-list,
+  .u-list {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+}
+
+.u-list {
+  .u-list-title {
+    font-weight: 600;
+
+    + ul {
+      margin-top: 0.5em !important;
+    }
+  }
+
+  li {
+    position: relative;
+    padding-left: empx(1, 15);
+    line-height: 1.6;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.7em;
+      left: 0.25em;
+      display: block;
+      width: 3px;
+      height: 3px;
+      background-color: $gray;
+      border-radius: 50%;
+    }
+
+    + li {
+      margin-top: empx(0.5, 10);
+    }
+  }
+
+  .o-list,
+  .u-list {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  @each $color, $value in $colors {
+    &.#{$color} {
+      li {
+        &::before {
+          background-color: $value;
+        }
+      }
+    }
+  }
+
+  &.narrow {
+    li {
+      + li {
+        margin-top: empx(0.25, 5);
+      }
+    }
+  }
+
+  &.wide {
+    li {
+      + li {
+        margin-top: empx(1, 15);
+      }
+    }
+  }
+}
+
+* + .o-list,
+* + .u-list {
+  margin-top: empx(1, 15);
+}
+
+.type-check {
+  li {
+    padding-left: 1.5em;
+  }
+}

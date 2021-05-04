@@ -1,0 +1,226 @@
+@charset "utf-8";
+
+// btn
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 1em;
+  height: 3em;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  transition: background-color ease-in-out 0.25s, color ease-in-out 0.25s,
+    border-color ease-in-out 0.25s;
+  font-size: $txt-medium;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+
+  + .btn {
+    margin-left: 1em;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  span {
+    display: inline-block;
+    line-height: 1;
+  }
+}
+
+.btn-white {
+  background-color: $white;
+  border: 1px solid $border-color;
+
+  &:not(:disabled):hover {
+    border-color: $white;
+  }
+}
+
+@mixin disabled {
+  &:disabled {
+    color: $white;
+    background-color: $gray-400;
+    border-color: $gray-400;
+    cursor: default;
+  }
+}
+
+// btn shape
+.btn-rounded {
+  border-radius: 3em;
+}
+
+.btn-circle {
+  width: 2.5em;
+  height: 2.5em;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.btn-square {
+  border-radius: 0;
+}
+
+.btn-inline-block {
+  display: inline-block;
+  width: auto;
+}
+
+.btn-block {
+  width: 100%;
+  max-width: 100%;
+}
+
+// btn underline
+.btn-underline {
+  text-decoration: underline;
+}
+
+// btn text
+.btn-txt {
+  + .btn-txt {
+    margin-left: 1em;
+  }
+}
+
+// btn color
+@each $color, $value in $colors {
+  .btn-#{$color} {
+    color: color-yiq($value);
+    background-color: $value;
+    border-color: $value;
+
+    &:not(:disabled):hover {
+      color: color-yiq($value);
+      @include darken(background-color, $value, 10);
+      @include darken(border-color, $value, 10);
+    }
+
+    @include disabled();
+  }
+
+  .btn-outline-#{$color} {
+    color: $value;
+    background-color: transparent;
+    border-color: $value;
+
+    &:not(:disabled):hover {
+      color: color-yiq($value);
+      @include darken(background-color, $value, 0);
+      @include darken(border-color, $value, 0);
+    }
+
+    @include disabled();
+  }
+}
+
+// btn theme color
+@each $color, $value in $theme-colors {
+  .btn-#{$color} {
+    color: color-yiq($value);
+    background-color: $value;
+    border-color: $value;
+
+    &:not(:disabled):hover {
+      color: color-yiq($value);
+      @include darken(background-color, $value, 10);
+      @include darken(border-color, $value, 10);
+    }
+
+    @include disabled();
+  }
+
+  .btn-outline-#{$color} {
+    color: $value;
+    background-color: transparent;
+    border-color: $value;
+
+    &:not(:disabled):hover {
+      color: color-yiq($value);
+      @include darken(background-color, $value, 0);
+      @include darken(border-color, $value, 0);
+    }
+
+    @include disabled();
+  }
+}
+
+// btn size
+@each $size, $value in $font-sizes {
+  .btn-#{$size} {
+    font-size: $value;
+  }
+}
+
+// btn icon
+.btn-icon {
+  position: relative;
+  padding: 0.25em;
+  width: 2.5em;
+  height: 2.5em;
+  text-align: center;
+
+  [class*='icon-'] {
+    display: inline-block;
+    font-size: 1.875em;
+  }
+
+  span {
+    @include blind();
+  }
+
+  &.btn-circle {
+    [class*='icon-'] {
+      font-size: 1.5em;
+    }
+  }
+}
+
+// bagge
+.badge {
+  display: inline-block;
+  padding: 0.5em 1em;
+  border-width: 1px;
+  border-style: solid;
+}
+
+// btn size
+@each $size, $value in $font-sizes {
+  .badge-#{$size} {
+    font-size: $value;
+  }
+}
+@each $color, $value in $colors {
+  .badge-#{$color} {
+    color: color-yiq($value);
+    background-color: $value;
+    border-color: $value;
+  }
+
+  .badge-outline-#{$color} {
+    color: $value;
+    background-color: transparent;
+    border-color: $value;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .badge-#{$color} {
+    color: color-yiq($value);
+    background-color: $value;
+    border-color: $value;
+  }
+
+  .badge-outline-#{$color} {
+    color: $value;
+    background-color: transparent;
+    border-color: $value;
+  }
+}
