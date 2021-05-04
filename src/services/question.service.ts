@@ -14,6 +14,9 @@ export class QuestionService extends BaseService {
   constructor() {
     super();
   }
+  getKBCategoryQuestion(firstQuestionDto: FirstQuestionDto) {
+    return super.get<QuestionResponseDto>('question', firstQuestionDto);
+  }
   getFirstQuestion(firstQuestionDto: FirstQuestionDto) {
     return super.get<QuestionResponseDto>('v2/question', firstQuestionDto);
   }

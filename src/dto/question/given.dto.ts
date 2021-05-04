@@ -5,4 +5,5 @@ export class Given extends BaseDto<Given> {
   given: string;
   value: string;
   questionId: number;
+  givenDetails?: any;
 }

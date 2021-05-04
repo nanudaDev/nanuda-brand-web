@@ -103,6 +103,7 @@
                     <span class="icon icon-arrow-left"><BaseArrow /></span>
                     <span class="is-blind">뒤로가기</span>
                   </b-btn>
+
                   <template v-if="!isMultipleAnswer">
                     <div class="row gutter-sm">
                       <div
@@ -171,106 +172,149 @@
                   </template>
                 </template>
                 <template v-else>
-                  <template v-if="firstQuestionDto.userType">
-                    <div
-                      v-if="
-                        firstQuestionDto.userType === FNB_OWNER.CUR_FNB_OWNER
-                      "
-                    >
-                      <!-- 다음 주소 api -->
-                      <b-btn
-                        @click="goToPreviousAddr()"
-                        size="sm"
-                        class="btn-back"
-                        variant="primary"
-                        pill
-                      >
-                        <span class="icon icon-arrow-left"><BaseArrow /></span>
-                        <span class="is-blind">뒤로가기</span>
-                      </b-btn>
-                      <b-form-group>
-                        <span
-                          class="icon icon-search"
-                          @click="$bvModal.show('post-code')"
-                          ><BaseSearch
-                        /></span>
-                        <b-form-input
-                          size="lg"
-                          v-model="selectedRoadAddress"
-                          placeholder="운영하고 있는 음식점 위치 검색"
-                          @click="$bvModal.show('post-code')"
-                          class="rounded-pill"
-                        />
-                      </b-form-group>
-                      <div class="text-center mt-4" v-if="!isAvailableLocation">
-                        <b-btn
-                          @click="getFirstQuestion()"
-                          :disabled="!selectedRoadAddress"
-                          variant="success"
-                          size="lg"
-                          block
-                          pill
-                          >다음</b-btn
-                        >
-                      </div>
+                  <template v-if="!KBCategoryGivens.length > 0">
+                    <template v-if="firstQuestionDto.userType">
                       <div
-                        class="txt-box text-center mt-5"
-                        v-if="isAvailableLocation"
+                        v-if="
+                          firstQuestionDto.userType === FNB_OWNER.CUR_FNB_OWNER
+                        "
                       >
-                        <p class="text-light">
-                          현재 상권분석이 가능한 지역은<br />
-                          <strong>{{ availableLocation }}</strong>
-                          <br />입니다
-                        </p>
-                      </div>
-                      <b-modal id="post-code" hide-footer no-close-on-backdrop>
-                        <template #modal-title>
-                          <strong class="txt-primary">주소검색</strong>
-                        </template>
-                        <div>
-                          <vue-daum-postcode @complete="onPostCodeComplete" />
-                        </div>
-                      </b-modal>
-                    </div>
-                    <div v-else>
-                      <b-btn
-                        @click="goToPreviousAddr()"
-                        size="sm"
-                        class="btn-back"
-                        variant="primary"
-                        pill
-                      >
-                        <span class="icon icon-arrow-left"><BaseArrow /></span>
-                        <span class="is-blind">뒤로가기</span>
-                      </b-btn>
-                      <!-- 행정동 버튼 그룹 -->
-                      <div>
-                        <div class="row gutter-sm">
-                          <div
-                            class="col-6 col-sm-4"
-                            v-for="given in addressGivens"
-                            :key="given.id"
+                        <!-- 다음 주소 api -->
+                        <b-btn
+                          @click="goToPreviousAddr()"
+                          size="sm"
+                          class="btn-back"
+                          variant="primary"
+                          pill
+                        >
+                          <span class="icon icon-arrow-left"
+                            ><BaseArrow
+                          /></span>
+                          <span class="is-blind">뒤로가기</span>
+                        </b-btn>
+                        <b-form-group>
+                          <span
+                            class="icon icon-search"
+                            @click="$bvModal.show('post-code')"
+                            ><BaseSearch
+                          /></span>
+                          <b-form-input
+                            size="lg"
+                            v-model="selectedRoadAddress"
+                            placeholder="운영하고 있는 음식점 위치 검색"
+                            @click="$bvModal.show('post-code')"
+                            class="rounded-pill"
+                          />
+                        </b-form-group>
+                        <div
+                          class="text-center mt-4"
+                          v-if="!isAvailableLocation"
+                        >
+                          <b-btn
+                            @click="getKBCategoryQuestion()"
+                            :disabled="!selectedRoadAddress"
+                            variant="success"
+                            size="lg"
+                            block
+                            pill
+                            >다음</b-btn
                           >
-                            <b-btn
-                              size="lg"
-                              variant="light"
-                              block
-                              class="mb-4 shadow"
-                              pill
-                              @click="getGuOrDong(given)"
-                              >{{ given[showingLevel] }}</b-btn
+                        </div>
+                        <div
+                          class="txt-box text-center mt-5"
+                          v-if="isAvailableLocation"
+                        >
+                          <p class="text-light">
+                            현재 상권분석이 가능한 지역은<br />
+                            <strong>{{ availableLocation }}</strong>
+                            <br />입니다
+                          </p>
+                        </div>
+                        <b-modal
+                          id="post-code"
+                          hide-footer
+                          no-close-on-backdrop
+                        >
+                          <template #modal-title>
+                            <strong class="txt-primary">주소검색</strong>
+                          </template>
+                          <div>
+                            <vue-daum-postcode @complete="onPostCodeComplete" />
+                          </div>
+                        </b-modal>
+                      </div>
+                      <div v-else>
+                        <b-btn
+                          @click="goToPreviousAddr()"
+                          size="sm"
+                          class="btn-back"
+                          variant="primary"
+                          pill
+                        >
+                          <span class="icon icon-arrow-left"
+                            ><BaseArrow
+                          /></span>
+                          <span class="is-blind">뒤로가기</span>
+                        </b-btn>
+                        <!-- 행정동 버튼 그룹 -->
+                        <div>
+                          <div class="row gutter-sm">
+                            <div
+                              class="col-6 col-sm-4"
+                              v-for="given in addressGivens"
+                              :key="given.id"
                             >
+                              <b-btn
+                                size="lg"
+                                variant="light"
+                                block
+                                class="mb-4 shadow"
+                                pill
+                                @click="getGuOrDong(given)"
+                                >{{ given[showingLevel] }}</b-btn
+                              >
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </template>
+                    <template v-else>
+                      <!-- 첫번째 질문 (사장님 or 창업) -->
+                      <div class="row">
+                        <div
+                          class="col-12"
+                          v-for="given in firstGivens"
+                          :key="given.id"
+                        >
+                          <b-btn
+                            variant="light"
+                            class="mb-4 shadow"
+                            block
+                            pill
+                            size="lg"
+                            @click="saveUserType(given.userType)"
+                          >
+                            {{ given.given }}
+                          </b-btn>
+                        </div>
+                      </div>
+                    </template>
                   </template>
                   <template v-else>
-                    <!-- 첫번째 질문 (사장님 or 창업) -->
+                    <b-btn
+                      @click="goToPrevious()"
+                      size="sm"
+                      class="btn-back"
+                      variant="primary"
+                      pill
+                    >
+                      <span class="icon icon-arrow-left"><BaseArrow /></span>
+                      <span class="is-blind">뒤로가기</span>
+                    </b-btn>
                     <div class="row">
                       <div
                         class="col-12"
-                        v-for="given in firstGivens"
+                        v-for="given in KBCategoryGivens"
                         :key="given.id"
                       >
                         <b-btn
@@ -279,7 +323,7 @@
                           block
                           pill
                           size="lg"
-                          @click="saveUserType(given.userType)"
+                          @click="getFirstQuestion(given.givenDetails.value)"
                         >
                           {{ given.given }}
                         </b-btn>
@@ -352,7 +396,7 @@ import {
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
 import { COMMON_CODE_CATEGORY, FNB_OWNER } from '@/shared';
-import { ADDRESS_LEVEL, YN } from '@/common';
+import { ADDRESS_LEVEL, KB_FOOD_CATEGORY, YN } from '@/common';
 import Solution from './Solution.vue';
 @Component({
   name: 'Question',
@@ -392,6 +436,7 @@ export default class Question extends BaseComponent {
     },
   ];
   private givens: Given[] = [];
+  private KBCategoryGivens: Given[] = [];
   private addressGivens: any[] = [];
   private showingLevel = ADDRESS_LEVEL.sidoName;
   private selectedRoadAddress = '';
@@ -442,8 +487,11 @@ export default class Question extends BaseComponent {
     this.questionOrder += 1;
   }
 
-  getFirstQuestion() {
+  getFirstQuestion(kbCategoryValue?: KB_FOOD_CATEGORY) {
     this.isLoading = true;
+    if (kbCategoryValue) {
+      this.resultRequestDto.selectedKbMediumCategory = kbCategoryValue;
+    }
     questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
       if (res) {
         this.isLoading = false;
@@ -459,6 +507,18 @@ export default class Question extends BaseComponent {
     // 이전 단계 저장 후 증가
     this.questionOrder += 1;
     this.prevOrder = this.questionOrder;
+  }
+  getKBCategoryQuestion() {
+    this.isLoading = true;
+    questionService
+      .getKBCategoryQuestion(this.firstQuestionDto)
+      .subscribe(res => {
+        if (res) {
+          this.isLoading = false;
+          this.KBCategoryGivens = res.data.givens;
+          this.question = res.data.question;
+        }
+      });
   }
 
   // 주소 선택화면일때 뒤로가기
@@ -486,6 +546,7 @@ export default class Question extends BaseComponent {
   // 질문 화면일때 뒤로가기
   goToPrevious() {
     if (this.previousQuestionDtoArr.length == 0) {
+      this.KBCategoryGivens = [];
       if (this.firstQuestionDto.userType == FNB_OWNER.CUR_FNB_OWNER) {
         this.question = '음식점 주소를 알려주세요!';
       } else {
@@ -644,7 +705,7 @@ export default class Question extends BaseComponent {
       if (given) {
         this.resultRequestDto.hdongCode = given.hdongCode;
       }
-      this.getFirstQuestion();
+      this.getKBCategoryQuestion();
     }
     this.prevOrder = this.questionOrder;
   }
