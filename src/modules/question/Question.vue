@@ -760,7 +760,7 @@ export default class Question extends BaseComponent {
 
     this.isStart = true;
     this.isLastQuestion = false;
-    this.smallSizeQuestionId = [1, 4, 5, 10, 12];
+    this.smallSizeQuestionId = [1, 4, 5, 12];
     this.bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
     this.questionTotalCount = 9;
     this.questionOrder = 0;

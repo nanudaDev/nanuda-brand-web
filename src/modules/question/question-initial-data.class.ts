@@ -20,7 +20,7 @@ export default class QuestionInitialData {
 
   private isStart = true;
   private isLastQuestion = false;
-  private smallSizeQuestionId = [1, 4, 5, 10, 12];
+  private smallSizeQuestionId = [1, 4, 5, 12];
   private bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
   private questionTotalCount: any = 9;
   private questionOrder: any = 0;

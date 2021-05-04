@@ -863,7 +863,7 @@ export default class Solution extends BaseComponent {
   &.is-open {
     .btn-toggle-form {
       .icon {
-        transform: rotate(180deg);
+        transform: rotate(0);
       }
     }
   }
@@ -879,6 +879,7 @@ export default class Solution extends BaseComponent {
       margin-right: 0.5em;
     }
     .icon {
+      transform: rotate(180deg);
       svg {
         fill: $white;
       }
