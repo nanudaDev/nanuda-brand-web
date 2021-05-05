@@ -357,11 +357,23 @@
                   <div class="section-content">
                     <div class="card py-10 px-2 shadow-sm">
                       <div class="odometer-container">
-                        <div class="odometer-box">
-                          <span class="odometer-count">
-                            <vue-odometer :value="revenueCount"> </vue-odometer>
-                          </span>
-                          <span class="odometer-unit">원/월</span>
+                        <div class="d-block d-lg-none">
+                          <div class="odometer-box ">
+                            <span class="odometer-count">
+                              <vue-odometer :value="revenueCount">
+                              </vue-odometer>
+                            </span>
+                            <span class="odometer-unit">원</span>
+                          </div>
+                        </div>
+                        <div class="d-none d-lg-block">
+                          <div class="odometer-box">
+                            <span class="odometer-count">
+                              <vue-odometer :value="revenueCount2">
+                              </vue-odometer>
+                            </span>
+                            <span class="odometer-unit">원</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -685,6 +697,7 @@ export default class Solution extends BaseComponent {
   private smsAuthNotificationDto = new SmsAuthNotificationDto();
 
   private revenueCount = 0;
+  private revenueCount2 = 0;
   private isToggleForm = false;
   private isFormVisible = false;
 
@@ -832,6 +845,9 @@ export default class Solution extends BaseComponent {
   }
 
   created() {
+    setTimeout(() => {
+      this.revenueCount2 = this.maxRevenueValue;
+    }, 1000);
     this.handleDebouncedScroll = debounce(this.handleScroll, 100);
     window.addEventListener('scroll', this.handleDebouncedScroll);
   }
@@ -1110,6 +1126,7 @@ export default class Solution extends BaseComponent {
     .chart-bar {
       position: relative;
       width: 50%;
+      min-width: 10%;
       &.chart-bar-restaurant {
         .bar-label {
           text-align: left;
@@ -1147,7 +1164,8 @@ export default class Solution extends BaseComponent {
       .bar-stack {
         position: relative;
         height: 3em;
-        padding: 0.5em 1em;
+        line-height: 3em;
+        padding: 0em 1em;
         overflow: hidden;
         &:before {
           display: block;
@@ -1163,8 +1181,9 @@ export default class Solution extends BaseComponent {
         position: relative;
         z-index: 2;
         color: #fff;
-        font-size: $txt-large;
+        font-size: 2rem;
         font-weight: $txt-bold;
+        white-space: nowrap;
       }
     }
   }
