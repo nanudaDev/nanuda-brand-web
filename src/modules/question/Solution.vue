@@ -121,8 +121,14 @@
                           </b-col>
                           <b-col cols="10" lg="12">
                             <p class="txt-tiny">
-                              빅데이터 상권지수(97%)와 조리경험 (90%),
-                              운영경험(80%), 창업자금(70%)을 종합하였을때
+                              빅데이터 상권지수({{
+                                item.bigDataLocationScore
+                              }}%)와 조리경험 ({{
+                                item.cookingExperienceScore
+                              }}%), 운영경험({{
+                                item.operationExperienceScore
+                              }}%), 창업자금({{ item.initialCostScore }}%)을
+                              종합하였을때
                               <strong class="txt-primary txt-bold">
                                 <template v-if="index === 0">
                                   가장
@@ -326,7 +332,7 @@
                               v-for="(item, index) in result.rankDataWCScore"
                               :key="index"
                             >
-                              {{ item.attributeValues.sSmallCategoryName }}
+                              {{ item.pickcookSmallCategoryInfo.pkMenuName }}
                             </span>
                           </div>
                         </div>
