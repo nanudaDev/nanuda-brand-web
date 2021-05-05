@@ -774,12 +774,12 @@ export default class Question extends BaseComponent {
       {
         id: 1,
         userType: FNB_OWNER.CUR_FNB_OWNER,
-        given: '음식점 사장님입니다',
+        given: '운영하는 음식점이 있어요!',
       },
       {
         id: 2,
         userType: FNB_OWNER.NEW_FNB_OWNER,
-        given: '창업을 생각하고 있습니다',
+        given: '음식점 창업을 생각 중이에요!',
       },
     ];
     this.givens = [];
