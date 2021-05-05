@@ -157,12 +157,12 @@
                   <h3>
                     {{ result.hdong.hdongName }}의 고객들은 <br />
                     <template
-                      v-if="result.deliveryRatioData.restaurantRatio > 30"
+                      v-if="result.deliveryRatioData.deliveryRatio > 30"
                     >
                       <strong>배달로 더 많이 이용하고 있어요!</strong>
                     </template>
                     <template
-                      v-else-if="result.deliveryRatioData.restaurantRatio < 30"
+                      v-else-if="result.deliveryRatioData.deliveryRatio < 30"
                     >
                       <strong>매장을 더 많이 이용하고 있어요!</strong>
                     </template>
@@ -214,23 +214,21 @@
                         <p>
                           <span class="icon-tip">TIP</span>
                           <span class="txt-tiny">
-                            창업아이템으로
+                            창업 아이템으로
                             <template
                               v-if="result.fnbOwnerStatus === 'NEW_FNB_OWNER'"
                             >
                               <strong>
                                 <template
                                   v-if="
-                                    result.deliveryRatioData.restaurantRatio >
-                                      30
+                                    result.deliveryRatioData.deliveryRatio > 30
                                   "
                                 >
                                   위험이 낮은 공유주방
                                 </template>
                                 <template
                                   v-else-if="
-                                    result.deliveryRatioData.restaurantRatio <
-                                      30
+                                    result.deliveryRatioData.deliveryRatio < 30
                                   "
                                 >
                                   매장이 있는 공유주방
