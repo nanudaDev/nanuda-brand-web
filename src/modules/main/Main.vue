@@ -355,7 +355,7 @@
                 data-aos-duration="1000"
                 :data-aos-delay="`${50 * n}`"
               >
-                <div class="shadow-sm rounded text-center my-2">
+                <div class="shadow-sm rounded bg-white text-center my-2">
                   <img
                     :src="
                       require(`@/assets/images/partner_${
