@@ -14,23 +14,23 @@ export class QuestionService extends BaseService {
   constructor() {
     super();
   }
-  getFirstQuestion(firstQuestionDto: FirstQuestionDto) {
+  getKBCategoryQuestion(firstQuestionDto: FirstQuestionDto) {
     return super.get<QuestionResponseDto>('question', firstQuestionDto);
   }
+  getFirstQuestion(firstQuestionDto: FirstQuestionDto) {
+    return super.get<QuestionResponseDto>('v2/question', firstQuestionDto);
+  }
   getNextQuestion(nextQuestionDto: NextQuestionDto) {
-    return super.post<QuestionResponseDto>('question/next', nextQuestionDto);
+    return super.post<QuestionResponseDto>('v2/question/next', nextQuestionDto);
   }
   getResult(resultRequestDto: ResultRequestDto) {
-    return super.post<AggregateResultResponse>(
-      'aggregate-result-response',
+    return super.post<ResultResponseDto>(
+      `v2/proforma-consult-response`,
       resultRequestDto,
     );
   }
   postConsult(consultRequestDto: ConsultRequestDto) {
-    return super.post<any>('consult-result', consultRequestDto);
-  }
-  getProformaConsultResult(id: string) {
-    return super.get<ProformaResponseDto>(`proforma-consult-result/${id}`);
+    return super.post<any>('v2/consult-result', consultRequestDto);
   }
 }
 

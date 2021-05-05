@@ -35,7 +35,10 @@
         <div class="section-content">
           <div class="container">
             <figure data-aos="fade-up" data-aos-duration="1000">
-              <img src="@/assets/images/services_img01.png" alt="" />
+              <img
+                src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/services_img01.png"
+                alt=""
+              />
             </figure>
           </div>
         </div>
@@ -56,7 +59,10 @@
         <div class="section-content">
           <div class="container">
             <figure data-aos="fade-up" data-aos-duration="1000">
-              <img src="@/assets/images/services_img02.png" alt="" />
+              <img
+                src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/services_img02.png"
+                alt=""
+              />
             </figure>
           </div>
         </div>
@@ -78,7 +84,10 @@
         <div class="section-content">
           <div class="container">
             <figure data-aos="fade-up" data-aos-duration="1000">
-              <img src="@/assets/images/services_img03.png" alt="" />
+              <img
+                src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/services_img03.png"
+                alt=""
+              />
             </figure>
           </div>
         </div>
@@ -97,7 +106,7 @@
             <button
               class="btn btn-primary rounded-pill btn-lg shawdow"
               id="bottom-button"
-              @click="$router.push('/question')"
+              @click="startQuestions('service_page')"
             >
               <span>원하는 지역의 내 메뉴 찾기</span>
               <span class="icon icon-arrow-right"><BaseArrow /></span>
@@ -117,6 +126,15 @@ import { Component } from 'vue-property-decorator';
 })
 export default class Services extends BaseComponent {
   navbarHeight: any = 0;
+
+  startQuestions(location?: string) {
+    if (!location) location = 'header';
+    this.$router.push('/question');
+    this.$gtag.event(`go_to_question_${location}`, {
+      description: '질문지로 이동',
+    });
+  }
+
   mounted() {
     const target = document.querySelector('.navbar');
     this.navbarHeight = target.getBoundingClientRect().height;

@@ -1,0 +1,16 @@
+@charset "utf-8";
+@each $color, $value in $colors {
+	.bg-#{$color} {
+		background-color: $value;
+	}
+}
+
+@each $color, $value in $theme-colors {
+	.bg-#{$color} {
+		background-color: $value;
+	}
+}
+
+.bg-transparent {
+  background-color: transparent !important;
+}

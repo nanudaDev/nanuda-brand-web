@@ -1,0 +1,38 @@
+.review {
+  .row {
+    align-items: center;
+  }
+
+  .review-img {
+    text-align: center;
+
+    img {
+      max-width: 14em;
+      width: 100%;
+    }
+  }
+
+  .review-title {
+    font-size: $txt-big;
+    color: $black;
+    font-weight: 600;
+    margin-bottom: .5em;
+  }
+
+  .review-sub-title {
+    font-size: $txt-large;
+    color: $gray-900;
+  }
+
+  +.review {
+    margin-top: 1em;
+  }
+}
+
+.review-group-horizontal {
+
+  .review-body {
+    padding-left: 1em;
+    word-break: break-all;
+  }
+}

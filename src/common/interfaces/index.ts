@@ -7,3 +7,4 @@ export * from './kb-food-category.type';
 export * from './score-code.type';
 export * from './address-level.type';
 export * from './reservation.type';
+export * from './deliveryRatioData.type';

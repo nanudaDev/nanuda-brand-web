@@ -10,10 +10,10 @@
               class="logo-w"/></router-link
         ></span>
         <h2 data-aos="fade-down" data-aos-duration="1500">
-          실패없는 창업을 <br />안내합니다
+          상권에 딱 맞는 <br />창업 아이템을 확인하세요!
         </h2>
         <p data-aos="fade-down" data-aos-duration="1500">
-          원하는 위치에서 무슨 메뉴로 창업해야 할지 <br />빅데이터로 분석합니다.
+          단 1분만에 빅데이터로 <br />최적 창업 아이템을 추천합니다.
         </p>
         <div
           class="btn-box text-center"
@@ -25,14 +25,14 @@
             pill
             size="xl"
             class="shadow"
-            @click="isStart = false"
+            @click="startQuestion()"
           >
             시작하기
           </b-btn>
         </div>
       </header>
     </article>
-    <template v-if="!aggregateResultResponseDto">
+    <template v-if="!resultResponseDto">
       <article
         class="main-article"
         :id="nextQuestionDto.questionId"
@@ -103,6 +103,7 @@
                     <span class="icon icon-arrow-left"><BaseArrow /></span>
                     <span class="is-blind">뒤로가기</span>
                   </b-btn>
+
                   <template v-if="!isMultipleAnswer">
                     <div class="row gutter-sm">
                       <div
@@ -123,7 +124,7 @@
                           size="lg"
                           pill
                           @click="getNextQuestion(given)"
-                          >{{ given.givenDetails.displayName }}</b-btn
+                          >{{ given.given }}</b-btn
                         >
                       </div>
                     </div>
@@ -153,7 +154,7 @@
                           size="lg"
                           pill
                           @click="onMultipleAnswerClicked(given)"
-                          >{{ given.givenDetails.displayName }}
+                          >{{ given.given }}
                         </b-btn>
                       </div>
                     </div>
@@ -171,106 +172,149 @@
                   </template>
                 </template>
                 <template v-else>
-                  <template v-if="firstQuestionDto.userType">
-                    <div
-                      v-if="
-                        firstQuestionDto.userType === FNB_OWNER.CUR_FNB_OWNER
-                      "
-                    >
-                      <!-- 다음 주소 api -->
-                      <b-btn
-                        @click="goToPreviousAddr()"
-                        size="sm"
-                        class="btn-back"
-                        variant="primary"
-                        pill
-                      >
-                        <span class="icon icon-arrow-left"><BaseArrow /></span>
-                        <span class="is-blind">뒤로가기</span>
-                      </b-btn>
-                      <b-form-group>
-                        <span
-                          class="icon icon-search"
-                          @click="$bvModal.show('post-code')"
-                          ><BaseSearch
-                        /></span>
-                        <b-form-input
-                          size="lg"
-                          v-model="selectedRoadAddress"
-                          placeholder="운영하고 있는 음식점 위치 검색"
-                          @click="$bvModal.show('post-code')"
-                          class="rounded-pill"
-                        />
-                      </b-form-group>
-                      <div class="text-center mt-4" v-if="!isAvailableLocation">
-                        <b-btn
-                          @click="getFirstQuestion()"
-                          :disabled="!selectedRoadAddress"
-                          variant="success"
-                          size="lg"
-                          block
-                          pill
-                          >다음</b-btn
-                        >
-                      </div>
+                  <template v-if="!KBCategoryGivens.length > 0">
+                    <template v-if="firstQuestionDto.userType">
                       <div
-                        class="txt-box text-center mt-5"
-                        v-if="isAvailableLocation"
+                        v-if="
+                          firstQuestionDto.userType === FNB_OWNER.CUR_FNB_OWNER
+                        "
                       >
-                        <p class="text-light">
-                          현재 상권분석이 가능한 지역은<br />
-                          <strong>{{ availableLocation }}</strong>
-                          <br />입니다
-                        </p>
-                      </div>
-                      <b-modal id="post-code" hide-footer no-close-on-backdrop>
-                        <template #modal-title>
-                          <strong class="txt-primary">주소검색</strong>
-                        </template>
-                        <div>
-                          <vue-daum-postcode @complete="onPostCodeComplete" />
-                        </div>
-                      </b-modal>
-                    </div>
-                    <div v-else>
-                      <b-btn
-                        @click="goToPreviousAddr()"
-                        size="sm"
-                        class="btn-back"
-                        variant="primary"
-                        pill
-                      >
-                        <span class="icon icon-arrow-left"><BaseArrow /></span>
-                        <span class="is-blind">뒤로가기</span>
-                      </b-btn>
-                      <!-- 행정동 버튼 그룹 -->
-                      <div>
-                        <div class="row gutter-sm">
-                          <div
-                            class="col-6 col-sm-4"
-                            v-for="given in addressGivens"
-                            :key="given.id"
+                        <!-- 다음 주소 api -->
+                        <b-btn
+                          @click="goToPreviousAddr()"
+                          size="sm"
+                          class="btn-back"
+                          variant="primary"
+                          pill
+                        >
+                          <span class="icon icon-arrow-left"
+                            ><BaseArrow
+                          /></span>
+                          <span class="is-blind">뒤로가기</span>
+                        </b-btn>
+                        <b-form-group>
+                          <span
+                            class="icon icon-search"
+                            @click="$bvModal.show('post-code')"
+                            ><BaseSearch
+                          /></span>
+                          <b-form-input
+                            size="lg"
+                            v-model="selectedRoadAddress"
+                            placeholder="운영하고 있는 음식점 위치 검색"
+                            @click="$bvModal.show('post-code')"
+                            class="rounded-pill"
+                          />
+                        </b-form-group>
+                        <div
+                          class="text-center mt-4"
+                          v-if="!isAvailableLocation"
+                        >
+                          <b-btn
+                            @click="getKBCategoryQuestion()"
+                            :disabled="!selectedRoadAddress"
+                            variant="success"
+                            size="lg"
+                            block
+                            pill
+                            >다음</b-btn
                           >
-                            <b-btn
-                              size="lg"
-                              variant="light"
-                              block
-                              class="mb-4 shadow"
-                              pill
-                              @click="getGuOrDong(given)"
-                              >{{ given[showingLevel] }}</b-btn
+                        </div>
+                        <div
+                          class="txt-box text-center mt-5"
+                          v-if="isAvailableLocation"
+                        >
+                          <p class="text-light">
+                            현재 상권분석이 가능한 지역은<br />
+                            <strong>{{ availableLocation }}</strong>
+                            <br />입니다
+                          </p>
+                        </div>
+                        <b-modal
+                          id="post-code"
+                          hide-footer
+                          no-close-on-backdrop
+                        >
+                          <template #modal-title>
+                            <strong class="txt-primary">주소검색</strong>
+                          </template>
+                          <div>
+                            <vue-daum-postcode @complete="onPostCodeComplete" />
+                          </div>
+                        </b-modal>
+                      </div>
+                      <div v-else>
+                        <b-btn
+                          @click="goToPreviousAddr()"
+                          size="sm"
+                          class="btn-back"
+                          variant="primary"
+                          pill
+                        >
+                          <span class="icon icon-arrow-left"
+                            ><BaseArrow
+                          /></span>
+                          <span class="is-blind">뒤로가기</span>
+                        </b-btn>
+                        <!-- 행정동 버튼 그룹 -->
+                        <div>
+                          <div class="row gutter-sm">
+                            <div
+                              class="col-6 col-sm-4"
+                              v-for="given in addressGivens"
+                              :key="given.id"
                             >
+                              <b-btn
+                                size="lg"
+                                variant="light"
+                                block
+                                class="mb-4 shadow"
+                                pill
+                                @click="getGuOrDong(given)"
+                                >{{ given[showingLevel] }}</b-btn
+                              >
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </template>
+                    <template v-else>
+                      <!-- 첫번째 질문 (사장님 or 창업) -->
+                      <div class="row">
+                        <div
+                          class="col-12"
+                          v-for="given in firstGivens"
+                          :key="given.id"
+                        >
+                          <b-btn
+                            variant="light"
+                            class="mb-4 shadow"
+                            block
+                            pill
+                            size="lg"
+                            @click="saveUserType(given.userType)"
+                          >
+                            {{ given.given }}
+                          </b-btn>
+                        </div>
+                      </div>
+                    </template>
                   </template>
                   <template v-else>
-                    <!-- 첫번째 질문 (사장님 or 창업) -->
+                    <b-btn
+                      @click="goToPrevious()"
+                      size="sm"
+                      class="btn-back"
+                      variant="primary"
+                      pill
+                    >
+                      <span class="icon icon-arrow-left"><BaseArrow /></span>
+                      <span class="is-blind">뒤로가기</span>
+                    </b-btn>
                     <div class="row">
                       <div
                         class="col-12"
-                        v-for="given in firstGivens"
+                        v-for="given in KBCategoryGivens"
                         :key="given.id"
                       >
                         <b-btn
@@ -279,7 +323,7 @@
                           block
                           pill
                           size="lg"
-                          @click="saveUserType(given.userType)"
+                          @click="getFirstQuestion(given.givenDetails.value)"
                         >
                           {{ given.given }}
                         </b-btn>
@@ -294,38 +338,43 @@
       </article>
     </template>
     <template v-else>
-      <Result
-        :result="aggregateResultResponseDto"
-        :resultRequestDto="resultRequestDto"
-        :codeHdongSearchDto="codeHdongSearchDto"
-        @onReset="resetData"
-      />
+      <Solution :result="resultResponseDto" @reset="resetData" />
     </template>
     <template v-if="isLoading">
       <div class="loading-layer"></div>
     </template>
     <template v-if="isLoadingResult">
-      <div class="loading-layer">
+      <div class="loading-progress-layer">
         <div class="loading-container">
-          <video
-            autoplay
-            muted
-            loop
-            playsinline
-            id="vid"
-            ref="videoRef"
-            class="video"
-          >
-            해당 브라우저는 video 태그를 지원하지 않습니다.
-            <source
-              src=" https://kr.object.ncloudstorage.com/common-nanuda/video/loading.mp4"
-              type="video/webm"
-            />
-            <source
-              src=" https://kr.object.ncloudstorage.com/common-nanuda/video/loading.mp4"
-              type="video/mp4"
-            />
-          </video>
+          <div class="text-center">
+            <vue-ellipse-progress
+              :progress="loadingProgress"
+              color="#ffffff"
+              empty-color="#ffffff"
+              :size="180"
+              thickness="5"
+              empty-thickness="3"
+              line-mode="out 5"
+              animation="default 700 1000"
+              font-size="3rem"
+              font-color="#ffffff"
+            >
+              <span slot="legend-value">%</span>
+            </vue-ellipse-progress>
+          </div>
+          <div class="mt-4 text-center">
+            <p class="txt-large txt-white">
+              <template v-if="loadingProgress < 91">
+                분석이 진행되고 있어요 <br />
+                응답하신 내용과 빅데이터로 <br />상권에 딱 맞는 창업 아이템을
+                알려드릴게요
+              </template>
+              <template v-else>
+                거의 완료되었어요 <br />
+                이제 결과를 보여드릴게요
+              </template>
+            </p>
+          </div>
         </div>
       </div>
     </template>
@@ -339,21 +388,21 @@ import { VueDaumPostcode } from 'vue-daum-postcode';
 import questionService from '@/services/question.service';
 import codeHdongService from '@/services/code-hdong.service';
 import axios from 'axios';
-import Result from './Result.vue';
 import {
   FirstQuestionDto,
   Given,
   NextQuestionDto,
   ResultRequestDto,
+  ResultResponseDto,
 } from '@/dto/question';
 import { use } from 'node_modules/vue/types/umd';
 import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
-import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 import { COMMON_CODE_CATEGORY, FNB_OWNER } from '@/shared';
-import { ADDRESS_LEVEL, YN } from '@/common';
+import { ADDRESS_LEVEL, KB_FOOD_CATEGORY, YN } from '@/common';
+import Solution from './Solution.vue';
 @Component({
   name: 'Question',
-  components: { VueDaumPostcode, Result },
+  components: { VueDaumPostcode, Solution },
 })
 export default class Question extends BaseComponent {
   [x: string]: any;
@@ -366,14 +415,14 @@ export default class Question extends BaseComponent {
 
   private isStart = true;
   private isLastQuestion = false;
-  private smallSizeQuestionId = [1, 4, 5, 10, 12];
+  private smallSizeQuestionId = [1, 4, 5, 12];
   private bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
-  private questionTotalCount: any = 9;
+  private questionTotalCount: any = 10;
   private questionOrder: any = 0;
   private prevOrder: any = 0;
   private question = '나는 현재';
   private FNB_OWNER = FNB_OWNER;
-  private aggregateResultResponseDto: AggregateResultResponse = null;
+  private resultResponseDto: ResultResponseDto = null;
   private isAvailableLocation = false;
   private availableLocation = '';
   private firstGivens = [
@@ -389,6 +438,7 @@ export default class Question extends BaseComponent {
     },
   ];
   private givens: Given[] = [];
+  private KBCategoryGivens: Given[] = [];
   private addressGivens: any[] = [];
   private showingLevel = ADDRESS_LEVEL.sidoName;
   private selectedRoadAddress = '';
@@ -398,6 +448,12 @@ export default class Question extends BaseComponent {
   private isLoadingResult = false;
   private previousQuestionDtoArr: NextQuestionDto[] = [];
   private questionGivenArray: any[] = [];
+  private loadingProgress = 0;
+
+  startQuestion() {
+    this.isStart = false;
+    this.$gtag.event('start_question_button', { description: '질문 시작' });
+  }
 
   saveUserType(userType: FNB_OWNER) {
     this.resultRequestDto.fnbOwnerStatus = userType;
@@ -408,6 +464,9 @@ export default class Question extends BaseComponent {
       this.$nextTick(() => {
         this.$bvModal.show('post-code');
       });
+      this.$gtag.event(`user_type_${userType}`, {
+        description: '기창업자로 질문 시작',
+      });
       codeHdongService.getSido().subscribe(res => {
         this.isLoading = false;
         this.addressGivens = res.data;
@@ -417,6 +476,9 @@ export default class Question extends BaseComponent {
       });
     } else {
       this.question = '어떤 곳에서 창업을 희망하나요?';
+      this.$gtag.event(`user_type_${userType}`, {
+        description: '신규창업자로 질문 시작',
+      });
       this.isLoading = true;
       codeHdongService.getSido().subscribe(res => {
         this.isLoading = false;
@@ -426,8 +488,12 @@ export default class Question extends BaseComponent {
     // 진행 단계 증가
     this.questionOrder += 1;
   }
-  getFirstQuestion() {
+
+  getFirstQuestion(kbCategoryValue?: KB_FOOD_CATEGORY) {
     this.isLoading = true;
+    if (kbCategoryValue) {
+      this.resultRequestDto.selectedKbMediumCategory = kbCategoryValue;
+    }
     questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
       if (res) {
         this.isLoading = false;
@@ -444,6 +510,19 @@ export default class Question extends BaseComponent {
     this.questionOrder += 1;
     this.prevOrder = this.questionOrder;
   }
+  getKBCategoryQuestion() {
+    this.isLoading = true;
+    questionService
+      .getKBCategoryQuestion(this.firstQuestionDto)
+      .subscribe(res => {
+        if (res) {
+          this.isLoading = false;
+          this.KBCategoryGivens = res.data.givens;
+          this.question = res.data.question;
+        }
+      });
+  }
+
   // 주소 선택화면일때 뒤로가기
   goToPreviousAddr() {
     if (this.showingLevel === ADDRESS_LEVEL.hdongName) {
@@ -465,9 +544,11 @@ export default class Question extends BaseComponent {
     this.questionOrder -= 1;
     this.isLastQuestion = false;
   }
+
   // 질문 화면일때 뒤로가기
   goToPrevious() {
     if (this.previousQuestionDtoArr.length == 0) {
+      this.KBCategoryGivens = [];
       if (this.firstQuestionDto.userType == FNB_OWNER.CUR_FNB_OWNER) {
         this.question = '음식점 주소를 알려주세요!';
       } else {
@@ -517,6 +598,7 @@ export default class Question extends BaseComponent {
     this.questionOrder -= 1;
     this.isLastQuestion = false;
   }
+
   getNextQuestion(given?: Given) {
     this.isLoading = true;
     //이전 질문들 저장
@@ -526,32 +608,11 @@ export default class Question extends BaseComponent {
     // 답변을 하나만 선택할때
     if (given) {
       this.nextQuestionDto.givenId.push(given.id);
-      if (
-        given.givenDetails.category === COMMON_CODE_CATEGORY.KB_MEDIUM_CATEGORY
-      ) {
-        this.resultRequestDto.kbFoodCategory = given.givenDetails.value;
-      }
-      if (given.givenDetails.category === COMMON_CODE_CATEGORY.AGE_GROUP) {
-        this.resultRequestDto.ageGroupCode = given.givenDetails.key;
-      }
-      if (given.givenDetails.category === COMMON_CODE_CATEGORY.REVENUE_RANGE) {
-        this.resultRequestDto.revenueRangeCode = given.givenDetails.key;
-      }
     } else {
       //답변을 여러개 선택할때
       this.$set(this.nextQuestionDto, 'givenId', this.selectedAnswers);
       const selectedGivenId = this.selectedAnswers.map(e => e.id);
       this.nextQuestionDto.givenId = selectedGivenId;
-      //영업 시간
-      if (
-        this.givens[0].givenDetails.category ===
-        COMMON_CODE_CATEGORY.OPERATION_TIME
-      ) {
-        this.resultRequestDto.operationTimes = [];
-        this.selectedAnswers.forEach(e => {
-          this.resultRequestDto.operationTimes.push(e.givenDetails.value);
-        });
-      }
     }
     //questionGivenArray에 지금까지의 질문과 답변 저장
     this.questionGivenArray.push({
@@ -562,15 +623,35 @@ export default class Question extends BaseComponent {
 
     //마지막 질문일때
     if (this.isLastQuestion) {
+      this.loadingProgress = 0;
       this.isLoadingResult = true;
+      const countStart = setInterval(() => {
+        if (this.loadingProgress < 79) {
+          this.loadingProgress += 5;
+        }
+      }, 20);
+
+      const countUp = setInterval(() => {
+        if (this.loadingProgress < 100) {
+          this.loadingProgress++;
+        }
+      }, 650);
+
+      // const countEnd = setInterval(() => {
+      //   if (this.loadingProgress > 96 && this.loadingProgress < 100) {
+      //     this.loadingProgress++;
+      //   }
+      // }, 400);
       //get result
       questionService.getResult(this.resultRequestDto).subscribe(res => {
-        this.isLoadingResult = false;
-        this.isLoading = false;
-        this.aggregateResultResponseDto = res.data;
-        this.$gtag.event('last_question', {
-          description: '마지막 질문',
-        });
+        if (res) {
+          this.loadingProgress = 0;
+          this.isLoadingResult = false;
+          this.isLoading = false;
+          clearInterval(countStart);
+          clearInterval(countUp);
+          this.resultResponseDto = res.data;
+        }
       });
     } else {
       questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
@@ -581,9 +662,9 @@ export default class Question extends BaseComponent {
           this.isLoading = false;
           this.nextQuestionDto.order = res.data.order;
           this.nextQuestionDto.questionId = res.data.id;
-          this.$gtag.event(`question_${res.data.id}`, {
-            description: `${res.data.question}`,
-          });
+          // this.$gtag.event(`question_${res.data.userType}_${res.data.id}`, {
+          //   description: `${res.data.commonCode.comment} : ${res.data.question}`,
+          // });
           this.question = res.data.question;
           this.questionOrder =
             this.nextQuestionDto.order + (this.prevOrder - 1);
@@ -596,6 +677,7 @@ export default class Question extends BaseComponent {
       });
     }
   }
+
   //level이 내려감에따라 showingLevel(보여줘야할 정보)이 변함
   getGuOrDong(given?: CodeHdongDto) {
     this.isLoading = true;
@@ -625,10 +707,11 @@ export default class Question extends BaseComponent {
       if (given) {
         this.resultRequestDto.hdongCode = given.hdongCode;
       }
-      this.getFirstQuestion();
+      this.getKBCategoryQuestion();
     }
     this.prevOrder = this.questionOrder;
   }
+
   onPostCodeComplete(event: any) {
     this.selectedRoadAddress = event.roadAddress;
     const geocoder = new window.kakao.maps.services.Geocoder();
@@ -648,8 +731,14 @@ export default class Question extends BaseComponent {
         this.$bvModal.hide('post-code');
       }
     };
+    if (callback) {
+      this.$gtag.event('kakao_address_complete', {
+        description: '카카오 주소 입력 완료',
+      });
+    }
     geocoder.addressSearch(this.selectedRoadAddress, callback);
   }
+
   onMultipleAnswerClicked(given: Given) {
     if (this.selectedAnswers.includes(given)) {
       const theIndex = this.selectedAnswers.findIndex(e => e === given);
@@ -658,6 +747,7 @@ export default class Question extends BaseComponent {
       this.selectedAnswers.push(given);
     }
   }
+
   resetData() {
     const ipInfo = new NextQuestionDto();
     ipInfo.ipAddress = this.nextQuestionDto.ipAddress;
@@ -670,14 +760,14 @@ export default class Question extends BaseComponent {
 
     this.isStart = true;
     this.isLastQuestion = false;
-    this.smallSizeQuestionId = [1, 4, 5, 10, 12];
+    this.smallSizeQuestionId = [1, 4, 5, 12];
     this.bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
     this.questionTotalCount = 9;
     this.questionOrder = 0;
     this.prevOrder = 0;
     this.question = '나는 현재';
     this.FNB_OWNER = FNB_OWNER;
-    this.aggregateResultResponseDto = null;
+    this.resultResponseDto = null;
     this.isAvailableLocation = false;
     this.availableLocation = '';
     this.firstGivens = [
@@ -693,6 +783,7 @@ export default class Question extends BaseComponent {
       },
     ];
     this.givens = [];
+    this.KBCategoryGivens = [];
     this.addressGivens = [];
     this.showingLevel = ADDRESS_LEVEL.sidoName;
     this.selectedRoadAddress = '';
@@ -702,16 +793,20 @@ export default class Question extends BaseComponent {
     this.isLoadingResult = false;
     this.previousQuestionDtoArr = [];
     this.questionGivenArray = [];
+    this.loadingProgress = 0;
   }
+
   async mounted() {
     // this.isLoading = true;
     //get ip address
     await axios.get('https://api.ipify.org?format=json').then(res => {
       // this.isLoading = false;
-      this.nextQuestionDto.ipAddress = res.data.ip;
-      this.nextQuestionDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
+      this.nextQuestionDto.ipAddress = this.resultRequestDto.ipAddress =
+        res.data.ip;
+      this.nextQuestionDto.uniqueSessionId = this.resultRequestDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
     });
   }
+
   updated() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
@@ -760,11 +855,11 @@ export default class Question extends BaseComponent {
   }
   .main-article {
     min-height: 100vh;
-    &:not(#question-start, #question-result, #question-solution) {
+    &:not(#question-start, #question-result, #question-solution, #question-complete) {
       .btn-back {
         position: fixed;
         left: 0.75em;
-        top: 1.25em;
+        top: 0.75em;
         width: 4em;
         height: 4em;
         background-color: transparent;
