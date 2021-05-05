@@ -41,7 +41,9 @@
               </p>
               <b-modal id="info" title="추천지수" size="md" hide-footer>
                 <p class="txt-small">
-                  설명설명
+                  빅데이터 상권지수와 입력하신 <br />
+                  조리경험, 운영경험, 창업자금을 <br />
+                  종합하여 반영한 수치입니다.
                 </p>
               </b-modal>
             </header>
@@ -626,11 +628,11 @@
               class="logo-w"/></router-link
         ></span>
         <h2 data-aos="fade-in" data-aos-duration="1500">
-          신청이 완료되었습니다
+          신청이 완료되었어요
         </h2>
         <p data-aos="fade-in" data-aos-duration="1500">
           담당 플래너가 배정되는대로 <br />
-          입력해주신 연락처로 안내드리겠습니다.
+          입력해주신 연락처로 안내드릴게요.
         </p>
         <div
           class="btn-box text-center"

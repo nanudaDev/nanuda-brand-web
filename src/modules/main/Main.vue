@@ -50,17 +50,18 @@
       </div>
       <div class="title-container">
         <div>
-          <div class="symbol">
+          <!-- <div class="symbol">
             <img src="@/assets/images/favicon.png" alt="" />
-          </div>
+          </div> -->
           <span
             class="d-inline-block txt-sm txt-underline txt-white txt-bold mb-2 pb-2"
             >스마트하게 창업하기</span
           >
-          <h2>실패없는 창업을<br />시작하세요</h2>
+          <h2>메뉴를 찾으세요</h2>
           <p>
-            어디에서 어떤 창업메뉴가 좋은지 <br />
-            빅데이터로 한번에 확인하세요
+            뭘로 창업하지? <br />
+            매출은 어떻게 더 올리지?<br />
+            그 메뉴를 픽쿡에서 찾으세요
           </p>
           <div class="btn-box">
             <button
@@ -68,7 +69,7 @@
               id="top-button"
               @click="startQuestions()"
             >
-              <span>1분만에 창업 메뉴 찾기 </span>
+              <span>원하는 지역의 내 메뉴 찾기 </span>
               <span class="icon icon-arrow-right icon-align-right"
                 ><BaseArrow
               /></span>
