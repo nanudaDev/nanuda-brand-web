@@ -785,7 +785,7 @@ export default class Solution extends BaseComponent {
         });
       } else {
         this.$bvToast.toast(
-          '인증번호가 올바르지않거나 유효기간이 초과했습니다',
+          '인증번호가 올바르지 않거나 유효기간이 초과했습니다',
           {
             variant: 'danger',
             title: 'Error',
