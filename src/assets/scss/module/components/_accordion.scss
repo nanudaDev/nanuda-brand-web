@@ -1,0 +1,60 @@
+@charset "utf-8";
+
+//.accordion
+.accordion {
+  .accordion-item {
+    position: relative;
+    font-weight: 600;
+    background-color: $white;
+    border-bottom: 1px solid $border-color;
+
+    &:first-child {
+      border-top: 2px solid $black;
+    }
+
+    .accordion-header {
+      position: relative;
+      padding: 1em;
+      cursor: pointer;
+      color: $gray-800;
+      h4 {
+        font-size: $txt-medium;
+      }
+      .icon {
+        position: absolute;
+        top: 50%;
+        right: 1em;
+        @include vendor-prefix(transform, translateY(-50%) rotate(0));
+        transition: transform 0.4s ease;
+      }
+    }
+
+    .accordion-body {
+      display: none;
+      padding: 1em;
+      background-color: $light;
+      .accordion-content {
+        p {
+          font-size: $txt-small;
+        }
+      }
+    }
+
+    &.is-active {
+      .accordion-header {
+        color: $primary;
+        h4 {
+          font-weight: $txt-bold;
+        }
+
+        .icon {
+          font-weight: $txt-bold;
+          @include vendor-prefix(transform, translateY(-50%) rotate(180deg));
+        }
+      }
+      .accordion-body {
+        display: block;
+      }
+    }
+  }
+}

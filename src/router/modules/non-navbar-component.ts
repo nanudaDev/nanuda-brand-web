@@ -30,15 +30,15 @@ const nonNavBarRouter: RouteConfig[] = [
       title: '설문',
     },
   },
-  {
-    path: '/solution/:proformaId([0-9]+)',
-    name: 'solution',
-    component: () => import('../../modules/question/Solution.vue'),
-    meta: {
-      layout: 'NonLayout',
-      title: '설문 조사 결과',
-    },
-  },
+  // {
+  //   path: '/solution',
+  //   name: 'solution',
+  //   component: () => import('../../modules/question/Solution.vue'),
+  //   meta: {
+  //     layout: 'NonLayout',
+  //     title: '설문 조사 결과',
+  //   },
+  // },
   {
     path: '/reservation',
     name: 'reservation',

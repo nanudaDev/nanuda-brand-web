@@ -20,3 +20,7 @@ declare module 'vue-awesome-swiper' {
 
   export { default as Swiper } from 'swiper';
 }
+
+declare module 'vue-odometer' {
+  import VueOdometer from 'vue-odometer';
+}

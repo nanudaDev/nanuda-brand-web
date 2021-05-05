@@ -1,0 +1,77 @@
+@charset "utf-8";
+
+/* .input */
+.input {
+  width: 100%;
+  height: 100%;
+
+  input {
+    display: block;
+    width: 100%;
+    padding: 0.25em 0.5em;
+    line-height: 1.4;
+    border: 0;
+    border-bottom: 1px solid $border-color;
+    -webkit-appearance: none;
+    outline: 0;
+    min-height: 2em;
+
+    &:hover {
+      @include darken(border-color, $border-color, 20);
+    }
+
+    &[type="file"] {
+      &::-webkit-file-upload-button {
+        line-height: 1;
+      }
+    }
+  }
+
+  .icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2.5em;
+    height: 100%;
+    color: $primary;
+    text-align: center;
+    line-height: 2.5;
+
+    + input {
+      padding-left: 2.5em;
+    }
+  }
+
+  &.fluid input {
+    width: 100%;
+  }
+
+  .label + input {
+    margin-top: 0.5em;
+  }
+
+  &.input-time {
+    input {
+      padding-right: 4em;
+    }
+
+    .time {
+      position: absolute;
+      right: 1em;
+      top: 50%;
+      transform: translateY(-50%);
+
+      &.is-active {
+        color: $primary;
+      }
+    }
+  }
+}
+
+@each $size, $value in $font-sizes {
+  .input-#{$size} {
+    font-size: $value;
+  }
+}
+
+/* .input */

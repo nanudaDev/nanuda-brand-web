@@ -10,14 +10,10 @@ import {
 import { BaseDto } from '@/core';
 
 export class ResultRequestDto extends BaseDto<ResultRequestDto> {
-  operationTimes: OPERATION_TIME[];
-  deliveryRatioCode: DELIVERY_OR_RESTAURANT;
-  responseCode: any;
-  ageGroupCode: AGE_GROUP;
-  revenueRangeCode: REVENUE_RANGE;
-  isReadyCode: any;
+  ipAddress: string;
+  uniqueSessionId: string;
+  selectedKbMediumCategory: KB_FOOD_CATEGORY;
   fnbOwnerStatus: FNB_OWNER;
   hdongCode: string;
-  kbFoodCategory: KB_FOOD_CATEGORY;
   questionGivenArray: number[];
 }

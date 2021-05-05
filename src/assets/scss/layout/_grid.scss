@@ -1,0 +1,51 @@
+@charset "utf-8";
+
+@if $enable-grid-classes {
+  .inner-container {
+    @include make-container();
+    @include make-container-max-widths();
+  }
+}
+
+@if $enable-grid-classes {
+  .inner-container-fluid {
+    @include make-container();
+  }
+}
+
+@if $enable-grid-classes {
+  .row {
+    @include make-row();
+  }
+
+  .no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+
+    > .col,
+    > [class*='col-'] {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+  .gutter-8 {
+    margin-right: -0.25em;
+    margin-left: -0.25em;
+    > .col,
+    > [class*='col-'] {
+      padding: 0.25em;
+    }
+  }
+
+  .gutter-16 {
+    margin-right: -0.5em;
+    margin-left: -0.5em;
+    > .col,
+    > [class*='col-'] {
+      padding: 0.5em;
+    }
+  }
+}
+@if $enable-grid-classes {
+  @include make-grid-columns();
+}
