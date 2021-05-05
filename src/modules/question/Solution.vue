@@ -434,8 +434,8 @@
             <h3 class="txt-center">
               <strong class="txt-big ">
                 <span class="txt-bold">
-                  픽쿡플래너가 쉽고 빠르게 <br class="d-block d-lg-none" />
-                  추가 매출을 올려드릴게요!
+                  픽쿡플래너와 함께 <br class="d-block d-lg-none" />
+                  확실한 아이템으로 창업하세요!
                 </span>
               </strong>
             </h3>
