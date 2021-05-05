@@ -1181,7 +1181,7 @@ export default class Solution extends BaseComponent {
         position: relative;
         z-index: 2;
         color: #fff;
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: $txt-bold;
         white-space: nowrap;
       }
