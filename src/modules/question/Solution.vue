@@ -332,7 +332,7 @@
                               v-for="(item, index) in result.rankDataWCScore"
                               :key="index"
                             >
-                              {{ item.attributeValues.sSmallCategoryName }}
+                              {{ item.pickcookSmallCategoryInfo.pkMenuName }}
                             </span>
                           </div>
                         </div>
