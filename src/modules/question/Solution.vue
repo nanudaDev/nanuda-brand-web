@@ -363,7 +363,7 @@
                               <vue-odometer :value="revenueCount">
                               </vue-odometer>
                             </span>
-                            <span class="odometer-unit">원</span>
+                            <span class="odometer-unit">원/월</span>
                           </div>
                         </div>
                         <div class="d-none d-lg-block">
@@ -372,7 +372,7 @@
                               <vue-odometer :value="revenueCount2">
                               </vue-odometer>
                             </span>
-                            <span class="odometer-unit">원</span>
+                            <span class="odometer-unit">원/월</span>
                           </div>
                         </div>
                       </div>
