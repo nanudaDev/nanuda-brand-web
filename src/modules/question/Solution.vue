@@ -1133,7 +1133,7 @@ export default class Solution extends BaseComponent {
   &.chart-horizontal-stacked {
     .chart-bars {
       display: flex;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
       width: 100%;
     }
     .chart-bar {
@@ -1148,6 +1148,7 @@ export default class Solution extends BaseComponent {
           border-top-left-radius: $border-radius;
           border-bottom-left-radius: $border-radius;
           text-align: left;
+          padding-right: 0.5em;
           &:before {
             left: 0;
             background-color: $primary;
@@ -1162,6 +1163,7 @@ export default class Solution extends BaseComponent {
           border-top-right-radius: $border-radius;
           border-bottom-right-radius: $border-radius;
           text-align: right;
+          padding-left: 0.5em;
           &:before {
             background-color: $lightblue;
             right: 0;
