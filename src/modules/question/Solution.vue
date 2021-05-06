@@ -225,10 +225,10 @@
                         <p>
                           <span class="icon-tip">TIP</span>
                           <span class="txt-tiny">
-                            창업 아이템으로
                             <template
                               v-if="result.fnbOwnerStatus === 'NEW_FNB_OWNER'"
                             >
+                              창업 아이템으로
                               <strong>
                                 <template
                                   v-if="
@@ -252,18 +252,17 @@
                             </template>
                             <template v-else>
                               <strong>
+                                창업 아이템을
                                 <template
                                   v-if="
-                                    result.deliveryRatioData.restaurantRatio >
-                                      30
+                                    result.deliveryRatioData.deliveryRatio > 30
                                   "
                                 >
                                   배달 판매하여
                                 </template>
                                 <template
                                   v-else-if="
-                                    result.deliveryRatioData.restaurantRatio <
-                                      30
+                                    result.deliveryRatioData.deliveryRatio < 30
                                   "
                                 >
                                   매장에 추가하여
@@ -384,7 +383,7 @@
                               <vue-odometer :value="revenueCount2">
                               </vue-odometer>
                             </span>
-                            <span class="odometer-unit">원/월</span>
+                            <span class="odometer-unit">원</span>
                           </div>
                         </div>
                       </div>
@@ -1133,7 +1132,7 @@ export default class Solution extends BaseComponent {
   &.chart-horizontal-stacked {
     .chart-bars {
       display: flex;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
       width: 100%;
     }
     .chart-bar {
@@ -1148,6 +1147,7 @@ export default class Solution extends BaseComponent {
           border-top-left-radius: $border-radius;
           border-bottom-left-radius: $border-radius;
           text-align: left;
+          padding-right: 0.5em;
           &:before {
             left: 0;
             background-color: $primary;
@@ -1162,6 +1162,7 @@ export default class Solution extends BaseComponent {
           border-top-right-radius: $border-radius;
           border-bottom-right-radius: $border-radius;
           text-align: right;
+          padding-left: 0.5em;
           &:before {
             background-color: $lightblue;
             right: 0;
