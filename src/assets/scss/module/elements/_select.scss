@@ -1,0 +1,65 @@
+@charset "utf-8";
+
+/* .select */
+.select {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  select {
+    display: block;
+    width: 100%;
+    padding: 0.625em 0.5em;
+    line-height: 1.4;
+    border: 1px solid $border-color;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    color: $gray-700;
+    background-position: right 0.5em center;
+    background-size: 0.625em;
+    // background-image: url('~assets/svg/icon/select.svg');
+    outline: 0;
+
+    &:focus {
+      // background-image: url('~assets/svg/icon/select_active.svg');
+    }
+
+    &::-ms-expand {
+      display: none;
+    }
+  }
+}
+
+/* .select */
+
+.select-group {
+  display: flex;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+
+  .select {
+    flex: 1 0 auto;
+
+    select {
+      border: 0;
+    }
+
+    &:before {
+      display: block;
+      content: '';
+      width: 1px;
+      height: 50%;
+      background-color: $border-color;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    &:first-child {
+      &:before {
+        display: none;
+      }
+    }
+  }
+}

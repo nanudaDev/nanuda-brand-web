@@ -1,0 +1,114 @@
+@charset "utf-8";
+
+/* checkbox */
+.checkbox {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.6;
+
+  input[type='checkbox'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+
+    + .label-txt {
+      position: relative;
+      min-width: 1.5em;
+      min-height: 1.5em;
+      cursor: pointer;
+      width: inherit;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    + .label-txt:before,
+    + .label-txt span {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    + .label-txt span {
+      padding-left: 2em;
+      position: relative;
+    }
+
+    &:checked + .label-txt:before {
+      background-color: $success;
+      border-color: $success;
+      color: $white;
+    }
+
+    &:disabled {
+      + .label-txt {
+        cursor: default;
+
+        &:before {
+          border-color: $gray-400;
+          background-color: $gray-400;
+        }
+      }
+    }
+  }
+
+  &.type-button {
+    input[type='checkbox'] {
+      + .label-txt {
+        min-width: auto;
+        min-height: auto;
+        padding: 0.5em 0.5em;
+        line-height: 1.4;
+        border: 1px solid $border-color;
+        border-radius: $border-radius-sm;
+        display: block;
+        text-align: center;
+
+        &::before,
+        &::after {
+          display: none;
+        }
+
+        &:not(:disabled):hover {
+          border-color: darken($border-color, 10);
+        }
+
+        span {
+          padding-left: 0;
+        }
+      }
+
+      &:checked {
+        + label {
+          color: $white;
+          background-color: $primary;
+          border-color: $primary;
+
+          &:not(:disabled):hover {
+            // background-color: darken($primary, 5);
+            // border-color: darken($primary, 5);
+          }
+        }
+      }
+    }
+
+    &.rounded {
+      .label-txt {
+        border-radius: $rounded-pill !important;
+      }
+    }
+  }
+}
+
+* + .checkbox {
+  margin-left: 0.5em;
+}
+
+[class*='-box'] + .checkbox {
+  margin-top: 0;
+}
+/* checkbox */

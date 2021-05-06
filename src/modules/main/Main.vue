@@ -50,17 +50,18 @@
       </div>
       <div class="title-container">
         <div>
-          <div class="symbol">
+          <!-- <div class="symbol">
             <img src="@/assets/images/favicon.png" alt="" />
-          </div>
+          </div> -->
           <span
             class="d-inline-block txt-sm txt-underline txt-white txt-bold mb-2 pb-2"
             >스마트하게 창업하기</span
           >
-          <h2>실패없는 창업을<br />안내합니다</h2>
+          <h2>메뉴를 찾으세요</h2>
           <p>
-            원하는 위치에서 무슨 메뉴로 창업해야 할지<br />
-            빅데이터로 분석합니다.
+            뭘로 창업하지? <br />
+            매출은 어떻게 더 올리지?<br />
+            그 메뉴를 픽쿡에서 찾으세요
           </p>
           <div class="btn-box">
             <button
@@ -68,7 +69,7 @@
               id="top-button"
               @click="startQuestions()"
             >
-              <span>원하는 지역의 내 메뉴 찾기</span>
+              <span>원하는 지역의 내 메뉴 찾기 </span>
               <span class="icon icon-arrow-right icon-align-right"
                 ><BaseArrow
               /></span>
@@ -84,40 +85,82 @@
       </button>
     </div>
     <div class="content-wrapper" id="content-wrapper">
-      <section class="article-section section01">
-        <div class="container">
-          <header class="section-title">
-            <h3 class="txt-primary" data-aos="fade-up" data-aos-duration="1000">
-              픽쿡은 파트너사와 함께 <br />
-              여러분의 창업을 안내합니다
-            </h3>
-          </header>
-          <div class="section-content">
-            <div class="row align-items-center">
-              <div
-                class="col-6 col-md-6 col-lg-3"
-                v-for="n in 10"
-                :key="n"
-                data-aos="fade-up"
-                data-aos-duration="1000"
-                :data-aos-delay="`${50 * n}`"
-              >
-                <div class="shadow-sm rounded text-center my-2">
+      <section class="article-section section04 bg-light">
+        <header class="section-title">
+          <h3 class="txt-primary" data-aos="fade-up" data-aos-duration="1000">
+            1분만에 빅데이터로 <br />창업아이템을 추천해드려요
+          </h3>
+        </header>
+        <div
+          class="section-content"
+          data-aos="fade-up"
+          data-aos-duration="1500"
+        >
+          <b-tabs align="center">
+            <b-tab title="진단하기" active>
+              <div class="img-box">
+                <div class="mask-box">
                   <img
-                    :src="
-                      require(`@/assets/images/partner_${
-                        n < 10 ? '0' + n : n
-                      }.png`)
-                    "
-                    style="width:100%"
+                    src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_section04_img01.png"
                   />
                 </div>
               </div>
-            </div>
-          </div>
+              <div class="txt-box">
+                <p>
+                  창업 지역과 운영 경험을 <br />
+                  간단하게 입력해 주세요.
+                </p>
+              </div>
+            </b-tab>
+            <b-tab title="결과보기">
+              <div class="img-box">
+                <div class="mask-box">
+                  <img
+                    src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_section04_img02.png"
+                  />
+                </div>
+              </div>
+              <div class="txt-box">
+                <p>
+                  입력결과와 빅데이터를 분석해서 <br />딱 맞는 창업아이템을
+                  추천해드려요.
+                </p>
+              </div>
+            </b-tab>
+            <b-tab title="플래너 만나기">
+              <div class="img-box">
+                <div class="mask-box">
+                  <img
+                    src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_section04_img03.png"
+                  />
+                </div>
+              </div>
+              <div class="txt-box">
+                <p>
+                  상세한 상권설명부터 운영전략까지 <br />픽쿡 플래너가
+                  알려드릴게요.
+                </p>
+              </div>
+            </b-tab>
+            <!-- <b-tab title="신청하기">
+              <div class="img-box">
+                <div class="mask-box">
+                  <img
+                    src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_section04_img04.png"
+                  />
+                </div>
+              </div>
+              <div class="txt-box">
+                <p>
+                  픽쿡플래너를 통해 자신에게 <br />
+                  딱 맞는 창업을 시작해보세요.
+                </p>
+              </div>
+            </b-tab> -->
+          </b-tabs>
         </div>
       </section>
-      <section class="article-section section02 bg-light">
+      <!-- <section class="article-section section02 bg-light">
         <div class="container">
           <header class="section-title">
             <h3 data-aos="fade-up" data-aos-duration="1000">
@@ -192,10 +235,10 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
       <section class="article-section section03">
         <div class="container">
-          <div class="row">
+          <div class="row gutter-sm">
             <div
               class="col-12 col-xl-4 pb-5 mb-5 pb-lg-0 mb-lg-0 d-md-flex d-xl-block align-items-center"
             >
@@ -205,12 +248,12 @@
                   data-aos="fade-up"
                   data-aos-duration="1000"
                 >
-                  픽쿡은 빅데이터로 <br />
-                  시간대별 적정 메뉴를 알려줍니다
+                  확실한 창업 아이템을 <br />
+                  픽쿡이 추천할게요
                 </h3>
                 <p data-aos="fade-up" data-aos-duration="1500">
-                  창업의 메뉴부터 배달 전략까지 <br />
-                  분석하여 실패 없는 창업을 이끕니다.
+                  빅데이터와 조리, 운영경험을 종합하여 <br />딱 맞는
+                  창업아이템을 확인하세요.
                 </p>
               </header>
               <div
@@ -232,12 +275,11 @@
                   data-aos="fade-up"
                   data-aos-duration="1000"
                 >
-                  지역에 맞게 고객이 원하는 <br />
-                  서비스를 딱 맞게 제공합니다
+                  꼼꼼한 상권분석으로 <br />최고 매출을 달성하세요
                 </h3>
                 <p data-aos="fade-up" data-aos-duration="1500">
-                  메뉴/브랜드 교육부터 디자인, 마케팅까지 <br />
-                  고객에 맞는 서비스를 제공합니다.
+                  고객 정보부터 시간에 따른 매출 변화까지 <br />정밀한 분석을
+                  픽쿡 플래너가 안내드려요.
                 </p>
               </header>
               <div
@@ -259,12 +301,11 @@
                   data-aos="fade-up"
                   data-aos-duration="1000"
                 >
-                  픽쿡 플래너가 <br />
-                  효율적인 창업을 안내합니다
+                  픽쿡 플래너와 함께 <br />효율적인 창업을 시작하세요
                 </h3>
                 <p data-aos="fade-up" data-aos-duration="1500">
-                  메뉴 교육부터 판매 운영까지<br />
-                  픽쿡 플래너가 음식점 창업을 안내합니다.
+                  메뉴 교육부터 판매 운영까지 <br />픽쿡 플래너가 밀착하여
+                  관리할게요.
                 </p>
               </header>
               <div
@@ -296,80 +337,38 @@
           </div>
         </div>
       </section>
+
       <section class="article-section section04 bg-light">
-        <header class="section-title">
-          <h3 class="txt-primary" data-aos="fade-up" data-aos-duration="1000">
-            픽쿡은 장소에 맞는 <br />
-            메뉴와 운영 방법을 안내합니다
-          </h3>
-        </header>
-        <div
-          class="section-content"
-          data-aos="fade-up"
-          data-aos-duration="1500"
-        >
-          <b-tabs align="center">
-            <b-tab title="진단하기" active>
-              <div class="img-box">
-                <div class="mask-box">
+        <div class="container">
+          <header class="section-title">
+            <h3 class="txt-primary" data-aos="fade-up" data-aos-duration="1000">
+              픽쿡이 여러 파트너사와 함께 <br />
+              확실한 창업을 안내할게요
+            </h3>
+          </header>
+          <div class="section-content">
+            <div class="row align-items-center">
+              <div
+                class="col-6 col-md-6 col-lg-3"
+                v-for="n in 10"
+                :key="n"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                :data-aos-delay="`${50 * n}`"
+              >
+                <div class="shadow-sm rounded bg-white text-center my-2">
                   <img
-                    :src="require(`@/assets/images/main_section04_img01.png`)"
+                    :src="
+                      require(`@/assets/images/partner_${
+                        n < 10 ? '0' + n : n
+                      }.png`)
+                    "
+                    style="width:100%"
                   />
                 </div>
               </div>
-              <div class="txt-box">
-                <p>
-                  간단한 설문을 통해 창업지역과 <br />
-                  현재 상황을 진단할 수 있어요.
-                </p>
-              </div>
-            </b-tab>
-            <b-tab title="결과보기">
-              <div class="img-box">
-                <div class="mask-box">
-                  <img
-                    :src="require(`@/assets/images/main_section04_img02.png`)"
-                  />
-                </div>
-              </div>
-              <div class="txt-box">
-                <p>
-                  빅데이터로 분석된 고객, 경쟁사, 시간대별 <br />
-                  소비메뉴를 세부적으로 확인하세요.
-                </p>
-              </div>
-            </b-tab>
-            <b-tab title="추천받기">
-              <div class="img-box">
-                <div class="mask-box">
-                  <img
-                    :src="require(`@/assets/images/main_section04_img03.png`)"
-                  />
-                </div>
-              </div>
-              <div class="txt-box">
-                <p>
-                  창업지역에 딱 맞는 시간대별 메뉴와 <br />
-                  운영 방법을 추천 받으세요.
-                </p>
-              </div>
-            </b-tab>
-            <b-tab title="신청하기">
-              <div class="img-box">
-                <div class="mask-box">
-                  <img
-                    :src="require(`@/assets/images/main_section04_img04.png`)"
-                  />
-                </div>
-              </div>
-              <div class="txt-box">
-                <p>
-                  픽쿡플래너를 통해 자신에게 <br />
-                  딱 맞는 창업을 시작해보세요.
-                </p>
-              </div>
-            </b-tab>
-          </b-tabs>
+            </div>
+          </div>
         </div>
       </section>
       <section class="article-section section05">
@@ -425,7 +424,7 @@ export default class Main extends BaseComponent {
     tagRef: HTMLFormElement;
   };
   navbarHeight: any = 0;
-  private isFnbVideo = false;
+  private isFnbVideo = true;
   private currentIdx = 0;
   private tagList: any = [
     {
@@ -577,18 +576,18 @@ export default class Main extends BaseComponent {
     const params = Object.fromEntries(new URLSearchParams(urlQuery));
     if (urlQuery) {
       if (params.isFnbVideo) {
-        this.isFnbVideo = true;
-      } else {
         this.isFnbVideo = false;
+      } else {
+        this.isFnbVideo = true;
       }
     }
 
     const target = document.querySelector('.navbar');
     this.navbarHeight = target.getBoundingClientRect().height;
-    this.onStartTextAnimation(0);
-    this.swiper.on('slideChange', () => {
-      this.onSwipe(this);
-    });
+    // this.onStartTextAnimation(0);
+    // this.swiper.on('slideChange', () => {
+    //   this.onSwipe(this);
+    // });
   }
 }
 </script>
