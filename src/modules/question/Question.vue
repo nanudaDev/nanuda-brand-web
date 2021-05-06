@@ -174,12 +174,11 @@
                 <template v-else>
                   <template v-if="!KBCategoryGivens.length > 0">
                     <template v-if="firstQuestionDto.userType">
-                      <div
+                      <!-- <div
                         v-if="
                           firstQuestionDto.userType === FNB_OWNER.CUR_FNB_OWNER
                         "
-                      >
-                        <!-- 다음 주소 api -->
+                      >                      
                         <b-btn
                           @click="goToPreviousAddr()"
                           size="sm"
@@ -242,8 +241,8 @@
                             <vue-daum-postcode @complete="onPostCodeComplete" />
                           </div>
                         </b-modal>
-                      </div>
-                      <div v-else>
+                      </div> -->
+                      <div>
                         <b-btn
                           @click="goToPreviousAddr()"
                           size="sm"
@@ -491,11 +490,13 @@ export default class Question extends BaseComponent {
 
   getFirstQuestion(kbCategoryValue?: KB_FOOD_CATEGORY) {
     this.isLoading = true;
+
     if (kbCategoryValue) {
       this.resultRequestDto.selectedKbMediumCategory = kbCategoryValue;
     }
     questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
       if (res) {
+        this.KBCategoryGivens = [];
         this.isLoading = false;
         this.givens = res.data.givens;
         this.question = res.data.question;
@@ -548,20 +549,28 @@ export default class Question extends BaseComponent {
   // 질문 화면일때 뒤로가기
   goToPrevious() {
     if (this.previousQuestionDtoArr.length == 0) {
-      this.KBCategoryGivens = [];
-      if (this.firstQuestionDto.userType == FNB_OWNER.CUR_FNB_OWNER) {
-        this.question = '음식점 주소를 알려주세요!';
+      //first Question 에서 뒤로갈때
+      if (this.KBCategoryGivens.length == 0) {
+        this.getKBCategoryQuestion();
+        this.givens = [];
+        return;
       } else {
-        this.question = '어떤 곳에서 창업을 희망하나요?';
-      }
-      this.givens = [];
-      codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
-        this.addressGivens = res.data;
-        if (this.firstQuestionDto.userType == FNB_OWNER.NEW_FNB_OWNER) {
-          this.showingLevel = ADDRESS_LEVEL.hdongName;
+        this.KBCategoryGivens = [];
+        if (this.firstQuestionDto.userType == FNB_OWNER.CUR_FNB_OWNER) {
+          this.question = '음식점 주소를 알려주세요!';
+        } else {
+          this.question = '어떤 곳에서 창업을 희망하나요?';
         }
-      });
-      // 진행 단계 저장
+        this.givens = [];
+        codeHdongService
+          .getHdongName(this.codeHdongSearchDto)
+          .subscribe(res => {
+            this.addressGivens = res.data;
+            if (this.firstQuestionDto.userType == FNB_OWNER.NEW_FNB_OWNER) {
+              this.showingLevel = ADDRESS_LEVEL.hdongName;
+            }
+          });
+      }
       this.questionOrder = this.prevOrder - 1;
       return;
     }
