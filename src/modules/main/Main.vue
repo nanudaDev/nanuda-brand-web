@@ -584,10 +584,10 @@ export default class Main extends BaseComponent {
 
     const target = document.querySelector('.navbar');
     this.navbarHeight = target.getBoundingClientRect().height;
-    this.onStartTextAnimation(0);
-    this.swiper.on('slideChange', () => {
-      this.onSwipe(this);
-    });
+    // this.onStartTextAnimation(0);
+    // this.swiper.on('slideChange', () => {
+    //   this.onSwipe(this);
+    // });
   }
 }
 </script>

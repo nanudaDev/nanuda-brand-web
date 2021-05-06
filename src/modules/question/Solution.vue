@@ -31,21 +31,32 @@
                   가게에 딱 맞는 창업 아이템을 추천할게요!
                 </template>
               </h3>
-              <p class="mt-2 txt-right">
-                <span class="d-inline-flex align-items-center" v-b-modal.info>
-                  <span class="d-inline-block txt-tiny txt-gray-400 mr-2"
-                    >추천지수</span
+              <div class="mt-2 txt-right">
+                <div class="tooltip-container">
+                  <span
+                    class="tooltip-label d-inline-flex align-items-center"
+                    @click="isTooltipVislble = !isTooltipVislble"
                   >
-                  <b-icon icon="question-circle"></b-icon>
-                </span>
-              </p>
-              <b-modal id="info" title="추천지수" size="md" hide-footer>
+                    <span class="d-inline-block txt-tiny txt-gray-400 mr-2"
+                      >추천지수</span
+                    >
+                    <b-icon icon="question-circle"></b-icon>
+                  </span>
+                  <div class="tooltip-content" v-if="isTooltipVislble">
+                    <p class="txt-small">
+                      빅데이터 상권지수와 입력하신 조리경험, 운영경험,
+                      창업자금을 종합하여 반영한 수치입니다.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- <b-modal id="info" title="추천지수" size="md" hide-footer>
                 <p class="txt-small">
                   빅데이터 상권지수와 입력하신 <br />
                   조리경험, 운영경험, 창업자금을 <br />
                   종합하여 반영한 수치입니다.
                 </p>
-              </b-modal>
+              </b-modal> -->
             </header>
             <div class="section-content">
               <b-row class="gutter-sm">
@@ -354,6 +365,9 @@
                   </header>
                   <div class="section-content">
                     <div class="card py-10 px-2 shadow-sm">
+                      <p class="px-4">
+                        월 예상 최소 매출액
+                      </p>
                       <div class="odometer-container">
                         <div class="d-block d-lg-none">
                           <div class="odometer-box ">
@@ -361,7 +375,7 @@
                               <vue-odometer :value="revenueCount">
                               </vue-odometer>
                             </span>
-                            <span class="odometer-unit">원/월</span>
+                            <span class="odometer-unit">원</span>
                           </div>
                         </div>
                         <div class="d-none d-lg-block">
@@ -698,6 +712,7 @@ export default class Solution extends BaseComponent {
   private revenueCount2 = 0;
   private isToggleForm = false;
   private isFormVisible = false;
+  private isTooltipVislble = false;
 
   toggleId(index: number) {
     return 'item0' + index;
@@ -1352,7 +1367,7 @@ export default class Solution extends BaseComponent {
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 992px) {
   #question-solution {
     .article-section {
       .section-header {
@@ -1370,6 +1385,37 @@ export default class Solution extends BaseComponent {
           margin: 1em 0 0;
         }
       }
+    }
+  }
+}
+.tooltip-container {
+  position: relative;
+
+  .tooltip-content {
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    margin-bottom: 1.5em;
+    background: rgb(213 213 213 / 95%);
+    color: #707070;
+    padding: 0.5em 1em;
+    border-radius: 0.5rem;
+    text-align: left;
+    z-index: 2;
+    &:before {
+      display: block;
+      content: '';
+      position: absolute;
+      right: 1em;
+      top: 100%;
+      width: 0;
+      height: 0;
+      border-width: 1em;
+      border-style: solid;
+      border-top-color: rgb(213 213 213 / 95%);
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
     }
   }
 }
