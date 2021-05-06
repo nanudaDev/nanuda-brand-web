@@ -1,5 +1,5 @@
 <template>
-  <article class="main-article" id="question-solution" v-if="isComplete">
+  <article class="main-article" id="question-solution" v-if="!isComplete">
     <header class="article-header">
       <div class="container">
         <h2>
@@ -39,9 +39,11 @@
                   <b-icon icon="question-circle"></b-icon>
                 </span>
               </p>
-              <b-modal id="info" title="추천지수" size="sm" hide-footer>
-                <p>
-                  설명설명
+              <b-modal id="info" title="추천지수" size="md" hide-footer>
+                <p class="txt-small">
+                  빅데이터 상권지수와 입력하신 <br />
+                  조리경험, 운영경험, 창업자금을 <br />
+                  종합하여 반영한 수치입니다.
                 </p>
               </b-modal>
             </header>
@@ -50,77 +52,98 @@
                 <b-col
                   cols="12"
                   lg="4"
-                  class="my-2"
                   v-for="(item, index) in result.rankDataWCScore"
                   :key="index"
                 >
-                  <div
-                    class="card flex-row d-lg-block shadow-sm"
-                    data-aos="fade-up"
-                    data-aos-duration="1000"
-                    v-b-toggle="toggleId(index)"
-                  >
-                    <div class="card-img-left">
-                      <b-img-lazy
-                        :src="require('@/assets/images/about_us_review_01.png')"
-                        alt=""
-                      />
-                    </div>
-                    <div class="card-body">
-                      <div class="card-badge">
-                        <b-badge pill variant="primary" v-if="index === 0"
-                          >최고적합률</b-badge
-                        >
-                        <b-badge pill variant="secondary">{{
-                          item.mediumCategoryName
-                        }}</b-badge>
-                        <b-badge pill variant="outline-secondary"
-                          >찌개/전골류</b-badge
-                        >
+                  <div class="my-2">
+                    <div
+                      class="card shadow-sm  flex-row d-lg-block"
+                      data-aos="fade-up"
+                      data-aos-duration="1000"
+                      :data-aos-delay="300 * index"
+                      v-b-toggle="toggleId(index)"
+                    >
+                      <div class="card-img-left" v-if="item.sSmallCategoryCode">
+                        <b-img-lazy
+                          :src="
+                            `https://kr.object.ncloudstorage.com/common-storage-pickcook/menu/${item.sSmallCategoryCode}.jpg`
+                          "
+                          alt=""
+                        />
                       </div>
-                      <h4 class="card-title">
-                        {{ item.attributeValues.sSmallCategoryName }}
-                      </h4>
-                      <p class="card-text">
-                        <b-icon icon="graph-up"></b-icon>
-                        <span class="mx-1"
-                          >적합률
-                          <strong
-                            >{{ Math.round(item.appliedFitnessScore) }}%</strong
-                          ></span
-                        >
-                      </p>
-                      <span class="btn-toggle">
-                        <span class="txt-tiny">더 보기</span>
-                        <span class="icon-toggle-arrow">
-                          <b-icon icon="chevron-down"></b-icon>
+                      <div class="card-body">
+                        <div class="card-badge">
+                          <b-badge pill variant="primary" v-if="index === 0"
+                            >최고적합률</b-badge
+                          >
+                          <b-badge pill variant="blue" v-if="index === 1"
+                            >적합률높음</b-badge
+                          >
+                          <b-badge pill variant="lightblue" v-if="index === 2"
+                            >적합률보통</b-badge
+                          >
+                          <b-badge pill variant="secondary">{{
+                            item.mediumCategoryName
+                          }}</b-badge>
+                          <b-badge pill variant="outline-secondary">{{
+                            item.pickcookSmallCategoryInfo.pkSmallCategoryName
+                          }}</b-badge>
+                        </div>
+                        <h4 class="card-title">
+                          {{ item.pickcookSmallCategoryInfo.pkMenuName }}
+                        </h4>
+                        <p class="card-text">
+                          <b-icon icon="graph-up"></b-icon>
+                          <span class="mx-1"
+                            >추천지수
+                            <strong
+                              >{{
+                                Math.round(item.appliedFitnessScore)
+                              }}%</strong
+                            ></span
+                          >
+                        </p>
+                        <span class="btn-toggle">
+                          <span class="txt-tiny">더 보기</span>
+                          <span class="icon-toggle-arrow">
+                            <b-icon icon="chevron-down"></b-icon>
+                          </span>
                         </span>
-                      </span>
+                      </div>
                     </div>
+                    <b-collapse class="card-collapse" :id="`item0${index}`">
+                      <div class="card-desc">
+                        <b-row no-gutters align-v="center">
+                          <b-col cols="2" lg="12">
+                            <img
+                              src="@/assets/images/logo.svg"
+                              alt="픽쿡"
+                              class="logo w-8"
+                            />
+                          </b-col>
+                          <b-col cols="10" lg="12">
+                            <p class="txt-tiny">
+                              빅데이터 상권지수({{
+                                item.bigDataLocationScore
+                              }}%)와 조리경험 ({{
+                                item.cookingExperienceScore
+                              }}%), 운영경험({{
+                                item.operationExperienceScore
+                              }}%), 창업자금({{ item.initialCostScore }}%)을
+                              종합하였을때
+                              <strong class="txt-primary txt-bold">
+                                <template v-if="index === 0">
+                                  가장
+                                </template>
+                                추천하는 아이템</strong
+                              >
+                              입니다.
+                            </p>
+                          </b-col>
+                        </b-row>
+                      </div>
+                    </b-collapse>
                   </div>
-                  <b-collapse class="card-collapse" :id="`item0${index}`">
-                    <div class="card-desc">
-                      <b-row no-gutters align-v="center">
-                        <b-col cols="2">
-                          <img
-                            src="@/assets/images/logo.svg"
-                            alt="픽쿡"
-                            class="logo"
-                          />
-                        </b-col>
-                        <b-col cols="10">
-                          <p class="txt-tiny">
-                            빅데이터 상권지수(97%)와 조리경험 (90%),
-                            운영경험(80%), 창업자금(70%)를 종합하였을때,
-                            <strong class="txt-primary txt-bold"
-                              >가장 추천하는 아이템</strong
-                            >
-                            입니다.
-                          </p>
-                        </b-col>
-                      </b-row>
-                    </div>
-                  </b-collapse>
                 </b-col>
               </b-row>
             </div>
@@ -132,19 +155,19 @@
               <div>
                 <header class="section-header">
                   <h3>
-                    {{ result.hdong.hdongName }}의 고객들은
+                    {{ result.hdong.hdongName }}의 고객들은 <br />
                     <template
-                      v-if="result.deliveryRatioData.restaurantRatio > 30"
+                      v-if="result.deliveryRatioData.deliveryRatio > 30"
                     >
-                      <strong>배달로 더 많이 이용하고 있어요</strong>
+                      <strong>배달로 더 많이 이용하고 있어요!</strong>
                     </template>
                     <template
-                      v-else-if="result.deliveryRatioData.restaurantRatio < 30"
+                      v-else-if="result.deliveryRatioData.deliveryRatio < 30"
                     >
-                      <strong>매장을 더 많이 이용하고 있어요</strong>
+                      <strong>매장을 더 많이 이용하고 있어요!</strong>
                     </template>
                     <template v-else>
-                      <strong>매장과 배달을 비슷하게 이용하고 있어요</strong>
+                      <strong>매장과 배달을 비슷하게 이용하고 있어요!</strong>
                     </template>
                   </h3>
                 </header>
@@ -187,27 +210,25 @@
                           </div>
                         </div>
                       </div>
-                      <div class="txt-box">
+                      <div class="txt-box mt-3">
                         <p>
                           <span class="icon-tip">TIP</span>
                           <span class="txt-tiny">
-                            창업아이템으로
+                            창업 아이템으로
                             <template
                               v-if="result.fnbOwnerStatus === 'NEW_FNB_OWNER'"
                             >
                               <strong>
                                 <template
                                   v-if="
-                                    result.deliveryRatioData.restaurantRatio >
-                                      30
+                                    result.deliveryRatioData.deliveryRatio > 30
                                   "
                                 >
                                   위험이 낮은 공유주방
                                 </template>
                                 <template
                                   v-else-if="
-                                    result.deliveryRatioData.restaurantRatio <
-                                      30
+                                    result.deliveryRatioData.deliveryRatio < 30
                                   "
                                 >
                                   매장이 있는 공유주방
@@ -259,59 +280,61 @@
                   <header class="section-header">
                     <h3>
                       추천 아이템은
-                      <br class="d-block d-lg-none" />
-                      <strong>전 분기대비 매출이 증가</strong> 하고 있습니다.
+                      <br />
+                      <strong>전 분기보다 매출이 올라가고 있어요!</strong>
                     </h3>
                   </header>
                   <div class="section-content">
                     <div class="card p-5 shadow-sm">
-                      <div class="chart-container chart-vertical-arrow">
-                        <div class="chart-bars">
-                          <div
-                            class="chart-bar "
-                            :class="{
-                              'bar-rank-max':
-                                maxRevenue ===
-                                Math.abs(
-                                  item.estimatedIncreasedRevenuePercentage,
-                                ),
-                              'bar-rank-min':
-                                minRevenue ===
-                                Math.abs(
-                                  item.estimatedIncreasedRevenuePercentage,
-                                ),
-                            }"
-                            v-for="(item, index) in result.rankDataWCScore"
-                            :key="index"
-                            :style="{
-                              height:
-                                (Math.abs(
-                                  item.estimatedIncreasedRevenuePercentage,
-                                ) /
-                                  maxRevenue) *
-                                  100 +
-                                '%',
-                            }"
-                          >
-                            <div class="bar-stack">
-                              <span class="bar-percent"
-                                >{{
+                      <div data-aos="fade-in" data-aos-duration="1000">
+                        <div class="chart-container chart-vertical-arrow">
+                          <div class="chart-bars">
+                            <div
+                              class="chart-bar "
+                              :class="{
+                                'bar-rank-max':
+                                  maxRevenue ===
                                   Math.abs(
                                     item.estimatedIncreasedRevenuePercentage,
-                                  ).toFixed(0)
-                                }}%
-                              </span>
+                                  ),
+                                'bar-rank-min':
+                                  minRevenue ===
+                                  Math.abs(
+                                    item.estimatedIncreasedRevenuePercentage,
+                                  ),
+                              }"
+                              v-for="(item, index) in result.rankDataWCScore"
+                              :key="index"
+                              :style="{
+                                height:
+                                  (Math.abs(
+                                    item.estimatedIncreasedRevenuePercentage,
+                                  ) /
+                                    maxRevenue) *
+                                    100 +
+                                  '%',
+                              }"
+                            >
+                              <div class="bar-stack">
+                                <span class="bar-percent"
+                                  >+{{
+                                    Math.abs(
+                                      item.estimatedIncreasedRevenuePercentage,
+                                    ).toFixed(0)
+                                  }}%
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="chart-labels">
-                          <span
-                            class="chart-label"
-                            v-for="(item, index) in result.rankDataWCScore"
-                            :key="index"
-                          >
-                            {{ item.attributeValues.sSmallCategoryName }}
-                          </span>
+                          <div class="chart-labels">
+                            <span
+                              class="chart-label"
+                              v-for="(item, index) in result.rankDataWCScore"
+                              :key="index"
+                            >
+                              {{ item.pickcookSmallCategoryInfo.pkMenuName }}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -325,18 +348,30 @@
                 <div>
                   <header class="section-header">
                     <h3>
-                      추천 아이템으로 <br class="d-block d-lg-none" />
-                      <strong>추가 매출을 올릴 수</strong> 있어요!
+                      추천 아이템으로 <br />
+                      <strong>추가 매출을 올릴 수 있어요!</strong>
                     </h3>
                   </header>
                   <div class="section-content">
-                    <div class="card p-5 shadow-sm">
-                      <div class="odometer-container my-8">
-                        <div class="odometer-box">
-                          <span class="odometer-count">
-                            <vue-odometer :value="revenueCount"> </vue-odometer>
-                          </span>
-                          <span class="odometer-unit">원</span>
+                    <div class="card py-10 px-2 shadow-sm">
+                      <div class="odometer-container">
+                        <div class="d-block d-lg-none">
+                          <div class="odometer-box ">
+                            <span class="odometer-count">
+                              <vue-odometer :value="revenueCount">
+                              </vue-odometer>
+                            </span>
+                            <span class="odometer-unit">원/월</span>
+                          </div>
+                        </div>
+                        <div class="d-none d-lg-block">
+                          <div class="odometer-box">
+                            <span class="odometer-count">
+                              <vue-odometer :value="revenueCount2">
+                              </vue-odometer>
+                            </span>
+                            <span class="odometer-unit">원/월</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -367,6 +402,7 @@
                     <img
                       data-aos="fade-up"
                       :data-aos-duration="500 * (1 * (4 - n))"
+                      :data-aos-delay="300 * (1 * (4 - n))"
                       :src="
                         `https://kr.object.ncloudstorage.com/common-nanuda/images/report_img_0${n}.png`
                       "
@@ -375,13 +411,13 @@
                   </div>
                 </div>
                 <div
-                  class="txt-box"
-                  data-aos="fade-in"
+                  class="txt-box txt-md-center"
+                  data-aos="fade-up"
                   data-aos-duration="2000"
                 >
                   <p>
                     상권의 고객 정보부터 시간에 따른 매출변화까지 <br />
-                    어려운 데이터를 한눈에 쉽게 안내드립니다.
+                    어려운 데이터를 한눈에 쉽게 알 수 있어요!
                   </p>
                 </div>
               </div>
@@ -389,14 +425,16 @@
           </div>
         </section>
       </div>
-      <section class="article-section bg-white" ref="bottomForm">
+      <section class="article-section" ref="bottomForm" id="bottom-form">
         <div class="container">
           <!-- 폼 영역 -->
           <header class="section-header">
             <h3 class="txt-center">
-              <strong class="txt-big txt-bold">
-                무료로 안내받고 <br class="d-block d-lg-none" />빠르게 추가
-                매출을 올리세요!
+              <strong class="txt-big ">
+                <span class="txt-bold">
+                  픽쿡플래너와 함께 <br class="d-block d-lg-none" />
+                  확실한 아이템으로 창업하세요!
+                </span>
               </strong>
             </h3>
           </header>
@@ -430,6 +468,7 @@
                 </b-col>
                 <b-col cols="3">
                   <b-btn
+                    variant="primary"
                     size="md"
                     @click="getSMSCode"
                     :disabled="isGetCodeBtnDisabled"
@@ -454,6 +493,7 @@
                 </b-col>
                 <b-col cols="3">
                   <b-btn
+                    variant="primary"
                     size="md"
                     @click="checkSMSCode"
                     :disabled="isVerified"
@@ -464,21 +504,22 @@
               <div class="txt-box" v-if="errorText">
                 <p>{{ errorText }}</p>
               </div>
+              <div class="mt-6">
+                <b-btn
+                  variant="primary"
+                  block
+                  size="xl"
+                  :disabled="isConsultBtnDisabled"
+                  @click="onConsultBtnClicked"
+                >
+                  <span>신청하기</span>
+                </b-btn>
+              </div>
             </div>
           </div>
           <!-- // 폼 영역 -->
         </div>
       </section>
-      <b-btn
-        variant="primary"
-        block
-        size="xl"
-        class=" rounded-0"
-        :disabled="isConsultBtnDisabled"
-        @click="onConsultBtnClicked"
-      >
-        <span>픽쿡 플래너 만나기</span>
-      </b-btn>
     </div>
     <!-- sticky 폼 -->
     <transition name="slideInUp">
@@ -545,9 +586,13 @@
                 ></b-form-input>
               </b-col>
               <b-col cols="3">
-                <b-btn size="md" @click="checkSMSCode" :disabled="isVerified">{{
-                  isVerified ? '인증완료' : '인증하기'
-                }}</b-btn>
+                <b-btn
+                  variant="white"
+                  size="md"
+                  @click="checkSMSCode"
+                  :disabled="isVerified"
+                  >{{ isVerified ? '인증완료' : '인증하기' }}</b-btn
+                >
               </b-col>
             </b-form-row>
             <div class="txt-box" v-if="errorText">
@@ -561,7 +606,7 @@
                 :disabled="isConsultBtnDisabled"
                 @click="onConsultBtnClicked"
               >
-                <span>픽쿡 플래너 만나기</span>
+                <span>신청하기</span>
               </b-btn>
             </div>
           </div>
@@ -581,11 +626,11 @@
               class="logo-w"/></router-link
         ></span>
         <h2 data-aos="fade-in" data-aos-duration="1500">
-          신청이 완료되었습니다
+          신청이 완료되었어요
         </h2>
         <p data-aos="fade-in" data-aos-duration="1500">
           담당 플래너가 배정되는대로 <br />
-          입력해주신 연락처로 안내드리겠습니다.
+          입력해주신 연락처로 안내드릴게요.
         </p>
         <div
           class="btn-box text-center"
@@ -649,7 +694,8 @@ export default class Solution extends BaseComponent {
   private time = 30;
   private smsAuthNotificationDto = new SmsAuthNotificationDto();
 
-  private revenueCount = 12000000;
+  private revenueCount = 0;
+  private revenueCount2 = 0;
   private isToggleForm = false;
   private isFormVisible = false;
 
@@ -739,7 +785,7 @@ export default class Solution extends BaseComponent {
         });
       } else {
         this.$bvToast.toast(
-          '인증번호가 올바르지않거나 유효기간이 초과했습니다',
+          '인증번호가 올바르지 않거나 유효기간이 초과했습니다',
           {
             variant: 'danger',
             title: 'Error',
@@ -771,6 +817,8 @@ export default class Solution extends BaseComponent {
       const winHeight = window.outerHeight;
       if (rect < winHeight / 2) {
         this.revenueCount = this.maxRevenueValue;
+      } else {
+        this.revenueCount = 0;
       }
     }
   }
@@ -780,7 +828,6 @@ export default class Solution extends BaseComponent {
     if (target) {
       const rect = target.getBoundingClientRect().top;
       const winHeight = window.outerHeight;
-      console.log(rect, winHeight / 2);
       if (rect < winHeight - target.offsetHeight) {
         this.isFormVisible = true;
       } else {
@@ -796,6 +843,9 @@ export default class Solution extends BaseComponent {
   }
 
   created() {
+    setTimeout(() => {
+      this.revenueCount2 = this.maxRevenueValue;
+    }, 1000);
     this.handleDebouncedScroll = debounce(this.handleScroll, 100);
     window.addEventListener('scroll', this.handleDebouncedScroll);
   }
@@ -808,6 +858,19 @@ export default class Solution extends BaseComponent {
 
 <style lang="scss">
 @import '@/assets/scss/common.scss';
+
+#bottom-form {
+  .form-container {
+    label {
+      color: $primary;
+      font-weight: $txt-bold;
+    }
+    .form-control {
+      background-color: transparent;
+      border-color: $primary;
+    }
+  }
+}
 
 #sticky-form {
   background-color: $black;
@@ -822,7 +885,7 @@ export default class Solution extends BaseComponent {
   &.is-open {
     .btn-toggle-form {
       .icon {
-        transform: rotate(180deg);
+        transform: rotate(0);
       }
     }
   }
@@ -838,6 +901,7 @@ export default class Solution extends BaseComponent {
       margin-right: 0.5em;
     }
     .icon {
+      transform: rotate(180deg);
       svg {
         fill: $white;
       }
@@ -885,6 +949,8 @@ export default class Solution extends BaseComponent {
 .report-container {
   display: flex;
   align-items: center;
+  max-width: 24em;
+  margin: 0 auto;
 
   .report {
     position: relative;
@@ -940,6 +1006,7 @@ export default class Solution extends BaseComponent {
         font-size: $h5;
         color: $primary;
         font-weight: 300;
+        line-height: 1.4;
         strong {
           font-weight: 700;
         }
@@ -1025,7 +1092,16 @@ export default class Solution extends BaseComponent {
         overflow: hidden;
         box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.075);
         padding: 2.5em 1.5em 1.25em;
-        min-height: 8em;
+        min-height: 7em;
+      }
+    }
+
+    &.section01 {
+      .section-content {
+        > .row {
+          margin-top: -0.5em;
+          margin-bottom: -0.5em;
+        }
       }
     }
   }
@@ -1048,6 +1124,7 @@ export default class Solution extends BaseComponent {
     .chart-bar {
       position: relative;
       width: 50%;
+      min-width: 10%;
       &.chart-bar-restaurant {
         .bar-label {
           text-align: left;
@@ -1085,7 +1162,8 @@ export default class Solution extends BaseComponent {
       .bar-stack {
         position: relative;
         height: 3em;
-        padding: 0.5em 1em;
+        line-height: 3em;
+        padding: 0em 1em;
         overflow: hidden;
         &:before {
           display: block;
@@ -1101,8 +1179,9 @@ export default class Solution extends BaseComponent {
         position: relative;
         z-index: 2;
         color: #fff;
-        font-size: $txt-large;
+        font-size: 1.5rem;
         font-weight: $txt-bold;
+        white-space: nowrap;
       }
     }
   }
@@ -1115,7 +1194,7 @@ export default class Solution extends BaseComponent {
       align-items: flex-end;
       justify-content: space-around;
       border-bottom: 1px solid $gray;
-      height: 8em;
+      height: 7em;
     }
     .chart-bar {
       position: relative;
@@ -1148,9 +1227,10 @@ export default class Solution extends BaseComponent {
         bottom: 0;
         margin-top: 3em;
         width: 100%;
-        height: calc(100% - 3em);
+        height: 0%;
         background-color: $blue;
         border-color: $blue;
+        transition: height 1s ease 0.5s;
         &:before {
           position: absolute;
           left: 50%;
@@ -1189,15 +1269,23 @@ export default class Solution extends BaseComponent {
       .chart-label {
         flex: 1;
         text-align: center;
+        font-size: 1.2rem;
       }
     }
   }
 }
 
+// chart animated
 .aos-animate {
-  .bar-stack {
+  .chart-horizontal-stacked .bar-stack {
     &:before {
       width: 100% !important;
+    }
+  }
+
+  .chart-vertical-arrow {
+    .bar-stack {
+      height: calc(100% - 3em) !important;
     }
   }
 }
@@ -1213,13 +1301,13 @@ export default class Solution extends BaseComponent {
     display: inline-flex;
     align-items: baseline;
     .odometer-count {
-      font-size: 4.8rem;
+      font-size: 4.4rem;
       font-weight: $txt-bolder;
       line-height: 1;
       color: $primary;
       * {
         font-family: 'Gotham', sans-serif !important;
-        min-width: 0.7em;
+        min-width: 0.68em;
       }
     }
     .odometer-unit {
@@ -1237,6 +1325,7 @@ export default class Solution extends BaseComponent {
   color: #fff;
   height: 100vh;
   .article-header {
+    display: block;
     text-align: center;
     span {
       display: block;
@@ -1266,9 +1355,15 @@ export default class Solution extends BaseComponent {
 @media screen and (min-width: 1024px) {
   #question-solution {
     .article-section {
+      .section-header {
+        h3 {
+          text-align: center;
+        }
+      }
       .card {
         .card-img-left {
           width: auto;
+          height: 8.5em;
         }
         .card-body {
           width: auto;

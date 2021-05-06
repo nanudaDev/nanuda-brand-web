@@ -5,6 +5,7 @@
     right: 1em;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 2;
   }
 }
 .form-control {
@@ -64,9 +65,8 @@
   }
 
   &.btn-xl {
-    font-size: 2.4rem;
+    font-size: 2rem;
     min-width: 8.4615em;
-    height: 3em;
     font-weight: $txt-bolder;
   }
 
@@ -352,7 +352,7 @@
   height: 100vh;
   z-index: 100;
   background-color: rgba(255, 255, 255, 0.6);
-  // background-image: url('../images/loading.gif');
+  background-image: url('https://kr.object.ncloudstorage.com/common-storage-pickcook/main/loading.gif');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 5em 5em;
@@ -472,6 +472,16 @@
   }
 }
 
+.article-section {
+  .section-content {
+    p {
+      + p {
+        margin-top: 1.5em;
+      }
+    }
+  }
+}
+
 /* 회사소개 - 추후 옮김 */
 .app-about-us {
   .article-header {
@@ -479,7 +489,7 @@
     background-color: #004d8a;
     background-repeat: no-repeat;
     background-position: center center;
-    // background-image: url('../images/bg_circle.svg');
+    background-image: url('https://kr.object.ncloudstorage.com/common-storage-pickcook/main/bg_circle.svg');
     background-size: cover;
     text-align: center;
     color: #fff;
@@ -551,9 +561,9 @@
 }
 
 .video-wrapper {
-  background-image: url('/assets/images/main_visuual.png');
+  background-image: url('https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_visuual.png');
   &.fnb {
-    background-image: url('/assets/images/main_visuual_02.png');
+    background-image: url('https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_visuual_02.png');
   }
 }
 
@@ -567,7 +577,7 @@
       justify-content: center;
       height: calc(100vh - 3.375em);
       background-color: #161a29;
-      // background-image: url('../images/bg_service.svg');
+      background-image: url('https://kr.object.ncloudstorage.com/common-storage-pickcook/main/bg_service.svg');
       background-repeat: no-repeat;
       background-position: center bottom;
       background-size: cover;

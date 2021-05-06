@@ -35,7 +35,10 @@
         <div class="section-content">
           <div class="container">
             <figure data-aos="fade-up" data-aos-duration="1000">
-              <img src="@/assets/images/services_img01.png" alt="" />
+              <img
+                src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/services_img01.png"
+                alt=""
+              />
             </figure>
           </div>
         </div>
@@ -56,7 +59,10 @@
         <div class="section-content">
           <div class="container">
             <figure data-aos="fade-up" data-aos-duration="1000">
-              <img src="@/assets/images/services_img02.png" alt="" />
+              <img
+                src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/services_img02.png"
+                alt=""
+              />
             </figure>
           </div>
         </div>
@@ -78,7 +84,10 @@
         <div class="section-content">
           <div class="container">
             <figure data-aos="fade-up" data-aos-duration="1000">
-              <img src="@/assets/images/services_img03.png" alt="" />
+              <img
+                src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/services_img03.png"
+                alt=""
+              />
             </figure>
           </div>
         </div>
