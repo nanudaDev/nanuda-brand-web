@@ -24,17 +24,17 @@
               <h3>
                 <template v-if="result.fnbOwnerStatus === 'NEW_FNB_OWNER'">
                   예비사장님, <br class="d-block d-lg-none" />
-                  상권에 딱 맞는 창업아이템을 추천할게요!
+                  상권에 딱 맞는 <strong>창업아이템을 추천할게요!</strong>
                 </template>
                 <template v-else>
                   사장님, <br class="d-block d-lg-none" />
-                  가게에 딱 맞는 창업 아이템을 추천할게요!
+                  가게에 딱 맞는 <strong>창업아이템을 추천할게요!</strong>
                 </template>
               </h3>
               <div class="mt-2 txt-right">
                 <div class="tooltip-container">
                   <span
-                    class="tooltip-label d-inline-flex align-items-center"
+                    class="tooltip-label tooltip-right d-inline-flex align-items-center"
                     @click="isTooltipVislble = !isTooltipVislble"
                   >
                     <span class="d-inline-block txt-tiny txt-gray-400 mr-2"
@@ -222,9 +222,9 @@
                         </div>
                       </div>
                       <div class="txt-box mt-3">
-                        <p>
+                        <p class="info-tip txt-tiny">
                           <span class="icon-tip">TIP</span>
-                          <span class="txt-tiny">
+                          <span>
                             <template
                               v-if="result.fnbOwnerStatus === 'NEW_FNB_OWNER'"
                             >
@@ -251,8 +251,8 @@
                               창업을 추천드립니다.
                             </template>
                             <template v-else>
+                              창업 아이템을
                               <strong>
-                                창업 아이템을
                                 <template
                                   v-if="
                                     result.deliveryRatioData.deliveryRatio > 30
@@ -363,11 +363,11 @@
                     </h3>
                   </header>
                   <div class="section-content">
-                    <div class="card py-10 px-2 shadow-sm">
+                    <div class="card px-2 shadow-sm">
                       <p class="px-4">
                         월 예상 최소 매출액
                       </p>
-                      <div class="odometer-container">
+                      <div class="odometer-container my-1">
                         <div class="d-block d-lg-none">
                           <div class="odometer-box ">
                             <span class="odometer-count">
@@ -400,7 +400,7 @@
               <h3>
                 픽쿡플래너를 만나서
                 <br class="d-block d-lg-none" />
-                상권 분석을 무료로 받아보세요!
+                <strong>상권 분석을 무료로 받아보세요!</strong>
               </h3>
             </header>
             <div class="section-content">
@@ -429,7 +429,8 @@
                   data-aos-duration="2000"
                 >
                   <p>
-                    상권의 고객 정보부터 시간에 따른 매출변화까지 <br />
+                    상권의 고객 정보부터 시간에 따른 매출변화까지
+                    <br class="d-none d-md-block" />
                     어려운 데이터를 한눈에 쉽게 알 수 있어요!
                   </p>
                 </div>
@@ -831,8 +832,6 @@ export default class Solution extends BaseComponent {
       const winHeight = window.outerHeight;
       if (rect < winHeight / 2) {
         this.revenueCount = this.maxRevenueValue;
-      } else {
-        this.revenueCount = 0;
       }
     }
   }
@@ -932,20 +931,28 @@ export default class Solution extends BaseComponent {
     }
   }
 }
-.icon-tip {
-  display: inline-flex;
-  width: 2.6rem;
-  height: 2.6rem;
-  align-items: center;
-  justify-content: center;
-  background-color: $primary;
-  border-radius: 50%;
-  color: $white;
-  font-size: $txt-mini;
-  + * {
-    margin-left: 0.5em;
+.info-tip {
+  .icon-tip {
+    float: left;
+    display: inline-flex;
+    width: 3em;
+    height: 3em;
+    align-items: center;
+    justify-content: center;
+    background-color: $primary;
+    border-radius: 50%;
+    color: $white;
+    font-size: 0.625em;
+    margin-right: 1em;
+    + * {
+      display: block;
+      margin-top: 1em;
+      padding-top: 0.125em;
+      overflow: hidden;
+    }
   }
 }
+
 .icon-toggle-arrow {
   display: inline-flex;
   width: 1em;
@@ -1174,6 +1181,7 @@ export default class Solution extends BaseComponent {
         font-weight: $txt-bold;
         color: $secondary;
         margin-bottom: 0.5em;
+        white-space: nowrap;
       }
       .bar-stack {
         position: relative;
@@ -1396,7 +1404,7 @@ export default class Solution extends BaseComponent {
     position: absolute;
     right: 0;
     bottom: 100%;
-    margin-bottom: 1.5em;
+    margin-bottom: 0.5em;
     background: rgb(213 213 213 / 95%);
     color: #707070;
     padding: 0.5em 1em;
@@ -1411,7 +1419,7 @@ export default class Solution extends BaseComponent {
       top: 100%;
       width: 0;
       height: 0;
-      border-width: 1em;
+      border-width: 0.5em;
       border-style: solid;
       border-top-color: rgb(213 213 213 / 95%);
       border-left-color: transparent;

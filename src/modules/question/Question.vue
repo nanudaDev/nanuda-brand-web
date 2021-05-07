@@ -1,36 +1,70 @@
 <template>
   <div>
     <article class="main-article bg-primary" v-if="isStart" id="question-start">
-      <header class="article-header">
-        <span data-aos="fade-down" data-aos-duration="1500"
-          ><router-link to="/"
-            ><img
-              src="@/assets/images/logo_w.svg"
-              alt="픽쿡"
-              class="logo-w"/></router-link
-        ></span>
-        <h2 data-aos="fade-down" data-aos-duration="1500">
-          상권에 딱 맞는 <br />창업 아이템을 확인하세요!
-        </h2>
-        <p data-aos="fade-down" data-aos-duration="1500">
-          단 1분만에 빅데이터로 <br />최적 창업 아이템을 추천합니다.
-        </p>
-        <div
-          class="btn-box text-center"
-          data-aos="fade-up"
-          data-aos-duration="1000"
-        >
-          <b-btn
-            variant="light"
-            pill
-            size="xl"
-            class="shadow"
-            @click="startQuestion()"
+      <template v-if="!isUtmSource">
+        <header class="article-header">
+          <span data-aos="fade-down" data-aos-duration="1500"
+            ><router-link to="/"
+              ><img
+                src="@/assets/images/logo_w.svg"
+                alt="픽쿡"
+                class="logo-w"/></router-link
+          ></span>
+          <h2 data-aos="fade-down" data-aos-duration="1500">
+            단 1분만에 빅데이터로<br />
+            창업아이템을 추천할게요.
+          </h2>
+          <div
+            class="btn-box text-center"
+            data-aos="fade-up"
+            data-aos-duration="1000"
           >
-            시작하기
-          </b-btn>
-        </div>
-      </header>
+            <b-btn
+              variant="light"
+              pill
+              size="xl"
+              class="shadow"
+              @click="startQuestion()"
+            >
+              시작하기
+            </b-btn>
+          </div>
+        </header>
+      </template>
+      <template v-else>
+        <header class="article-header">
+          <span data-aos="fade-down" data-aos-duration="1500"
+            ><router-link to="/"
+              ><img
+                src="@/assets/images/logo_w.svg"
+                alt="픽쿡"
+                class="logo-w"/></router-link
+          ></span>
+          <h2 data-aos="fade-down" data-aos-duration="1500">
+            메뉴를 찾으세요
+          </h2>
+          <p data-aos="fade-down" data-aos-duration="1500">
+            뭘로 창업하지? <br />
+            매출은 어떻게 더 올리지?<br />
+            그 메뉴를 픽쿡에서 찾으세요<br />
+          </p>
+          <div
+            class="btn-box text-center"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+          >
+            <b-btn
+              variant="light"
+              pill
+              size="xl"
+              class="shadow"
+              @click="startQuestion()"
+            >
+              원하는 지역에서 내 메뉴 찾기
+            </b-btn>
+          </div>
+        </header>
+      </template>
     </article>
     <template v-if="!resultResponseDto">
       <article
@@ -449,6 +483,8 @@ export default class Question extends BaseComponent {
   private questionGivenArray: any[] = [];
   private loadingProgress = 0;
 
+  private isUtmSource = false;
+
   startQuestion() {
     this.isStart = false;
     this.$gtag.event('start_question_button', { description: '질문 시작' });
@@ -511,6 +547,7 @@ export default class Question extends BaseComponent {
     this.questionOrder += 1;
     this.prevOrder = this.questionOrder;
   }
+
   getKBCategoryQuestion() {
     this.isLoading = true;
     questionService
@@ -803,6 +840,15 @@ export default class Question extends BaseComponent {
     this.previousQuestionDtoArr = [];
     this.questionGivenArray = [];
     this.loadingProgress = 0;
+  }
+
+  created() {
+    const urlQuery = location.search;
+    if (urlQuery.includes('utm_source=')) {
+      this.isUtmSource = true;
+    } else {
+      this.isUtmSource = false;
+    }
   }
 
   async mounted() {
