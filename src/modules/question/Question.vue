@@ -1,36 +1,68 @@
 <template>
   <div>
     <article class="main-article bg-primary" v-if="isStart" id="question-start">
-      <header class="article-header">
-        <span data-aos="fade-down" data-aos-duration="1500"
-          ><router-link to="/"
-            ><img
-              src="@/assets/images/logo_w.svg"
-              alt="픽쿡"
-              class="logo-w"/></router-link
-        ></span>
-        <h2 data-aos="fade-down" data-aos-duration="1500">
-          상권에 딱 맞는 <br />창업 아이템을 확인하세요!
-        </h2>
-        <p data-aos="fade-down" data-aos-duration="1500">
-          단 1분만에 빅데이터로 <br />최적 창업 아이템을 추천합니다.
-        </p>
-        <div
-          class="btn-box text-center"
-          data-aos="fade-up"
-          data-aos-duration="1000"
-        >
-          <b-btn
-            variant="light"
-            pill
-            size="xl"
-            class="shadow"
-            @click="startQuestion()"
+      <template v-if="!isUtmSource">
+        <header class="article-header">
+          <span data-aos="fade-down" data-aos-duration="1500"
+            ><router-link to="/"
+              ><img
+                src="@/assets/images/logo_w.svg"
+                alt="픽쿡"
+                class="logo-w" /></router-link
+          ></span>
+          <h2 data-aos="fade-down" data-aos-duration="1500">
+            단 1분만에 빅데이터로<br />
+            창업아이템을 추천할게요.
+          </h2>
+          <div
+            class="btn-box text-center"
+            data-aos="fade-up"
+            data-aos-duration="1000"
           >
-            시작하기
-          </b-btn>
-        </div>
-      </header>
+            <b-btn
+              variant="light"
+              pill
+              size="xl"
+              class="shadow"
+              @click="startQuestion()"
+            >
+              시작하기
+            </b-btn>
+          </div>
+        </header>
+      </template>
+      <template v-else>
+        <header class="article-header">
+          <span data-aos="fade-down" data-aos-duration="1500"
+            ><router-link to="/"
+              ><img
+                src="@/assets/images/logo_w.svg"
+                alt="픽쿡"
+                class="logo-w" /></router-link
+          ></span>
+          <h2 data-aos="fade-down" data-aos-duration="1500">메뉴를 찾으세요</h2>
+          <p data-aos="fade-down" data-aos-duration="1500">
+            뭘로 창업하지? <br />
+            매출은 어떻게 더 올리지?<br />
+            그 메뉴를 픽쿡에서 찾으세요<br />
+          </p>
+          <div
+            class="btn-box text-center"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+          >
+            <b-btn
+              variant="light"
+              pill
+              size="xl"
+              class="shadow"
+              @click="startQuestion()"
+            >
+              원하는 지역에서 내 메뉴 찾기
+            </b-btn>
+          </div>
+        </header>
+      </template>
     </article>
     <template v-if="!resultResponseDto">
       <article
@@ -449,6 +481,8 @@ export default class Question extends BaseComponent {
   private questionGivenArray: any[] = [];
   private loadingProgress = 0;
 
+  private isUtmSource = false;
+
   startQuestion() {
     this.isStart = false;
     this.$gtag.event('start_question_button', { description: '질문 시작' });
@@ -466,10 +500,10 @@ export default class Question extends BaseComponent {
       this.$gtag.event(`user_type_${userType}`, {
         description: '기창업자로 질문 시작',
       });
-      codeHdongService.getSido().subscribe(res => {
+      codeHdongService.getSido().subscribe((res) => {
         this.isLoading = false;
         this.addressGivens = res.data;
-        const locationArray = this.addressGivens.map(e => e.sidoName);
+        const locationArray = this.addressGivens.map((e) => e.sidoName);
         const locationArrayText = locationArray.join(', ');
         this.availableLocation = locationArrayText;
       });
@@ -479,7 +513,7 @@ export default class Question extends BaseComponent {
         description: '신규창업자로 질문 시작',
       });
       this.isLoading = true;
-      codeHdongService.getSido().subscribe(res => {
+      codeHdongService.getSido().subscribe((res) => {
         this.isLoading = false;
         this.addressGivens = res.data;
       });
@@ -494,7 +528,7 @@ export default class Question extends BaseComponent {
     if (kbCategoryValue) {
       this.resultRequestDto.selectedKbMediumCategory = kbCategoryValue;
     }
-    questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
+    questionService.getFirstQuestion(this.firstQuestionDto).subscribe((res) => {
       if (res) {
         this.KBCategoryGivens = [];
         this.isLoading = false;
@@ -511,11 +545,12 @@ export default class Question extends BaseComponent {
     this.questionOrder += 1;
     this.prevOrder = this.questionOrder;
   }
+
   getKBCategoryQuestion() {
     this.isLoading = true;
     questionService
       .getKBCategoryQuestion(this.firstQuestionDto)
-      .subscribe(res => {
+      .subscribe((res) => {
         if (res) {
           this.isLoading = false;
           this.KBCategoryGivens = res.data.givens;
@@ -527,12 +562,12 @@ export default class Question extends BaseComponent {
   // 주소 선택화면일때 뒤로가기
   goToPreviousAddr() {
     if (this.showingLevel === ADDRESS_LEVEL.hdongName) {
-      codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
+      codeHdongService.getGuName(this.codeHdongSearchDto).subscribe((res) => {
         this.addressGivens = res.data;
         this.showingLevel = ADDRESS_LEVEL.guName;
       });
     } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
-      codeHdongService.getSido().subscribe(res => {
+      codeHdongService.getSido().subscribe((res) => {
         this.addressGivens = res.data;
         this.showingLevel = ADDRESS_LEVEL.sidoName;
       });
@@ -564,7 +599,7 @@ export default class Question extends BaseComponent {
         this.givens = [];
         codeHdongService
           .getHdongName(this.codeHdongSearchDto)
-          .subscribe(res => {
+          .subscribe((res) => {
             this.addressGivens = res.data;
             if (this.firstQuestionDto.userType == FNB_OWNER.NEW_FNB_OWNER) {
               this.showingLevel = ADDRESS_LEVEL.hdongName;
@@ -575,24 +610,26 @@ export default class Question extends BaseComponent {
       return;
     }
     if (this.previousQuestionDtoArr.length == 1) {
-      questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
-        this.givens = res.data.givens;
-        this.question = res.data.question;
-        this.nextQuestionDto.order = res.data.order;
-        this.nextQuestionDto.questionId = res.data.id;
-        this.nextQuestionDto.givenId = [];
-        this.isMultipleAnswer =
-          res.data.multipleAnswerYn === YN.YES ? true : false;
-        // 진행 단계 저장
-        this.prevOrder = this.questionOrder;
-      });
+      questionService
+        .getFirstQuestion(this.firstQuestionDto)
+        .subscribe((res) => {
+          this.givens = res.data.givens;
+          this.question = res.data.question;
+          this.nextQuestionDto.order = res.data.order;
+          this.nextQuestionDto.questionId = res.data.id;
+          this.nextQuestionDto.givenId = [];
+          this.isMultipleAnswer =
+            res.data.multipleAnswerYn === YN.YES ? true : false;
+          // 진행 단계 저장
+          this.prevOrder = this.questionOrder;
+        });
     }
     const previousDto = this.previousQuestionDtoArr[
       this.previousQuestionDtoArr.length - 2
     ];
     this.previousQuestionDtoArr.pop();
     this.questionGivenArray.pop();
-    questionService.getNextQuestion(previousDto).subscribe(res => {
+    questionService.getNextQuestion(previousDto).subscribe((res) => {
       if (res.data.isLastQuestion === YN.YES) {
         this.isLastQuestion = true;
       }
@@ -620,7 +657,7 @@ export default class Question extends BaseComponent {
     } else {
       //답변을 여러개 선택할때
       this.$set(this.nextQuestionDto, 'givenId', this.selectedAnswers);
-      const selectedGivenId = this.selectedAnswers.map(e => e.id);
+      const selectedGivenId = this.selectedAnswers.map((e) => e.id);
       this.nextQuestionDto.givenId = selectedGivenId;
     }
     //questionGivenArray에 지금까지의 질문과 답변 저장
@@ -652,7 +689,7 @@ export default class Question extends BaseComponent {
       //   }
       // }, 400);
       //get result
-      questionService.getResult(this.resultRequestDto).subscribe(res => {
+      questionService.getResult(this.resultRequestDto).subscribe((res) => {
         if (res) {
           this.loadingProgress = 0;
           this.isLoadingResult = false;
@@ -663,7 +700,7 @@ export default class Question extends BaseComponent {
         }
       });
     } else {
-      questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
+      questionService.getNextQuestion(this.nextQuestionDto).subscribe((res) => {
         if (res.data.isLastQuestion === YN.YES) {
           this.isLastQuestion = true;
         }
@@ -671,9 +708,7 @@ export default class Question extends BaseComponent {
           this.isLoading = false;
           this.nextQuestionDto.order = res.data.order;
           this.nextQuestionDto.questionId = res.data.id;
-          // this.$gtag.event(`question_${res.data.userType}_${res.data.id}`, {
-          //   description: `${res.data.commonCode.comment} : ${res.data.question}`,
-          // });
+          this.$gtag.event(`question_${res.data.userType}_${res.data.id}`);
           this.question = res.data.question;
           this.questionOrder =
             this.nextQuestionDto.order + (this.prevOrder - 1);
@@ -697,7 +732,7 @@ export default class Question extends BaseComponent {
       this.codeHdongSearchDto.guName = given.guName;
     }
     if (this.showingLevel === ADDRESS_LEVEL.sidoName) {
-      codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
+      codeHdongService.getGuName(this.codeHdongSearchDto).subscribe((res) => {
         this.isLoading = false;
         this.addressGivens = res.data;
         this.showingLevel = ADDRESS_LEVEL.guName;
@@ -705,13 +740,15 @@ export default class Question extends BaseComponent {
         this.questionOrder += 1;
       });
     } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
-      codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
-        this.isLoading = false;
-        this.addressGivens = res.data;
-        this.showingLevel = ADDRESS_LEVEL.hdongName;
-        // 진행 단계 증가
-        this.questionOrder += 1;
-      });
+      codeHdongService
+        .getHdongName(this.codeHdongSearchDto)
+        .subscribe((res) => {
+          this.isLoading = false;
+          this.addressGivens = res.data;
+          this.showingLevel = ADDRESS_LEVEL.hdongName;
+          // 진행 단계 증가
+          this.questionOrder += 1;
+        });
     } else {
       if (given) {
         this.resultRequestDto.hdongCode = given.hdongCode;
@@ -750,7 +787,7 @@ export default class Question extends BaseComponent {
 
   onMultipleAnswerClicked(given: Given) {
     if (this.selectedAnswers.includes(given)) {
-      const theIndex = this.selectedAnswers.findIndex(e => e === given);
+      const theIndex = this.selectedAnswers.findIndex((e) => e === given);
       this.selectedAnswers.splice(theIndex, 1);
     } else {
       this.selectedAnswers.push(given);
@@ -805,10 +842,19 @@ export default class Question extends BaseComponent {
     this.loadingProgress = 0;
   }
 
+  created() {
+    const urlQuery = location.search;
+    if (urlQuery.includes('utm_source=')) {
+      this.isUtmSource = true;
+    } else {
+      this.isUtmSource = false;
+    }
+  }
+
   async mounted() {
     // this.isLoading = true;
     //get ip address
-    await axios.get('https://api.ipify.org?format=json').then(res => {
+    await axios.get('https://api.ipify.org?format=json').then((res) => {
       // this.isLoading = false;
       this.nextQuestionDto.ipAddress = this.resultRequestDto.ipAddress =
         res.data.ip;
