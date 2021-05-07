@@ -708,9 +708,9 @@ export default class Question extends BaseComponent {
           this.isLoading = false;
           this.nextQuestionDto.order = res.data.order;
           this.nextQuestionDto.questionId = res.data.id;
-          // this.$gtag.event(`question_${res.data.userType}_${res.data.id}`, {
-          //   description: `${res.data.commonCode.comment} : ${res.data.question}`,
-          // });
+          this.$gtag.event(`question_${res.data.userType}_${res.data.id}`, {
+            description: `${res.data.commonCode.comment} : ${res.data.question}`,
+          });
           this.question = res.data.question;
           this.questionOrder =
             this.nextQuestionDto.order + (this.prevOrder - 1);
