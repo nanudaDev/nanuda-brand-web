@@ -1,7 +1,7 @@
 <template>
   <div>
     <article class="main-article bg-primary" v-if="isStart" id="question-start">
-      <template v-if="true">
+      <template v-if="!isUtmSource">
         <header class="article-header">
           <span data-aos="fade-down" data-aos-duration="1500"
             ><router-link to="/"
@@ -483,6 +483,8 @@ export default class Question extends BaseComponent {
   private questionGivenArray: any[] = [];
   private loadingProgress = 0;
 
+  private isUtmSource = false;
+
   startQuestion() {
     this.isStart = false;
     this.$gtag.event('start_question_button', { description: '질문 시작' });
@@ -545,6 +547,7 @@ export default class Question extends BaseComponent {
     this.questionOrder += 1;
     this.prevOrder = this.questionOrder;
   }
+
   getKBCategoryQuestion() {
     this.isLoading = true;
     questionService
@@ -837,6 +840,15 @@ export default class Question extends BaseComponent {
     this.previousQuestionDtoArr = [];
     this.questionGivenArray = [];
     this.loadingProgress = 0;
+  }
+
+  created() {
+    const urlQuery = location.search;
+    if (urlQuery.includes('utm_source=')) {
+      this.isUtmSource = true;
+    } else {
+      this.isUtmSource = false;
+    }
   }
 
   async mounted() {
