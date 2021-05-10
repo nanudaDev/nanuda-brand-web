@@ -94,7 +94,7 @@
                             >적합률보통</b-badge
                           >
                           <b-badge pill variant="secondary">{{
-                            item.mediumCategoryName
+                            item.pickcookSmallCategoryInfo.pkMediumCategoryName
                           }}</b-badge>
                           <b-badge pill variant="outline-secondary">{{
                             item.pickcookSmallCategoryInfo.pkSmallCategoryName
