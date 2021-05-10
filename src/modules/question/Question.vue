@@ -691,6 +691,7 @@ export default class Question extends BaseComponent {
       //get result
       questionService.getResult(this.resultRequestDto).subscribe((res) => {
         if (res) {
+          this.$gtag.event(`proforma_result_seen_${res.data.id}`);
           this.loadingProgress = 0;
           this.isLoadingResult = false;
           this.isLoading = false;
@@ -703,6 +704,9 @@ export default class Question extends BaseComponent {
       questionService.getNextQuestion(this.nextQuestionDto).subscribe((res) => {
         if (res.data.isLastQuestion === YN.YES) {
           this.isLastQuestion = true;
+          this.$gtag.event(
+            `question_${res.data.userType}_${res.data.id}_last_question`,
+          );
         }
         if (res) {
           this.isLoading = false;
