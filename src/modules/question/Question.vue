@@ -68,25 +68,11 @@
         </header>
       </template>
     </article>
-    <article
-      class="main-article"
-      :id="nextQuestionDto.questionId"
-      :class="
-        bgLightQuestionId.includes(nextQuestionDto.questionId)
-          ? 'bg-light'
-          : 'bg-primary'
-      "
-      v-else
-    >
+    <article class="main-article bg-primary" v-else>
       <header class="article-header">
         <h1>
           <router-link to="/">
-            <img
-              src="@/assets/images/logo.svg"
-              alt="픽쿡"
-              v-if="bgLightQuestionId.includes(nextQuestionDto.questionId)"
-            />
-            <img src="@/assets/images/logo_w.svg" alt="픽쿡" v-else />
+            <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
           </router-link>
         </h1>
         <div class="progress-bar-rail">
@@ -100,7 +86,16 @@
       </header>
       <div class="article-content">
         <section class="article-section">
-          <component :is="questionOrderArr[questionIndex]" @next="onNext" />
+          <!-- questionOrderArr의 순서에 따라 컴포넌트가 변함 -->
+          <component
+            :is="questionOrderArr[questionIndex]"
+            @next="onNext"
+            @previous="questionIndex--"
+            :fnbOwnerStatus="resultRequestDto.fnbOwnerStatus"
+            :ipAdress="ipAddress"
+            :uniqueSessionId="uniqueSessionId"
+            :resultRequestDto="resultRequestDto"
+          />
         </section>
       </div>
     </article>
@@ -127,35 +122,33 @@ import { COMMON_CODE_CATEGORY } from '@/shared';
 import { ADDRESS_LEVEL, KB_FOOD_CATEGORY, YN } from '@/common';
 import FnbOwnerStatus from './components/questions/FnbOwnerStatus.vue';
 import HdongCode from './components/questions/HdongCode.vue';
+import KBCategory from './components/questions/KBCategory.vue';
+import MultipleQuestion from './components/questions/MultipleQuestion.vue';
+import Solution from './Solution.vue';
 @Component({
   name: 'Question',
-  components: { VueDaumPostcode, FnbOwnerStatus, HdongCode },
+  components: {
+    VueDaumPostcode,
+    FnbOwnerStatus,
+    HdongCode,
+    KBCategory,
+    MultipleQuestion,
+    Solution,
+  },
 })
 export default class Question extends BaseComponent {
   [x: string]: any;
   // private userType: USER = null;
 
-  private firstQuestionDto = new FirstQuestionDto();
-  private nextQuestionDto = new NextQuestionDto();
-  private codeHdongSearchDto = new CodeHdongSearchDto();
   private resultRequestDto = new ResultRequestDto();
-
-  private isLastQuestion = false;
-  private smallSizeQuestionId = [1, 4, 5, 12];
   private bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
   private questionTotalCount: any = 10;
   private questionOrder: any = 0;
   private prevOrder: any = 0;
-  private question = '나는 현재';
-
   private resultResponseDto: ResultResponseDto = null;
   private isAvailableLocation = false;
   private availableLocation = '';
 
-  private givens: Given[] = [];
-  private KBCategoryGivens: Given[] = [];
-  private addressGivens: any[] = [];
-  private showingLevel = ADDRESS_LEVEL.sidoName;
   private selectedRoadAddress = '';
   private isMultipleAnswer = false;
   private selectedAnswers: Given[] = [];
@@ -168,254 +161,18 @@ export default class Question extends BaseComponent {
   private isUtmSource = false;
 
   private questionIndex = -1;
-  private questionOrderArr = ['FnbOwnerStatus', 'HdongCode'];
+  private questionOrderArr = [
+    'FnbOwnerStatus',
+    'HdongCode',
+    'KBCategory',
+    'MultipleQuestion',
+    'Solution',
+  ];
+  private ipAdress = '';
+  private uniqueSessionId = '';
   startQuestion() {
     this.$gtag.event('start_question_button', { description: '질문 시작' });
     this.questionIndex = 0;
-  }
-
-  getFirstQuestion(kbCategoryValue?: KB_FOOD_CATEGORY) {
-    this.isLoading = true;
-
-    if (kbCategoryValue) {
-      this.resultRequestDto.selectedKbMediumCategory = kbCategoryValue;
-    }
-    questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
-      if (res) {
-        this.KBCategoryGivens = [];
-        this.isLoading = false;
-        this.givens = res.data.givens;
-        this.question = res.data.question;
-        this.nextQuestionDto.order = res.data.order;
-        this.nextQuestionDto.questionId = res.data.id;
-        this.nextQuestionDto.givenId = [];
-        this.isMultipleAnswer =
-          res.data.multipleAnswerYn === YN.YES ? true : false;
-      }
-    });
-    // 이전 단계 저장 후 증가
-    this.questionOrder += 1;
-    this.prevOrder = this.questionOrder;
-  }
-
-  getKBCategoryQuestion() {
-    this.isLoading = true;
-    questionService
-      .getKBCategoryQuestion(this.firstQuestionDto)
-      .subscribe(res => {
-        if (res) {
-          this.isLoading = false;
-          this.KBCategoryGivens = res.data.givens;
-          this.question = res.data.question;
-        }
-      });
-  }
-
-  // 주소 선택화면일때 뒤로가기
-  goToPreviousAddr() {
-    if (this.showingLevel === ADDRESS_LEVEL.hdongName) {
-      codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
-        this.addressGivens = res.data;
-        this.showingLevel = ADDRESS_LEVEL.guName;
-      });
-    } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
-      codeHdongService.getSido().subscribe(res => {
-        this.addressGivens = res.data;
-        this.showingLevel = ADDRESS_LEVEL.sidoName;
-      });
-    } else {
-      this.question = '나는 현재';
-      this.selectedRoadAddress = '';
-      this.firstQuestionDto.userType = null;
-    }
-    // 진행 단계 감소
-    this.questionOrder -= 1;
-    this.isLastQuestion = false;
-  }
-
-  getNextQuestion(given?: Given) {
-    this.isLoading = true;
-    //이전 질문들 저장
-    this.previousQuestionDtoArr.push({ ...this.nextQuestionDto });
-    this.nextQuestionDto.givenId = [];
-
-    // 답변을 하나만 선택할때
-    if (given) {
-      this.nextQuestionDto.givenId.push(given.id);
-    } else {
-      //답변을 여러개 선택할때
-      this.$set(this.nextQuestionDto, 'givenId', this.selectedAnswers);
-      const selectedGivenId = this.selectedAnswers.map(e => e.id);
-      this.nextQuestionDto.givenId = selectedGivenId;
-    }
-    //questionGivenArray에 지금까지의 질문과 답변 저장
-    this.questionGivenArray.push({
-      questionId: this.nextQuestionDto.questionId,
-      givenId: this.nextQuestionDto.givenId,
-    });
-    this.resultRequestDto.questionGivenArray = this.questionGivenArray;
-
-    //마지막 질문일때
-    if (this.isLastQuestion) {
-      this.loadingProgress = 0;
-      this.isLoadingResult = true;
-      const countStart = setInterval(() => {
-        if (this.loadingProgress < 79) {
-          this.loadingProgress += 5;
-        }
-      }, 20);
-
-      const countUp = setInterval(() => {
-        if (this.loadingProgress < 100) {
-          this.loadingProgress++;
-        }
-      }, 650);
-
-      // const countEnd = setInterval(() => {
-      //   if (this.loadingProgress > 96 && this.loadingProgress < 100) {
-      //     this.loadingProgress++;
-      //   }
-      // }, 400);
-      //get result
-      questionService.getResult(this.resultRequestDto).subscribe(res => {
-        if (res) {
-          this.$gtag.event(`proforma_result_seen_${res.data.id}`);
-          this.loadingProgress = 0;
-          this.isLoadingResult = false;
-          this.isLoading = false;
-          clearInterval(countStart);
-          clearInterval(countUp);
-          this.resultResponseDto = res.data;
-        }
-      });
-    } else {
-      questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
-        if (res.data.isLastQuestion === YN.YES) {
-          this.isLastQuestion = true;
-          this.$gtag.event(
-            `question_${res.data.userType}_${res.data.id}_last_question`,
-          );
-        }
-        if (res) {
-          this.isLoading = false;
-          this.nextQuestionDto.order = res.data.order;
-          this.nextQuestionDto.questionId = res.data.id;
-          this.$gtag.event(`question_${res.data.userType}_${res.data.id}`);
-          this.question = res.data.question;
-          this.questionOrder =
-            this.nextQuestionDto.order + (this.prevOrder - 1);
-          this.givens = res.data.givens;
-          this.nextQuestionDto.givenId = [];
-          this.isMultipleAnswer =
-            res.data.multipleAnswerYn === YN.YES ? true : false;
-          this.selectedAnswers = [];
-        }
-      });
-    }
-  }
-
-  //level이 내려감에따라 showingLevel(보여줘야할 정보)이 변함
-  getGuOrDong(given?: CodeHdongDto) {
-    this.isLoading = true;
-    if (given) {
-      this.codeHdongSearchDto.sidoName = given.sidoName;
-      this.codeHdongSearchDto.hdongCode = given.hdongCode;
-      this.codeHdongSearchDto.hdongName = given.hdongName;
-      this.codeHdongSearchDto.guName = given.guName;
-    }
-    if (this.showingLevel === ADDRESS_LEVEL.sidoName) {
-      codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
-        this.isLoading = false;
-        this.addressGivens = res.data;
-        this.showingLevel = ADDRESS_LEVEL.guName;
-        // 진행 단계 증가
-        this.questionOrder += 1;
-      });
-    } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
-      codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
-        this.isLoading = false;
-        this.addressGivens = res.data;
-        this.showingLevel = ADDRESS_LEVEL.hdongName;
-        // 진행 단계 증가
-        this.questionOrder += 1;
-      });
-    } else {
-      if (given) {
-        this.resultRequestDto.hdongCode = given.hdongCode;
-      }
-      this.getKBCategoryQuestion();
-    }
-    this.prevOrder = this.questionOrder;
-  }
-
-  onPostCodeComplete(event: any) {
-    this.selectedRoadAddress = event.roadAddress;
-    const geocoder = new window.kakao.maps.services.Geocoder();
-    // 상권분석 가능한 지역 안내
-    const availableLocationCodeArray = ['11', '41', '28', '26', '50'];
-    const callback = (results: any, status: any) => {
-      if (status === window.kakao.maps.services.Status.OK) {
-        this.resultRequestDto.hdongCode = results[0].address.h_code;
-        const hdongCodeSido = this.resultRequestDto.hdongCode.substring(0, 2);
-        availableLocationCodeArray.includes(hdongCodeSido);
-        if (!availableLocationCodeArray.includes(hdongCodeSido)) {
-          this.isAvailableLocation = true;
-        } else {
-          this.isAvailableLocation = false;
-        }
-        // console.log(hdongCodeSido);
-        this.$bvModal.hide('post-code');
-      }
-    };
-    if (callback) {
-      this.$gtag.event('kakao_address_complete', {
-        description: '카카오 주소 입력 완료',
-      });
-    }
-    geocoder.addressSearch(this.selectedRoadAddress, callback);
-  }
-
-  onMultipleAnswerClicked(given: Given) {
-    if (this.selectedAnswers.includes(given)) {
-      const theIndex = this.selectedAnswers.findIndex(e => e === given);
-      this.selectedAnswers.splice(theIndex, 1);
-    } else {
-      this.selectedAnswers.push(given);
-    }
-  }
-
-  resetData() {
-    const ipInfo = new NextQuestionDto();
-    ipInfo.ipAddress = this.nextQuestionDto.ipAddress;
-    ipInfo.uniqueSessionId = this.nextQuestionDto.uniqueSessionId;
-    this.nextQuestionDto = ipInfo;
-    this.firstQuestionDto = new FirstQuestionDto();
-
-    this.codeHdongSearchDto = new CodeHdongSearchDto();
-    this.resultRequestDto = new ResultRequestDto();
-
-    this.isLastQuestion = false;
-    this.smallSizeQuestionId = [1, 4, 5, 12];
-    this.bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
-    this.questionTotalCount = 9;
-    this.questionOrder = 0;
-    this.prevOrder = 0;
-    this.question = '나는 현재';
-    this.resultResponseDto = null;
-    this.isAvailableLocation = false;
-    this.availableLocation = '';
-    this.givens = [];
-    this.KBCategoryGivens = [];
-    this.addressGivens = [];
-    this.showingLevel = ADDRESS_LEVEL.sidoName;
-    this.selectedRoadAddress = '';
-    this.isMultipleAnswer = false;
-    this.selectedAnswers = [];
-    this.isLoading = false;
-    this.isLoadingResult = false;
-    this.previousQuestionDtoArr = [];
-    this.questionGivenArray = [];
-    this.loadingProgress = 0;
   }
 
   onNext(obj: any) {
@@ -434,14 +191,13 @@ export default class Question extends BaseComponent {
     }
   }
 
-  async mounted() {
+  mounted() {
     // this.isLoading = true;
     //get ip address
-    await axios.get('https://api.ipify.org?format=json').then(res => {
+    axios.get('https://api.ipify.org?format=json').then(res => {
       // this.isLoading = false;
-      this.nextQuestionDto.ipAddress = this.resultRequestDto.ipAddress =
-        res.data.ip;
-      this.nextQuestionDto.uniqueSessionId = this.resultRequestDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
+      this.ipAddress = this.resultRequestDto.ipAddress = res.data.ip;
+      this.uniqueSessionId = this.resultRequestDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
     });
   }
 
