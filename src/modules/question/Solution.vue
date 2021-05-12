@@ -1,5 +1,5 @@
 <template>
-  <article class="main-article" id="question-solution" v-if="!isComplete">
+  <article class="main-article" id="question-solution" v-if="result">
     <header class="article-header">
       <div class="container">
         <h2>
@@ -628,46 +628,9 @@
       </div>
     </transition>
   </article>
-  <!-- 신청 완료 -->
-  <article class="main-article bg-primary" id="question-complete" v-else>
-    <div class="container">
-      <header class="article-header">
-        <span data-aos="fade-in" data-aos-duration="1500"
-          ><router-link to="/"
-            ><img
-              src="@/assets/images/logo_w.svg"
-              alt="픽쿡"
-              class="logo-w"/></router-link
-        ></span>
-        <h2 data-aos="fade-in" data-aos-duration="1500">
-          신청이 완료되었어요
-        </h2>
-        <p data-aos="fade-in" data-aos-duration="1500">
-          담당 플래너가 배정되는대로 <br />
-          입력해주신 연락처로 안내드릴게요.
-        </p>
-        <div
-          class="btn-box text-center"
-          data-aos="fade-in"
-          data-aos-duration="1000"
-        >
-          <b-btn
-            variant="light"
-            pill
-            size="xl"
-            class="shadow"
-            @click="$emit('reset')"
-          >
-            처음으로
-          </b-btn>
-        </div>
-        <div class="row-box mt-4">
-          <router-link to="/" class="txt-sm txt-underline"
-            >픽쿡에 대해 더 알아보기
-          </router-link>
-        </div>
-      </header>
-    </div>
+  <!-- 로딩-->
+  <article class="main-article" v-else>
+    <Loading />
   </article>
 </template>
 
@@ -676,7 +639,11 @@ import BaseComponent from '@/core/base.component';
 import { Component, Prop } from 'vue-property-decorator';
 import ResultRevenueChart from '@/modules/_components/charts/ResultRevenueChart.vue';
 import FoodCategoryRatioChart from '@/modules/_components/charts/FoodCategoryRatioChart.vue';
-import { ConsultRequestDto, ResultResponseDto } from '@/dto/question';
+import {
+  ConsultRequestDto,
+  ResultRequestDto,
+  ResultResponseDto,
+} from '@/dto/question';
 import authService from '@/services/auth.service';
 // import toast from '../../../resources/assets/js/services/toast.js';
 import questionService from '@/services/question.service';
@@ -684,10 +651,11 @@ import { AggregateResultResponse } from '@/dto/question/aggregate-result-respons
 import { SmsAuthNotificationDto } from '@/dto';
 import { ProformaResponseDto } from '@/dto/question/proforma-response.dto';
 import debounce from 'lodash/debounce';
+import Loading from './Loading.vue';
 
 @Component({
   name: 'Solution',
-  components: { ResultRevenueChart, FoodCategoryRatioChart },
+  components: { ResultRevenueChart, FoodCategoryRatioChart, Loading },
 })
 export default class Solution extends BaseComponent {
   [x: string]: any;
@@ -696,10 +664,10 @@ export default class Solution extends BaseComponent {
     revenueWrapper: HTMLFormElement;
     bottomForm: HTMLFormElement;
   };
-  @Prop() readonly result: ResultResponseDto;
+  @Prop() readonly resultRequestDto: ResultRequestDto;
   // private result: ProformaResponseDto = null;
   // private resultRequestDto: any = null;
-  private isComplete = false;
+  private result: any = null;
   private consultRequestDto = new ConsultRequestDto();
   private isVerified = false;
   private errorText = '';
@@ -740,25 +708,31 @@ export default class Solution extends BaseComponent {
   }
 
   get maxRevenueValue() {
-    const arr = this.result.rankDataWCScore.map(e => {
-      return Math.abs(e.estimatedHighestRevenue);
-    });
+    const arr = this.result.rankDataWCScore.map(
+      (e: { estimatedHighestRevenue: number }) => {
+        return Math.abs(e.estimatedHighestRevenue);
+      },
+    );
     return Math.max(...arr);
   }
 
   // get max revenue
   get maxRevenue() {
-    const arr = this.result.rankDataWCScore.map(e => {
-      return Math.abs(e.estimatedIncreasedRevenuePercentage);
-    });
+    const arr = this.result.rankDataWCScore.map(
+      (e: { estimatedIncreasedRevenuePercentage: number }) => {
+        return Math.abs(e.estimatedIncreasedRevenuePercentage);
+      },
+    );
     return Math.max(...arr);
   }
 
   // get min revenue
   get minRevenue() {
-    const arr = this.result.rankDataWCScore.map(e => {
-      return Math.abs(e.estimatedIncreasedRevenuePercentage);
-    });
+    const arr = this.result.rankDataWCScore.map(
+      (e: { estimatedIncreasedRevenuePercentage: number }) => {
+        return Math.abs(e.estimatedIncreasedRevenuePercentage);
+      },
+    );
     return Math.min(...arr);
   }
 
@@ -810,17 +784,16 @@ export default class Solution extends BaseComponent {
     });
   }
 
-  //
   onConsultBtnClicked() {
     this.consultRequestDto.proformaConsultResultId = this.result.id;
     questionService.postConsult(this.consultRequestDto).subscribe(res => {
       if (res) {
-        this.isComplete = true;
         // send pixel event
         this.$analytics.fbq.event('SubmitApplication');
         this.$gtag.event('complete_application', {
           description: '신청 완료',
         });
+        this.$emit('next');
       }
     });
   }
@@ -856,6 +829,12 @@ export default class Solution extends BaseComponent {
   }
 
   created() {
+    questionService.getResult(this.resultRequestDto).subscribe(res => {
+      if (res) {
+        this.$gtag.event(`proforma_result_seen_${res.data.id}`);
+        this.result = res.data;
+      }
+    });
     setTimeout(() => {
       this.revenueCount2 = this.maxRevenueValue;
     }, 1000);
