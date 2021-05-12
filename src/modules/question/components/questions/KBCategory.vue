@@ -1,15 +1,33 @@
 <template>
-  <div>
+  <section class="article-section">
     <header class="section-title">
       <div class="container">
         <span>
           <router-link to="/">
-            <img src="@/assets/images/logo_symbol.svg" alt="픽쿡" />
+            <img src="@/assets/images/logo_symbol_w.svg" alt="픽쿡" />
           </router-link>
         </span>
         <h3>{{ question }}</h3>
       </div>
     </header>
+    <div class="section-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-12" v-for="given in givens" :key="given.id">
+            <b-btn
+              variant="light"
+              class="mb-4 shadow"
+              block
+              pill
+              size="lg"
+              @click="onBtnClick(given)"
+            >
+              {{ given.given }}
+            </b-btn>
+          </div>
+        </div>
+      </div>
+    </div>
     <b-btn
       size="sm"
       class="btn-back"
@@ -20,21 +38,7 @@
       <span class="icon icon-arrow-left"><BaseArrow /></span>
       <span class="is-blind">뒤로가기</span>
     </b-btn>
-    <div class="row">
-      <div class="col-12" v-for="given in givens" :key="given.id">
-        <b-btn
-          variant="light"
-          class="mb-4 shadow"
-          block
-          pill
-          size="lg"
-          @click="onBtnClick(given)"
-        >
-          {{ given.given }}
-        </b-btn>
-      </div>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">

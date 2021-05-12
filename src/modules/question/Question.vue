@@ -67,8 +67,15 @@
       </header>
     </template>
   </article>
-  <article class="main-article bg-primary" v-else>
-    <header class="article-header">
+  <article
+    class="main-article bg-primary"
+    :id="`question-${questionOrderArr[questionIndex].name.toLowerCase()}`"
+    v-else
+  >
+    <header
+      class="article-header"
+      v-if="questionOrderArr[questionIndex].header"
+    >
       <h1>
         <router-link to="/">
           <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
@@ -84,23 +91,21 @@
       </div>
     </header>
     <div class="article-content">
-      <section class="article-section">
-        <!-- questionOrderArr의 순서에 따라 컴포넌트가 변함 -->
-        <keep-alive exclude="MultipleQuestion">
-          <component
-            :is="questionOrderArr[questionIndex]"
-            @next="onNext"
-            @previous="questionIndex--"
-            @progressUp="questionOrder++"
-            @progressDown="questionOrder--"
-            @loading="onLoading"
-            :fnbOwnerStatus="resultRequestDto.fnbOwnerStatus"
-            :ipAdress="ipAddress"
-            :uniqueSessionId="uniqueSessionId"
-            :resultRequestDto="resultRequestDto"
-          />
-        </keep-alive>
-      </section>
+      <!-- questionOrderArr의 순서에 따라 컴포넌트가 변함 -->
+      <keep-alive exclude="MultipleQuestion">
+        <component
+          :is="questionOrderArr[questionIndex].name"
+          @next="onNext"
+          @previous="questionIndex--"
+          @progressUp="questionOrder++"
+          @progressDown="questionOrder--"
+          @loading="onLoading"
+          :fnbOwnerStatus="resultRequestDto.fnbOwnerStatus"
+          :ipAddress="ipAddress"
+          :uniqueSessionId="uniqueSessionId"
+          :resultRequestDto="resultRequestDto"
+        />
+      </keep-alive>
     </div>
     <template v-if="isLoading">
       <div class="loading-layer"></div>
@@ -143,7 +148,6 @@ import Complete from './Complete.vue';
 })
 export default class Question extends BaseComponent {
   private resultRequestDto = new ResultRequestDto();
-  private bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
   private questionTotalCount: any = 10;
   private questionOrder: any = 0;
   private resultResponseDto: ResultResponseDto = null;
@@ -154,12 +158,12 @@ export default class Question extends BaseComponent {
   private isUtmSource = false;
   private questionIndex = -1;
   private questionOrderArr = [
-    'FnbOwnerStatus',
-    'HdongCode',
-    'KBCategory',
-    'MultipleQuestion',
-    'Solution',
-    'Complete',
+    { name: 'FnbOwnerStatus', header: true },
+    { name: 'HdongCode', header: true },
+    { name: 'KBCategory', header: true },
+    { name: 'MultipleQuestion', header: true },
+    { name: 'Solution', header: false },
+    { name: 'Complete', header: false },
   ];
   private ipAddress = '';
   private uniqueSessionId = '';
@@ -197,6 +201,11 @@ export default class Question extends BaseComponent {
       // this.isLoading = false;
       this.ipAddress = this.resultRequestDto.ipAddress = res.data.ip;
       this.uniqueSessionId = this.resultRequestDto.uniqueSessionId = `${res.data.ip}-${window.navigator.userAgent}`;
+    });
+
+    // 재시작
+    this.$root.$on('restart', () => {
+      this.questionIndex = -1;
     });
   }
 
