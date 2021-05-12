@@ -630,7 +630,7 @@
   </article>
   <!-- 로딩-->
   <article class="main-article" v-else>
-    <Loading></Loading>
+    <Loading />
   </article>
 </template>
 
@@ -784,7 +784,6 @@ export default class Solution extends BaseComponent {
     });
   }
 
-  //
   onConsultBtnClicked() {
     this.consultRequestDto.proformaConsultResultId = this.result.id;
     questionService.postConsult(this.consultRequestDto).subscribe(res => {
@@ -794,6 +793,7 @@ export default class Solution extends BaseComponent {
         this.$gtag.event('complete_application', {
           description: '신청 완료',
         });
+        this.$emit('next');
       }
     });
   }

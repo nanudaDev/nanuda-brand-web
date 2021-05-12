@@ -1,113 +1,118 @@
 <template>
-  <div>
-    <article
-      class="main-article bg-primary"
-      id="question-start"
-      v-if="questionIndex < 0"
-    >
-      <template v-if="!isUtmSource">
-        <header class="article-header">
-          <span data-aos="fade-down" data-aos-duration="1500"
-            ><router-link to="/"
-              ><img
-                src="@/assets/images/logo_w.svg"
-                alt="픽쿡"
-                class="logo-w"/></router-link
-          ></span>
-          <h2 data-aos="fade-down" data-aos-duration="1500">
-            단 1분만에 빅데이터로<br />
-            창업아이템을 추천할게요.
-          </h2>
-          <div
-            class="btn-box text-center"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-          >
-            <b-btn
-              variant="light"
-              pill
-              size="xl"
-              class="shadow"
-              @click="startQuestion()"
-            >
-              시작하기
-            </b-btn>
-          </div>
-        </header>
-      </template>
-      <template v-else>
-        <header class="article-header">
-          <span data-aos="fade-down" data-aos-duration="1500"
-            ><router-link to="/"
-              ><img
-                src="@/assets/images/logo_w.svg"
-                alt="픽쿡"
-                class="logo-w"/></router-link
-          ></span>
-          <h2 data-aos="fade-down" data-aos-duration="1500">메뉴를 찾으세요</h2>
-          <p data-aos="fade-down" data-aos-duration="1500">
-            뭘로 창업하지? <br />
-            매출은 어떻게 더 올리지?<br />
-            그 메뉴를 픽쿡에서 찾으세요<br />
-          </p>
-          <div
-            class="btn-box text-center"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-          >
-            <b-btn
-              variant="light"
-              pill
-              size="xl"
-              class="shadow"
-              @click="startQuestion()"
-            >
-              원하는 지역에서 내 메뉴 찾기
-            </b-btn>
-          </div>
-        </header>
-      </template>
-    </article>
-    <article class="main-article bg-primary" v-else>
+  <article
+    class="main-article bg-primary"
+    id="question-start"
+    v-if="questionIndex < 0"
+  >
+    <template v-if="!isUtmSource">
       <header class="article-header">
-        <h1>
-          <router-link to="/">
-            <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
-          </router-link>
-        </h1>
-        <div class="progress-bar-rail">
-          <span
-            class="progress-bar"
-            :style="{
-              width: (questionOrder / (questionTotalCount + 1)) * 100 + '%',
-            }"
-          ></span>
+        <span data-aos="fade-down" data-aos-duration="1500"
+          ><router-link to="/"
+            ><img
+              src="@/assets/images/logo_w.svg"
+              alt="픽쿡"
+              class="logo-w"/></router-link
+        ></span>
+        <h2 data-aos="fade-down" data-aos-duration="1500">
+          단 1분만에 빅데이터로<br />
+          창업아이템을 추천할게요.
+        </h2>
+        <div
+          class="btn-box text-center"
+          data-aos="fade-up"
+          data-aos-duration="1000"
+        >
+          <b-btn
+            variant="light"
+            pill
+            size="xl"
+            class="shadow"
+            @click="startQuestion()"
+          >
+            시작하기
+          </b-btn>
         </div>
       </header>
-      <div class="article-content">
-        <section class="article-section">
-          <!-- questionOrderArr의 순서에 따라 컴포넌트가 변함 -->
+    </template>
+    <template v-else>
+      <header class="article-header">
+        <span data-aos="fade-down" data-aos-duration="1500"
+          ><router-link to="/"
+            ><img
+              src="@/assets/images/logo_w.svg"
+              alt="픽쿡"
+              class="logo-w"/></router-link
+        ></span>
+        <h2 data-aos="fade-down" data-aos-duration="1500">메뉴를 찾으세요</h2>
+        <p data-aos="fade-down" data-aos-duration="1500">
+          뭘로 창업하지? <br />
+          매출은 어떻게 더 올리지?<br />
+          그 메뉴를 픽쿡에서 찾으세요<br />
+        </p>
+        <div
+          class="btn-box text-center"
+          data-aos="fade-up"
+          data-aos-duration="1000"
+        >
+          <b-btn
+            variant="light"
+            pill
+            size="xl"
+            class="shadow"
+            @click="startQuestion()"
+          >
+            원하는 지역에서 내 메뉴 찾기
+          </b-btn>
+        </div>
+      </header>
+    </template>
+  </article>
+  <article class="main-article bg-primary" v-else>
+    <header class="article-header">
+      <h1>
+        <router-link to="/">
+          <img src="@/assets/images/logo_w.svg" alt="픽쿡" />
+        </router-link>
+      </h1>
+      <div class="progress-bar-rail">
+        <span
+          class="progress-bar"
+          :style="{
+            width: (questionOrder / (questionTotalCount + 1)) * 100 + '%',
+          }"
+        ></span>
+      </div>
+    </header>
+    <div class="article-content">
+      <section class="article-section">
+        <!-- questionOrderArr의 순서에 따라 컴포넌트가 변함 -->
+        <keep-alive exclude="MultipleQuestion">
           <component
             :is="questionOrderArr[questionIndex]"
             @next="onNext"
             @previous="questionIndex--"
+            @progressUp="questionOrder++"
+            @progressDown="questionOrder--"
+            @loading="onLoading"
             :fnbOwnerStatus="resultRequestDto.fnbOwnerStatus"
             :ipAdress="ipAddress"
             :uniqueSessionId="uniqueSessionId"
             :resultRequestDto="resultRequestDto"
           />
-        </section>
-      </div>
-    </article>
-  </div>
+        </keep-alive>
+      </section>
+    </div>
+    <template v-if="isLoading">
+      <div class="loading-layer"></div>
+    </template>
+  </article>
 </template>
 
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
 import { Component, Watch } from 'vue-property-decorator';
 import { VueDaumPostcode } from 'vue-daum-postcode';
-import questionService from '@/services/question.service';
-import codeHdongService from '@/services/code-hdong.service';
+
 import axios from 'axios';
 import {
   FirstQuestionDto,
@@ -117,14 +122,13 @@ import {
   ResultResponseDto,
 } from '@/dto/question';
 import { use } from 'node_modules/vue/types/umd';
-import { CodeHdongDto, CodeHdongSearchDto } from '@/dto/code-hdong';
-import { COMMON_CODE_CATEGORY } from '@/shared';
-import { ADDRESS_LEVEL, KB_FOOD_CATEGORY, YN } from '@/common';
+
 import FnbOwnerStatus from './components/questions/FnbOwnerStatus.vue';
 import HdongCode from './components/questions/HdongCode.vue';
 import KBCategory from './components/questions/KBCategory.vue';
 import MultipleQuestion from './components/questions/MultipleQuestion.vue';
 import Solution from './Solution.vue';
+import Complete from './Complete.vue';
 @Component({
   name: 'Question',
   components: {
@@ -134,32 +138,20 @@ import Solution from './Solution.vue';
     KBCategory,
     MultipleQuestion,
     Solution,
+    Complete,
   },
 })
 export default class Question extends BaseComponent {
-  [x: string]: any;
-  // private userType: USER = null;
-
   private resultRequestDto = new ResultRequestDto();
   private bgLightQuestionId = [2, 3, 4, 5, 6, 11, 12, 13, 14];
   private questionTotalCount: any = 10;
   private questionOrder: any = 0;
-  private prevOrder: any = 0;
   private resultResponseDto: ResultResponseDto = null;
-  private isAvailableLocation = false;
-  private availableLocation = '';
-
-  private selectedRoadAddress = '';
-  private isMultipleAnswer = false;
-  private selectedAnswers: Given[] = [];
   private isLoading = false;
   private isLoadingResult = false;
   private previousQuestionDtoArr: NextQuestionDto[] = [];
   private questionGivenArray: any[] = [];
-  private loadingProgress = 0;
-
   private isUtmSource = false;
-
   private questionIndex = -1;
   private questionOrderArr = [
     'FnbOwnerStatus',
@@ -167,19 +159,26 @@ export default class Question extends BaseComponent {
     'KBCategory',
     'MultipleQuestion',
     'Solution',
+    'Complete',
   ];
-  private ipAdress = '';
+  private ipAddress = '';
   private uniqueSessionId = '';
   startQuestion() {
     this.$gtag.event('start_question_button', { description: '질문 시작' });
     this.questionIndex = 0;
   }
-
-  onNext(obj: any) {
-    const key = Object.keys(obj)[0];
-    const value = Object.values(obj)[0];
-    this.$set(this.resultRequestDto, key, value);
+  //다음 컴포넌트로 이동
+  onNext(obj?: any) {
+    if (obj) {
+      const key = Object.keys(obj)[0];
+      const value = Object.values(obj)[0];
+      this.$set(this.resultRequestDto, key, value);
+    }
     this.questionIndex++;
+  }
+
+  onLoading(event: boolean) {
+    this.isLoading = event;
   }
 
   created() {

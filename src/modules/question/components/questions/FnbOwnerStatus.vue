@@ -60,6 +60,7 @@ export default class FnbOwnerStatus extends BaseComponent {
       });
     }
     this.$emit('next', { fnbOwnerStatus: userType });
+    this.$emit('progressUp');
   }
 }
 </script>

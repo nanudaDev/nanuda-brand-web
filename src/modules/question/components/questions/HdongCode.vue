@@ -54,43 +54,49 @@ export default class HdongCode extends BaseComponent {
   private givens: any[] = [];
   private question = '';
   private codeHdongSearchDto = new CodeHdongSearchDto();
-  getGuOrDong(given?: CodeHdongDto) {
-    if (given) {
-      this.codeHdongSearchDto.sidoName = given.sidoName;
-      this.codeHdongSearchDto.hdongCode = given.hdongCode;
-      this.codeHdongSearchDto.hdongName = given.hdongName;
-      this.codeHdongSearchDto.guName = given.guName;
-    }
+  getGuOrDong(given: CodeHdongDto) {
+    this.$emit('progressUp');
+    this.$emit('loading', true);
+    this.codeHdongSearchDto.sidoName = given.sidoName;
+    this.codeHdongSearchDto.hdongCode = given.hdongCode;
+    this.codeHdongSearchDto.hdongName = given.hdongName;
+    this.codeHdongSearchDto.guName = given.guName;
     if (this.showingLevel === ADDRESS_LEVEL.sidoName) {
       codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
-        // this.isLoading = false;
+        this.$emit('loading', false);
         this.givens = res.data;
         this.showingLevel = ADDRESS_LEVEL.guName;
       });
     } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
       codeHdongService.getHdongName(this.codeHdongSearchDto).subscribe(res => {
-        // this.isLoading = false;
+        this.$emit('loading', false);
         this.givens = res.data;
         this.showingLevel = ADDRESS_LEVEL.hdongName;
       });
     } else {
+      this.$emit('loading', false);
       this.$emit('next', { hdongCode: given.hdongCode });
     }
   }
   // 주소 선택화면일때 뒤로가기
   goToPreviousAddr() {
+    this.$emit('progressDown');
+    this.$emit('loading', true);
     if (this.showingLevel === ADDRESS_LEVEL.hdongName) {
       codeHdongService.getGuName(this.codeHdongSearchDto).subscribe(res => {
+        this.$emit('loading', false);
         this.givens = res.data;
         this.showingLevel = ADDRESS_LEVEL.guName;
       });
     } else if (this.showingLevel === ADDRESS_LEVEL.guName) {
       codeHdongService.getSido().subscribe(res => {
+        this.$emit('loading', false);
         this.givens = res.data;
         this.showingLevel = ADDRESS_LEVEL.sidoName;
       });
     } else {
       // 전 단계로
+      this.$emit('loading', false);
       this.$emit('previous');
     }
 

@@ -10,6 +10,16 @@
         <h3>{{ question }}</h3>
       </div>
     </header>
+    <b-btn
+      size="sm"
+      class="btn-back"
+      variant="primary"
+      pill
+      @click="onPrevious"
+    >
+      <span class="icon icon-arrow-left"><BaseArrow /></span>
+      <span class="is-blind">뒤로가기</span>
+    </b-btn>
     <template v-if="!isMultipleAnswer">
       <div class="row gutter-sm">
         <div :class="'col-12'" v-for="given in givens" :key="given.id">
@@ -85,8 +95,11 @@ export default class MultipleQuestion extends BaseComponent {
   private selectedAnswers: Given[] = [];
   private isMultipleAnswer = false;
   private smallSizeQuestionId = [1, 4, 5, 12];
+  private nextQuestionDtoArr: NextQuestionDto[] = [];
 
   getNextQuestion(given?: Given) {
+    this.$emit('progressUp');
+    this.$emit('loading', true);
     // 답변을 하나만 선택할때
     if (given) {
       this.nextQuestionDto.givenId.push(given.id);
@@ -102,8 +115,9 @@ export default class MultipleQuestion extends BaseComponent {
       givenId: this.nextQuestionDto.givenId,
     });
     // this.resultRequestDto.questionGivenArray = this.questionGivenArray;
-
+    this.nextQuestionDtoArr.push({ ...this.nextQuestionDto });
     questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
+      this.$emit('loading', false);
       if (res.data.isLastQuestion === YN.YES) {
         //마지막질문일때
         this.$gtag.event(
@@ -136,22 +150,63 @@ export default class MultipleQuestion extends BaseComponent {
     }
   }
 
+  onPrevious() {
+    this.$emit('progressDown');
+    if (this.questionGivenArray.length === 0) {
+      //multiple의 첫번째 질문일때
+      this.$emit('previous');
+    } else if (this.questionGivenArray.length === 1) {
+      this.getFirstQuestion();
+    } else {
+      this.$emit('loading', true);
+      questionService
+        .getNextQuestion(
+          this.nextQuestionDtoArr[this.nextQuestionDtoArr.length - 2],
+        )
+        .subscribe(res => {
+          this.$emit('loading', false);
+          this.nextQuestionDto.order = res.data.order;
+          this.nextQuestionDto.questionId = res.data.id;
+          this.$gtag.event(`question_${res.data.userType}_${res.data.id}`);
+          this.question = res.data.question;
+          //   this.questionOrder =
+          //     this.nextQuestionDto.order + (this.prevOrder - 1);
+          this.givens = res.data.givens;
+          this.nextQuestionDto.givenId = [];
+          this.isMultipleAnswer =
+            res.data.multipleAnswerYn === YN.YES ? true : false;
+          this.selectedAnswers = [];
+          this.nextQuestionDtoArr.pop();
+          this.questionGivenArray.pop();
+        });
+    }
+  }
+
+  getFirstQuestion() {
+    this.questionGivenArray = [];
+    this.nextQuestionDtoArr = [];
+    this.$emit('loading', true);
+    questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
+      if (res) {
+        this.$emit('loading', false);
+        this.givens = res.data.givens;
+        this.question = res.data.question;
+        this.nextQuestionDto.order = res.data.order;
+        this.nextQuestionDto.questionId = res.data.id;
+        // this.nextQuestionDtoArr.push({ ...this.nextQuestionDto });
+        // this.isMultipleAnswer =
+        //   res.data.multipleAnswerYn === YN.YES ? true : false;
+      }
+    });
+  }
+
   mounted() {
     this.firstQuestionDto.userType = this.fnbOwnerStatus;
     this.nextQuestionDto.userType = this.fnbOwnerStatus;
     this.nextQuestionDto.ipAddress = this.ipAdress;
     this.nextQuestionDto.uniqueSessionId = this.uniqueSessionId;
-    questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
-      if (res) {
-        this.givens = res.data.givens;
-        this.question = res.data.question;
-        this.nextQuestionDto.order = res.data.order;
-        this.nextQuestionDto.questionId = res.data.id;
-        this.nextQuestionDto.givenId = [];
-        // this.isMultipleAnswer =
-        //   res.data.multipleAnswerYn === YN.YES ? true : false;
-      }
-    });
+    this.nextQuestionDto.givenId = [];
+    this.getFirstQuestion();
   }
 }
 </script>

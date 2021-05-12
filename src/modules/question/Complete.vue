@@ -26,7 +26,7 @@
             pill
             size="xl"
             class="shadow"
-            @click="$emit('reset')"
+            @click="$router.push('/')"
           >
             처음으로
           </b-btn>
