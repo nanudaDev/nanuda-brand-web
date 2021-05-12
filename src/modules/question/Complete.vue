@@ -26,7 +26,7 @@
             pill
             size="xl"
             class="shadow"
-            @click="$router.push('/')"
+            @click="restart()"
           >
             처음으로
           </b-btn>
@@ -48,7 +48,11 @@ import { Component } from 'vue-property-decorator';
 @Component({
   name: 'Complete',
 })
-export default class Complete extends BaseComponent {}
+export default class Complete extends BaseComponent {
+  restart() {
+    this.$root.$emit('restart');
+  }
+}
 </script>
 
 <style></style>

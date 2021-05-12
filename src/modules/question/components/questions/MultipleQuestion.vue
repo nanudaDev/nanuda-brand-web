@@ -1,15 +1,70 @@
 <template>
-  <div>
+  <section class="article-section">
     <header class="section-title">
       <div class="container">
         <span>
           <router-link to="/">
-            <img src="@/assets/images/logo_symbol.svg" alt="픽쿡" />
+            <img src="@/assets/images/logo_symbol_w.svg" alt="픽쿡" />
           </router-link>
         </span>
         <h3>{{ question }}</h3>
       </div>
     </header>
+    <div class="section-content">
+      <div class="container">
+        <template v-if="!isMultipleAnswer">
+          <div class="row gutter-sm">
+            <div :class="'col-12'" v-for="given in givens" :key="given.id">
+              <b-btn
+                variant="light"
+                class="mb-4 shadow"
+                block
+                pill
+                size="lg"
+                @click="getNextQuestion(given)"
+              >
+                {{ given.given }}
+              </b-btn>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <!-- 복수 선택 -->
+          <div class="row">
+            <div
+              v-for="given in givens"
+              :key="given.id"
+              :class="
+                smallSizeQuestionId.includes(nextQuestionDto.questionId)
+                  ? 'col-6 col-sm-4'
+                  : 'col-12'
+              "
+            >
+              <b-btn
+                :variant="selectedAnswers.includes(given) ? 'primary' : 'light'"
+                class="mb-4"
+                block
+                size="lg"
+                pill
+                @click="onMultipleAnswerClicked(given)"
+                >{{ given.given }}
+              </b-btn>
+            </div>
+          </div>
+          <div class="btn-box mt-2">
+            <b-btn
+              variant="success"
+              block
+              size="lg"
+              pill
+              @click="getNextQuestion()"
+              :disabled="!selectedAnswers.length > 0"
+              >다음</b-btn
+            >
+          </div>
+        </template>
+      </div>
+    </div>
     <b-btn
       size="sm"
       class="btn-back"
@@ -20,58 +75,7 @@
       <span class="icon icon-arrow-left"><BaseArrow /></span>
       <span class="is-blind">뒤로가기</span>
     </b-btn>
-    <template v-if="!isMultipleAnswer">
-      <div class="row gutter-sm">
-        <div :class="'col-12'" v-for="given in givens" :key="given.id">
-          <b-btn
-            variant="light"
-            class="mb-4 shadow"
-            block
-            pill
-            size="lg"
-            @click="getNextQuestion(given)"
-          >
-            {{ given.given }}
-          </b-btn>
-        </div>
-      </div>
-    </template>
-    <template v-else>
-      <!-- 복수 선택 -->
-      <div class="row">
-        <div
-          v-for="given in givens"
-          :key="given.id"
-          :class="
-            smallSizeQuestionId.includes(nextQuestionDto.questionId)
-              ? 'col-6 col-sm-4'
-              : 'col-12'
-          "
-        >
-          <b-btn
-            :variant="selectedAnswers.includes(given) ? 'primary' : 'light'"
-            class="mb-4"
-            block
-            size="lg"
-            pill
-            @click="onMultipleAnswerClicked(given)"
-            >{{ given.given }}
-          </b-btn>
-        </div>
-      </div>
-      <div class="btn-box mt-2">
-        <b-btn
-          variant="success"
-          block
-          size="lg"
-          pill
-          @click="getNextQuestion()"
-          :disabled="!selectedAnswers.length > 0"
-          >다음</b-btn
-        >
-      </div>
-    </template>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">
@@ -85,7 +89,7 @@ import { Component, Prop } from 'vue-property-decorator';
 })
 export default class MultipleQuestion extends BaseComponent {
   @Prop() readonly fnbOwnerStatus: FNB_OWNER;
-  @Prop() readonly ipAdress: string;
+  @Prop() readonly ipAddress: string;
   @Prop() readonly uniqueSessionId: string;
   private givens: Given[] = [];
   private question = '';
@@ -203,7 +207,7 @@ export default class MultipleQuestion extends BaseComponent {
   mounted() {
     this.firstQuestionDto.userType = this.fnbOwnerStatus;
     this.nextQuestionDto.userType = this.fnbOwnerStatus;
-    this.nextQuestionDto.ipAddress = this.ipAdress;
+    this.nextQuestionDto.ipAddress = this.ipAddress;
     this.nextQuestionDto.uniqueSessionId = this.uniqueSessionId;
     this.nextQuestionDto.givenId = [];
     this.getFirstQuestion();

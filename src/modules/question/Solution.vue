@@ -58,7 +58,7 @@
                 </p>
               </b-modal> -->
             </header>
-            <div class="section-content">
+            <div class="section-content" v-if="result.rankDataWCScore">
               <b-row class="gutter-sm">
                 <b-col
                   cols="12"
@@ -282,7 +282,7 @@
               </div>
             </section>
           </b-col>
-          <b-col cols="12" lg="6">
+          <b-col cols="12" lg="6" v-if="result.rankDataWCScore">
             <template v-if="result.fnbOwnerStatus === 'NEW_FNB_OWNER'">
               <!-- 신규 창업자 -->
               <section class="article-section section03 pt-0">
