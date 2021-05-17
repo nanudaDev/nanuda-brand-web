@@ -68,7 +68,8 @@
     </template>
   </article>
   <article
-    class="main-article bg-primary"
+    class="main-article"
+    :class="questionOrderArr[questionIndex].header ? ' bg-primary' : 'bg-light'"
     :id="`question-${questionOrderArr[questionIndex].name.toLowerCase()}`"
     v-else
   >
