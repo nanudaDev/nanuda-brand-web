@@ -24,7 +24,9 @@ export default class BaseComponent extends Vue {
   }
 
   created() {
-    AOS.init();
+    AOS.init({
+      once: true,
+    });
   }
   mounted() {
     this.getDeviceCheck();

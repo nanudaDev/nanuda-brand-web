@@ -1,457 +1,987 @@
 <template>
-  <article class="main-article" id="question-solution" v-if="!isComplete">
+  <article class="main-article" id="question-solution" v-if="result">
     <header class="article-header">
       <div class="container">
         <h2>
           <router-link to="/">
-            <img
-              src="@/assets/images/logo_w.svg"
-              alt="픽쿡"
-              class="logo-w w-15"
-            />
+            <img src="@/assets/images/logo.svg" alt="픽쿡" class="logo w-15" />
           </router-link>
         </h2>
-        <p v-if="result.hdong.hdongName">
-          <b-icon icon="geo-alt-fill" /> {{ result.hdong.hdongName }}
+        <p v-if="result.hdong" class="txt-primary">
+          <b-icon icon="geo-alt-fill" class="txt-lightblue" />
+          {{ result.hdong.hdongName }}
         </p>
       </div>
     </header>
     <div class="article-content bg-light">
       <div class="container">
-        <section class="article-section section01">
-          <div>
-            <header class="section-header">
-              <h3>
-                <template v-if="result.fnbOwnerStatus === 'NEW_FNB_OWNER'">
-                  예비사장님, <br class="d-block d-lg-none" />
-                  상권에 딱 맞는 창업아이템을 추천할게요!
-                </template>
-                <template v-else>
-                  사장님, <br class="d-block d-lg-none" />
-                  가게에 딱 맞는 창업 아이템을 추천할게요!
-                </template>
-              </h3>
-              <p class="mt-2 txt-right">
-                <span class="d-inline-flex align-items-center" v-b-modal.info>
-                  <span class="d-inline-block txt-tiny txt-gray-400 mr-2"
-                    >추천지수</span
-                  >
-                  <b-icon icon="question-circle"></b-icon>
-                </span>
-              </p>
-              <b-modal id="info" title="추천지수" size="md" hide-footer>
-                <p class="txt-small">
-                  설명설명
+        <template v-if="result.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
+          <section class="article-section ">
+            <div class="card card-revenue bg-primary">
+              <div class="card-header">
+                <h4>
+                  <span class="txt-white">
+                    추천 아이템으로 <br />
+                    <strong>추가 매출</strong>을 올려보세요!
+                  </span>
+                </h4>
+              </div>
+              <div class="section-content">
+                <p class="txt-white">
+                  추가 가능 월 최소 매출
                 </p>
-              </b-modal>
-            </header>
-            <div class="section-content">
-              <b-row class="gutter-sm">
-                <b-col
-                  cols="12"
-                  lg="4"
-                  v-for="(item, index) in result.rankDataWCScore"
-                  :key="index"
-                >
-                  <div class="my-2">
-                    <div
-                      class="card shadow-sm  flex-row d-lg-block"
-                      data-aos="fade-up"
-                      data-aos-duration="1000"
-                      :data-aos-delay="300 * index"
-                      v-b-toggle="toggleId(index)"
-                    >
-                      <div class="card-img-left" v-if="item.sSmallCategoryCode">
-                        <b-img-lazy
-                          :src="
-                            `https://kr.object.ncloudstorage.com/common-storage-pickcook/menu/${item.sSmallCategoryCode}.jpg`
-                          "
-                          alt=""
-                        />
+                <div class="odometer-container my-1">
+                  <div class="odometer-box ">
+                    <span class="odometer-count">
+                      <vue-odometer :value="revenueCount"> </vue-odometer>
+                    </span>
+                    <span class="odometer-unit">원</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="txt-box">
+              <p class="txt-small txt-lightblue">
+                ※ 상기 금액은 추천아이템에 따라 다를 수 있습니다.
+              </p>
+            </div>
+          </section>
+          <section class="article-section" ref="tooltipWrapper">
+            <b-row>
+              <b-col cols="12" lg="6" v-if="selectedMenu">
+                <div class="card card-selected-menu p-0 mb-4">
+                  <div class="p-6">
+                    <div class="card-header">
+                      <h4>
+                        사장님 가게에 딱 맞는 <br />
+                        <strong>추천아이템</strong>이에요!
+                      </h4>
+                      <div class="mt-2 txt-right">
+                        <div class="tooltip-container">
+                          <span
+                            class="tooltip-label tooltip-right d-inline-flex align-items-center"
+                            @click="isTooltipVislble = !isTooltipVislble"
+                          >
+                            <span
+                              class="d-inline-block txt-tiny txt-gray-400 mr-2"
+                              >추천지수</span
+                            >
+                            <b-icon icon="question-circle"></b-icon>
+                          </span>
+                          <div class="tooltip-content" v-if="isTooltipVislble">
+                            <p class="txt-small">
+                              빅데이터 상권지수와 입력하신 조리경험, 운영경험,
+                              창업자금을 종합하여 반영한 수치입니다.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        class="card-img mt-4 mb-6"
+                        v-if="selectedMenu.sSmallCategoryCode"
+                      >
+                        <div
+                          data-aos="fade-right"
+                          data-aos-duration="1000"
+                          class="img-mask"
+                        >
+                          <b-img-lazy
+                            :src="
+                              `https://kr.object.ncloudstorage.com/common-storage-pickcook/menu/${selectedMenu.sSmallCategoryCode}.jpg`
+                            "
+                            alt=""
+                          />
+                        </div>
                       </div>
                       <div class="card-body">
                         <div class="card-badge">
-                          <b-badge pill variant="primary" v-if="index === 0"
-                            >최고적합률</b-badge
-                          >
-                          <b-badge pill variant="blue" v-if="index === 1"
-                            >적합률높음</b-badge
-                          >
-                          <b-badge pill variant="lightblue" v-if="index === 2"
-                            >적합률보통</b-badge
-                          >
+                          <b-badge pill variant="primary">최고적합률</b-badge>
                           <b-badge pill variant="secondary">{{
-                            item.mediumCategoryName
+                            selectedMenu.pickcookSmallCategoryInfo
+                              .pkMediumCategoryName
                           }}</b-badge>
                           <b-badge pill variant="outline-secondary">{{
-                            item.pickcookSmallCategoryInfo.pkSmallCategoryName
+                            selectedMenu.pickcookSmallCategoryInfo
+                              .pkSmallCategoryName
                           }}</b-badge>
                         </div>
                         <h4 class="card-title">
-                          {{ item.pickcookSmallCategoryInfo.pkMenuName }}
+                          {{
+                            selectedMenu.pickcookSmallCategoryInfo.pkMenuName
+                          }}
                         </h4>
                         <p class="card-text">
                           <b-icon icon="graph-up"></b-icon>
                           <span class="mx-1"
                             >추천지수
-                            <strong
+                            <strong class="txt-primary"
                               >{{
-                                Math.round(item.appliedFitnessScore)
+                                Math.round(selectedMenu.appliedFitnessScore)
                               }}%</strong
                             ></span
                           >
                         </p>
-                        <span class="btn-toggle">
-                          <span class="txt-tiny">더 보기</span>
-                          <span class="icon-toggle-arrow">
-                            <b-icon icon="chevron-down"></b-icon>
-                          </span>
-                        </span>
                       </div>
                     </div>
-                    <b-collapse class="card-collapse" :id="`item0${index}`">
-                      <div class="card-desc">
-                        <b-row no-gutters align-v="center">
-                          <b-col cols="2" lg="12">
-                            <img
-                              src="@/assets/images/logo.svg"
-                              alt="픽쿡"
-                              class="logo w-8"
-                            />
-                          </b-col>
-                          <b-col cols="10" lg="12">
-                            <p class="txt-tiny">
-                              빅데이터 상권지수(97%)와 조리경험 (90%),
-                              운영경험(80%), 창업자금(70%)을 종합하였을때
-                              <strong class="txt-primary txt-bold">
-                                <template v-if="index === 0">
-                                  가장
-                                </template>
-                                추천하는 아이템</strong
-                              >
-                              입니다.
-                            </p>
-                          </b-col>
-                        </b-row>
-                      </div>
-                    </b-collapse>
                   </div>
-                </b-col>
-              </b-row>
-            </div>
-          </div>
-        </section>
-        <b-row ref="revenueWrapper" class="gutter-sm">
-          <b-col cols="12" lg="6">
-            <section class="article-section section02 pt-0">
-              <div>
-                <header class="section-header">
-                  <h3>
-                    {{ result.hdong.hdongName }}의 고객들은 <br />
-                    <template
-                      v-if="result.deliveryRatioData.restaurantRatio > 30"
+                  <div
+                    class="btn-more-menu"
+                    @click="isOhterMenuVislble = true"
+                    v-if="!isOhterMenuVislble && !isOverlayVisible"
+                  >
+                    <div
+                      class="d-flex align-itmes-center justify-content-between"
                     >
-                      <strong>배달로 더 많이 이용하고 있어요!</strong>
-                    </template>
-                    <template
-                      v-else-if="result.deliveryRatioData.restaurantRatio < 30"
-                    >
-                      <strong>매장을 더 많이 이용하고 있어요!</strong>
-                    </template>
-                    <template v-else>
-                      <strong>매장과 배달을 비슷하게 이용하고 있어요!</strong>
-                    </template>
-                  </h3>
-                </header>
-                <div class="section-content">
-                  <div class="card p-5 shadow-sm">
-                    <div data-aos="fade-in" data-aos-duration="1000">
-                      <div class="chart-container chart-horizontal-stacked">
-                        <div class="chart-bars">
-                          <div
-                            class="chart-bar chart-bar-restaurant"
-                            :style="{
-                              width:
-                                result.deliveryRatioData.restaurantRatio + '%',
-                            }"
-                          >
-                            <span class="bar-label">매장</span>
-                            <div class="bar-stack">
-                              <span class="bar-percent"
-                                >{{
-                                  result.deliveryRatioData.restaurantRatio
-                                }}%</span
-                              >
-                            </div>
-                          </div>
-                          <div
-                            class="chart-bar chart-bar-delivery"
-                            :style="{
-                              width:
-                                result.deliveryRatioData.deliveryRatio + '%',
-                            }"
-                          >
-                            <span class="bar-label">배달</span>
-                            <div class="bar-stack">
-                              <span class="bar-percent"
-                                >{{
-                                  result.deliveryRatioData.deliveryRatio
-                                }}%</span
-                              >
-                            </div>
-                          </div>
+                      <p>선택하신 업종과 다른 추천 아이템</p>
+                      <span>더보기 +</span>
+                    </div>
+                  </div>
+                  <div
+                    class="btn-more-detail"
+                    :class="{ 'is-active': isOverlayVisible }"
+                    @click="isOverlayVisible = !isOverlayVisible"
+                  >
+                    <span class="txt-tiny is-blind">자세히 보기</span>
+                    <span class="icon-toggle-plus">
+                      <b-icon icon="plus"></b-icon>
+                    </span>
+                    <!-- tooltip -->
+                    <transition name="fadeIn">
+                      <div
+                        class="tooltip-container"
+                        v-if="isDetailInfoTooltipVisible"
+                      >
+                        <div class="tooltip-content">
+                          <p class="txt-small">
+                            + 버튼을 클릭하면 <br />자세한 정보를 알 수 있습니다
+                            <b-icon
+                              icon="x-circle-fill"
+                              class="ml-2 txt-large"
+                              @click.stop="isDetailInfoTooltipVisible = false"
+                            ></b-icon>
+                          </p>
                         </div>
                       </div>
-                      <div class="txt-box mt-3">
+                    </transition>
+                  </div>
+                  <transition name="fadeIn">
+                    <div class="card-overlay" v-if="isOverlayVisible">
+                      <div class="inner-box">
+                        <h4>추천지수</h4>
                         <p>
-                          <span class="icon-tip">TIP</span>
-                          <span class="txt-tiny">
-                            창업아이템으로
-                            <template
-                              v-if="result.fnbOwnerStatus === 'NEW_FNB_OWNER'"
-                            >
-                              <strong>
-                                <template
-                                  v-if="
-                                    result.deliveryRatioData.restaurantRatio >
-                                      30
-                                  "
-                                >
-                                  위험이 낮은 공유주방
-                                </template>
-                                <template
-                                  v-else-if="
-                                    result.deliveryRatioData.restaurantRatio <
-                                      30
-                                  "
-                                >
-                                  매장이 있는 공유주방
-                                </template>
-                                <template v-else>
-                                  유동인구가 많은 상가에서
-                                </template>
-                              </strong>
-                              창업을 추천드립니다.
-                            </template>
-                            <template v-else>
-                              <strong>
-                                <template
-                                  v-if="
-                                    result.deliveryRatioData.restaurantRatio >
-                                      30
-                                  "
-                                >
-                                  배달 판매하여
-                                </template>
-                                <template
-                                  v-else-if="
-                                    result.deliveryRatioData.restaurantRatio <
-                                      30
-                                  "
-                                >
-                                  매장에 추가하여
-                                </template>
-                                <template v-else>
-                                  배달 또는 메뉴 추가로
-                                </template>
-                              </strong>
-                              매출을 올릴 수 있습니다.
-                            </template>
-                          </span>
+                          빅데이터 상권지수({{
+                            selectedMenu.bigDataLocationScore
+                          }}%)와 조리경험 ({{
+                            selectedMenu.cookingExperienceScore
+                          }}%), 운영경험({{
+                            selectedMenu.operationExperienceScore
+                          }}%), 창업자금({{ selectedMenu.initialCostScore }}%)을
+                          종합하였을때
+                          <strong class="txt-lightblue txt-bold">
+                            가장 추천하는 아이템</strong
+                          >
+                          입니다.
+                        </p>
+                      </div>
+                    </div>
+                  </transition>
+                </div>
+              </b-col>
+              <b-col cols="12" lg="6">
+                <div class="d-none d-lg-block">
+                  <h4 class="txt-black txt-bold mb-4 txt-large">
+                    <b-icon icon="bookmark-fill"></b-icon> 선택하신 업종과 다른
+                    추천 아이템입니다
+                  </h4>
+                </div>
+                <template v-if="isOhterMenuVislble && otherMenu.length > 0">
+                  <div
+                    class="card flex-row"
+                    v-for="(item, index) in otherMenu"
+                    :key="item.id"
+                  >
+                    <div class="card-img-left" v-if="item.sSmallCategoryCode">
+                      <b-img-lazy
+                        :src="
+                          `https://kr.object.ncloudstorage.com/common-storage-pickcook/menu/${item.sSmallCategoryCode}.jpg`
+                        "
+                        alt=""
+                      />
+                    </div>
+                    <div class="card-body">
+                      <div class="card-badge">
+                        <b-badge pill variant="blue" v-if="index === 0"
+                          >적합률높음</b-badge
+                        >
+                        <b-badge pill variant="lightblue" v-if="index === 1"
+                          >적합률보통</b-badge
+                        >
+                        <b-badge pill variant="secondary">{{
+                          item.pickcookSmallCategoryInfo.pkMediumCategoryName
+                        }}</b-badge>
+                        <b-badge pill variant="outline-secondary">{{
+                          item.pickcookSmallCategoryInfo.pkSmallCategoryName
+                        }}</b-badge>
+                      </div>
+                      <h4 class="card-title">
+                        {{ item.pickcookSmallCategoryInfo.pkMenuName }}
+                      </h4>
+                      <p class="card-text">
+                        <b-icon icon="graph-up"></b-icon>
+                        <span class="mx-1"
+                          >추천지수
+                          <strong class="txt-primary"
+                            >{{ Math.round(item.appliedFitnessScore) }}%</strong
+                          ></span
+                        >
+                      </p>
+                    </div>
+                    <div
+                      class="btn-more-detail"
+                      :class="{ 'is-active': isOverlayVisible }"
+                      @click="isOverlayVisible = !isOverlayVisible"
+                    >
+                      <span class="txt-tiny is-blind">자세히 보기</span>
+                      <span class="icon-toggle-plus">
+                        <b-icon icon="plus"></b-icon>
+                      </span>
+                    </div>
+                  </div>
+                </template>
+              </b-col>
+            </b-row>
+            <div class="row-box mt-4">
+              <div class="card">
+                <div class="card-header">
+                  <h4>
+                    <template v-if="result.deliveryRatio > 30">
+                      <strong> 배달 주문량</strong>이 많은 지역입니다<br />
+                      창업 아이템을 <strong>배달로 추가</strong>하세요
+                    </template>
+                    <template v-else-if="result.deliveryRatio < 30">
+                      <strong>매장 주문량</strong>이 많은 지역입니다<br />
+                      창업 아이템을 <strong>매장에 추가</strong>하세요
+                    </template>
+                    <template v-else>
+                      <strong>배달과 매장 주문량</strong>이 비슷합니다<br />
+                      창업 아이템을 <strong>매장이나 배달로 추가</strong>하세요
+                    </template>
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <div
+                    class="d-flex align-items-center justify-content-between max-w-40 my-18 mx-auto"
+                  >
+                    <template v-if="result.deliveryRatio > 30">
+                      <b-img-lazy
+                        src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/icon_delivery.svg"
+                        class="w-20"
+                      ></b-img-lazy>
+                      <div class="txt-center">
+                        <span>배달주문량</span>
+                        <p class="txt-giant txt-primary txt-bolder">
+                          높음
+                        </p>
+                      </div>
+                    </template>
+                    <template v-else-if="result.deliveryRatio < 30">
+                      <b-img-lazy
+                        src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/icon_restaurant.svg"
+                        class="w-20"
+                      ></b-img-lazy>
+                      <div class="txt-center">
+                        <span>매장주문량</span>
+                        <p class="txt-giant txt-primary txt-bolder">
+                          높음
+                        </p>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <b-img-lazy
+                        src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/icon_delivery.svg"
+                        class="w-20"
+                      ></b-img-lazy>
+                      <div class="txt-center">
+                        <span>배달주문량</span>
+                        <p class="txt-giant txt-primary txt-bolder">
+                          보통
+                        </p>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+                <div
+                  class="btn-more-detail"
+                  :class="{ 'is-active': isOverlayVisible3 }"
+                  @click="isOverlayVisible3 = !isOverlayVisible3"
+                >
+                  <span class="txt-tiny is-blind">자세히 보기</span>
+                  <span class="icon-toggle-plus">
+                    <b-icon icon="plus"></b-icon>
+                  </span>
+                </div>
+                <transition name="fadeIn">
+                  <div class="card-overlay" v-if="isOverlayVisible3">
+                    <div class="inner-box">
+                      <h4>추천 영업방법</h4>
+                      <p>
+                        강남, 관악 등 배달 주요 상권을 기준으로 매장과 배달
+                        주문량을 비교하여 영업 방법을 추천하였습니다.
+                      </p>
+                    </div>
+                  </div>
+                </transition>
+              </div>
+            </div>
+            <!-- <div class="card p-5 shadow-sm">
+              <div data-aos="fade-in" data-aos-duration="1000">
+                <div class="chart-container chart-horizontal-stacked">
+                  <div class="chart-bars">
+                    <div
+                      class="chart-bar chart-bar-restaurant"
+                      :style="{
+                        width: result.deliveryRatioData.restaurantRatio + '%',
+                      }"
+                    >
+                      <span class="bar-label">매장</span>
+                      <div class="bar-stack">
+                        <span class="bar-percent"
+                          >{{ result.deliveryRatioData.restaurantRatio }}%</span
+                        >
+                      </div>
+                    </div>
+                    <div
+                      class="chart-bar chart-bar-delivery"
+                      :style="{
+                        width: result.deliveryRatioData.deliveryRatio + '%',
+                      }"
+                    >
+                      <span class="bar-label">배달</span>
+                      <div class="bar-stack">
+                        <span class="bar-percent"
+                          >{{ result.deliveryRatioData.deliveryRatio }}%</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="txt-box mt-3">
+                  <p class="info-tip txt-tiny">
+                    <span class="icon-tip">TIP</span>
+                    <span>
+                      <template
+                        v-if="result.fnbOwnerStatus === 'NEW_FNB_OWNER'"
+                      >
+                        창업 아이템으로
+                        <strong>
+                          <template
+                            v-if="result.deliveryRatioData.deliveryRatio > 30"
+                          >
+                            위험이 낮은 공유주방
+                          </template>
+                          <template
+                            v-else-if="
+                              result.deliveryRatioData.deliveryRatio < 30
+                            "
+                          >
+                            매장이 있는 공유주방
+                          </template>
+                          <template v-else>
+                            유동인구가 많은 상가에서
+                          </template>
+                        </strong>
+                        창업을 추천드립니다.
+                      </template>
+                      <template v-else>
+                        창업 아이템을
+                        <strong>
+                          <template
+                            v-if="result.deliveryRatioData.deliveryRatio > 30"
+                          >
+                            배달 판매하여
+                          </template>
+                          <template
+                            v-else-if="
+                              result.deliveryRatioData.deliveryRatio < 30
+                            "
+                          >
+                            매장에 추가하여
+                          </template>
+                          <template v-else>
+                            배달 또는 메뉴 추가로
+                          </template>
+                        </strong>
+                        매출을 올릴 수 있습니다.
+                      </template>
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div> -->
+          </section>
+        </template>
+        <template v-else>
+          <section
+            class="article-section"
+            v-if="result.rankDataWCScore"
+            ref="tooltipWrapper"
+          >
+            <b-row>
+              <b-col cols="12" lg="6" v-if="result.rankDataWCScore[0]">
+                <!-- <div class="mb-2 txt-right">
+                  <div class="tooltip-container">
+                    <span
+                      class="tooltip-label tooltip-right d-inline-flex align-items-center txt-medium"
+                      @click="isTooltipVislble = !isTooltipVislble"
+                    >
+                      <span class="d-inline-block txt-gray-400 mr-2"
+                        >추천지수</span
+                      >
+                      <b-icon icon="question-circle"></b-icon>
+                    </span>
+                    <div class="tooltip-content" v-if="isTooltipVislble">
+                      <p class="txt-small">
+                        빅데이터 상권지수와 입력하신 조리경험, 운영경험,
+                        창업자금을 종합하여 반영한 수치입니다.
+                      </p>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="card card-selected-menu p-0 mb-4">
+                  <div class="p-6">
+                    <div class="card-header relative">
+                      <h4>
+                        <strong>상권에 딱 맞는</strong> <br />
+                        <strong>창업아이템</strong>을 추천할게요!
+                      </h4>
+                    </div>
+                    <div>
+                      <div
+                        class="card-img mt-4 mb-6"
+                        v-if="result.rankDataWCScore[0].sSmallCategoryCode"
+                      >
+                        <div
+                          data-aos="fade-right"
+                          data-aos-duration="1000"
+                          class="img-mask"
+                        >
+                          <b-img-lazy
+                            :src="
+                              `https://kr.object.ncloudstorage.com/common-storage-pickcook/menu/${result.rankDataWCScore[0].sSmallCategoryCode}.jpg`
+                            "
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="card-badge">
+                          <b-badge pill variant="primary">최고적합률</b-badge>
+                          <b-badge pill variant="secondary">{{
+                            result.rankDataWCScore[0].pickcookSmallCategoryInfo
+                              .pkMediumCategoryName
+                          }}</b-badge>
+                          <b-badge pill variant="outline-secondary">{{
+                            result.rankDataWCScore[0].pickcookSmallCategoryInfo
+                              .pkSmallCategoryName
+                          }}</b-badge>
+                        </div>
+                        <h4 class="card-title">
+                          {{
+                            result.rankDataWCScore[0].pickcookSmallCategoryInfo
+                              .pkMenuName
+                          }}
+                        </h4>
+                        <p class="card-text">
+                          <b-icon icon="graph-up"></b-icon>
+                          <span class="mx-1"
+                            >추천지수
+                            <strong class="txt-primary"
+                              >{{
+                                Math.round(
+                                  result.rankDataWCScore[0].appliedFitnessScore,
+                                )
+                              }}%</strong
+                            ></span
+                          >
                         </p>
                       </div>
                     </div>
                   </div>
+                  <div
+                    class="btn-more-detail"
+                    :class="{ 'is-active': isOverlayVisible }"
+                    @click="isOverlayVisible = !isOverlayVisible"
+                  >
+                    <span class="txt-tiny is-blind">자세히 보기</span>
+                    <span class="icon-toggle-plus">
+                      <b-icon icon="plus"></b-icon>
+                    </span>
+                    <!-- tooltip -->
+                    <transition name="fadeIn">
+                      <div
+                        class="tooltip-container"
+                        v-if="isDetailInfoTooltipVisible"
+                      >
+                        <div class="tooltip-content">
+                          <p class="txt-small">
+                            + 버튼을 클릭하면 <br />자세한 정보를 알 수 있습니다
+                            <b-icon
+                              icon="x-circle-fill"
+                              class="ml-2 txt-large"
+                              @click.stop="isDetailInfoTooltipVisible = false"
+                            ></b-icon>
+                          </p>
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
+                  <transition name="fadeIn">
+                    <div class="card-overlay" v-if="isOverlayVisible">
+                      <div class="inner-box">
+                        <h4>추천지수</h4>
+                        <p>
+                          빅데이터 상권지수({{
+                            result.rankDataWCScore[0].bigDataLocationScore
+                          }}%)와 조리경험 ({{
+                            result.rankDataWCScore[0].cookingExperienceScore
+                          }}%), 운영경험({{
+                            result.rankDataWCScore[0].operationExperienceScore
+                          }}%), 창업자금({{
+                            result.rankDataWCScore[0].initialCostScore
+                          }}%)을 종합하였을때
+                          <strong class="txt-lightblue txt-bold">
+                            가장 추천하는 아이템</strong
+                          >
+                          입니다.
+                        </p>
+                      </div>
+                    </div>
+                  </transition>
+                </div>
+              </b-col>
+              <b-col cols="12" lg="6">
+                <div
+                  class="card flex-row"
+                  data-aos="fade-up"
+                  data-aos-duration="1000"
+                  :data-aos-delay="300 * index"
+                  v-for="(item, index) in newOtherMenu"
+                  :key="index"
+                >
+                  <div class="card-img-left" v-if="item.sSmallCategoryCode">
+                    <b-img-lazy
+                      :src="
+                        `https://kr.object.ncloudstorage.com/common-storage-pickcook/menu/${item.sSmallCategoryCode}.jpg`
+                      "
+                      alt=""
+                    />
+                  </div>
+                  <div class="card-body">
+                    <div class="card-badge">
+                      <b-badge pill variant="primary" v-if="index === 0"
+                        >최고적합률</b-badge
+                      >
+                      <b-badge pill variant="blue" v-if="index === 1"
+                        >적합률높음</b-badge
+                      >
+                      <b-badge pill variant="lightblue" v-if="index === 2"
+                        >적합률보통</b-badge
+                      >
+                      <b-badge pill variant="secondary">{{
+                        item.pickcookSmallCategoryInfo.pkMediumCategoryName
+                      }}</b-badge>
+                      <b-badge pill variant="outline-secondary">{{
+                        item.pickcookSmallCategoryInfo.pkSmallCategoryName
+                      }}</b-badge>
+                    </div>
+                    <h4 class="card-title">
+                      {{ item.pickcookSmallCategoryInfo.pkMenuName }}
+                    </h4>
+                    <p class="card-text">
+                      <b-icon icon="graph-up"></b-icon>
+                      <span class="mx-1"
+                        >추천지수
+                        <strong class="txt-primary"
+                          >{{ Math.round(item.appliedFitnessScore) }}%</strong
+                        ></span
+                      >
+                    </p>
+                  </div>
+                  <div
+                    class="btn-more-detail"
+                    :class="{ 'is-active': isOverlayVisible }"
+                    @click="isOverlayVisible = !isOverlayVisible"
+                  >
+                    <span class="txt-tiny is-blind">자세히 보기</span>
+                    <span class="icon-toggle-plus">
+                      <b-icon icon="plus"></b-icon>
+                    </span>
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
+            <div class="row-box">
+              <div class="card">
+                <div class="card-header txt-sm-center">
+                  <h4>
+                    추천 아이템들은 <br />
+                    전 분기보다 <br class="d-block d-lg-none" />
+                    <strong>매출이 올라가고</strong> 있어요!
+                  </h4>
+                </div>
+                <div
+                  data-aos="fade-in"
+                  data-aos-duration="1000"
+                  class="card-body"
+                >
+                  <div class="chart-container chart-vertical-arrow">
+                    <div class="chart-bars">
+                      <div
+                        class="chart-bar "
+                        :class="{
+                          'bar-rank-max':
+                            maxRevenue ===
+                            Math.abs(item.estimatedIncreasedRevenuePercentage),
+                          'bar-rank-min':
+                            minRevenue ===
+                            Math.abs(item.estimatedIncreasedRevenuePercentage),
+                        }"
+                        v-for="(item, index) in result.rankDataWCScore"
+                        :key="index"
+                        :style="{
+                          height:
+                            (Math.abs(
+                              item.estimatedIncreasedRevenuePercentage,
+                            ) /
+                              maxRevenue) *
+                              100 +
+                            '%',
+                        }"
+                      >
+                        <div class="bar-stack">
+                          <span class="bar-percent"
+                            >+{{
+                              Math.abs(
+                                item.estimatedIncreasedRevenuePercentage,
+                              ).toFixed(0)
+                            }}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chart-labels">
+                      <span
+                        class="chart-label"
+                        v-for="(item, index) in result.rankDataWCScore"
+                        :key="index"
+                      >
+                        {{ item.pickcookSmallCategoryInfo.pkMenuName }}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </section>
-          </b-col>
-          <b-col cols="12" lg="6">
-            <template v-if="result.fnbOwnerStatus === 'NEW_FNB_OWNER'">
-              <!-- 신규 창업자 -->
-              <section class="article-section section03 pt-0">
-                <div>
-                  <header class="section-header">
-                    <h3>
-                      추천 아이템은
-                      <br />
-                      <strong>전 분기보다 매출이 올라가고 있어요!</strong>
-                    </h3>
-                  </header>
-                  <div class="section-content">
-                    <div class="card p-5 shadow-sm">
-                      <div data-aos="fade-in" data-aos-duration="1000">
-                        <div class="chart-container chart-vertical-arrow">
-                          <div class="chart-bars">
-                            <div
-                              class="chart-bar "
-                              :class="{
-                                'bar-rank-max':
-                                  maxRevenue ===
-                                  Math.abs(
-                                    item.estimatedIncreasedRevenuePercentage,
-                                  ),
-                                'bar-rank-min':
-                                  minRevenue ===
-                                  Math.abs(
-                                    item.estimatedIncreasedRevenuePercentage,
-                                  ),
-                              }"
-                              v-for="(item, index) in result.rankDataWCScore"
-                              :key="index"
-                              :style="{
-                                height:
-                                  (Math.abs(
-                                    item.estimatedIncreasedRevenuePercentage,
-                                  ) /
-                                    maxRevenue) *
-                                    100 +
-                                  '%',
-                              }"
-                            >
-                              <div class="bar-stack">
-                                <span class="bar-percent"
-                                  >+{{
-                                    Math.abs(
-                                      item.estimatedIncreasedRevenuePercentage,
-                                    ).toFixed(0)
-                                  }}%
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="chart-labels">
-                            <span
-                              class="chart-label"
-                              v-for="(item, index) in result.rankDataWCScore"
-                              :key="index"
-                            >
-                              {{ item.attributeValues.sSmallCategoryName }}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </template>
-            <template v-else>
-              <!-- 기창업자 -->
-              <section class="article-section section03 pt-0">
-                <div>
-                  <header class="section-header">
-                    <h3>
-                      추천 아이템으로 <br />
-                      <strong>추가 매출을 올릴 수 있어요!</strong>
-                    </h3>
-                  </header>
-                  <div class="section-content">
-                    <div class="card py-10 px-2 shadow-sm">
-                      <div class="odometer-container">
-                        <div class="odometer-box">
-                          <span class="odometer-count">
-                            <vue-odometer :value="revenueCount"> </vue-odometer>
-                          </span>
-                          <span class="odometer-unit">원</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </template>
-          </b-col>
-        </b-row>
-        <section class="article-section section04 pt-0">
-          <div>
-            <header class="section-header">
+            </div>
+          </section>
+          <section class="article-section">
+            <header class="section-header txt-sm-center">
               <h3>
-                픽쿡플래너를 만나서
-                <br class="d-block d-lg-none" />
-                상권 분석을 무료로 받아보세요!
+                배달창업
+                <br />
+                <strong>필요한 서비스만 골라</strong
+                ><br class="d-block d-lg-none" />
+                한번에 준비하세요
               </h3>
             </header>
             <div class="section-content">
-              <div class="card shadow-sm">
-                <div class="report-container">
-                  <div
-                    class="report"
-                    :class="`report0${n}`"
-                    v-for="n in 3"
-                    :key="n"
-                  >
-                    <img
-                      data-aos="fade-up"
-                      :data-aos-duration="500 * (1 * (4 - n))"
-                      :data-aos-delay="300 * (1 * (4 - n))"
-                      :src="
-                        `https://kr.object.ncloudstorage.com/common-nanuda/images/report_img_0${n}.png`
-                      "
-                      :alt="`상권분석 리포트 ${n}`"
-                    />
+              <b-row>
+                <b-col cols="12" lg="6">
+                  <div class="card my-2 card-recipe">
+                    <div class="card-img">
+                      <swiper :options="swiperRecipe">
+                        <swiper-slide v-for="n in 5" :key="n">
+                          <img
+                            :src="
+                              `
+                          https://kr.object.ncloudstorage.com/common-storage-pickcook/main/recipe_menu_0${n}.png
+                        `
+                            "
+                          />
+                        </swiper-slide>
+                      </swiper>
+                    </div>
+                    <div class="card-header mt-2">
+                      <h4>
+                        간편한 <strong>레시피</strong>와 <br />빠른
+                        <strong>조리 교육</strong>
+                      </h4>
+                    </div>
+
+                    <div
+                      class="btn-more-detail"
+                      :class="{ 'is-active': isOverayRecipeVisible }"
+                      @click="isOverayRecipeVisible = !isOverayRecipeVisible"
+                    >
+                      <span class="txt-tiny is-blind">자세히 보기</span>
+                      <span class="icon-toggle-plus">
+                        <b-icon icon="plus"></b-icon>
+                      </span>
+                    </div>
+                    <transition name="fadeIn">
+                      <div class="card-overlay" v-if="isOverayRecipeVisible">
+                        <div class="inner-box">
+                          <h4>
+                            레시피와 조리 교육
+                          </h4>
+                          <p>
+                            간편한 공정의 레시피로 수익성과 맛을 모두 고려하여
+                            제작되었습니다. 1:1 교육, 현장 실습, 방문 교육 등
+                            원하시는 교육 방법을 선택할 수 있습니다.
+                          </p>
+                        </div>
+                      </div>
+                    </transition>
                   </div>
-                </div>
-                <div
-                  class="txt-box txt-md-center"
-                  data-aos="fade-up"
-                  data-aos-duration="2000"
-                >
-                  <p>
-                    상권의 고객 정보부터 시간에 따른 매출변화까지 <br />
-                    어려운 데이터를 한눈에 쉽게 알 수 있어요!
-                  </p>
-                </div>
+                </b-col>
+                <b-col cols="12" lg="6" class="d-none d-lg-block">
+                  <div class="card my-2 card-app-guide">
+                    <div class="card-header">
+                      <h4>
+                        복잡한 배달 앱<br />
+                        <strong>등록부터 관리</strong>까지<br />
+                        <strong>운영교육</strong>을 한번에!
+                      </h4>
+                    </div>
+                    <div class="card-body">
+                      <ul class="u-list type-check">
+                        <li>배달앱 등록</li>
+                        <li>배달앱 광고</li>
+                        <li>매출 컨설팅</li>
+                        <li>홍보물 제공</li>
+                      </ul>
+                    </div>
+                    <div
+                      class="btn-more-detail"
+                      :class="{ 'is-active': isOverayRecipeVisible }"
+                      @click="isOverayRecipeVisible = !isOverayRecipeVisible"
+                    >
+                      <span class="txt-tiny is-blind">자세히 보기</span>
+                      <span class="icon-toggle-plus">
+                        <b-icon icon="plus"></b-icon>
+                      </span>
+                    </div>
+                    <transition name="fadeIn">
+                      <div class="card-overlay" v-if="isOverayRecipeVisible">
+                        <div class="inner-box">
+                          <h4>
+                            운영교육
+                          </h4>
+                          <p>
+                            배민, 쿠팡이츠, 요기요 등 복잡한 배달 앱을 모두
+                            등록해 드립니다. 어려운 배달 앱 광고, 매출 컨설팅,
+                            홍보물까지 픽쿡에서 한번에 관리하세요.
+                          </p>
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
+                </b-col>
+                <b-col cols="12">
+                  <div class="card my-2 card-delivery-kitchen px-0 bg-primary">
+                    <div class="card-img">
+                      <swiper :options="swiperKitchen">
+                        <swiper-slide v-for="n in 3" :key="n">
+                          <div class="img-mask">
+                            <img
+                              :src="
+                                `
+                          https://kr.object.ncloudstorage.com/common-storage-pickcook/main/delivery_kitchen_0${n}.jpg`
+                              "
+                            />
+                          </div>
+                        </swiper-slide>
+                      </swiper>
+                    </div>
+                    <div class="card-header px-6 mt-4">
+                      <h4>
+                        <span class="txt-white">
+                          <strong
+                            >전국 1500개<br />
+                            공유주방 추천과</strong
+                          ><br class="d-block d-lg-none" />
+                          할인&amp;무료 혜택 제공
+                        </span>
+                      </h4>
+                    </div>
+
+                    <div
+                      class="btn-more-detail"
+                      :class="{ 'is-active': isOverayRecipeVisible }"
+                      @click="isOverayRecipeVisible = !isOverayRecipeVisible"
+                    >
+                      <span class="txt-tiny is-blind">자세히 보기</span>
+                      <span class="icon-toggle-plus">
+                        <b-icon icon="plus"></b-icon>
+                      </span>
+                    </div>
+                    <transition name="fadeIn">
+                      <div class="card-overlay" v-if="isOverayRecipeVisible">
+                        <div class="inner-box">
+                          <h4>
+                            공유주방 추천
+                          </h4>
+                          <p>
+                            전국 1500개 공유주방을 원하시는 위치와 금액 등
+                            조건에 맞추어 추천하며, 보증금 0원, 임대료 무료 등
+                            다양한 혜택을 동시에 제공해 드립니다.
+                          </p>
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
+                </b-col>
+                <b-col cols="12" lg="6" class="d-block d-lg-none">
+                  <div class="card my-2 card-app-guide">
+                    <div class="card-header txt-sm-center">
+                      <h4>
+                        복잡한 배달 앱<br />
+                        <strong>등록부터 관리</strong>까지<br />
+                        <strong>운영교육</strong>을 한번에!
+                      </h4>
+                    </div>
+                    <div class="card-body">
+                      <ul class="u-list type-check">
+                        <li>배달앱 등록</li>
+                        <li>배달앱 광고</li>
+                        <li>매출 컨설팅</li>
+                        <li>홍보물 제공</li>
+                      </ul>
+                    </div>
+                    <div
+                      class="btn-more-detail"
+                      :class="{ 'is-active': isOverayRecipeVisible }"
+                      @click="isOverayRecipeVisible = !isOverayRecipeVisible"
+                    >
+                      <span class="txt-tiny is-blind">자세히 보기</span>
+                      <span class="icon-toggle-plus">
+                        <b-icon icon="plus"></b-icon>
+                      </span>
+                    </div>
+                    <transition name="fadeIn">
+                      <div class="card-overlay" v-if="isOverayRecipeVisible">
+                        <div class="inner-box">
+                          <h4>
+                            운영교육
+                          </h4>
+                          <p>
+                            배민, 쿠팡이츠, 요기요 등 복잡한 배달 앱을 모두
+                            등록해 드립니다. 어려운 배달 앱 광고, 매출 컨설팅,
+                            홍보물까지 픽쿡에서 한번에 관리하세요.
+                          </p>
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
+                </b-col>
+              </b-row>
+            </div>
+          </section>
+        </template>
+        <section class="article-section section04">
+          <header class="section-header txt-sm-center">
+            <h3>
+              알바생도 쉽게! <br />
+              간편한 레시피로 <br class="d-block d-lg-none" />
+              <strong>3일만에 판매</strong>하세요!
+            </h3>
+          </header>
+          <div class="card">
+            <div class="card-header txt-sm-center">
+              <p class="txt-black">
+                <b-img-lazy
+                  src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/logo_1980.svg"
+                  alt="1980부대찌개 로고"
+                  class="w-10"
+                ></b-img-lazy>
+                <span class="mx-1">X</span>
+                <span>돈암점</span>
+              </p>
+              <div class="my-8">
+                <h4>
+                  메뉴변경 <strong>2주</strong>만에 <br />
+                  <strong>일매출 150만원 돌파</strong>
+                </h4>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="txt-center">
+                <b-img-lazy
+                  src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/revenue_graph.png"
+                  alt="1980부대찌개 돈암점 매출 예시 그래프"
+                  style="width:100%"
+                  class="max-w-40 mx-auto"
+                />
               </div>
             </div>
           </div>
         </section>
-      </div>
-      <section class="article-section" ref="bottomForm" id="bottom-form">
-        <div class="container">
+        <section
+          class="article-section mb-0 pb-12"
+          ref="bottomForm"
+          id="bottom-form"
+        >
           <!-- 폼 영역 -->
-          <header class="section-header">
-            <h3 class="txt-center">
-              <strong class="txt-big ">
-                <span class="txt-bold">
-                  픽쿡플래너가 쉽고 빠르게 <br class="d-block d-lg-none" />
-                  추가 매출을 올려드릴게요!
-                </span>
-              </strong>
+          <header class="section-header txt-sm-center">
+            <h3>
+              <template v-if="result.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
+                <strong>월 30만원</strong> 부터 시작하는 <br />
+                <strong>매출솔루션 픽쿡플래너</strong>와
+                <br class="d-block d-lg-none" />
+                만나보세요!
+              </template>
+              <template v-else>
+                <strong>픽쿡플래너</strong> 와 함께<br />
+                <strong>확실한 아이템</strong>으로
+                <br class="d-block d-lg-none" />
+                <strong>효율적인 창업</strong>하세요!
+              </template>
             </h3>
           </header>
           <div class="section-content mt-8">
             <div class="form-container">
               <b-form-row>
-                <b-col cols="3">
+                <!-- <b-col cols="2">
                   <label class="txt-sm">이름</label>
-                </b-col>
-                <b-col cols="9">
+                </b-col> -->
+                <b-col cols="12">
                   <b-form-input
                     v-model="consultRequestDto.name"
-                    placeholder="이름을 적어주세요"
+                    placeholder="이름"
                     size="md"
                     required
                   ></b-form-input>
                 </b-col>
               </b-form-row>
               <b-form-row class="mt-3">
-                <b-col cols="3">
+                <!-- <b-col cols="2">
                   <label class="txt-sm">휴대전화</label>
-                </b-col>
-                <b-col cols="6">
+                </b-col> -->
+                <b-col cols="8">
                   <b-form-input
                     v-model="consultRequestDto.phone"
-                    placeholder="ex) 01012345678"
+                    placeholder="휴대폰번호"
                     required
                     :disabled="isVerified"
                     size="md"
                   ></b-form-input>
                 </b-col>
-                <b-col cols="3">
+                <b-col cols="4">
                   <b-btn
-                    variant="primary"
+                    variant="outline-primary"
                     size="md"
+                    pill
                     @click="getSMSCode"
                     :disabled="isGetCodeBtnDisabled"
                     v-if="!isVerified"
@@ -461,21 +991,22 @@
                 </b-col>
               </b-form-row>
               <b-form-row v-if="isSMSCodeSent" class="mt-3">
-                <b-col cols="3">
+                <!-- <b-col cols="2">
                   <label class="txt-sm">인증번호</label>
-                </b-col>
-                <b-col cols="6">
+                </b-col> -->
+                <b-col cols="8">
                   <b-form-input
                     v-model="consultRequestDto.smsAuthCode"
-                    placeholder="인증번호 숫자 6자리 입력"
+                    placeholder="인증번호"
                     required
                     size="md"
                     :disabled="isVerified"
                   ></b-form-input>
                 </b-col>
-                <b-col cols="3">
+                <b-col cols="4">
                   <b-btn
-                    variant="primary"
+                    variant="outline-primary"
+                    pill
                     size="md"
                     @click="checkSMSCode"
                     :disabled="isVerified"
@@ -494,14 +1025,14 @@
                   :disabled="isConsultBtnDisabled"
                   @click="onConsultBtnClicked"
                 >
-                  <span>신청하기</span>
+                  <span>픽쿡플래너 만나기</span>
                 </b-btn>
               </div>
             </div>
           </div>
           <!-- // 폼 영역 -->
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
     <!-- sticky 폼 -->
     <transition name="slideInUp">
@@ -510,41 +1041,42 @@
         v-if="!isFormVisible"
         :class="{ 'is-open': isToggleForm }"
       >
-        <div class="btn-toggle-form" @click="isToggleForm = !isToggleForm">
-          <span class="btn-txt">상담 신청하기</span>
+        <div class="btn-more-form" @click="isToggleForm = !isToggleForm">
+          <span class="btn-txt">픽쿡플래너 만나기</span>
           <span class="icon"><BaseArrow /></span>
         </div>
         <div class="form-container" v-if="isToggleForm">
           <div class="container">
             <b-form-row>
-              <b-col cols="3">
+              <!-- <b-col cols="2">
                 <label class="txt-sm">이름</label>
-              </b-col>
-              <b-col cols="9">
+              </b-col> -->
+              <b-col cols="12">
                 <b-form-input
                   v-model="consultRequestDto.name"
-                  placeholder="이름을 적어주세요"
+                  placeholder="이름"
                   size="md"
                   required
                 ></b-form-input>
               </b-col>
             </b-form-row>
             <b-form-row class="mt-3">
-              <b-col cols="3">
+              <!-- <b-col cols="2">
                 <label class="txt-sm">휴대전화</label>
-              </b-col>
-              <b-col cols="6">
+              </b-col> -->
+              <b-col cols="8">
                 <b-form-input
                   v-model="consultRequestDto.phone"
-                  placeholder="ex) 01012345678"
+                  placeholder="휴대폰번호"
                   required
                   :disabled="isVerified"
                   size="md"
                 ></b-form-input>
               </b-col>
-              <b-col cols="3">
+              <b-col cols="4">
                 <b-btn
-                  variant="white"
+                  variant="outline-white"
+                  pill
                   size="md"
                   @click="getSMSCode"
                   :disabled="isGetCodeBtnDisabled"
@@ -555,22 +1087,23 @@
               </b-col>
             </b-form-row>
             <b-form-row v-if="isSMSCodeSent" class="mt-3">
-              <b-col cols="3">
+              <!-- <b-col cols="2">
                 <label class="txt-sm">인증번호</label>
-              </b-col>
-              <b-col cols="6">
+              </b-col> -->
+              <b-col cols="8">
                 <b-form-input
                   v-model="consultRequestDto.smsAuthCode"
-                  placeholder="인증번호 숫자 6자리 입력"
+                  placeholder="인증번호"
                   required
                   size="md"
                   :disabled="isVerified"
                 ></b-form-input>
               </b-col>
-              <b-col cols="3">
+              <b-col cols="4">
                 <b-btn
-                  variant="white"
+                  variant="outline-white"
                   size="md"
+                  pill
                   @click="checkSMSCode"
                   :disabled="isVerified"
                   >{{ isVerified ? '인증완료' : '인증하기' }}</b-btn
@@ -584,11 +1117,12 @@
               <b-btn
                 variant="white"
                 block
+                pill
                 size="lg"
                 :disabled="isConsultBtnDisabled"
                 @click="onConsultBtnClicked"
               >
-                <span>신청하기</span>
+                <span>픽쿡플래너 만나기</span>
               </b-btn>
             </div>
           </div>
@@ -596,46 +1130,9 @@
       </div>
     </transition>
   </article>
-  <!-- 신청 완료 -->
-  <article class="main-article bg-primary" id="question-complete" v-else>
-    <div class="container">
-      <header class="article-header">
-        <span data-aos="fade-in" data-aos-duration="1500"
-          ><router-link to="/"
-            ><img
-              src="@/assets/images/logo_w.svg"
-              alt="픽쿡"
-              class="logo-w"/></router-link
-        ></span>
-        <h2 data-aos="fade-in" data-aos-duration="1500">
-          신청이 완료되었습니다
-        </h2>
-        <p data-aos="fade-in" data-aos-duration="1500">
-          담당 플래너가 배정되는대로 <br />
-          입력해주신 연락처로 안내드리겠습니다.
-        </p>
-        <div
-          class="btn-box text-center"
-          data-aos="fade-in"
-          data-aos-duration="1000"
-        >
-          <b-btn
-            variant="light"
-            pill
-            size="xl"
-            class="shadow"
-            @click="$emit('reset')"
-          >
-            처음으로
-          </b-btn>
-        </div>
-        <div class="row-box mt-4">
-          <router-link to="/" class="txt-sm txt-underline"
-            >픽쿡에 대해 더 알아보기
-          </router-link>
-        </div>
-      </header>
-    </div>
+  <!-- 로딩-->
+  <article class="main-article" v-else>
+    <Loading />
   </article>
 </template>
 
@@ -644,30 +1141,36 @@ import BaseComponent from '@/core/base.component';
 import { Component, Prop } from 'vue-property-decorator';
 import ResultRevenueChart from '@/modules/_components/charts/ResultRevenueChart.vue';
 import FoodCategoryRatioChart from '@/modules/_components/charts/FoodCategoryRatioChart.vue';
-import { ConsultRequestDto, ResultResponseDto } from '@/dto/question';
+import {
+  ConsultRequestDto,
+  ResultRequestDto,
+  ResultResponseDto,
+} from '@/dto/question';
 import authService from '@/services/auth.service';
 // import toast from '../../../resources/assets/js/services/toast.js';
-import questionService from '@/services/question.service';
+import QuestionService from '@/services/question.service';
 import { AggregateResultResponse } from '@/dto/question/aggregate-result-response.dto';
 import { SmsAuthNotificationDto } from '@/dto';
 import { ProformaResponseDto } from '@/dto/question/proforma-response.dto';
 import debounce from 'lodash/debounce';
+import Loading from './Loading.vue';
 
 @Component({
   name: 'Solution',
-  components: { ResultRevenueChart, FoodCategoryRatioChart },
+  components: { ResultRevenueChart, FoodCategoryRatioChart, Loading },
 })
 export default class Solution extends BaseComponent {
   [x: string]: any;
   $refs!: {
     tagRef: HTMLFormElement;
     revenueWrapper: HTMLFormElement;
+    tooltipWrapper: HTMLFormElement;
     bottomForm: HTMLFormElement;
   };
-  @Prop() readonly result: ResultResponseDto;
+  @Prop() readonly resultRequestDto: ResultRequestDto;
   // private result: ProformaResponseDto = null;
   // private resultRequestDto: any = null;
-  private isComplete = false;
+  private result: any = null;
   private consultRequestDto = new ConsultRequestDto();
   private isVerified = false;
   private errorText = '';
@@ -679,6 +1182,48 @@ export default class Solution extends BaseComponent {
   private revenueCount = 0;
   private isToggleForm = false;
   private isFormVisible = false;
+  private isTooltipVislble = false;
+
+  // 신규창업자
+  private newOtherMenu: any = {};
+  private swiperRecipe: any = {
+    effect: 'fade',
+    fadeEffect: {
+      crossFade: true,
+    },
+    // virtualTranslate: true,
+    slidesPerView: 1,
+    loop: true,
+    grabCursor: false,
+    allowTouchMove: false,
+    speed: 700,
+    autoplay: {
+      delay: 3000,
+      // disableOnInteraction: true,
+    },
+  };
+  private swiperKitchen: any = {
+    slidesPerView: 1,
+    loop: true,
+    grabCursor: false,
+    allowTouchMove: false,
+    speed: 1000,
+    spaceBetween: 20,
+    centeredSlides: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: true,
+    },
+  };
+
+  // 기창업자 메뉴
+  private selectedMenu: any = {};
+  private otherMenu: any = {};
+  private isOhterMenuVislble = false;
+  private isOverlayVisible = false;
+  private isOverlayVisible3 = false;
+  private isOverayRecipeVisible = false;
+  private isDetailInfoTooltipVisible = true;
 
   toggleId(index: number) {
     return 'item0' + index;
@@ -706,25 +1251,31 @@ export default class Solution extends BaseComponent {
   }
 
   get maxRevenueValue() {
-    const arr = this.result.rankDataWCScore.map(e => {
-      return Math.abs(e.estimatedHighestRevenue);
-    });
+    const arr = this.result.rankDataWCScore.map(
+      (e: { estimatedHighestRevenue: number }) => {
+        return Math.abs(e.estimatedHighestRevenue);
+      },
+    );
     return Math.max(...arr);
   }
 
   // get max revenue
   get maxRevenue() {
-    const arr = this.result.rankDataWCScore.map(e => {
-      return Math.abs(e.estimatedIncreasedRevenuePercentage);
-    });
+    const arr = this.result.rankDataWCScore.map(
+      (e: { estimatedIncreasedRevenuePercentage: number }) => {
+        return Math.abs(e.estimatedIncreasedRevenuePercentage);
+      },
+    );
     return Math.max(...arr);
   }
 
   // get min revenue
   get minRevenue() {
-    const arr = this.result.rankDataWCScore.map(e => {
-      return Math.abs(e.estimatedIncreasedRevenuePercentage);
-    });
+    const arr = this.result.rankDataWCScore.map(
+      (e: { estimatedIncreasedRevenuePercentage: number }) => {
+        return Math.abs(e.estimatedIncreasedRevenuePercentage);
+      },
+    );
     return Math.min(...arr);
   }
 
@@ -766,7 +1317,7 @@ export default class Solution extends BaseComponent {
         });
       } else {
         this.$bvToast.toast(
-          '인증번호가 올바르지않거나 유효기간이 초과했습니다',
+          '인증번호가 올바르지 않거나 유효기간이 초과했습니다',
           {
             variant: 'danger',
             title: 'Error',
@@ -776,30 +1327,30 @@ export default class Solution extends BaseComponent {
     });
   }
 
-  //
   onConsultBtnClicked() {
     this.consultRequestDto.proformaConsultResultId = this.result.id;
-    questionService.postConsult(this.consultRequestDto).subscribe(res => {
+    QuestionService.postConsult(this.consultRequestDto).subscribe(res => {
       if (res) {
-        this.isComplete = true;
         // send pixel event
         this.$analytics.fbq.event('SubmitApplication');
         this.$gtag.event('complete_application', {
           description: '신청 완료',
         });
+        this.$emit('next');
       }
     });
   }
 
-  revenueCountUp() {
-    const target = this.$refs.revenueWrapper;
+  // hide detail info tooltip
+  hideDetailInfoTooltip() {
+    const target = this.$refs.tooltipWrapper;
     if (target) {
       const rect = target.getBoundingClientRect().top;
       const winHeight = window.outerHeight;
       if (rect < winHeight / 2) {
-        this.revenueCount = this.maxRevenueValue;
-      } else {
-        this.revenueCount = 0;
+        setTimeout(() => {
+          this.isDetailInfoTooltipVisible = false;
+        }, 3000);
       }
     }
   }
@@ -819,13 +1370,56 @@ export default class Solution extends BaseComponent {
 
   // scroll event
   handleScroll() {
-    this.revenueCountUp();
+    this.hideDetailInfoTooltip();
     this.stickyFormVisible();
   }
 
+  findResult() {
+    QuestionService.getResult(this.resultRequestDto).subscribe(res => {
+      if (res) {
+        this.$gtag.event(`proforma_result_seen_${res.data.id}`);
+        this.result = res.data;
+
+        // selected Menu info
+        if (this.result.selectedMenuRecommendation) {
+          this.selectedMenu = this.result.selectedMenuRecommendation;
+        }
+        // ohter Menu info
+        if (this.result.otherMenuRecommendations) {
+          this.otherMenu = this.result.otherMenuRecommendations.slice(0, 2);
+        }
+
+        // new owner other menu
+        if (this.result.rankDataWCScore) {
+          this.newOtherMenu = this.result.rankDataWCScore.slice(1, 3);
+        }
+
+        // start countup animation of estimate revenue
+        setTimeout(() => {
+          this.revenueCount = this.result.estimatedRevenue;
+        }, 10);
+      }
+    });
+  }
+
+  handleDebouncedResizing() {
+    const screenWith = window.innerWidth;
+    if (screenWith >= 992) {
+      this.isOhterMenuVislble = true;
+    } else {
+      this.isOhterMenuVislble = false;
+    }
+  }
+
   created() {
+    this.findResult();
     this.handleDebouncedScroll = debounce(this.handleScroll, 100);
     window.addEventListener('scroll', this.handleDebouncedScroll);
+    window.addEventListener('resize', this.handleDebouncedResizing);
+  }
+
+  mounted() {
+    this.handleDebouncedResizing();
   }
 
   beforeDestroy() {
@@ -837,21 +1431,8 @@ export default class Solution extends BaseComponent {
 <style lang="scss">
 @import '@/assets/scss/common.scss';
 
-#bottom-form {
-  .form-container {
-    label {
-      color: $primary;
-      font-weight: $txt-bold;
-    }
-    .form-control {
-      background-color: transparent;
-      border-color: $primary;
-    }
-  }
-}
-
 #sticky-form {
-  background-color: $black;
+  background-color: rgba(0, 77, 138, 0.95);
   width: 100%;
   position: fixed;
   bottom: 0;
@@ -861,13 +1442,14 @@ export default class Solution extends BaseComponent {
   border-top-right-radius: $border-radius-lg;
   overflow: hidden;
   &.is-open {
-    .btn-toggle-form {
+    background-color: $primary;
+    .btn-more-form {
       .icon {
         transform: rotate(0);
       }
     }
   }
-  .btn-toggle-form {
+  .btn-more-form {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -893,35 +1475,46 @@ export default class Solution extends BaseComponent {
     .form-control {
       background: transparent;
       color: #fff;
+      border-bottom-color: #fff;
     }
   }
 }
-.icon-tip {
-  display: inline-flex;
-  width: 2.6rem;
-  height: 2.6rem;
-  align-items: center;
-  justify-content: center;
-  background-color: $primary;
-  border-radius: 50%;
-  color: $white;
-  font-size: $txt-mini;
-  + * {
-    margin-left: 0.5em;
+.info-tip {
+  .icon-tip {
+    float: left;
+    display: inline-flex;
+    width: 3em;
+    height: 3em;
+    align-items: center;
+    justify-content: center;
+    background-color: $primary;
+    border-radius: 50%;
+    color: $white;
+    font-size: 0.625em;
+    margin-right: 1em;
+    + * {
+      display: block;
+      margin-top: 1em;
+      padding-top: 0.125em;
+      overflow: hidden;
+    }
   }
 }
-.icon-toggle-arrow {
+
+.icon-toggle-plus {
   display: inline-flex;
-  width: 1em;
-  height: 1em;
+  width: 2em;
+  height: 2em;
   align-items: center;
   justify-content: center;
-  background-color: $primary;
+  background-color: $gray-400;
   border-radius: 50%;
   color: $white;
   font-weight: bold;
+  box-shadow: 0 0 0.5em rgb(0 0 0 / 25%);
   svg {
-    transform: scale(0.65);
+    width: 2em;
+    height: 2em;
   }
 }
 .report-container {
@@ -958,9 +1551,9 @@ export default class Solution extends BaseComponent {
 #question-solution {
   padding-bottom: 0 !important;
   .article-header {
-    padding: 2em 0;
-    background-color: $primary;
-    color: $white;
+    padding: 1em 0;
+    background-color: $light;
+    border-bottom: 1px solid $border-color;
     .container {
       display: flex;
       align-items: center;
@@ -977,12 +1570,13 @@ export default class Solution extends BaseComponent {
     }
   }
   .article-section {
-    padding: 3.125em 0;
+    margin: 2em 0;
     .section-header {
+      margin: 3.5em 0;
       text-align: left;
       h3 {
-        font-size: $h5;
-        color: $primary;
+        font-size: 3.2rem;
+        color: $black;
         font-weight: 300;
         line-height: 1.4;
         strong {
@@ -997,8 +1591,26 @@ export default class Solution extends BaseComponent {
     .card {
       position: relative;
       border-radius: $border-radius-lg;
-      padding: 1.25em 1.5em;
+      padding: 1.5em 1.5em;
       z-index: 1;
+      overflow: hidden;
+      .card-header {
+        background: none;
+        border: 0;
+        padding: 0;
+        h4 {
+          font-size: 2.8rem;
+          color: $black;
+          line-height: 1.4;
+          font-weight: 300;
+          strong {
+            font-weight: 700;
+          }
+        }
+        + .card-body {
+          margin-top: 1em;
+        }
+      }
       .card-img-left {
         display: flex;
         align-items: center;
@@ -1013,14 +1625,16 @@ export default class Solution extends BaseComponent {
           height: 100%;
           object-fit: cover;
         }
+        + .card-body {
+          width: calc(100% - 4.75em);
+          margin-left: 1.25em;
+        }
       }
       .card-body {
         position: relative;
-        width: calc(100% - 4.75em);
         padding: 0;
-        margin-left: 1.25em;
         .card-badge {
-          margin-bottom: 0.7em;
+          margin-bottom: 1em;
           font-size: $txt-mini;
           .badge {
             margin-bottom: 0.4em;
@@ -1033,28 +1647,59 @@ export default class Solution extends BaseComponent {
           font-size: 2.8rem;
           font-weight: $txt-bolder;
           line-height: 1;
-          color: $gray;
-          margin-bottom: 0.5em;
+          color: $black;
+          margin-bottom: 0.625em;
         }
         .card-text {
           font-size: $txt-medium;
           font-weight: $txt-normal;
           line-height: 1;
+          color: $black;
           strong {
             font-weight: $txt-bold;
             font-family: 'YoonGothic', sans-serif;
           }
         }
-        .btn-toggle {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          display: flex;
-          align-items: center;
-          color: #b1b1b1;
-          line-height: 1;
-          .icon-toggle-arrow {
-            margin-left: 0.25em;
+      }
+      .card-overlay {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        padding: 1.5em 1.5em;
+        z-index: 2;
+        background-color: rgba(0, 0, 0, 0.85);
+        color: $white;
+        .inner-box {
+          overflow-y: auto;
+          height: 100%;
+          h4 {
+            font-size: 3.2rem;
+            margin-bottom: 0.5em;
+            font-weight: 700;
+          }
+          p {
+            font-size: $txt-large;
+          }
+        }
+      }
+      .btn-more-detail {
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+        line-height: 1;
+        z-index: 1;
+        .icon-toggle-plus {
+          transform: rotate(0deg);
+          transition: transform 0.4s ease;
+        }
+
+        &.is-active {
+          bottom: 1em !important;
+          z-index: 3;
+          .icon-toggle-plus {
+            transform: rotate(225deg);
           }
         }
       }
@@ -1074,19 +1719,152 @@ export default class Solution extends BaseComponent {
       }
     }
 
-    &.section01 {
+    .card-revenue {
+      background-image: url('https://kr.object.ncloudstorage.com/common-storage-pickcook/main/bg_graph.png');
+      background-position: left bottom;
+      background-repeat: no-repeat;
+      background-size: contain;
       .section-content {
-        > .row {
-          margin-top: -0.5em;
-          margin-bottom: -0.5em;
+        margin-top: 11.25em;
+        text-align: right;
+
+        // odometer
+        .odometer-container {
+          text-align: right;
+
+          .odometer-box {
+            display: inline-flex;
+            align-items: baseline;
+            .odometer-count {
+              font-size: 4.4rem;
+              font-weight: $txt-bolder;
+              line-height: 1;
+              color: $white;
+              * {
+                font-family: 'Gotham', sans-serif !important;
+                min-width: 0.68em;
+              }
+            }
+            .odometer-unit {
+              font-size: 2.8rem;
+              color: $white;
+              margin-left: 0.5em;
+            }
+          }
+        }
+      }
+    }
+
+    .card-selected-menu {
+      display: block;
+      .card-img {
+        margin-left: -1.5em;
+        width: auto;
+        .img-mask {
+          padding-bottom: 70.25%;
+          border-top-right-radius: 15em;
+          border-bottom-right-radius: 15em;
+          overflow: hidden;
+        }
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      .card-body {
+        margin: 1em 0 0;
+        width: auto;
+      }
+      .btn-more-menu {
+        position: relative;
+        background-color: #eaeaea;
+        padding: 1em 1.5em;
+        overflow: hidden;
+        cursor: pointer;
+        &:before {
+          position: absolute;
+          top: -40%;
+          left: 0;
+          display: block;
+          content: '';
+          width: 100%;
+          height: 50%;
+          background: rgba(0, 0, 0, 0.25);
+          background: linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.25) 100%
+          );
+        }
+        + .btn-more-detail {
+          bottom: 5em;
+        }
+      }
+      .tooltip-container {
+        position: absolute;
+        right: -0.25em;
+        bottom: 100%;
+        margin-bottom: 0.5em;
+        white-space: nowrap;
+      }
+    }
+
+    .card-recipe {
+      .card-img {
+        margin-top: -1.5em;
+        img {
+          position: relative;
+          top: -5em;
+          transition: top 0.4s ease;
+          max-width: 24.25em;
+          margin: 0 auto;
+        }
+        .swiper-slide-active {
+          img {
+            top: 0;
+          }
+        }
+      }
+    }
+
+    .card-delivery-kitchen {
+      .swiper-container {
+        padding-left: 3em;
+        padding-right: 3em;
+      }
+      .img-mask {
+        overflow: hidden;
+        border-radius: $border-radius;
+        height: 20em;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .card-app-guide {
+      background-image: url('https://kr.object.ncloudstorage.com/common-storage-pickcook/main/app_guide.png');
+      background-repeat: no-repeat;
+      background-position: bottom left calc(50% - 1.5em);
+      background-size: 18em auto;
+      .card-body {
+        padding-top: 2em !important;
+        padding-bottom: 10em !important;
+        .u-list {
+          margin-left: 60%;
+          li {
+            color: $black;
+          }
         }
       }
     }
   }
-}
-
-.shadow-sm {
-  box-shadow: 0.125rem 0.25rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
 
 // chart
@@ -1096,12 +1874,13 @@ export default class Solution extends BaseComponent {
   &.chart-horizontal-stacked {
     .chart-bars {
       display: flex;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
       width: 100%;
     }
     .chart-bar {
       position: relative;
       width: 50%;
+      min-width: 10%;
       &.chart-bar-restaurant {
         .bar-label {
           text-align: left;
@@ -1110,6 +1889,7 @@ export default class Solution extends BaseComponent {
           border-top-left-radius: $border-radius;
           border-bottom-left-radius: $border-radius;
           text-align: left;
+          padding-right: 0.5em;
           &:before {
             left: 0;
             background-color: $primary;
@@ -1124,6 +1904,7 @@ export default class Solution extends BaseComponent {
           border-top-right-radius: $border-radius;
           border-bottom-right-radius: $border-radius;
           text-align: right;
+          padding-left: 0.5em;
           &:before {
             background-color: $lightblue;
             right: 0;
@@ -1135,11 +1916,13 @@ export default class Solution extends BaseComponent {
         font-weight: $txt-bold;
         color: $secondary;
         margin-bottom: 0.5em;
+        white-space: nowrap;
       }
       .bar-stack {
         position: relative;
         height: 3em;
-        padding: 0.5em 1em;
+        line-height: 3em;
+        padding: 0em 1em;
         overflow: hidden;
         &:before {
           display: block;
@@ -1155,14 +1938,15 @@ export default class Solution extends BaseComponent {
         position: relative;
         z-index: 2;
         color: #fff;
-        font-size: $txt-large;
+        font-size: 1.5rem;
         font-weight: $txt-bold;
+        white-space: nowrap;
       }
     }
   }
 
   &.chart-vertical-arrow {
-    width: 16.25em;
+    max-width: 30em;
     margin: 0 auto;
     .chart-bars {
       display: flex;
@@ -1265,34 +2049,6 @@ export default class Solution extends BaseComponent {
   }
 }
 
-// odometer
-.odometer-container {
-  text-align: center;
-  height: 5em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .odometer-box {
-    display: inline-flex;
-    align-items: baseline;
-    .odometer-count {
-      font-size: 4.4rem;
-      font-weight: $txt-bolder;
-      line-height: 1;
-      color: $primary;
-      * {
-        font-family: 'Gotham', sans-serif !important;
-        min-width: 0.68em;
-      }
-    }
-    .odometer-unit {
-      font-size: 2.8rem;
-      color: $secondary;
-      margin-left: 0.5em;
-    }
-  }
-}
-
 #question-complete {
   display: flex;
   align-items: center;
@@ -1327,24 +2083,34 @@ export default class Solution extends BaseComponent {
   }
 }
 
-@media screen and (min-width: 1024px) {
-  #question-solution {
-    .article-section {
-      .section-header {
-        h3 {
-          text-align: center;
-        }
-      }
-      .card {
-        .card-img-left {
-          width: auto;
-          height: 8.5em;
-        }
-        .card-body {
-          width: auto;
-          margin: 1em 0 0;
-        }
-      }
+.tooltip-container {
+  position: relative;
+
+  .tooltip-content {
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    margin-bottom: 0.5em;
+    background: rgb(213 213 213 / 100%);
+    color: #707070;
+    padding: 0.5em 1em;
+    border-radius: 0.5rem;
+    text-align: left;
+    z-index: 2;
+    &:before {
+      display: block;
+      content: '';
+      position: absolute;
+      right: 1em;
+      top: 100%;
+      width: 0;
+      height: 0;
+      border-width: 0.5em;
+      border-style: solid;
+      border-top-color: rgb(213 213 213 / 95%);
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
     }
   }
 }
