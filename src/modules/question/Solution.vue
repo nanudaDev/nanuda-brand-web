@@ -1534,7 +1534,7 @@ export default class Solution extends BaseComponent {
         isPcDevice = true;
       }
     }
-    if (!isPcDevice) {
+    if (isPcDevice) {
       if (screenWith >= 992) {
         this.isOhterMenuVislble = true;
       } else {
