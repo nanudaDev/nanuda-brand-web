@@ -207,6 +207,7 @@ export default class Question extends BaseComponent {
     // 재시작
     this.$root.$on('restart', () => {
       this.questionIndex = -1;
+      this.questionOrder = 0;
     });
   }
 
