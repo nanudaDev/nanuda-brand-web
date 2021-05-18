@@ -649,13 +649,13 @@
                   </div>
                   <div class="card-body">
                     <div class="card-badge">
-                      <b-badge pill variant="primary" v-if="index === 0"
+                      <!-- <b-badge pill variant="primary" v-if="index === 0"
                         >최고적합률</b-badge
-                      >
-                      <b-badge pill variant="blue" v-if="index === 1"
+                      > -->
+                      <b-badge pill variant="blue" v-if="index === 0"
                         >적합률높음</b-badge
                       >
-                      <b-badge pill variant="lightblue" v-if="index === 2"
+                      <b-badge pill variant="lightblue" v-if="index === 1"
                         >적합률보통</b-badge
                       >
                       <b-badge pill variant="secondary">{{
@@ -2163,8 +2163,8 @@ export default class Solution extends BaseComponent {
     right: 0;
     bottom: 100%;
     margin-bottom: 0.5em;
-    background: rgb(213 213 213 / 100%);
-    color: #707070;
+    background: $primary;
+    color: #fff;
     padding: 0.5em 1em;
     border-radius: 0.5rem;
     text-align: left;
@@ -2185,7 +2185,7 @@ export default class Solution extends BaseComponent {
       height: 0;
       border-width: 0.5em;
       border-style: solid;
-      border-top-color: rgb(213 213 213 / 95%);
+      border-top-color: $primary;
       border-left-color: transparent;
       border-right-color: transparent;
       border-bottom-color: transparent;
