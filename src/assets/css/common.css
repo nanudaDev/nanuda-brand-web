@@ -13958,6 +13958,7 @@ a {
 
 a:hover {
   text-decoration: none;
+  color: inherit;
 }
 
 pre,
@@ -17327,6 +17328,15 @@ template {
 
 .type-check li {
   padding-left: 1.5em;
+}
+
+.type-check li:before {
+  width: 1em;
+  height: 1em;
+  background: url("https://kr.object.ncloudstorage.com/common-storage-pickcook/main/icon_list_check.svg") no-repeat center center;
+  background-size: contain;
+  top: 0.25em;
+  left: 0;
 }
 
 .review .row {

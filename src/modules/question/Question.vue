@@ -69,7 +69,11 @@
   </article>
   <article
     class="main-article"
-    :class="questionOrderArr[questionIndex].header ? ' bg-primary' : 'bg-light'"
+    :class="
+      questionOrderArr[questionIndex].name.toLowerCase() !== 'solution'
+        ? 'bg-primary'
+        : 'bg-light'
+    "
     :id="`question-${questionOrderArr[questionIndex].name.toLowerCase()}`"
     v-else
   >
