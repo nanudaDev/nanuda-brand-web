@@ -212,6 +212,7 @@ export default class Question extends BaseComponent {
     this.$root.$on('restart', () => {
       this.questionIndex = -1;
       this.questionOrder = 0;
+      this.resultRequestDto = new ResultRequestDto();
     });
   }
 
