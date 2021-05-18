@@ -83,7 +83,7 @@
                     </div>
                     <div>
                       <div
-                        class="card-img mt-4 mb-6"
+                        class="card-img mt-4 mb-6 mt-lg-10"
                         v-if="selectedMenu.sSmallCategoryCode"
                       >
                         <div
@@ -199,12 +199,12 @@
                 </div>
               </b-col>
               <b-col cols="12" lg="6">
-                <!-- <div class="d-none d-lg-block">
+                <div class="d-none d-lg-block">
                   <h4 class="txt-black txt-bold mb-4 txt-large">
                     <b-icon icon="bookmark-fill" class="txt-primary"></b-icon>
                     선택하신 업종과 다른 추천 아이템입니다
                   </h4>
-                </div> -->
+                </div>
                 <template v-if="isOhterMenuVislble && otherMenu.length > 0">
                   <div
                     class="card flex-row"
@@ -528,7 +528,7 @@
                     </div>
                     <div>
                       <div
-                        class="card-img mt-4 mb-6"
+                        class="card-img mt-4 mb-6 mt-lg-10"
                         v-if="result.rankDataWCScore[0].sSmallCategoryCode"
                       >
                         <div
@@ -1492,7 +1492,7 @@ export default class Solution extends BaseComponent {
 
   // scroll event
   handleScroll() {
-    // this.hideDetailInfoTooltip();
+    this.hideDetailInfoTooltip();
     this.stickyFormVisible();
   }
 
@@ -2159,9 +2159,9 @@ export default class Solution extends BaseComponent {
     z-index: 2;
     .icon-close {
       position: absolute;
-      right: .25em;
-      top: .25em;
-      z-index:1;
+      right: 0.5em;
+      top: 0.5em;
+      z-index: 1;
     }
     &:before {
       display: block;
@@ -2259,13 +2259,16 @@ export default class Solution extends BaseComponent {
         display: block;
         .card-img-left {
           width: auto;
-          height: 6.95em;
+          height: 8.25em;
           + .card-body {
             width: auto;
             margin-left: 0;
             margin-top: 1em;
           }
         }
+      }
+      .card-selected-menu {
+        height: 100%;
       }
     }
   }
