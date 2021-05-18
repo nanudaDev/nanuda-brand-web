@@ -141,6 +141,22 @@
   }
 }
 
+@each $prop, $abbrev in (max-width: max-w, max-height: max-h) {
+  @for $i from 1 through 100 {
+    .#{$abbrev}-#{$i} {
+      #{$prop}: $i * ($spacer * 2) !important;
+    }
+  }
+
+  @for $i from 10 through 100 {
+    @if ($i%10 == 0) {
+      .#{$abbrev}-#{$i}p {
+        #{$prop}: percentage($i/100) !important;
+      }
+    }
+  }
+}
+
 // Border
 
 .border {

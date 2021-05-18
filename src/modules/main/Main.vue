@@ -753,7 +753,7 @@ export default class Main extends BaseComponent {
 
               img {
                 position: absolute;
-                bottom: -20%;
+                bottom: -2em;
                 left: 0;
                 width: 100%;
               }
@@ -894,7 +894,7 @@ export default class Main extends BaseComponent {
 
 @keyframes slideInUp {
   0% {
-    bottom: -20%;
+    bottom: -2em;
   }
   100% {
     bottom: 0;

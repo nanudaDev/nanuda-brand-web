@@ -14,6 +14,7 @@ $txt-large: rempx(2.3, 23);
 $txt-big: rempx(2.6, 26);
 $txt-huge: rempx(3, 30);
 $txt-massive: rempx(3.6, 36);
+$txt-giant: rempx(4.8, 4.8);
 $h1: rempx(3.6, 36);
 $h2: rempx(3, 30);
 $h3: rempx(2.6, 26);
@@ -32,6 +33,7 @@ $font-sizes: map-merge(
     'big': $txt-big,
     'huge': $txt-huge,
     'massive': $txt-massive,
+    'giant': $txt-giant,
   ),
   $font-sizes
 );
@@ -173,7 +175,7 @@ $border-width: 1px !default;
 $border-radius: 1rem !default;
 $border-radius-lg: 2.5rem !default;
 $border-radius-sm: 0.25rem !default;
-$rounded-pill: 50rem !default;
+$rounded-pill: 30rem !default;
 
 // Table Settings
 $table-border-top-color: $black;

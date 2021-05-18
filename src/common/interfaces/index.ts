@@ -8,3 +8,4 @@ export * from './score-code.type';
 export * from './address-level.type';
 export * from './reservation.type';
 export * from './deliveryRatioData.type';
+export * from './delivery-grade.type';
