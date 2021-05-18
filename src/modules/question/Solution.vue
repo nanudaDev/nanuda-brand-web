@@ -1042,7 +1042,7 @@
           <header class="section-header txt-sm-center">
             <h3>
               <template v-if="result.fnbOwnerStatus !== 'NEW_FNB_OWNER'">
-                <strong>월 30만원</strong> 부터 시작하는 <br />
+                <strong>월 30만원</strong>부터 시작하는 <br />
                 <strong>매출솔루션 픽쿡플래너</strong>와
                 <br class="d-block d-lg-none" />
                 만나보세요!
@@ -1574,6 +1574,7 @@ export default class Solution extends BaseComponent {
   border-top-left-radius: $border-radius-lg;
   border-top-right-radius: $border-radius-lg;
   overflow: hidden;
+  box-shadow: 0 -0.5em 0.5em rgb(0 0 0 / 15%);
   &.is-open {
     background-color: $primary;
     .btn-more-form {
@@ -1745,7 +1746,7 @@ export default class Solution extends BaseComponent {
           overflow-y: auto;
           height: 100%;
           h4 {
-            font-size: 3.2rem;
+            font-size: 3rem;
             margin-bottom: 0.5em;
             font-weight: 700;
           }
