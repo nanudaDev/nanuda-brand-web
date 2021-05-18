@@ -45,7 +45,7 @@
 import { FNB_OWNER } from '@/common';
 import BaseComponent from '@/core/base.component';
 import { FirstQuestionDto, Given } from '@/dto';
-import questionService from '@/services/question.service';
+import QuestionService from '@/services/question.service';
 import { Component, Prop } from 'vue-property-decorator';
 @Component({
   name: 'KBCategory',
@@ -70,15 +70,15 @@ export default class KBCategory extends BaseComponent {
   mounted() {
     this.$emit('loading', true);
     this.firstQuestionDto.userType = this.fnbOwnerStatus;
-    questionService
-      .getKBCategoryQuestion(this.firstQuestionDto)
-      .subscribe(res => {
+    QuestionService.getKBCategoryQuestion(this.firstQuestionDto).subscribe(
+      res => {
         if (res) {
           this.$emit('loading', false);
           this.givens = res.data.givens;
           this.question = res.data.question;
         }
-      });
+      },
+    );
   }
 }
 </script>

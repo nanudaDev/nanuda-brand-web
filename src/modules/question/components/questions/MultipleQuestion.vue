@@ -82,7 +82,7 @@
 import { FNB_OWNER, YN } from '@/common';
 import BaseComponent from '@/core/base.component';
 import { FirstQuestionDto, Given, NextQuestionDto } from '@/dto';
-import questionService from '@/services/question.service';
+import QuestionService from '@/services/question.service';
 import { Component, Prop } from 'vue-property-decorator';
 @Component({
   name: 'MultipleQuestion',
@@ -120,7 +120,7 @@ export default class MultipleQuestion extends BaseComponent {
     });
     // this.resultRequestDto.questionGivenArray = this.questionGivenArray;
     this.nextQuestionDtoArr.push({ ...this.nextQuestionDto });
-    questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
+    QuestionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
       this.$emit('loading', false);
       if (res.data.isLastQuestion === YN.YES) {
         //마지막질문일때
@@ -163,26 +163,24 @@ export default class MultipleQuestion extends BaseComponent {
       this.getFirstQuestion();
     } else {
       this.$emit('loading', true);
-      questionService
-        .getNextQuestion(
-          this.nextQuestionDtoArr[this.nextQuestionDtoArr.length - 2],
-        )
-        .subscribe(res => {
-          this.$emit('loading', false);
-          this.nextQuestionDto.order = res.data.order;
-          this.nextQuestionDto.questionId = res.data.id;
-          this.$gtag.event(`question_${res.data.userType}_${res.data.id}`);
-          this.question = res.data.question;
-          //   this.questionOrder =
-          //     this.nextQuestionDto.order + (this.prevOrder - 1);
-          this.givens = res.data.givens;
-          this.nextQuestionDto.givenId = [];
-          this.isMultipleAnswer =
-            res.data.multipleAnswerYn === YN.YES ? true : false;
-          this.selectedAnswers = [];
-          this.nextQuestionDtoArr.pop();
-          this.questionGivenArray.pop();
-        });
+      QuestionService.getNextQuestion(
+        this.nextQuestionDtoArr[this.nextQuestionDtoArr.length - 2],
+      ).subscribe(res => {
+        this.$emit('loading', false);
+        this.nextQuestionDto.order = res.data.order;
+        this.nextQuestionDto.questionId = res.data.id;
+        this.$gtag.event(`question_${res.data.userType}_${res.data.id}`);
+        this.question = res.data.question;
+        //   this.questionOrder =
+        //     this.nextQuestionDto.order + (this.prevOrder - 1);
+        this.givens = res.data.givens;
+        this.nextQuestionDto.givenId = [];
+        this.isMultipleAnswer =
+          res.data.multipleAnswerYn === YN.YES ? true : false;
+        this.selectedAnswers = [];
+        this.nextQuestionDtoArr.pop();
+        this.questionGivenArray.pop();
+      });
     }
   }
 
@@ -190,7 +188,7 @@ export default class MultipleQuestion extends BaseComponent {
     this.questionGivenArray = [];
     this.nextQuestionDtoArr = [];
     this.$emit('loading', true);
-    questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
+    QuestionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
       if (res) {
         this.$emit('loading', false);
         this.givens = res.data.givens;
