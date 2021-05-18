@@ -28,7 +28,7 @@
               </div>
               <div class="section-content">
                 <p class="txt-white">
-                  추가 가능 월 최소 매출
+                  월 최소 추가 매출액
                 </p>
                 <div class="odometer-container my-1">
                   <div class="odometer-box ">
@@ -139,7 +139,10 @@
                     <div
                       class="d-flex align-itmes-center justify-content-between"
                     >
-                      <p>선택하신 업종과 다른 추천 아이템</p>
+                      <p class="txt-black">
+                        선택하신 업종과
+                        <strong class="txt-bold">다른 추천 아이템</strong>
+                      </p>
                       <span>더보기 +</span>
                     </div>
                   </div>
@@ -196,12 +199,12 @@
                 </div>
               </b-col>
               <b-col cols="12" lg="6">
-                <div class="d-none d-lg-block">
+                <!-- <div class="d-none d-lg-block">
                   <h4 class="txt-black txt-bold mb-4 txt-large">
                     <b-icon icon="bookmark-fill" class="txt-primary"></b-icon>
                     선택하신 업종과 다른 추천 아이템입니다
                   </h4>
-                </div>
+                </div> -->
                 <template v-if="isOhterMenuVislble && otherMenu.length > 0">
                   <div
                     class="card flex-row"
@@ -247,7 +250,7 @@
                         >
                       </p>
                     </div>
-                    <div
+                    <!-- <div
                       class="btn-more-detail"
                       @click="onToggleOverlay(`other-menu-${index}`, $event)"
                     >
@@ -255,7 +258,7 @@
                       <span class="icon-toggle-plus">
                         <b-icon icon="plus"></b-icon>
                       </span>
-                    </div>
+                    </div> -->
                     <div class="card-overlay" :id="`other-menu-${index}`">
                       <div class="inner-box">
                         <p class="txt-medium">
@@ -1724,7 +1727,7 @@ export default class Solution extends BaseComponent {
         top: 0;
         padding: 1.5em 1.5em;
         z-index: 2;
-        background-color: rgba(0, 0, 0, 0.85);
+        background-color: rgba(0, 0, 0, 0.92);
         color: $white;
         font-size: 2rem;
         .inner-box {
@@ -1817,6 +1820,7 @@ export default class Solution extends BaseComponent {
         margin-left: -1.5em;
         width: auto;
         .img-mask {
+          position: relative;
           padding-bottom: 70.25%;
           border-top-right-radius: 15em;
           border-bottom-right-radius: 15em;
@@ -2238,6 +2242,25 @@ export default class Solution extends BaseComponent {
       margin-top: 0.5em;
       margin-left: -4em;
       z-index: 1;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  #question-solution {
+    .article-section {
+      .card {
+        display: block;
+        .card-img-left {
+          width: auto;
+          height: 6.95em;
+          + .card-body {
+            width: auto;
+            margin-left: 0;
+            margin-top: 1em;
+          }
+        }
+      }
     }
   }
 }
