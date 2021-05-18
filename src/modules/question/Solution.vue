@@ -164,10 +164,10 @@
                       >
                         <div class="tooltip-content">
                           <p class="txt-small">
-                            + 버튼을 클릭하면 <br />자세한 정보를 알 수 있습니다
+                            버튼을 클릭하면 <br />자세한 정보를 알 수 있습니다
                             <b-icon
                               icon="x-circle-fill"
-                              class="ml-2 txt-large"
+                              class="icon icon-close ml-2"
                               @click.stop="isDetailInfoTooltipVisible = false"
                             ></b-icon>
                           </p>
@@ -595,10 +595,10 @@
                       >
                         <div class="tooltip-content">
                           <p class="txt-small">
-                            + 버튼을 클릭하면 <br />자세한 정보를 알 수 있습니다
+                            버튼을 클릭하면 <br />자세한 정보를 알 수 있습니다
                             <b-icon
                               icon="x-circle-fill"
-                              class="ml-2 txt-large"
+                              class="icon icon-close ml-2"
                               @click.stop="isDetailInfoTooltipVisible = false"
                             ></b-icon>
                           </p>
@@ -1492,7 +1492,7 @@ export default class Solution extends BaseComponent {
 
   // scroll event
   handleScroll() {
-    this.hideDetailInfoTooltip();
+    // this.hideDetailInfoTooltip();
     this.stickyFormVisible();
   }
 
@@ -2157,6 +2157,12 @@ export default class Solution extends BaseComponent {
     border-radius: 0.5rem;
     text-align: left;
     z-index: 2;
+    .icon-close {
+      position: absolute;
+      right: .25em;
+      top: .25em;
+      z-index:1;
+    }
     &:before {
       display: block;
       content: '';
