@@ -77,7 +77,7 @@ if (isEnvProd()) {
   });
   Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
 } else {
-  Vue.use(VueGtag, { config: { id: 'notProd' } });
+  Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
 }
 
 new Vue({
