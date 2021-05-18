@@ -134,7 +134,7 @@
                   <div
                     class="btn-more-menu"
                     @click="isOhterMenuVislble = true"
-                    v-if="!isOhterMenuVislble && !isOverlayVisible"
+                    v-if="!isOhterMenuVislble"
                   >
                     <div
                       class="d-flex align-itmes-center justify-content-between"
@@ -1524,11 +1524,22 @@ export default class Solution extends BaseComponent {
   }
 
   handleDebouncedResizing() {
+    const pcDevice = 'win16|win32|win64|mac';
     const screenWith = window.innerWidth;
-    if (screenWith >= 992) {
-      this.isOhterMenuVislble = true;
-    } else {
-      this.isOhterMenuVislble = false;
+    let isPcDevice = false;
+    if (navigator.platform) {
+      if (pcDevice.indexOf(navigator.platform.toLowerCase()) < 0) {
+        isPcDevice = false;
+      } else {
+        isPcDevice = true;
+      }
+    }
+    if (isPcDevice) {
+      if (screenWith >= 992) {
+        this.isOhterMenuVislble = true;
+      } else {
+        this.isOhterMenuVislble = false;
+      }
     }
   }
 
@@ -1632,7 +1643,7 @@ export default class Solution extends BaseComponent {
       margin: 4em 0;
       text-align: left;
       h3 {
-        font-size: 3.2rem;
+        font-size: 3rem;
         color: $black;
         font-weight: 300;
         line-height: 1.4;
@@ -1656,7 +1667,7 @@ export default class Solution extends BaseComponent {
         border: 0;
         padding: 0;
         h4 {
-          font-size: 2.8rem;
+          font-size: 2.6rem;
           color: $black;
           line-height: 1.4;
           font-weight: 300;
