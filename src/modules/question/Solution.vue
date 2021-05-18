@@ -1297,7 +1297,7 @@ export default class Solution extends BaseComponent {
     DELIVERY_GRADE_TYPE.DELIVERY_ONLY;
 
   // 신규창업자
-  private newOtherMenu: any = {};
+  private newOtherMenu: any = null;
   private swiperRecipe: any = {
     effect: 'fade',
     fadeEffect: {
@@ -1329,8 +1329,8 @@ export default class Solution extends BaseComponent {
   };
 
   // 기창업자 메뉴
-  private selectedMenu: any = {};
-  private otherMenu: any = {};
+  private selectedMenu: any = null;
+  private otherMenu: any = null;
   private isOhterMenuVislble = false;
   private isDetailInfoTooltipVisible = true;
 
@@ -1392,7 +1392,6 @@ export default class Solution extends BaseComponent {
   onToggleOverlay(overlayId: string, event: { target: HTMLElement }) {
     const overlay = document.getElementById(overlayId);
     const toggleBtn = event.target;
-    this.isOverlayVisible = !this.isOverlayVisible;
     toggleBtn.classList.toggle('is-active');
     if (overlay.style.display !== 'block') {
       overlay.style.display = 'block';
@@ -1546,6 +1545,7 @@ export default class Solution extends BaseComponent {
 
   beforeDestroy() {
     window.removeEventListener('scroll', this.handleDebouncedScroll);
+    window.addEventListener('resize', this.handleDebouncedResizing);
   }
 }
 </script>
