@@ -293,7 +293,7 @@
                       <template v-else-if="result.deliveryRatio < 30">
                         <strong>배달 주문량</strong>이 낮은 지역입니다<br />
                         창업 아이템을
-                        <strong>배달로 추가 또는 변경</strong>하세요
+                        <strong>변경 또는 추가</strong>하세요
                       </template>
                       <template v-else>
                         <strong>배달과 매장 주문량</strong>이 비슷합니다<br />
@@ -770,7 +770,7 @@
                 <br />
                 <strong>필요한 서비스만 골라</strong
                 ><br class="d-block d-lg-none" />
-                한번에 준비하세요
+                한번에 준비하세요!
               </h3>
             </header>
             <div class="section-content">
@@ -1048,7 +1048,7 @@
                 만나보세요!
               </template>
               <template v-else>
-                <strong>픽쿡플래너</strong> 와 함께<br />
+                <strong>픽쿡플래너</strong>와 함께<br />
                 <strong>확실한 아이템</strong>으로
                 <br class="d-block d-lg-none" />
                 <strong>효율적인 창업</strong>하세요!
@@ -1534,7 +1534,7 @@ export default class Solution extends BaseComponent {
         isPcDevice = true;
       }
     }
-    if (isPcDevice) {
+    if (!isPcDevice) {
       if (screenWith >= 992) {
         this.isOhterMenuVislble = true;
       } else {
