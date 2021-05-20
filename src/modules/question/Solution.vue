@@ -1,5 +1,5 @@
 <template>
-  <article class="main-article" id="question-solution" v-if="result">
+  <div v-if="result">
     <header class="article-header">
       <div class="container">
         <h2>
@@ -38,12 +38,12 @@
                     <span class="odometer-unit">원</span>
                   </div>
                 </div>
+                <div class="txt-box txt-right mt-1">
+                  <p class="txt-mini txt-lightblue">
+                    ※ 상기 금액은 추천아이템에 따라 다를 수 있습니다.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div class="txt-box txt-right">
-              <p class="txt-small txt-lightblue">
-                ※ 상기 금액은 추천아이템에 따라 다를 수 있습니다.
-              </p>
             </div>
           </section>
           <section class="article-section" ref="tooltipWrapper">
@@ -320,7 +320,7 @@
                 </div>
                 <div class="card-body">
                   <div
-                    class="d-flex align-items-center justify-content-between max-w-40 my-15 mx-auto"
+                    class="d-flex align-items-center justify-content-between max-w-40 my-10 mx-auto"
                   >
                     <template v-if="result.deliveryRatio > 30">
                       <b-img-lazy
@@ -795,7 +795,7 @@
                       </swiper>
                     </div>
                     <div
-                      class="card-header mt-2"
+                      class="card-header mt-4"
                       data-aos="fade-up"
                       data-aos-duration="1000"
                     >
@@ -838,7 +838,7 @@
                   data-aos-duration="1000"
                 >
                   <div class="card my-2 card-app-guide">
-                    <div class="card-header">
+                    <div class="card-header txt-lg-center">
                       <h4>
                         복잡한 배달 앱<br />
                         <strong>등록부터 관리</strong>까지<br />
@@ -1235,7 +1235,7 @@
         </div>
       </div>
     </transition>
-  </article>
+  </div>
   <!-- 로딩-->
   <article class="main-article" v-else>
     <Loading />
@@ -1619,10 +1619,16 @@ export default class Solution extends BaseComponent {
 
 #question-solution {
   padding-bottom: 0 !important;
+  padding-top: 3.75em;
   .article-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     padding: 1em 0;
     background-color: $light;
-    box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+    z-index: 10;
     .container {
       display: flex;
       align-items: center;
@@ -1641,7 +1647,7 @@ export default class Solution extends BaseComponent {
   .article-section {
     margin: 2em 0;
     .section-header {
-      margin: 4em 0;
+      margin: 3em 0;
       text-align: left;
       h3 {
         font-size: 3rem;
@@ -1663,6 +1669,7 @@ export default class Solution extends BaseComponent {
       padding: 1.5em 1.5em;
       z-index: 1;
       overflow: hidden;
+      box-shadow: 1px 1px 5px rgb(0 0 0 / 5%);
       .card-header {
         background: none;
         border: 0;
@@ -1886,20 +1893,24 @@ export default class Solution extends BaseComponent {
     }
 
     .card-recipe {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: space-between;
+      height: calc(100% - 1em);
       .card-img {
         margin-top: -1.5em;
         img {
           position: relative;
-          top: -5em;
           transition: top 0.4s ease;
           max-width: 24.25em;
           margin: 0 auto;
+          margin-top: -5em;
         }
-        .swiper-slide-active {
-          img {
-            top: 0;
-          }
-        }
+        // .swiper-slide-active {
+        //   img {
+        //     top: 0;
+        //   }
+        // }
       }
     }
 
@@ -1923,13 +1934,13 @@ export default class Solution extends BaseComponent {
     .card-app-guide {
       background-image: url('https://kr.object.ncloudstorage.com/common-storage-pickcook/main/app_guide.png');
       background-repeat: no-repeat;
-      background-position: bottom left calc(50% - 1.5em);
+      background-position: calc(50% - 0.25em) 100%;
       background-size: 18em auto;
       .card-body {
         padding-top: 2em !important;
         padding-bottom: 10em !important;
         .u-list {
-          margin-left: 60%;
+          margin-left: 55%;
           li {
             color: $black;
           }
@@ -2224,8 +2235,6 @@ export default class Solution extends BaseComponent {
   background-color: $gray-400;
   border-radius: 50%;
   color: $white;
-  font-weight: bold;
-  box-shadow: 0 0 0.5em rgb(0 0 0 / 25%);
   svg {
     width: 2em;
     height: 2em;
