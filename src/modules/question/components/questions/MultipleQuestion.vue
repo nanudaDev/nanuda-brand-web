@@ -83,6 +83,7 @@ import { FNB_OWNER, YN } from '@/common';
 import BaseComponent from '@/core/base.component';
 import { FirstQuestionDto, Given, NextQuestionDto } from '@/dto';
 import questionService from '@/services/question.service';
+import QuestionService from '@/services/question.service';
 import { Component, Prop } from 'vue-property-decorator';
 @Component({
   name: 'MultipleQuestion',
@@ -197,7 +198,7 @@ export default class MultipleQuestion extends BaseComponent {
     this.questionGivenArray = [];
     this.nextQuestionDtoArr = [];
     this.$emit('loading', true);
-    questionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
+    QuestionService.getFirstQuestion(this.firstQuestionDto).subscribe(res => {
       if (res) {
         this.$emit('loading', false);
         this.givens = res.data.givens;

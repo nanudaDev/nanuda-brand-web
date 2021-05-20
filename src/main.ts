@@ -19,9 +19,10 @@ import {
   Pagination,
   Mousewheel,
   Autoplay,
+  EffectFade,
 } from 'swiper';
 import getAwesomeSwiper from 'vue-awesome-swiper/dist/exporter';
-SwiperClass.use([Pagination, Mousewheel, Autoplay]);
+SwiperClass.use([Pagination, Mousewheel, Autoplay, EffectFade]);
 const { Swiper, SwiperSlide } = getAwesomeSwiper(SwiperClass);
 import 'swiper/swiper-bundle.css';
 
@@ -76,7 +77,7 @@ if (isEnvProd()) {
   });
   Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
 } else {
-  Vue.use(VueGtag, { config: { id: 'notProd' } });
+  Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
 }
 
 new Vue({

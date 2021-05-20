@@ -25,7 +25,7 @@ export class QuestionService extends BaseService {
   }
   getResult(resultRequestDto: ResultRequestDto) {
     return super.post<ResultResponseDto>(
-      `v2/proforma-consult-response`,
+      `v2/proforma-consult-response-w-other`,
       resultRequestDto,
     );
   }

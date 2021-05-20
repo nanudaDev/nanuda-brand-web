@@ -68,7 +68,12 @@
     </template>
   </article>
   <article
-    class="main-article bg-primary"
+    class="main-article"
+    :class="
+      questionOrderArr[questionIndex].name.toLowerCase() !== 'solution'
+        ? 'bg-primary'
+        : 'bg-light'
+    "
     :id="`question-${questionOrderArr[questionIndex].name.toLowerCase()}`"
     v-else
   >
@@ -207,6 +212,7 @@ export default class Question extends BaseComponent {
     this.$root.$on('restart', () => {
       this.questionIndex = -1;
       this.questionOrder = 0;
+      this.resultRequestDto = new ResultRequestDto();
     });
   }
 
