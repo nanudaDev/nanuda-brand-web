@@ -286,11 +286,11 @@
                         result.deliveryOrRestaurantType === onlyDeliveryType
                       "
                     >
-                      <template v-if="result.deliveryRatio > 30">
+                      <template v-if="result.deliveryRatio > 20">
                         <strong> 배달 주문량</strong>이 많은 지역입니다<br />
                         창업 아이템을 <strong>배달로 추가</strong>하세요
                       </template>
-                      <template v-else-if="result.deliveryRatio < 30">
+                      <template v-else-if="result.deliveryRatio < 20">
                         <strong>배달 주문량</strong>이 낮은 지역입니다<br />
                         창업 아이템을
                         <strong>변경 또는 추가</strong>하세요
@@ -302,11 +302,11 @@
                       </template>
                     </template>
                     <template v-else>
-                      <template v-if="result.deliveryRatio > 30">
+                      <template v-if="result.deliveryRatio > 20">
                         <strong> 배달 주문량</strong>이 많은 지역입니다<br />
                         창업 아이템을 <strong>배달로 추가</strong>하세요
                       </template>
-                      <template v-else-if="result.deliveryRatio < 30">
+                      <template v-else-if="result.deliveryRatio < 20">
                         <strong>매장 주문량</strong>이 많은 지역입니다<br />
                         창업 아이템을 <strong>매장에 추가</strong>하세요
                       </template>
@@ -322,7 +322,7 @@
                   <div
                     class="d-flex align-items-center justify-content-between max-w-40 my-10 mx-auto"
                   >
-                    <template v-if="result.deliveryRatio > 30">
+                    <template v-if="result.deliveryRatio > 20">
                       <b-img-lazy
                         src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/icon_delivery.svg"
                         class="w-20"
@@ -334,7 +334,7 @@
                         </p>
                       </div>
                     </template>
-                    <template v-else-if="result.deliveryRatio < 30">
+                    <template v-else-if="result.deliveryRatio < 20">
                       <template
                         v-if="
                           result.deliveryOrRestaurantType === onlyDeliveryType
