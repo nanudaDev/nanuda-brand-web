@@ -2,7 +2,7 @@ import packageInfo from '../package.json';
 import { Environment, EnvironmentType } from './environment.type';
 
 export const StagingEnvironment: Environment = {
-  baseURL: 'https://platform-api-test.nanudakitchen.com/',
+  baseURL: 'https://pickcook-api-test.nanudakitchen.com/',
   // baseURL: 'https://pickcook-api.nanudakitchen.com/',
   NODE_ENV: EnvironmentType.staging,
   production: false,
