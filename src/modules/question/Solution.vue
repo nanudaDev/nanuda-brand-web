@@ -1074,62 +1074,28 @@
                 <!-- <b-col cols="2">
                   <label class="txt-sm">휴대전화</label>
                 </b-col> -->
-                <b-col cols="8">
+                <b-col cols="12">
                   <b-form-input
+                    id="phone-input"
                     v-model="consultRequestDto.phone"
                     placeholder="휴대폰번호"
                     required
-                    :disabled="isVerified"
                     size="md"
-                  ></b-form-input>
-                </b-col>
-                <b-col cols="4">
-                  <b-btn
-                    variant="outline-primary"
-                    size="md"
-                    pill
-                    @click="getSMSCode"
-                    :disabled="isGetCodeBtnDisabled"
-                    v-if="!isVerified"
+                    :state="isCorrectPhoneNum"
                   >
-                    {{ isGetCodeBtnDisabled ? time : '인증번호' }}</b-btn
-                  >
+                  </b-form-input>
+                  <b-form-invalid-feedback id="phone-input">
+                    휴대폰번호가 정확하지 않습니다
+                  </b-form-invalid-feedback>
                 </b-col>
               </b-form-row>
-              <b-form-row v-if="isSMSCodeSent" class="mt-3">
-                <!-- <b-col cols="2">
-                  <label class="txt-sm">인증번호</label>
-                </b-col> -->
-                <b-col cols="8">
-                  <b-form-input
-                    v-model="consultRequestDto.smsAuthCode"
-                    placeholder="인증번호"
-                    required
-                    size="md"
-                    :disabled="isVerified"
-                  ></b-form-input>
-                </b-col>
-                <b-col cols="4">
-                  <b-btn
-                    variant="outline-primary"
-                    pill
-                    size="md"
-                    @click="checkSMSCode"
-                    :disabled="isVerified"
-                    >{{ isVerified ? '인증완료' : '인증하기' }}</b-btn
-                  >
-                </b-col>
-              </b-form-row>
-              <div class="txt-box" v-if="errorText">
-                <p>{{ errorText }}</p>
-              </div>
               <div class="mt-6">
                 <b-btn
                   variant="primary"
                   block
                   size="xl"
                   :disabled="isConsultBtnDisabled"
-                  @click="onConsultBtnClicked"
+                  @click="onConsultBtnClicked('main')"
                 >
                   <span>픽쿡플래너 만나기</span>
                 </b-btn>
@@ -1170,55 +1136,21 @@
               <!-- <b-col cols="2">
                 <label class="txt-sm">휴대전화</label>
               </b-col> -->
-              <b-col cols="8">
+              <b-col cols="12">
                 <b-form-input
+                  id="phone-input"
                   v-model="consultRequestDto.phone"
                   placeholder="휴대폰번호"
                   required
                   :disabled="isVerified"
                   size="md"
+                  :state="isCorrectPhoneNum"
                 ></b-form-input>
-              </b-col>
-              <b-col cols="4">
-                <b-btn
-                  variant="outline-white"
-                  pill
-                  size="md"
-                  @click="getSMSCode"
-                  :disabled="isGetCodeBtnDisabled"
-                  v-if="!isVerified"
-                >
-                  {{ isGetCodeBtnDisabled ? time : '인증번호' }}</b-btn
-                >
+                <b-form-invalid-feedback id="phone-input">
+                  휴대폰번호가 정확하지 않습니다
+                </b-form-invalid-feedback>
               </b-col>
             </b-form-row>
-            <b-form-row v-if="isSMSCodeSent" class="mt-3">
-              <!-- <b-col cols="2">
-                <label class="txt-sm">인증번호</label>
-              </b-col> -->
-              <b-col cols="8">
-                <b-form-input
-                  v-model="consultRequestDto.smsAuthCode"
-                  placeholder="인증번호"
-                  required
-                  size="md"
-                  :disabled="isVerified"
-                ></b-form-input>
-              </b-col>
-              <b-col cols="4">
-                <b-btn
-                  variant="outline-white"
-                  size="md"
-                  pill
-                  @click="checkSMSCode"
-                  :disabled="isVerified"
-                  >{{ isVerified ? '인증완료' : '인증하기' }}</b-btn
-                >
-              </b-col>
-            </b-form-row>
-            <div class="txt-box" v-if="errorText">
-              <p>{{ errorText }}</p>
-            </div>
             <div class="btn-box mt-6">
               <b-btn
                 variant="white"
@@ -1226,7 +1158,7 @@
                 pill
                 size="lg"
                 :disabled="isConsultBtnDisabled"
-                @click="onConsultBtnClicked"
+                @click="onConsultBtnClicked('sticky')"
               >
                 <span>픽쿡플래너 만나기</span>
               </b-btn>
@@ -1280,7 +1212,6 @@ export default class Solution extends BaseComponent {
   private result: any = null;
   private consultRequestDto = new ConsultRequestDto();
   private isVerified = false;
-  private errorText = '';
   private isSMSCodeSent = false;
   private isGetCodeBtnDisabled = false;
   private time = 30;
@@ -1338,11 +1269,27 @@ export default class Solution extends BaseComponent {
     return 'item0' + index;
   }
 
+  get isCorrectPhoneNum() {
+    const phone = this.consultRequestDto.phone;
+    if (phone) {
+      if (
+        this.consultRequestDto.phone.startsWith('010') &&
+        this.consultRequestDto.phone.length === 11
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return null;
+    }
+  }
+
   get isConsultBtnDisabled() {
     if (
       this.consultRequestDto.name &&
       this.consultRequestDto.phone &&
-      this.isVerified
+      this.isCorrectPhoneNum
     ) {
       return false;
     } else {
@@ -1425,38 +1372,45 @@ export default class Solution extends BaseComponent {
     });
   }
 
-  checkSMSCode() {
-    this.smsAuthNotificationDto.phone = this.consultRequestDto.phone;
-    this.smsAuthNotificationDto.smsAuthCode = parseInt(
-      this.consultRequestDto.smsAuthCode,
-    );
-    authService.checkSMSCode(this.smsAuthNotificationDto).subscribe(res => {
-      if (res) {
-        this.isVerified = true;
-        this.$gtag.event('complete_sms_auth', {
-          description: '인증번호 확인 완료',
-        });
-      } else {
-        this.$bvToast.toast(
-          '인증번호가 올바르지 않거나 유효기간이 초과했습니다',
-          {
-            variant: 'danger',
-            title: 'Error',
-          },
-        );
-      }
-    });
-  }
+  // checkSMSCode() {
+  //   this.smsAuthNotificationDto.phone = this.consultRequestDto.phone;
+  //   this.smsAuthNotificationDto.smsAuthCode = parseInt(
+  //     this.consultRequestDto.smsAuthCode,
+  //   );
+  //   authService.checkSMSCode(this.smsAuthNotificationDto).subscribe(res => {
+  //     if (res) {
+  //       this.isVerified = true;
+  //       this.$gtag.event('complete_sms_auth', {
+  //         description: '인증번호 확인 완료',
+  //       });
+  //     } else {
+  //       this.$bvToast.toast(
+  //         '인증번호가 올바르지 않거나 유효기간이 초과했습니다',
+  //         {
+  //           variant: 'danger',
+  //           title: 'Error',
+  //         },
+  //       );
+  //     }
+  //   });
+  // }
 
-  onConsultBtnClicked() {
+  onConsultBtnClicked(flag: string) {
     this.consultRequestDto.proformaConsultResultId = this.result.id;
     QuestionService.postConsult(this.consultRequestDto).subscribe(res => {
       if (res) {
         // send pixel event
         this.$analytics.fbq.event('SubmitApplication');
-        this.$gtag.event('complete_application', {
-          description: '신청 완료',
-        });
+        if (flag === 'main') {
+          this.$gtag.event('complete_application_main', {
+            description: '메인 폼에서 신청 완료',
+          });
+        } else {
+          this.$gtag.event('complete_application_sticky', {
+            description: '스티키 폼에서 신청 완료',
+          });
+        }
+
         this.$emit('next');
       }
     });
@@ -1483,6 +1437,9 @@ export default class Solution extends BaseComponent {
       const winHeight = window.outerHeight;
       if (rect < winHeight - target.offsetHeight) {
         this.isFormVisible = true;
+        this.$gtag.event('scrolled_to_form', {
+          description: '솔루션 페이지의 form화면으로 이동함',
+        });
       } else {
         this.isFormVisible = false;
       }
@@ -1543,6 +1500,12 @@ export default class Solution extends BaseComponent {
     }
   }
 
+  onClickSticky() {
+    this.isToggleForm = !this.isToggleForm;
+    this.$gtag.event('sticky_btn_clicked', {
+      description: '솔루션 화면의 스티키 버튼을 클릭함',
+    });
+  }
   created() {
     this.findResult();
     this.handleDebouncedScroll = debounce(this.handleScroll, 100);
