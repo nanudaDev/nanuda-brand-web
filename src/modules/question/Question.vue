@@ -153,7 +153,7 @@ import Complete from './Complete.vue';
 })
 export default class Question extends BaseComponent {
   private resultRequestDto = new ResultRequestDto();
-  private questionTotalCount: any = 10;
+  private questionTotalCount: any = 11;
   private questionOrder: any = 0;
   private resultResponseDto: ResultResponseDto = null;
   private isLoading = false;

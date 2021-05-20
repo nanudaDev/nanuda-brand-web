@@ -82,6 +82,7 @@
 import { FNB_OWNER, YN } from '@/common';
 import BaseComponent from '@/core/base.component';
 import { FirstQuestionDto, Given, NextQuestionDto } from '@/dto';
+import questionService from '@/services/question.service';
 import QuestionService from '@/services/question.service';
 import { Component, Prop } from 'vue-property-decorator';
 @Component({
@@ -100,10 +101,11 @@ export default class MultipleQuestion extends BaseComponent {
   private isMultipleAnswer = false;
   private smallSizeQuestionId = [1, 4, 5, 12];
   private nextQuestionDtoArr: NextQuestionDto[] = [];
+  private isLastQuestion = false;
 
   getNextQuestion(given?: Given) {
     this.$emit('progressUp');
-    this.$emit('loading', true);
+
     // 답변을 하나만 선택할때
     if (given) {
       this.nextQuestionDto.givenId.push(given.id);
@@ -120,15 +122,18 @@ export default class MultipleQuestion extends BaseComponent {
     });
     // this.resultRequestDto.questionGivenArray = this.questionGivenArray;
     this.nextQuestionDtoArr.push({ ...this.nextQuestionDto });
-    QuestionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
+    //마지막 질문 given 선택하면 데이터 안받고 solution으로 이동
+    if (this.isLastQuestion) {
+      this.$emit('next', { questionGivenArray: this.questionGivenArray });
+      this.$gtag.event(
+        `question_${this.nextQuestionDto.userType}_${this.nextQuestionDto.questionId}_last_question`,
+      );
+      return;
+    }
+
+    this.$emit('loading', true);
+    questionService.getNextQuestion(this.nextQuestionDto).subscribe(res => {
       this.$emit('loading', false);
-      if (res.data.isLastQuestion === YN.YES) {
-        //마지막질문일때
-        this.$gtag.event(
-          `question_${res.data.userType}_${res.data.id}_last_question`,
-        );
-        this.$emit('next', { questionGivenArray: this.questionGivenArray });
-      }
       if (res) {
         this.nextQuestionDto.order = res.data.order;
         this.nextQuestionDto.questionId = res.data.id;
@@ -140,6 +145,7 @@ export default class MultipleQuestion extends BaseComponent {
         this.nextQuestionDto.givenId = [];
         this.isMultipleAnswer =
           res.data.multipleAnswerYn === YN.YES ? true : false;
+        this.isLastQuestion = res.data.isLastQuestion === YN.YES ? true : false;
         this.selectedAnswers = [];
       }
     });
@@ -163,24 +169,28 @@ export default class MultipleQuestion extends BaseComponent {
       this.getFirstQuestion();
     } else {
       this.$emit('loading', true);
-      QuestionService.getNextQuestion(
-        this.nextQuestionDtoArr[this.nextQuestionDtoArr.length - 2],
-      ).subscribe(res => {
-        this.$emit('loading', false);
-        this.nextQuestionDto.order = res.data.order;
-        this.nextQuestionDto.questionId = res.data.id;
-        this.$gtag.event(`question_${res.data.userType}_${res.data.id}`);
-        this.question = res.data.question;
-        //   this.questionOrder =
-        //     this.nextQuestionDto.order + (this.prevOrder - 1);
-        this.givens = res.data.givens;
-        this.nextQuestionDto.givenId = [];
-        this.isMultipleAnswer =
-          res.data.multipleAnswerYn === YN.YES ? true : false;
-        this.selectedAnswers = [];
-        this.nextQuestionDtoArr.pop();
-        this.questionGivenArray.pop();
-      });
+      questionService
+        .getNextQuestion(
+          this.nextQuestionDtoArr[this.nextQuestionDtoArr.length - 2],
+        )
+        .subscribe(res => {
+          this.$emit('loading', false);
+          this.nextQuestionDto.order = res.data.order;
+          this.nextQuestionDto.questionId = res.data.id;
+          this.$gtag.event(`question_${res.data.userType}_${res.data.id}`);
+          this.question = res.data.question;
+          //   this.questionOrder =
+          //     this.nextQuestionDto.order + (this.prevOrder - 1);
+          this.givens = res.data.givens;
+          this.nextQuestionDto.givenId = [];
+          this.isMultipleAnswer =
+            res.data.multipleAnswerYn === YN.YES ? true : false;
+          this.isLastQuestion =
+            res.data.isLastQuestion === YN.YES ? true : false;
+          this.selectedAnswers = [];
+          this.nextQuestionDtoArr.pop();
+          this.questionGivenArray.pop();
+        });
     }
   }
 
