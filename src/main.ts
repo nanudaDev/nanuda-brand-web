@@ -72,11 +72,14 @@ Vue.use(VueAwesomeSwiper /* { default global options } */);
 // use vue gtag
 if (isEnvProd()) {
   // use facebook pixel
-  (Vue as any).analytics.fbq.init('932827054153408', {
-    em: 'lsj@widaehan.com',
+  (Vue as any).analytics.fbq.init('320745236190638', {
+    em: 'hamrotibob@naver.com',
   });
   Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
 } else {
+  (Vue as any).analytics.fbq.init('320745236190638', {
+    em: 'hamrotibob@naver.com',
+  });
   Vue.use(VueGtag, { config: { id: 'notProd' } });
 }
 
