@@ -77,9 +77,9 @@ if (isEnvProd()) {
   });
   Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
 } else {
-  (Vue as any).analytics.fbq.init('432700378140556', {
-    em: 'hamrotibob@naver.com',
-  });
+  // (Vue as any).analytics.fbq.init('432700378140556', {
+  //   em: 'hamrotibob@naver.com',
+  // });
   Vue.use(VueGtag, { config: { id: 'notProd' } });
 }
 
