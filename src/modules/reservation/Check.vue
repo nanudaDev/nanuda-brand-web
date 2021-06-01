@@ -141,12 +141,13 @@ export default class Check extends BaseComponent {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/common.scss';
 .main-article {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #004d8a;
+  background: $primary;
   padding: 1em;
   .article-section {
     max-width: 600px;
@@ -157,7 +158,7 @@ export default class Check extends BaseComponent {
       text-align: center;
       h3 {
         font-size: 1.6rem;
-        color: #004d8a;
+        color: $primary;
         font-weight: 700;
       }
     }

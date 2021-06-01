@@ -111,12 +111,13 @@ export default class Login extends BaseComponent {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/common.scss';
 .main-article {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #004d8a;
+  background: $primary;
   padding: 1em;
   .article-section {
     width: 100%;

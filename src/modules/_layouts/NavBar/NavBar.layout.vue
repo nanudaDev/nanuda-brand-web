@@ -95,6 +95,7 @@ export default class NavBar extends BaseComponent {
 }
 </script>
 <style lang="scss">
+@import '@/assets/scss/common.scss';
 .navbar {
   padding: 0.3125em 1.25em;
   background: #fff;

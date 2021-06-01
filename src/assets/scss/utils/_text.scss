@@ -36,23 +36,6 @@
   }
 }
 
-// txt align
-.txt-left {
-  text-align: left !important;
-}
-
-.txt-center {
-  text-align: center !important;
-}
-
-.txt-right {
-  text-align: right !important;
-}
-
-.txt-justify {
-  text-align: justify !important;
-}
-
 // media query
 @each $breakpoint in map-keys($grid-breakpoints) {
   @include media-breakpoint-up($breakpoint) {

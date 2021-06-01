@@ -80,6 +80,15 @@ const nonNavBarRouter: RouteConfig[] = [
       title: '예약 성공',
     },
   },
+  {
+    path: '/services2',
+    name: 'services2',
+    component: () => import('../../modules/services/Services2.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '서비스 소개',
+    },
+  },
 ];
 
 export default nonNavBarRouter;
