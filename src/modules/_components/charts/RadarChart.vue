@@ -2,11 +2,11 @@
 import Vue from 'vue';
 import { Radar, mixins } from 'vue-chartjs';
 import { Component, Prop } from 'vue-property-decorator';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+// import ChartDataLabels from 'chartjs-plugin-datalabels';
 @Component({
   extends: Radar, // this is important to add the functionality to your component
   //   mixins: [mixins.reactiveProp],
-  components: { ChartDataLabels },
+  // components: { ChartDataLabels },
 })
 export default class RadarChart extends Vue {
   public renderChart!: (chartData: any, options?: any) => void;
@@ -37,10 +37,11 @@ export default class RadarChart extends Vue {
       legend: {
         display: false,
       },
-      scaleOverride: true,
-      scaleSteps: 4,
-      scaleStepWidth: 5,
-      scaleStartValue: 0,
+      scale: {
+        ticks: {
+          beginAtZero: true,
+        },
+      },
     });
   }
 }
