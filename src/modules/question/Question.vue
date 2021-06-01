@@ -223,6 +223,7 @@ export default class Question extends BaseComponent {
 }
 </script>
 <style lang="scss">
+@import '@/assets/scss/common.scss';
 .app-question {
   ~ [id*='post-code'] {
     .modal-body {
@@ -233,9 +234,9 @@ export default class Question extends BaseComponent {
   }
   .btn {
     &.btn-light {
-      border: 1px solid #004d8a;
+      border: 1px solid $primary;
       background-color: #fff;
-      color: #004d8a;
+      color: $primary;
     }
   }
   .form-group {
@@ -346,7 +347,7 @@ export default class Question extends BaseComponent {
     &.bg-light {
       .article-section {
         .section-title {
-          color: #004d8a;
+          color: $primary;
         }
       }
     }

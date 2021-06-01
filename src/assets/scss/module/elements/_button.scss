@@ -55,7 +55,7 @@
 
 // btn shape
 .btn-rounded {
-  border-radius: 3em;
+  border-radius: 5em;
 }
 
 .btn-circle {
@@ -154,9 +154,9 @@
 }
 
 // btn size
-@each $size, $value in $font-sizes {
+@each $size, $value in $sizes {
   .btn-#{$size} {
-    font-size: $value;
+    font-size: $value !important;
   }
 }
 

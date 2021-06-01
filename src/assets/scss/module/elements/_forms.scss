@@ -157,8 +157,24 @@
   }
 }
 
+/* custom control */
+.custom-control {
+  &.custom-checkbox {
+    padding-left: 2.5em;
+    .custom-control-label {
+      padding-top: 0.25em;
+      &:before,
+      &:after {
+        top: 0;
+        left: -2.5em;
+      }
+    }
+  }
+}
+
 /* form control size */
 @each $size, $value in $font-sizes {
+  .custom-control-#{$size},
   .form-control-#{$size} {
     font-size: $value;
   }

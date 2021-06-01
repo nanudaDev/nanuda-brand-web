@@ -133,8 +133,8 @@
                   </div>
                   <div
                     class="btn-more-menu"
-                    @click="isOhterMenuVislble = true"
-                    v-if="!isOhterMenuVislble"
+                    @click="isOtherMenuVislble = true"
+                    v-if="!isOtherMenuVislble"
                   >
                     <div
                       class="d-flex align-itmes-center justify-content-between"
@@ -205,7 +205,7 @@
                     선택하신 업종과 다른 추천 아이템입니다
                   </h4>
                 </div>
-                <template v-if="isOhterMenuVislble && otherMenu.length > 0">
+                <template v-if="isOtherMenuVislble && otherMenu.length > 0">
                   <div
                     class="card flex-row"
                     data-aos="fade-up"
@@ -1262,7 +1262,7 @@ export default class Solution extends BaseComponent {
   // 기창업자 메뉴
   private selectedMenu: any = null;
   private otherMenu: any = null;
-  private isOhterMenuVislble = false;
+  private isOtherMenuVislble = false;
   private isDetailInfoTooltipVisible = true;
 
   toggleId(index: number) {
@@ -1462,7 +1462,7 @@ export default class Solution extends BaseComponent {
         if (this.result.selectedMenuRecommendation) {
           this.selectedMenu = this.result.selectedMenuRecommendation;
         }
-        // ohter Menu info
+        // other Menu info
         if (this.result.otherMenuRecommendations) {
           this.otherMenu = this.result.otherMenuRecommendations.slice(0, 2);
         }
@@ -1493,9 +1493,9 @@ export default class Solution extends BaseComponent {
     }
     if (isPcDevice) {
       if (screenWith >= 992) {
-        this.isOhterMenuVislble = true;
+        this.isOtherMenuVislble = true;
       } else {
-        this.isOhterMenuVislble = false;
+        this.isOtherMenuVislble = false;
       }
     }
   }
@@ -1508,8 +1508,6 @@ export default class Solution extends BaseComponent {
   }
   created() {
     this.findResult();
-    this.handleDebouncedScroll = debounce(this.handleScroll, 100);
-    window.addEventListener('scroll', this.handleDebouncedScroll);
     window.addEventListener('resize', this.handleDebouncedResizing);
   }
 
@@ -1518,7 +1516,6 @@ export default class Solution extends BaseComponent {
   }
 
   beforeDestroy() {
-    window.removeEventListener('scroll', this.handleDebouncedScroll);
     window.addEventListener('resize', this.handleDebouncedResizing);
   }
 }
@@ -1552,7 +1549,7 @@ export default class Solution extends BaseComponent {
     justify-content: center;
     height: 5em;
     .btn-txt {
-      font-size: 2.4rem;
+      font-size: $txt-big;
       font-weight: $txt-bolder;
       color: $white;
       margin-right: 0.5em;
@@ -1602,7 +1599,7 @@ export default class Solution extends BaseComponent {
       font-weight: $txt-bold;
     }
     p {
-      font-size: $h5;
+      font-size: $txt-large;
       text-align: right;
       font-weight: $txt-bold;
     }
@@ -1613,7 +1610,7 @@ export default class Solution extends BaseComponent {
       margin: 3em 0;
       text-align: left;
       h3 {
-        font-size: 3rem;
+        font-size: $txt-huge;
         color: $black;
         font-weight: 300;
         line-height: 1.4;
@@ -1638,7 +1635,7 @@ export default class Solution extends BaseComponent {
         border: 0;
         padding: 0;
         h4 {
-          font-size: 2.6rem;
+          font-size: $txt-big;
           color: $black;
           line-height: 1.4;
           font-weight: 300;
@@ -1711,12 +1708,12 @@ export default class Solution extends BaseComponent {
         z-index: 2;
         background-color: rgba(0, 0, 0, 0.92);
         color: $white;
-        font-size: 2rem;
+        font-size: $txt-large;
         .inner-box {
           overflow-y: auto;
           height: 100%;
           h4 {
-            font-size: 3rem;
+            font-size: $txt-huge;
             margin-bottom: 0.5em;
             font-weight: 700;
           }
@@ -1777,7 +1774,7 @@ export default class Solution extends BaseComponent {
             display: inline-flex;
             align-items: baseline;
             .odometer-count {
-              font-size: 4.4rem;
+              font-size: $txt-giant;
               font-weight: $txt-bolder;
               line-height: 1;
               color: $white;
@@ -1787,7 +1784,7 @@ export default class Solution extends BaseComponent {
               }
             }
             .odometer-unit {
-              font-size: 2.8rem;
+              font-size: $txt-huge;
               color: $white;
               margin-left: 0.5em;
             }
@@ -1932,7 +1929,7 @@ export default class Solution extends BaseComponent {
       }
     }
     h2 {
-      font-size: 2em;
+      font-size: $txt-huge;
     }
     p {
       font-size: 1em;
