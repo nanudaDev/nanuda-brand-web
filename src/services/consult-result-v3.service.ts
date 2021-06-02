@@ -13,6 +13,14 @@ export class ConsultResultV3Service extends BaseService {
       consultRequestDto,
     );
   }
+
+  /**
+   *
+   * @returns
+   */
+  getCounsultCount() {
+    return super.get('v3/consult-result/get-count');
+  }
 }
 
 export default new ConsultResultV3Service();

@@ -114,7 +114,7 @@ $yellow: #fec001 !default;
 $green: #46b266 !default;
 $teal: #33cabb !default;
 $cyan: #17a2b8 !default;
-$darknavy: #1e3142 !default;
+$darknavy: #01315a !default;
 $brown: #d1a62c !default;
 
 $colors: () !default;
@@ -186,10 +186,16 @@ $yiq-contrasted-threshold: 191 !default;
 //Component Settings
 $border-color: $gray-300 !default;
 $border-width: 1px !default;
-$border-radius: 1rem !default;
+$border-radius: 0.5rem !default;
 $border-radius-lg: 2.5rem !default;
 $border-radius-sm: 0.25rem !default;
 $rounded-pill: 30rem !default;
+
+// box shadow
+
+$shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+$shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+$shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 
 // Table Settings
 $table-border-top-color: $black;

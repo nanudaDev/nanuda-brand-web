@@ -1,28 +1,27 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Radar, mixins } from 'vue-chartjs';
-import { Component, Prop } from 'vue-property-decorator';
-// import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Component, Prop, Watch } from 'vue-property-decorator';
+const { reactiveProp } = mixins;
 @Component({
-  extends: Radar, // this is important to add the functionality to your component
-  //   mixins: [mixins.reactiveProp],
-  // components: { ChartDataLabels },
+  extends: Radar,
+  mixins: [reactiveProp],
 })
 export default class RadarChart extends Vue {
   public renderChart!: (chartData: any, options?: any) => void;
-  @Prop() private readonly chartData: any;
+  @Prop() private chartData: any;
 
-  mounted(): void {
+  onRenderChart() {
     const canvas = document.getElementById('radar-chart') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
 
-    const gradientStrokeMale = 'rgba(11,83,141,1)';
-    const gradientFillMale = ctx.createLinearGradient(0, 0, 0, 500);
-    gradientFillMale.addColorStop(0, 'rgba(103,186,208,0.25)');
-    gradientFillMale.addColorStop(1, 'rgba(11,83,141,0.25)');
+    const gradientStroke = 'rgba(11,83,141,1)';
+    const gradientFill = ctx.createLinearGradient(0, 0, 0, 500);
+    gradientFill.addColorStop(0, 'rgba(103,186,208,0.25)');
+    gradientFill.addColorStop(1, 'rgba(11,83,141,0.25)');
 
-    this.chartData.datasets[0].borderColor = gradientStrokeMale;
-    this.chartData.datasets[0].backgroundColor = gradientFillMale;
+    this.chartData.datasets[0].borderColor = gradientStroke;
+    this.chartData.datasets[0].backgroundColor = gradientFill;
 
     this.renderChart(this.chartData, {
       animation: {
@@ -33,15 +32,31 @@ export default class RadarChart extends Vue {
         showAllTooltips: true,
       },
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
       legend: {
         display: false,
       },
       scale: {
+        pointLabels: {
+          // fontSize: 16,
+        },
         ticks: {
           beginAtZero: true,
+          max: 100,
+          stepSize: 20,
+          showLabelBackdrop: false,
+          callback: () => {
+            return '';
+          },
         },
       },
+    });
+  }
+
+  mounted(): void {
+    this.onRenderChart();
+    this.$root.$on('updateData', () => {
+      this.onRenderChart();
     });
   }
 }

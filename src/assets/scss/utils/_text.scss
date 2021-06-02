@@ -22,6 +22,20 @@
   }
 }
 
+@each $color, $value in $colors {
+  .txt-#{$color} {
+    color: $value;
+    &.txt-underline {
+      padding-bottom: 2px;
+      border-bottom: 1px solid $value;
+      font-weight: $txt-bold;
+      &:hover {
+        @include saturate(color, $value, 10);
+      }
+    }
+  }
+}
+
 // txt size
 @each $size, $value in $font-sizes {
   .txt-#{$size} {
