@@ -204,6 +204,7 @@
       icon
       id="btn-kakao"
       :class="{ 'is-scrolled': isVisibleStickyBtn }"
+      @click="kakaoChat()"
     >
       카카오톡 상담
     </b-btn>
@@ -274,6 +275,10 @@ export default class Register extends BaseComponent {
           // this.$bvToast.toast('상담신청이 완료되었습니다', {
           //   varient: 'success',
           // });
+          // this.$analytics.fbq.event('SubmitApplication');
+          this.$gtag.event('complete_application', {
+            description: '신청 완료',
+          });
         }
       },
     );
@@ -316,6 +321,7 @@ export default class Register extends BaseComponent {
     if (urlQuery) {
       this.fnbOwnerStatus = params.fnbOwnerStatus;
     }
+    this.$gtag.event(`user_type_${params.fnbOwnerStatus}`);
   }
 
   // get proformar id
@@ -329,6 +335,12 @@ export default class Register extends BaseComponent {
         this.consultRequestDto.proformaConsultResultId = res.data.id;
         console.log(this.consultRequestDto.proformaConsultResultId);
       }
+    });
+  }
+
+  kakaoChat() {
+    window.Kakao.Channel.chat({
+      channelPublicId: '_rxlgjs',
     });
   }
 
