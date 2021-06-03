@@ -81,9 +81,9 @@ const nonNavBarRouter: RouteConfig[] = [
     },
   },
   {
-    path: '/services2',
-    name: 'services2',
-    component: () => import('../../modules/services/Services2.vue'),
+    path: '/register',
+    name: 'Register',
+    component: () => import('../../modules/register/Register.vue'),
     meta: {
       layout: 'NonLayout',
       title: '서비스 소개',

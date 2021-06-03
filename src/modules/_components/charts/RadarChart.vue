@@ -15,14 +15,6 @@ export default class RadarChart extends Vue {
     const canvas = document.getElementById('radar-chart') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
 
-    const gradientStroke = 'rgba(11,83,141,1)';
-    const gradientFill = ctx.createLinearGradient(0, 0, 0, 500);
-    gradientFill.addColorStop(0, 'rgba(103,186,208,0.25)');
-    gradientFill.addColorStop(1, 'rgba(11,83,141,0.25)');
-
-    this.chartData.datasets[0].borderColor = gradientStroke;
-    this.chartData.datasets[0].backgroundColor = gradientFill;
-
     this.renderChart(this.chartData, {
       animation: {
         easing: 'easeInOutBack',
