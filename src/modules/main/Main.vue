@@ -498,11 +498,6 @@ export default class Main extends BaseComponent {
     return this.$refs.mySwiper.$swiper;
   }
 
-  private handleDebouncedScroll: {
-    (this: Window, ev: Event): any;
-    (this: Window, ev: Event): any;
-  } = null;
-
   onTypeWriter(text: string, idx: number, callback: TimerHandler) {
     if (idx < text.length) {
       this.locationText = text.substring(0, idx + 1);
@@ -561,15 +556,6 @@ export default class Main extends BaseComponent {
     });
   }
 
-  created() {
-    this.handleDebouncedScroll = debounce(this.handleScroll, 100);
-    window.addEventListener('scroll', this.handleDebouncedScroll);
-  }
-
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleDebouncedScroll);
-  }
-
   mounted() {
     // TODO :  나중에 util 함수로 옮기기
     const urlQuery = location.search;
@@ -592,6 +578,7 @@ export default class Main extends BaseComponent {
 }
 </script>
 <style lang="scss">
+@import '@/assets/scss/common.scss';
 .app-main {
   .video-wrapper {
     position: relative;
@@ -838,7 +825,7 @@ export default class Main extends BaseComponent {
           &.is-selected {
             position: absolute;
             top: 0;
-            background: #004d8a;
+            background: $primary;
             border-radius: 2.5em;
             z-index: 1;
           }

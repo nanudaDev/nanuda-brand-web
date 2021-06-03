@@ -178,12 +178,13 @@ export default class Calendar extends Vue {
 </script>
 
 <style lang="scss">
+@import '@/assets/scss/common.scss';
 .selected {
   background-color: rgb(221, 176, 40) !important;
   border-color: #fff !important;
 }
 .main-article {
-  background: #004d8a;
+  background: $primary;
   min-height: 100vh;
 }
 .demo-app {
@@ -210,7 +211,7 @@ export default class Calendar extends Vue {
     flex-grow: 1;
     padding: 3em 1em;
     .fc-button-primary {
-      background-color: #004d8a !important;
+      background-color: $primary !important;
       border-color: #fff !important;
     }
     .fc-day-sun,

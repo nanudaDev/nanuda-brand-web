@@ -6,21 +6,21 @@
 $unit: 'rem';
 
 // Font Settings
-$txt-mini: rempx(1, 10);
-$txt-tiny: rempx(1.2, 12);
-$txt-small: rempx(1.4, 14);
-$txt-medium: rempx(1.6, 16);
-$txt-large: rempx(2.3, 23);
-$txt-big: rempx(2.6, 26);
-$txt-huge: rempx(3, 30);
-$txt-massive: rempx(3.6, 36);
-$txt-giant: rempx(4.8, 4.8);
-$h1: rempx(3.6, 36);
-$h2: rempx(3, 30);
-$h3: rempx(2.6, 26);
-$h4: rempx(2.3, 23);
-$h5: rempx(2, 20);
-$h6: rempx(1.8, 18);
+$txt-mini: rempx(0.625, 10);
+$txt-tiny: rempx(0.75, 12);
+$txt-small: rempx(0.875, 14);
+$txt-medium: rempx(1, 16);
+$txt-large: rempx(1.25, 20);
+$txt-big: rempx(1.625, 26);
+$txt-huge: rempx(2, 32);
+$txt-massive: rempx(2.25, 36);
+$txt-giant: rempx(3, 4.8);
+$h1: rempx(4.8, 48);
+$h2: rempx(3.6, 36);
+$h3: rempx(3.2, 32);
+$h4: rempx(2.6, 26);
+$h5: rempx(2, 2);
+$h6: rempx(1.6, 1.6);
 
 $font-sizes: () !default;
 $font-sizes: map-merge(
@@ -36,6 +36,20 @@ $font-sizes: map-merge(
     'giant': $txt-giant,
   ),
   $font-sizes
+);
+
+$sizes: () !default;
+$sizes: map-merge(
+  (
+    'xxs': $txt-mini,
+    'xs': $txt-tiny,
+    'sm': $txt-small,
+    'md': $txt-medium,
+    'lg': $txt-large,
+    'xl': $txt-big,
+    'xxl': $txt-huge,
+  ),
+  $sizes
 );
 
 $line-height-default: 1.6;
@@ -59,7 +73,7 @@ $font-weight: map-merge(
 //Color Settings
 $white: #fff !default;
 $black: #212121 !default;
-$gray-100: #f0f0f0 !default;
+$gray-100: #f5f5f5 !default;
 $gray-200: #e4e4e4 !default;
 $gray-300: #dddddd !default;
 $gray-400: #969696 !default;
@@ -85,8 +99,8 @@ $grays: map-merge(
   $grays
 );
 
-$blue: #6c8fb7 !default;
-$lightblue: #a7bdd3 !default;
+$blue: #007eeb !default;
+$lightblue: #2c9dff !default;
 $darkblue: #004d8a !default;
 $indigo: #1a1448 !default;
 $purple: #7e5cdf !default;
@@ -100,7 +114,7 @@ $yellow: #fec001 !default;
 $green: #46b266 !default;
 $teal: #33cabb !default;
 $cyan: #17a2b8 !default;
-$darknavy: #1e3142 !default;
+$darknavy: #01315a !default;
 $brown: #d1a62c !default;
 
 $colors: () !default;
@@ -172,10 +186,16 @@ $yiq-contrasted-threshold: 191 !default;
 //Component Settings
 $border-color: $gray-300 !default;
 $border-width: 1px !default;
-$border-radius: 1rem !default;
+$border-radius: 0.5rem !default;
 $border-radius-lg: 2.5rem !default;
 $border-radius-sm: 0.25rem !default;
 $rounded-pill: 30rem !default;
+
+// box shadow
+
+$shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+$shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+$shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 
 // Table Settings
 $table-border-top-color: $black;

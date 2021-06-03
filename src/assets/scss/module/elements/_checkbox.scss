@@ -1,12 +1,7 @@
 @charset "utf-8";
 
 /* checkbox */
-.checkbox {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-  line-height: 1.6;
-
+.custom-checkbox {
   input[type='checkbox'] {
     position: absolute;
     width: 1px;
@@ -17,31 +12,29 @@
     clip: rect(0, 0, 0, 0);
     border: 0;
 
-    + .label-txt {
-      position: relative;
-      min-width: 1.5em;
-      min-height: 1.5em;
-      cursor: pointer;
-      width: inherit;
-      display: inline-flex;
-      align-items: center;
+    + .custom-control-label {
+      &:before {
+        width: 1.875em;
+        height: 1.875em;
+        border-radius: 50%;
+        background-color: $white;
+        border-color: $success;
+        color: $success;
+      }
+      &:after {
+        width: 1.875em;
+        height: 1.875em;
+      }
     }
 
-    + .label-txt:before,
-    + .label-txt span {
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    + .label-txt span {
-      padding-left: 2em;
-      position: relative;
-    }
-
-    &:checked + .label-txt:before {
-      background-color: $success;
-      border-color: $success;
-      color: $white;
+    &:checked {
+      + .custom-control-label {
+        &:before {
+          background-color: $success;
+          border-color: $success;
+          color: $white;
+        }
+      }
     }
 
     &:disabled {
