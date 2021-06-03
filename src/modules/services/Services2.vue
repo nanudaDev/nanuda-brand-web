@@ -732,7 +732,6 @@ export default class Services extends BaseComponent {
   private consultRequestDto = new ConsultRequestDto();
   private consultTotalCount: any = null;
   private deposit = 9;
-  private index = 0;
   private chartArray: any[] = [
     {
       data: [40, 60, 80, 60, 70],
@@ -744,17 +743,12 @@ export default class Services extends BaseComponent {
       data: [20, 70, 50, 30, 80],
     },
   ];
-  private chartArrayData = this.chartArray[0];
 
   private isChartVisible = false;
   private isPrivacyChecked = true;
   private isVisibleStickyBtn = false;
   private headerBgOpacity = 0;
-
-  private chartData: any = {
-    datasets: [this.chartArrayData],
-    labels: ['빅데이터 상권지수', '구매력', '창업비용', '조리경험', '운영경험'],
-  };
+  private chartIndex = 0;
 
   private currentIdx = 0;
   private swiperOption: any = {
@@ -806,11 +800,22 @@ export default class Services extends BaseComponent {
       : false;
   }
 
+  get chartData() {
+    return {
+      datasets: [this.chartArray[this.chartIndex]],
+      labels: [
+        '빅데이터 상권지수',
+        '구매력',
+        '창업비용',
+        '조리경험',
+        '운영경험',
+      ],
+    };
+  }
   updateChartData() {
     setInterval(() => {
-      this.index++;
-      this.chartArrayData = this.chartArray[this.index];
-      if (this.index === this.chartArray.length) this.index = 0;
+      this.chartIndex++;
+      if (this.chartIndex === this.chartArray.length) this.chartIndex = 0;
       // this.$root.$emit('updateData');
     }, 3000);
   }
