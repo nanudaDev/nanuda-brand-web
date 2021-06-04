@@ -319,7 +319,7 @@ export default class Register extends BaseComponent {
     const urlQuery = location.search;
     const params = Object.fromEntries(new URLSearchParams(urlQuery));
     if (urlQuery) {
-      this.fnbOwnerStatus = params.fnbOwnerStatus;
+      this.fnbOwnerStatus = params.fnbOwnerStatus.toUpperCase();
     }
     this.$gtag.event(`user_type_${params.fnbOwnerStatus}`);
   }
