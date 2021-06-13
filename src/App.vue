@@ -8,6 +8,11 @@ declare global {
     kakao: any;
   }
 }
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 import { Component } from 'vue-property-decorator';
 import BaseComponent from './core/base.component';
 

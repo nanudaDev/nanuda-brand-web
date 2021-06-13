@@ -5,7 +5,6 @@ import '@/router/router-guard';
 import MainLayout from './modules/_layouts/Layouts/MainLayout.layout.vue';
 import NonLayout from './modules/_layouts/Layouts/NonLayout.layout.vue';
 import BootstrapVue, { BootstrapVueIcons } from 'bootstrap-vue';
-// import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import './assets/css/common.css';
 import VueScrollTo from 'vue-scrollto';
@@ -13,7 +12,6 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import 'intersection-observer'; // Optional
 import '@/core/guards/auth-role.guard';
-import VueAwesomeSwiper from 'vue-awesome-swiper';
 import {
   Swiper as SwiperClass,
   Pagination,
@@ -23,7 +21,6 @@ import {
 } from 'swiper';
 import getAwesomeSwiper from 'vue-awesome-swiper/dist/exporter';
 SwiperClass.use([Pagination, Mousewheel, Autoplay, EffectFade]);
-const { Swiper, SwiperSlide } = getAwesomeSwiper(SwiperClass);
 import 'swiper/swiper-bundle.css';
 
 import BaseArrow from '@/modules/_components/svg/BaseArrow.vue';
@@ -67,16 +64,18 @@ Vue.use(VueScrollTo, {
   easing: [0, 0, 0.1, 1],
   offset: -100,
 });
-Vue.use(VueAwesomeSwiper /* { default global options } */);
 
 // use vue gtag
 if (isEnvProd()) {
   // use facebook pixel
-  (Vue as any).analytics.fbq.init('932827054153408', {
-    em: 'lsj@widaehan.com',
+  (Vue as any).analytics.fbq.init('432700378140556', {
+    em: 'hamrotibob@naver.com',
   });
   Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
 } else {
+  // (Vue as any).analytics.fbq.init('432700378140556', {
+  //   em: 'hamrotibob@naver.com',
+  // });
   Vue.use(VueGtag, { config: { id: 'notProd' } });
 }
 

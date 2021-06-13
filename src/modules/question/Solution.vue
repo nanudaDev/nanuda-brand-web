@@ -1,5 +1,5 @@
 <template>
-  <article class="main-article" id="question-solution" v-if="result">
+  <div v-if="result">
     <header class="article-header">
       <div class="container">
         <h2>
@@ -38,12 +38,12 @@
                     <span class="odometer-unit">원</span>
                   </div>
                 </div>
+                <div class="txt-box txt-right mt-1">
+                  <p class="txt-mini txt-lightblue">
+                    ※ 상기 금액은 추천아이템에 따라 다를 수 있습니다.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div class="txt-box txt-right">
-              <p class="txt-small txt-lightblue">
-                ※ 상기 금액은 추천아이템에 따라 다를 수 있습니다.
-              </p>
             </div>
           </section>
           <section class="article-section" ref="tooltipWrapper">
@@ -133,8 +133,8 @@
                   </div>
                   <div
                     class="btn-more-menu"
-                    @click="isOhterMenuVislble = true"
-                    v-if="!isOhterMenuVislble"
+                    @click="isOtherMenuVislble = true"
+                    v-if="!isOtherMenuVislble"
                   >
                     <div
                       class="d-flex align-itmes-center justify-content-between"
@@ -205,7 +205,7 @@
                     선택하신 업종과 다른 추천 아이템입니다
                   </h4>
                 </div>
-                <template v-if="isOhterMenuVislble && otherMenu.length > 0">
+                <template v-if="isOtherMenuVislble && otherMenu.length > 0">
                   <div
                     class="card flex-row"
                     data-aos="fade-up"
@@ -286,11 +286,11 @@
                         result.deliveryOrRestaurantType === onlyDeliveryType
                       "
                     >
-                      <template v-if="result.deliveryRatio > 30">
+                      <template v-if="result.deliveryRatio > 20">
                         <strong> 배달 주문량</strong>이 많은 지역입니다<br />
                         창업 아이템을 <strong>배달로 추가</strong>하세요
                       </template>
-                      <template v-else-if="result.deliveryRatio < 30">
+                      <template v-else-if="result.deliveryRatio < 20">
                         <strong>배달 주문량</strong>이 낮은 지역입니다<br />
                         창업 아이템을
                         <strong>변경 또는 추가</strong>하세요
@@ -302,11 +302,11 @@
                       </template>
                     </template>
                     <template v-else>
-                      <template v-if="result.deliveryRatio > 30">
+                      <template v-if="result.deliveryRatio > 20">
                         <strong> 배달 주문량</strong>이 많은 지역입니다<br />
                         창업 아이템을 <strong>배달로 추가</strong>하세요
                       </template>
-                      <template v-else-if="result.deliveryRatio < 30">
+                      <template v-else-if="result.deliveryRatio < 20">
                         <strong>매장 주문량</strong>이 많은 지역입니다<br />
                         창업 아이템을 <strong>매장에 추가</strong>하세요
                       </template>
@@ -320,9 +320,9 @@
                 </div>
                 <div class="card-body">
                   <div
-                    class="d-flex align-items-center justify-content-between max-w-40 my-15 mx-auto"
+                    class="d-flex align-items-center justify-content-between max-w-40 my-10 mx-auto"
                   >
-                    <template v-if="result.deliveryRatio > 30">
+                    <template v-if="result.deliveryRatio > 20">
                       <b-img-lazy
                         src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/icon_delivery.svg"
                         class="w-20"
@@ -334,7 +334,7 @@
                         </p>
                       </div>
                     </template>
-                    <template v-else-if="result.deliveryRatio < 30">
+                    <template v-else-if="result.deliveryRatio < 20">
                       <template
                         v-if="
                           result.deliveryOrRestaurantType === onlyDeliveryType
@@ -649,13 +649,13 @@
                   </div>
                   <div class="card-body">
                     <div class="card-badge">
-                      <b-badge pill variant="primary" v-if="index === 0"
+                      <!-- <b-badge pill variant="primary" v-if="index === 0"
                         >최고적합률</b-badge
-                      >
-                      <b-badge pill variant="blue" v-if="index === 1"
+                      > -->
+                      <b-badge pill variant="blue" v-if="index === 0"
                         >적합률높음</b-badge
                       >
-                      <b-badge pill variant="lightblue" v-if="index === 2"
+                      <b-badge pill variant="lightblue" v-if="index === 1"
                         >적합률보통</b-badge
                       >
                       <b-badge pill variant="secondary">{{
@@ -795,7 +795,7 @@
                       </swiper>
                     </div>
                     <div
-                      class="card-header mt-2"
+                      class="card-header mt-4"
                       data-aos="fade-up"
                       data-aos-duration="1000"
                     >
@@ -838,7 +838,7 @@
                   data-aos-duration="1000"
                 >
                   <div class="card my-2 card-app-guide">
-                    <div class="card-header">
+                    <div class="card-header txt-lg-center">
                       <h4>
                         복잡한 배달 앱<br />
                         <strong>등록부터 관리</strong>까지<br />
@@ -1074,62 +1074,28 @@
                 <!-- <b-col cols="2">
                   <label class="txt-sm">휴대전화</label>
                 </b-col> -->
-                <b-col cols="8">
+                <b-col cols="12">
                   <b-form-input
+                    id="phone-input"
                     v-model="consultRequestDto.phone"
                     placeholder="휴대폰번호"
                     required
-                    :disabled="isVerified"
                     size="md"
-                  ></b-form-input>
-                </b-col>
-                <b-col cols="4">
-                  <b-btn
-                    variant="outline-primary"
-                    size="md"
-                    pill
-                    @click="getSMSCode"
-                    :disabled="isGetCodeBtnDisabled"
-                    v-if="!isVerified"
+                    :state="isCorrectPhoneNum"
                   >
-                    {{ isGetCodeBtnDisabled ? time : '인증번호' }}</b-btn
-                  >
+                  </b-form-input>
+                  <b-form-invalid-feedback id="phone-input">
+                    휴대폰번호가 정확하지 않습니다
+                  </b-form-invalid-feedback>
                 </b-col>
               </b-form-row>
-              <b-form-row v-if="isSMSCodeSent" class="mt-3">
-                <!-- <b-col cols="2">
-                  <label class="txt-sm">인증번호</label>
-                </b-col> -->
-                <b-col cols="8">
-                  <b-form-input
-                    v-model="consultRequestDto.smsAuthCode"
-                    placeholder="인증번호"
-                    required
-                    size="md"
-                    :disabled="isVerified"
-                  ></b-form-input>
-                </b-col>
-                <b-col cols="4">
-                  <b-btn
-                    variant="outline-primary"
-                    pill
-                    size="md"
-                    @click="checkSMSCode"
-                    :disabled="isVerified"
-                    >{{ isVerified ? '인증완료' : '인증하기' }}</b-btn
-                  >
-                </b-col>
-              </b-form-row>
-              <div class="txt-box" v-if="errorText">
-                <p>{{ errorText }}</p>
-              </div>
               <div class="mt-6">
                 <b-btn
                   variant="primary"
                   block
                   size="xl"
                   :disabled="isConsultBtnDisabled"
-                  @click="onConsultBtnClicked"
+                  @click="onConsultBtnClicked('main')"
                 >
                   <span>픽쿡플래너 만나기</span>
                 </b-btn>
@@ -1170,55 +1136,21 @@
               <!-- <b-col cols="2">
                 <label class="txt-sm">휴대전화</label>
               </b-col> -->
-              <b-col cols="8">
+              <b-col cols="12">
                 <b-form-input
+                  id="phone-input"
                   v-model="consultRequestDto.phone"
                   placeholder="휴대폰번호"
                   required
                   :disabled="isVerified"
                   size="md"
+                  :state="isCorrectPhoneNum"
                 ></b-form-input>
-              </b-col>
-              <b-col cols="4">
-                <b-btn
-                  variant="outline-white"
-                  pill
-                  size="md"
-                  @click="getSMSCode"
-                  :disabled="isGetCodeBtnDisabled"
-                  v-if="!isVerified"
-                >
-                  {{ isGetCodeBtnDisabled ? time : '인증번호' }}</b-btn
-                >
+                <b-form-invalid-feedback id="phone-input">
+                  휴대폰번호가 정확하지 않습니다
+                </b-form-invalid-feedback>
               </b-col>
             </b-form-row>
-            <b-form-row v-if="isSMSCodeSent" class="mt-3">
-              <!-- <b-col cols="2">
-                <label class="txt-sm">인증번호</label>
-              </b-col> -->
-              <b-col cols="8">
-                <b-form-input
-                  v-model="consultRequestDto.smsAuthCode"
-                  placeholder="인증번호"
-                  required
-                  size="md"
-                  :disabled="isVerified"
-                ></b-form-input>
-              </b-col>
-              <b-col cols="4">
-                <b-btn
-                  variant="outline-white"
-                  size="md"
-                  pill
-                  @click="checkSMSCode"
-                  :disabled="isVerified"
-                  >{{ isVerified ? '인증완료' : '인증하기' }}</b-btn
-                >
-              </b-col>
-            </b-form-row>
-            <div class="txt-box" v-if="errorText">
-              <p>{{ errorText }}</p>
-            </div>
             <div class="btn-box mt-6">
               <b-btn
                 variant="white"
@@ -1226,7 +1158,7 @@
                 pill
                 size="lg"
                 :disabled="isConsultBtnDisabled"
-                @click="onConsultBtnClicked"
+                @click="onConsultBtnClicked('sticky')"
               >
                 <span>픽쿡플래너 만나기</span>
               </b-btn>
@@ -1235,7 +1167,7 @@
         </div>
       </div>
     </transition>
-  </article>
+  </div>
   <!-- 로딩-->
   <article class="main-article" v-else>
     <Loading />
@@ -1280,7 +1212,6 @@ export default class Solution extends BaseComponent {
   private result: any = null;
   private consultRequestDto = new ConsultRequestDto();
   private isVerified = false;
-  private errorText = '';
   private isSMSCodeSent = false;
   private isGetCodeBtnDisabled = false;
   private time = 30;
@@ -1331,18 +1262,34 @@ export default class Solution extends BaseComponent {
   // 기창업자 메뉴
   private selectedMenu: any = null;
   private otherMenu: any = null;
-  private isOhterMenuVislble = false;
+  private isOtherMenuVislble = false;
   private isDetailInfoTooltipVisible = true;
 
   toggleId(index: number) {
     return 'item0' + index;
   }
 
+  get isCorrectPhoneNum() {
+    const phone = this.consultRequestDto.phone;
+    if (phone) {
+      if (
+        this.consultRequestDto.phone.startsWith('010') &&
+        this.consultRequestDto.phone.length === 11
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return null;
+    }
+  }
+
   get isConsultBtnDisabled() {
     if (
       this.consultRequestDto.name &&
       this.consultRequestDto.phone &&
-      this.isVerified
+      this.isCorrectPhoneNum
     ) {
       return false;
     } else {
@@ -1425,38 +1372,45 @@ export default class Solution extends BaseComponent {
     });
   }
 
-  checkSMSCode() {
-    this.smsAuthNotificationDto.phone = this.consultRequestDto.phone;
-    this.smsAuthNotificationDto.smsAuthCode = parseInt(
-      this.consultRequestDto.smsAuthCode,
-    );
-    authService.checkSMSCode(this.smsAuthNotificationDto).subscribe(res => {
-      if (res) {
-        this.isVerified = true;
-        this.$gtag.event('complete_sms_auth', {
-          description: '인증번호 확인 완료',
-        });
-      } else {
-        this.$bvToast.toast(
-          '인증번호가 올바르지 않거나 유효기간이 초과했습니다',
-          {
-            variant: 'danger',
-            title: 'Error',
-          },
-        );
-      }
-    });
-  }
+  // checkSMSCode() {
+  //   this.smsAuthNotificationDto.phone = this.consultRequestDto.phone;
+  //   this.smsAuthNotificationDto.smsAuthCode = parseInt(
+  //     this.consultRequestDto.smsAuthCode,
+  //   );
+  //   authService.checkSMSCode(this.smsAuthNotificationDto).subscribe(res => {
+  //     if (res) {
+  //       this.isVerified = true;
+  //       this.$gtag.event('complete_sms_auth', {
+  //         description: '인증번호 확인 완료',
+  //       });
+  //     } else {
+  //       this.$bvToast.toast(
+  //         '인증번호가 올바르지 않거나 유효기간이 초과했습니다',
+  //         {
+  //           variant: 'danger',
+  //           title: 'Error',
+  //         },
+  //       );
+  //     }
+  //   });
+  // }
 
-  onConsultBtnClicked() {
+  onConsultBtnClicked(flag: string) {
     this.consultRequestDto.proformaConsultResultId = this.result.id;
     QuestionService.postConsult(this.consultRequestDto).subscribe(res => {
       if (res) {
         // send pixel event
         this.$analytics.fbq.event('SubmitApplication');
-        this.$gtag.event('complete_application', {
-          description: '신청 완료',
-        });
+        if (flag === 'main') {
+          this.$gtag.event('complete_application_main', {
+            description: '메인 폼에서 신청 완료',
+          });
+        } else {
+          this.$gtag.event('complete_application_sticky', {
+            description: '스티키 폼에서 신청 완료',
+          });
+        }
+
         this.$emit('next');
       }
     });
@@ -1483,6 +1437,9 @@ export default class Solution extends BaseComponent {
       const winHeight = window.outerHeight;
       if (rect < winHeight - target.offsetHeight) {
         this.isFormVisible = true;
+        this.$gtag.event('scrolled_to_form', {
+          description: '솔루션 페이지의 form화면으로 이동함',
+        });
       } else {
         this.isFormVisible = false;
       }
@@ -1505,7 +1462,7 @@ export default class Solution extends BaseComponent {
         if (this.result.selectedMenuRecommendation) {
           this.selectedMenu = this.result.selectedMenuRecommendation;
         }
-        // ohter Menu info
+        // other Menu info
         if (this.result.otherMenuRecommendations) {
           this.otherMenu = this.result.otherMenuRecommendations.slice(0, 2);
         }
@@ -1536,17 +1493,21 @@ export default class Solution extends BaseComponent {
     }
     if (isPcDevice) {
       if (screenWith >= 992) {
-        this.isOhterMenuVislble = true;
+        this.isOtherMenuVislble = true;
       } else {
-        this.isOhterMenuVislble = false;
+        this.isOtherMenuVislble = false;
       }
     }
   }
 
+  onClickSticky() {
+    this.isToggleForm = !this.isToggleForm;
+    this.$gtag.event('sticky_btn_clicked', {
+      description: '솔루션 화면의 스티키 버튼을 클릭함',
+    });
+  }
   created() {
     this.findResult();
-    this.handleDebouncedScroll = debounce(this.handleScroll, 100);
-    window.addEventListener('scroll', this.handleDebouncedScroll);
     window.addEventListener('resize', this.handleDebouncedResizing);
   }
 
@@ -1555,7 +1516,6 @@ export default class Solution extends BaseComponent {
   }
 
   beforeDestroy() {
-    window.removeEventListener('scroll', this.handleDebouncedScroll);
     window.addEventListener('resize', this.handleDebouncedResizing);
   }
 }
@@ -1589,7 +1549,7 @@ export default class Solution extends BaseComponent {
     justify-content: center;
     height: 5em;
     .btn-txt {
-      font-size: 2.4rem;
+      font-size: $txt-big;
       font-weight: $txt-bolder;
       color: $white;
       margin-right: 0.5em;
@@ -1619,10 +1579,16 @@ export default class Solution extends BaseComponent {
 
 #question-solution {
   padding-bottom: 0 !important;
+  padding-top: 3.75em;
   .article-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     padding: 1em 0;
     background-color: $light;
-    box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+    z-index: 10;
     .container {
       display: flex;
       align-items: center;
@@ -1633,7 +1599,7 @@ export default class Solution extends BaseComponent {
       font-weight: $txt-bold;
     }
     p {
-      font-size: $h5;
+      font-size: $txt-large;
       text-align: right;
       font-weight: $txt-bold;
     }
@@ -1641,10 +1607,10 @@ export default class Solution extends BaseComponent {
   .article-section {
     margin: 2em 0;
     .section-header {
-      margin: 4em 0;
+      margin: 3em 0;
       text-align: left;
       h3 {
-        font-size: 3rem;
+        font-size: $txt-huge;
         color: $black;
         font-weight: 300;
         line-height: 1.4;
@@ -1663,12 +1629,13 @@ export default class Solution extends BaseComponent {
       padding: 1.5em 1.5em;
       z-index: 1;
       overflow: hidden;
+      box-shadow: 1px 1px 5px rgb(0 0 0 / 5%);
       .card-header {
         background: none;
         border: 0;
         padding: 0;
         h4 {
-          font-size: 2.6rem;
+          font-size: $txt-big;
           color: $black;
           line-height: 1.4;
           font-weight: 300;
@@ -1741,12 +1708,12 @@ export default class Solution extends BaseComponent {
         z-index: 2;
         background-color: rgba(0, 0, 0, 0.92);
         color: $white;
-        font-size: 2rem;
+        font-size: $txt-large;
         .inner-box {
           overflow-y: auto;
           height: 100%;
           h4 {
-            font-size: 3rem;
+            font-size: $txt-huge;
             margin-bottom: 0.5em;
             font-weight: 700;
           }
@@ -1807,7 +1774,7 @@ export default class Solution extends BaseComponent {
             display: inline-flex;
             align-items: baseline;
             .odometer-count {
-              font-size: 4.4rem;
+              font-size: $txt-giant;
               font-weight: $txt-bolder;
               line-height: 1;
               color: $white;
@@ -1817,7 +1784,7 @@ export default class Solution extends BaseComponent {
               }
             }
             .odometer-unit {
-              font-size: 2.8rem;
+              font-size: $txt-huge;
               color: $white;
               margin-left: 0.5em;
             }
@@ -1886,20 +1853,24 @@ export default class Solution extends BaseComponent {
     }
 
     .card-recipe {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: space-between;
+      height: calc(100% - 1em);
       .card-img {
         margin-top: -1.5em;
         img {
           position: relative;
-          top: -5em;
           transition: top 0.4s ease;
           max-width: 24.25em;
           margin: 0 auto;
+          margin-top: -5em;
         }
-        .swiper-slide-active {
-          img {
-            top: 0;
-          }
-        }
+        // .swiper-slide-active {
+        //   img {
+        //     top: 0;
+        //   }
+        // }
       }
     }
 
@@ -1923,13 +1894,13 @@ export default class Solution extends BaseComponent {
     .card-app-guide {
       background-image: url('https://kr.object.ncloudstorage.com/common-storage-pickcook/main/app_guide.png');
       background-repeat: no-repeat;
-      background-position: bottom left calc(50% - 1.5em);
+      background-position: calc(50% - 0.25em) 100%;
       background-size: 18em auto;
       .card-body {
         padding-top: 2em !important;
         padding-bottom: 10em !important;
         .u-list {
-          margin-left: 60%;
+          margin-left: 55%;
           li {
             color: $black;
           }
@@ -1958,7 +1929,7 @@ export default class Solution extends BaseComponent {
       }
     }
     h2 {
-      font-size: 2em;
+      font-size: $txt-huge;
     }
     p {
       font-size: 1em;
@@ -2163,8 +2134,8 @@ export default class Solution extends BaseComponent {
     right: 0;
     bottom: 100%;
     margin-bottom: 0.5em;
-    background: rgb(213 213 213 / 100%);
-    color: #707070;
+    background: $primary;
+    color: #fff;
     padding: 0.5em 1em;
     border-radius: 0.5rem;
     text-align: left;
@@ -2185,7 +2156,7 @@ export default class Solution extends BaseComponent {
       height: 0;
       border-width: 0.5em;
       border-style: solid;
-      border-top-color: rgb(213 213 213 / 95%);
+      border-top-color: $primary;
       border-left-color: transparent;
       border-right-color: transparent;
       border-bottom-color: transparent;
@@ -2224,8 +2195,6 @@ export default class Solution extends BaseComponent {
   background-color: $gray-400;
   border-radius: 50%;
   color: $white;
-  font-weight: bold;
-  box-shadow: 0 0 0.5em rgb(0 0 0 / 25%);
   svg {
     width: 2em;
     height: 2em;

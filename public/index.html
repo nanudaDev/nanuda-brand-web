@@ -25,15 +25,7 @@
     <meta property="og:title" content="픽쿡 - 음식점창업 네비게이터" />
     <meta
       property="og:description"
-      content="실패 
-      없는
-      음식점창업을
-      안내합니다
-      빅데이터기반
-      상권분석
-      음식점
-      창업
-      픽쿡"
+      content="스마트하게 창업하기 빅데이터 기반 상권분석으로 실패 없는 창업을 안내합니다"
     />
     <meta
       property="og:image"
@@ -66,6 +58,7 @@
     <title>
       <%= htmlWebpackPlugin.options.title %>
     </title>
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
   </head>
 
   <body>
@@ -95,8 +88,11 @@
     ></script>
     <script
       type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=05bd95996429076cf3d7d687db931c3e&libraries=services"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=15c9ab05bc5feb6e7c83ca2b56626027&libraries=services"
     ></script>
+    <script>
+      Kakao.init('15c9ab05bc5feb6e7c83ca2b56626027');
+    </script>
     <script>
       !(function(f, b, e, v, n, t, s) {
         if (f.fbq) return;
@@ -121,14 +117,14 @@
         'script',
         'https://connect.facebook.net/en_US/fbevents.js',
       );
-      fbq('init', '422533925552381');
+      fbq('init', '432700378140556');
     </script>
     <noscript
       ><img
         height="1"
         width="1"
         style="display:none"
-        src="https://www.facebook.com/tr?id=422533925552381&ev=PageView&noscript=1"
+        src="https://www.facebook.com/tr?id=432700378140556&ev=PageView&noscript=1"
     /></noscript>
   </body>
 </html>

@@ -64,33 +64,10 @@ import debounce from 'lodash/debounce';
     NavBar,
   },
 })
-export default class MainLayout extends BaseComponent {
-  private isScrolled = false;
-  private handleDebouncedScroll: {
-    (this: Window, ev: Event): any;
-    (this: Window, ev: Event): any;
-  } = null;
-
-  handleScroll() {
-    const scrollTop = window.scrollY || window.pageYOffset;
-    if (scrollTop > 0) {
-      this.isScrolled = true;
-    } else {
-      this.isScrolled = false;
-    }
-  }
-
-  created() {
-    this.handleDebouncedScroll = debounce(this.handleScroll, 100);
-    window.addEventListener('scroll', this.handleDebouncedScroll);
-  }
-
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleDebouncedScroll);
-  }
-}
+export default class MainLayout extends BaseComponent {}
 </script>
 <style lang="scss" scoped>
+@import '@/assets/scss/common.scss';
 #app {
   &.app-main {
     // 메인

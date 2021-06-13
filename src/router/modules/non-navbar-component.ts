@@ -80,6 +80,15 @@ const nonNavBarRouter: RouteConfig[] = [
       title: '예약 성공',
     },
   },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../../modules/register/Register.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '서비스 소개',
+    },
+  },
 ];
 
 export default nonNavBarRouter;

@@ -441,9 +441,10 @@ export default class Result extends BaseComponent {
 </script>
 
 <style lang="scss">
+@import '@/assets/scss/common.scss';
 .app-question {
   .bg-gradient {
-    background: #004d8a;
+    background: $primary;
     background: -moz-linear-gradient(
       360deg,
       rgba(0, 77, 138) 0%,
@@ -459,7 +460,7 @@ export default class Result extends BaseComponent {
       rgba(0, 77, 138) 0%,
       rgba(30, 104, 155, 1) 100%
     );
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#004D8A",endColorstr="#1e689b",GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="$primary",endColorstr="#1e689b",GradientType=1);
     padding-top: 3.25em;
     padding-bottom: 6.25em;
     color: #fff;
@@ -517,14 +518,14 @@ export default class Result extends BaseComponent {
         rgba(0, 77, 138) 0%,
         rgba(108, 143, 183, 1) 100%
       );
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#004D8A",endColorstr="#6c8fb7",GradientType=1);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="$primary",endColorstr="#6c8fb7",GradientType=1);
     }
     .article-section {
       position: relative;
       padding: 6.25em 0;
       .section-header {
         text-align: center;
-        color: #004d8a;
+        color: $primary;
         h3 {
           font-weight: 200;
           font-size: 1.875em;
