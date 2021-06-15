@@ -68,11 +68,14 @@ Vue.use(VueScrollTo, {
 // use vue gtag
 if (isEnvProd()) {
   // use facebook pixel
-  (Vue as any).analytics.fbq.init('932827054153408', {
-    em: 'lsj@widaehan.com',
+  (Vue as any).analytics.fbq.init('432700378140556', {
+    em: 'hamrotibob@naver.com',
   });
   Vue.use(VueGtag, { config: { id: 'G-N3MZ272GVG' } });
 } else {
+  // (Vue as any).analytics.fbq.init('432700378140556', {
+  //   em: 'hamrotibob@naver.com',
+  // });
   Vue.use(VueGtag, { config: { id: 'notProd' } });
 }
 
