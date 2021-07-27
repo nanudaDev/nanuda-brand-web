@@ -1,5 +1,5 @@
 import { BaseService } from '@/core';
-import { ConsultRequestDto } from '@/dto';
+import { ConsultRequestDto, ProformaConsultResultV3CreateDto } from '@/dto';
 
 export class ConsultResultV3Service extends BaseService {
   /**
@@ -11,6 +11,20 @@ export class ConsultResultV3Service extends BaseService {
     return super.post<ConsultRequestDto>(
       'v3/consult-result',
       consultRequestDto,
+    );
+  }
+
+  /**
+   *
+   * @param proformaConsultResultV3CreateDto
+   * @returns
+   */
+  getProformaId(
+    proformaConsultResultV3CreateDto: ProformaConsultResultV3CreateDto,
+  ) {
+    return super.post<ProformaConsultResultV3CreateDto>(
+      'v3/proforma-consult-response',
+      proformaConsultResultV3CreateDto,
     );
   }
 
