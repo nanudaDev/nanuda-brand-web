@@ -321,7 +321,8 @@ export default class Register extends BaseComponent {
     if (urlQuery) {
       this.fnbOwnerStatus = params.fnbOwnerStatus.toUpperCase();
     }
-    this.$gtag.event(`user_type_${params.fnbOwnerStatus}`);
+    // console.log(this.fnbOwnerStatus);
+    this.$gtag.event(`user_type_${this.fnbOwnerStatus}`);
   }
 
   // get proformar id
@@ -333,7 +334,7 @@ export default class Register extends BaseComponent {
     ).subscribe(res => {
       if (res) {
         this.consultRequestDto.proformaConsultResultId = res.data.id;
-        console.log(this.consultRequestDto.proformaConsultResultId);
+        // console.log(this.consultRequestDto.proformaConsultResultId);
       }
     });
   }
