@@ -30,15 +30,23 @@ import VueGtag from 'vue-gtag';
 // facebook pixel
 import VueFacebookPixel from 'vue-analytics-facebook-pixel';
 import VueMoment from 'vue-moment';
-import VueVideoPlayer from 'vue-video-player';
 
 // pipe
-import { EnumPipeTransformer, PhonePipeTransformer } from './core';
+import {
+  EnumPipeTransformer,
+  PhonePipeTransformer,
+  SecondsToMinutesPipeTransformer,
+} from './core';
 import { isEnvProd } from './common/utils/base-url.util';
 EnumPipeTransformer();
 PhonePipeTransformer();
+SecondsToMinutesPipeTransformer();
 
 import VueEllipseProgress from 'vue-ellipse-progress';
+
+// vue video
+import VueVideoPlayer from 'vue-video-player';
+import 'video.js/dist/video-js.css';
 
 // odometer
 import VueOdometer from 'vue-odometer';
@@ -57,7 +65,6 @@ Vue.use(VueFacebookPixel);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 Vue.use(getAwesomeSwiper(SwiperClass));
-
 Vue.use(VueMoment);
 Vue.use(VueEllipseProgress);
 Vue.use(VueScrollTo, {
@@ -65,7 +72,6 @@ Vue.use(VueScrollTo, {
   easing: [0, 0, 0.1, 1],
   offset: -100,
 });
-
 Vue.use(VueVideoPlayer);
 
 // use vue gtag

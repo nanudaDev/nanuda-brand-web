@@ -86,7 +86,7 @@ const nonNavBarRouter: RouteConfig[] = [
     component: () => import('../../modules/register/Register.vue'),
     meta: {
       layout: 'NonLayout',
-      title: '서비스 소개',
+      title: '배달창업, 픽쿡',
     },
   },
   {
