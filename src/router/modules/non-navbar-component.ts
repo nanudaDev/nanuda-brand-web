@@ -89,6 +89,15 @@ const nonNavBarRouter: RouteConfig[] = [
       title: '서비스 소개',
     },
   },
+  {
+    path: '/tutorials/just-salad',
+    name: 'just-salad',
+    component: () => import('../../modules/tutorials/JustSalad.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '저스트샐러드 교육페이지',
+    },
+  },
 ];
 
 export default nonNavBarRouter;

@@ -30,6 +30,7 @@ import VueGtag from 'vue-gtag';
 // facebook pixel
 import VueFacebookPixel from 'vue-analytics-facebook-pixel';
 import VueMoment from 'vue-moment';
+import VueVideoPlayer from 'vue-video-player';
 
 // pipe
 import { EnumPipeTransformer, PhonePipeTransformer } from './core';
@@ -64,6 +65,8 @@ Vue.use(VueScrollTo, {
   easing: [0, 0, 0.1, 1],
   offset: -100,
 });
+
+Vue.use(VueVideoPlayer);
 
 // use vue gtag
 if (isEnvProd()) {
