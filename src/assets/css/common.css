@@ -20052,14 +20052,6 @@ template {
   font-size: 0.75em;
 }
 
-.video-wrapper {
-  background-image: url("https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_visuual.png");
-}
-
-.video-wrapper.fnb {
-  background-image: url("https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_visuual_02.png");
-}
-
 /* services */
 .app-services .main-article {
   padding-bottom: 0 !important;
