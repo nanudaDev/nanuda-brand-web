@@ -368,6 +368,7 @@ export default class JustSalad extends BaseComponent {
         font-size: 20px;
         white-space: nowrap;
         text-overflow: ellipsis;
+        overflow: hidden;
       }
     }
     .video-player {
@@ -512,8 +513,7 @@ export default class JustSalad extends BaseComponent {
         justify-content: space-between;
         padding: 24px 0;
         cursor: pointer;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+
         + .track-list {
           border-top: 1px solid #e0e0e0;
         }
@@ -523,12 +523,17 @@ export default class JustSalad extends BaseComponent {
         .track-title {
           font-size: 16px;
           font-weight: 400;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          padding-right: 4px;
         }
         .track-time {
           display: flex;
           align-items: center;
           font-size: 14px;
           font-weight: 500;
+          white-space: nowrap;
         }
         &:hover,
         &.is-active {
