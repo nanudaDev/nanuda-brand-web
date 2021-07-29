@@ -183,7 +183,7 @@ export default class JustSalad extends BaseComponent {
             time: 641,
           },
           {
-            subject: '구운 연어스테이크 샐러드 샐러드',
+            subject: '구운 연어스테이크 샐러드',
             time: 665,
           },
         ],
