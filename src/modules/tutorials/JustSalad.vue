@@ -114,7 +114,7 @@ export default class JustSalad extends BaseComponent {
   private isVideoClicked = false;
   private isVisibleChapter = true;
   private currentTime = 0;
-  private timeInterval = null;
+  private timeInterval: any = null;
   private chapterList = [
     [
       {
