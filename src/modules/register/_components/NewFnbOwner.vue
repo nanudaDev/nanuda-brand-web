@@ -128,7 +128,7 @@
                       <div class="d-block d-xl-none">
                         <b-btn
                           size="md"
-                          variant="outline-blue"
+                          variant="blue"
                           block
                           v-b-toggle.analysis-detail
                           @click="onClickAnalysisDetail()"
@@ -138,7 +138,7 @@
                           <span>{{
                             !isChartVisible ? '확인하기' : '접기'
                           }}</span>
-                          <span class="icon icon-lightblue"><BaseArrow /></span>
+                          <span class="icon icon-white"><BaseArrow /></span>
                         </b-btn>
                       </div>
                       <div class="d-none d-xl-block">
@@ -435,7 +435,7 @@
                         <span>{{
                           !isKitchenVisible ? '확인하기' : '접기'
                         }}</span>
-                        <span class="icon icon-lightblue"><BaseArrow /></span>
+                        <span class="icon icon-white"><BaseArrow /></span>
                       </b-btn>
                     </div>
                     <div class="d-none d-xl-block">

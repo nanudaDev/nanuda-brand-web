@@ -584,6 +584,11 @@ export default class Main extends BaseComponent {
     position: relative;
     background-position: center center;
     background-size: cover;
+    background-image: url('https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_visuual.png');
+    &.fnb {
+      background-image: url('https://kr.object.ncloudstorage.com/common-storage-pickcook/main/main_visuual_02.png');
+    }
+
     .video-container {
       position: absolute;
       left: 0;
