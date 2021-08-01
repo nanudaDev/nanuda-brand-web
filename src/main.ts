@@ -45,8 +45,8 @@ SecondsToMinutesPipeTransformer();
 import VueEllipseProgress from 'vue-ellipse-progress';
 
 // vue video
-import VueVideoPlayer from 'vue-video-player';
-import 'video.js/dist/video-js.css';
+// import VueVideoPlayer from 'vue-video-player';
+// import 'video.js/dist/video-js.css';
 
 // odometer
 import VueOdometer from 'vue-odometer';
@@ -72,7 +72,7 @@ Vue.use(VueScrollTo, {
   easing: [0, 0, 0.1, 1],
   offset: -100,
 });
-Vue.use(VueVideoPlayer);
+// Vue.use(VueVideoPlayer);
 
 // use vue gtag
 if (isEnvProd()) {

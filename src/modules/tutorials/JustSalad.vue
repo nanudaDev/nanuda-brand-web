@@ -1,9 +1,5 @@
 <template>
-  <article
-    class="video-container"
-    :class="{ 'is-active': isVisibleChapter }"
-    @keyup.stop.prevent="keyup($event)"
-  >
+  <article class="video-container" :class="{ 'is-active': isVisibleChapter }">
     <div class="video-wrapper" @click.stop.prevent="onPlayerClicked($event)">
       <transition name="fadeIn">
         <div class="video-title" v-if="!isPlaying">
@@ -72,9 +68,10 @@
 
               <div v-if="chapter.trackList" class="track-container">
                 <div
-                  v-for="track in chapter.trackList"
-                  :key="track.time"
+                  v-for="(track, index) in chapter.trackList"
+                  :key="index"
                   class="track-list"
+                  :class="track.time < currentTime ? 'is-active' : null"
                   @click="onMoveChapter(track.time)"
                 >
                   <span class="track-title">{{ track.subject }}</span>
@@ -99,7 +96,7 @@
 </template>
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import 'video.js/dist/video-js.css';
 import { videoPlayer } from 'vue-video-player';
 
@@ -116,6 +113,8 @@ export default class JustSalad extends BaseComponent {
   private isPlaying = false;
   private isVideoClicked = false;
   private isVisibleChapter = true;
+  private currentTime = 0;
+  private timeInterval = null;
   private chapterList = [
     [
       {
@@ -221,8 +220,7 @@ export default class JustSalad extends BaseComponent {
     sources: [
       {
         type: 'video/mp4',
-        src:
-          'https://kr.object.ncloudstorage.com/common-storage-pickcook/recipes/recipe_just_salad.mp4',
+        src: 'https://kr.object.ncloudstorage.com/common-storage-pickcook/recipes/recipe_just_salad.mp4',
       },
     ],
     poster:
@@ -232,6 +230,7 @@ export default class JustSalad extends BaseComponent {
   get player() {
     return (this.$refs.videoPlayer as any).player;
   }
+  // private player = (this.$refs.videoPlayer as any).player;
 
   onPlayerLoadeddata(event?: EventTarget) {
     if (this.player.cache_) {
@@ -331,6 +330,9 @@ export default class JustSalad extends BaseComponent {
   }
 
   mounted() {
+    this.timeInterval = setInterval(() => {
+      this.currentTime = this.player.cache_.currentTime;
+    }, 300);
     this.handleDebouncedResizing();
     document.addEventListener('keyup', this.onKeyup);
   }
@@ -338,6 +340,7 @@ export default class JustSalad extends BaseComponent {
   beforeDestroy() {
     document.removeEventListener('keyup', this.onKeyup);
     window.addEventListener('resize', this.handleDebouncedResizing);
+    clearInterval(this.timeInterval);
   }
 }
 </script>

@@ -31,6 +31,7 @@
     "odometer": "^0.4.8",
     "regenerator-runtime": "^0.13.7",
     "swiper": "^6.5.0",
+    "video.js": "^6.13.0",
     "vue": "^2.6.11",
     "vue-analytics-facebook-pixel": "^1.0.1",
     "vue-awesome-swiper": "^4.1.1",
@@ -72,7 +73,6 @@
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "url-loader": "^4.1.1",
-    "video.js": "^7.14.3",
     "vue-template-compiler": "^2.6.11"
   }
 }
