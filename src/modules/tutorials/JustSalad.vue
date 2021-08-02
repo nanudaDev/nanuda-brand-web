@@ -134,7 +134,7 @@ export default class JustSalad extends BaseComponent {
   private chapterList = [
     [
       {
-        title: '재료 새척',
+        title: '재료 세척',
         trackList: [
           {
             subject: '재료 세척 방법',
@@ -486,7 +486,6 @@ export default class JustSalad extends BaseComponent {
       height: 100vh;
       z-index: 5;
       background-color: #f5f5f5;
-      box-shadow: -0.25em 0 0.25em rgba(0, 0, 0, 0.05);
 
       .chapter-title {
         color: $black;
@@ -517,7 +516,7 @@ export default class JustSalad extends BaseComponent {
       height: 60px;
       border-radius: 50%;
       background-color: #f5f5f5;
-      box-shadow: -7px 7px 0.25em rgba(0, 0, 0, 0.05);
+      box-shadow: -4px 4px 0.25em rgba(0, 0, 0, 0.05);
       padding-left: 8px;
       .icon {
         transform: rotate(90deg);
