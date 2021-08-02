@@ -364,6 +364,15 @@ export default class JustSalad extends BaseComponent {
     this.timeInterval = setInterval(() => {
       this.currentTime = this.player.cache_.currentTime;
     }, 300);
+    this.player.on('touchstart', (event: any) => {
+      if (event.target.tagName === 'VIDEO') {
+        if (!this.player.paused()) {
+          this.player.pause();
+        } else {
+          this.player.play();
+        }
+      }
+    });
     this.handleDebouncedResizing();
     document.addEventListener('keyup', this.onKeyup);
     document.addEventListener('keydown', this.onKeydown);
