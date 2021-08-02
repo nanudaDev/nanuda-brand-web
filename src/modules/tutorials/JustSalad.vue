@@ -1,6 +1,10 @@
 <template>
-  <article class="video-container" :class="{ 'is-active': isVisibleChapter }">
-    <div class="video-wrapper" @click.stop.prevent="onPlayerClicked($event)">
+  <article
+    class="video-container"
+    :class="{ 'is-active': isVisibleChapter }"
+    @contextmenu="onStopCtx($event)"
+  >
+    <div class="video-wrapper">
       <transition name="fadeIn">
         <div class="video-title" v-if="!isPlaying">
           <h1>저스트샐러드 레시피</h1>
@@ -68,21 +72,29 @@
 
               <div v-if="chapter.trackList" class="track-container">
                 <div
-                  v-for="(track, index) in chapter.trackList"
-                  :key="index"
+                  v-for="(track, trackIndex) in chapter.trackList"
+                  :key="trackIndex"
                   class="track-list"
                   :class="
-                    track.start < currentTime && currentTime < track.end
+                    chapter.trackList[trackIndex].time < currentTime &&
+                    currentTime <
+                      (chapter.trackList.length - 1 > trackIndex
+                        ? chapter.trackList[trackIndex + 1].time
+                        : chapterList[index].length - 1 > childIndex
+                        ? chapterList[index][childIndex + 1].trackList[0].time
+                        : chapterList.length - 1 > index
+                        ? chapterList[index + 1][0].trackList[0].time
+                        : totalTime)
                       ? 'is-active'
                       : null
                   "
-                  @click="onMoveChapter(track.start)"
+                  @click="onMoveChapter(track.time)"
                 >
                   <span class="track-title">{{ track.subject }}</span>
                   <span class="track-time">
                     <b-icon icon="play-circle-fill" class="icon"></b-icon>
                     <span class="yoongothic txt-tiny ml-2">{{
-                      track.start | secondsToMinutesTransformer
+                      track.time | secondsToMinutesTransformer
                     }}</span>
                   </span>
                 </div>
@@ -122,17 +134,15 @@ export default class JustSalad extends BaseComponent {
   private chapterList = [
     [
       {
-        title: '재료 새척',
+        title: '재료 세척',
         trackList: [
           {
             subject: '재료 세척 방법',
-            start: 16,
-            end: 79,
+            time: 16,
           },
           {
             subject: '채소 소독 방법',
-            start: 79,
-            end: 84,
+            time: 79,
           },
         ],
       },
@@ -143,8 +153,7 @@ export default class JustSalad extends BaseComponent {
         trackList: [
           {
             subject: '재료 컷팅 및 손질 방법',
-            start: 84,
-            end: 298,
+            time: 84,
           },
         ],
       },
@@ -155,8 +164,7 @@ export default class JustSalad extends BaseComponent {
         trackList: [
           {
             subject: '조리 방법(삶기, 볶기, 굽기, 튀기기)',
-            start: 298,
-            end: 483,
+            time: 298,
           },
         ],
       },
@@ -167,38 +175,31 @@ export default class JustSalad extends BaseComponent {
         trackList: [
           {
             subject: '버섯 샐러드',
-            start: 483,
-            end: 538,
+            time: 483,
           },
           {
             subject: '리코타 샐러드',
-            start: 538,
-            end: 565,
+            time: 538,
           },
           {
             subject: '두부병아리콩 샐러드',
-            start: 565,
-            end: 594,
+            time: 565,
           },
           {
             subject: '닭가슴살 샐러드',
-            start: 594,
-            end: 614,
+            time: 594,
           },
           {
             subject: '콥 샐러드',
-            start: 614,
-            end: 641,
+            time: 614,
           },
           {
             subject: '콩고기 샐러드',
-            start: 641,
-            end: 665,
+            time: 641,
           },
           {
             subject: '구운 연어스테이크 샐러드',
-            start: 665,
-            end: 683,
+            time: 665,
           },
         ],
       },
@@ -207,8 +208,7 @@ export default class JustSalad extends BaseComponent {
         trackList: [
           {
             subject: '드레싱 만드는 방법 및 담기',
-            start: 683,
-            end: 695,
+            time: 683,
           },
         ],
       },
@@ -219,8 +219,7 @@ export default class JustSalad extends BaseComponent {
         trackList: [
           {
             subject: '배달용 포장 방법',
-            start: 695,
-            end: 800,
+            time: 695,
           },
         ],
       },
@@ -260,6 +259,7 @@ export default class JustSalad extends BaseComponent {
     this.isStart = true;
     this.isPlaying = true;
     this.isEnded = false;
+    this.onPlayerClicked();
   }
 
   onPlayerEnded(event?: EventTarget) {
@@ -268,6 +268,7 @@ export default class JustSalad extends BaseComponent {
 
   onPlayerPause(event?: EventTarget) {
     this.isPlaying = false;
+    this.onPlayerClicked();
   }
 
   onPlayerClicked(event?: EventTarget) {
@@ -326,13 +327,25 @@ export default class JustSalad extends BaseComponent {
 
     // Press the space bar button
     if (key.keyCode === 32) {
-      this.onPlayerClicked();
       if (!this.player.paused()) {
         this.player.pause();
       } else {
         this.player.play();
       }
     }
+  }
+
+  onKeydown(key?: any) {
+    // disableclick F12
+    if (key.keyCode == 123) {
+      key.preventDefault();
+      key.returnValue = false;
+    }
+  }
+
+  onStopCtx(event?: any) {
+    // disable mouse right click
+    event.preventDefault();
   }
 
   handleDebouncedResizing() {
@@ -353,10 +366,12 @@ export default class JustSalad extends BaseComponent {
     }, 300);
     this.handleDebouncedResizing();
     document.addEventListener('keyup', this.onKeyup);
+    document.addEventListener('keydown', this.onKeydown);
   }
 
   beforeDestroy() {
     document.removeEventListener('keyup', this.onKeyup);
+    document.removeEventListener('keydown', this.onKeydown);
     window.addEventListener('resize', this.handleDebouncedResizing);
     clearInterval(this.timeInterval);
   }
@@ -471,7 +486,6 @@ export default class JustSalad extends BaseComponent {
       height: 100vh;
       z-index: 5;
       background-color: #f5f5f5;
-      box-shadow: -0.25em 0 0.25em rgba(0, 0, 0, 0.05);
 
       .chapter-title {
         color: $black;
@@ -502,7 +516,7 @@ export default class JustSalad extends BaseComponent {
       height: 60px;
       border-radius: 50%;
       background-color: #f5f5f5;
-      box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.05);
+      box-shadow: -4px 4px 0.25em rgba(0, 0, 0, 0.05);
       padding-left: 8px;
       .icon {
         transform: rotate(90deg);
@@ -555,10 +569,16 @@ export default class JustSalad extends BaseComponent {
           font-size: 14px;
           font-weight: 500;
           white-space: nowrap;
+          .icon {
+            color: #8c8c8c;
+          }
         }
         &:hover,
         &.is-active {
           color: $blue;
+          .icon {
+            color: $blue;
+          }
         }
       }
     }
