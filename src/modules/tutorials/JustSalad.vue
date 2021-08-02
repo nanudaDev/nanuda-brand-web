@@ -364,6 +364,15 @@ export default class JustSalad extends BaseComponent {
     this.timeInterval = setInterval(() => {
       this.currentTime = this.player.cache_.currentTime;
     }, 300);
+    this.player.on('touchstart', (event: any) => {
+      if (event.target.tagName === 'VIDEO') {
+        if (!this.player.paused()) {
+          this.player.pause();
+        } else {
+          this.player.play();
+        }
+      }
+    });
     this.handleDebouncedResizing();
     document.addEventListener('keyup', this.onKeyup);
     document.addEventListener('keydown', this.onKeydown);
@@ -573,7 +582,6 @@ export default class JustSalad extends BaseComponent {
             color: #8c8c8c;
           }
         }
-        &:hover,
         &.is-active {
           color: $blue;
           .icon {
@@ -645,6 +653,13 @@ export default class JustSalad extends BaseComponent {
     &.is-active {
       .chapter-wrapper {
         transform: translate(0, 0);
+      }
+    }
+  }
+  @media screen and (orientation: landscape) {
+    .video-container {
+      .chapter-wrapper {
+        height: auto;
       }
     }
   }
