@@ -71,14 +71,18 @@
                   v-for="(track, index) in chapter.trackList"
                   :key="index"
                   class="track-list"
-                  :class="track.time < currentTime ? 'is-active' : null"
-                  @click="onMoveChapter(track.time)"
+                  :class="
+                    track.start < currentTime && currentTime < track.end
+                      ? 'is-active'
+                      : null
+                  "
+                  @click="onMoveChapter(track.start)"
                 >
                   <span class="track-title">{{ track.subject }}</span>
                   <span class="track-time">
                     <b-icon icon="play-circle-fill" class="icon"></b-icon>
                     <span class="yoongothic txt-tiny ml-2">{{
-                      track.time | secondsToMinutesTransformer
+                      track.start | secondsToMinutesTransformer
                     }}</span>
                   </span>
                 </div>
@@ -122,11 +126,13 @@ export default class JustSalad extends BaseComponent {
         trackList: [
           {
             subject: '재료 세척 방법',
-            time: 16,
+            start: 16,
+            end: 79,
           },
           {
             subject: '채소 소독 방법',
-            time: 79,
+            start: 79,
+            end: 84,
           },
         ],
       },
@@ -137,7 +143,8 @@ export default class JustSalad extends BaseComponent {
         trackList: [
           {
             subject: '재료 컷팅 및 손질 방법',
-            time: 84,
+            start: 84,
+            end: 298,
           },
         ],
       },
@@ -148,7 +155,8 @@ export default class JustSalad extends BaseComponent {
         trackList: [
           {
             subject: '조리 방법(삶기, 볶기, 굽기, 튀기기)',
-            time: 298,
+            start: 298,
+            end: 483,
           },
         ],
       },
@@ -159,31 +167,38 @@ export default class JustSalad extends BaseComponent {
         trackList: [
           {
             subject: '버섯 샐러드',
-            time: 483,
+            start: 483,
+            end: 538,
           },
           {
             subject: '리코타 샐러드',
-            time: 538,
+            start: 538,
+            end: 565,
           },
           {
             subject: '두부병아리콩 샐러드',
-            time: 565,
+            start: 565,
+            end: 594,
           },
           {
             subject: '닭가슴살 샐러드',
-            time: 594,
+            start: 594,
+            end: 614,
           },
           {
             subject: '콥 샐러드',
-            time: 614,
+            start: 614,
+            end: 641,
           },
           {
             subject: '콩고기 샐러드',
-            time: 641,
+            start: 641,
+            end: 665,
           },
           {
             subject: '구운 연어스테이크 샐러드',
-            time: 665,
+            start: 665,
+            end: 683,
           },
         ],
       },
@@ -192,7 +207,8 @@ export default class JustSalad extends BaseComponent {
         trackList: [
           {
             subject: '드레싱 만드는 방법 및 담기',
-            time: 683,
+            start: 683,
+            end: 695,
           },
         ],
       },
@@ -203,7 +219,8 @@ export default class JustSalad extends BaseComponent {
         trackList: [
           {
             subject: '배달용 포장 방법',
-            time: 695,
+            start: 695,
+            end: 800,
           },
         ],
       },
@@ -220,7 +237,8 @@ export default class JustSalad extends BaseComponent {
     sources: [
       {
         type: 'video/mp4',
-        src: 'https://kr.object.ncloudstorage.com/common-storage-pickcook/recipes/recipe_just_salad.mp4',
+        src:
+          'https://kr.object.ncloudstorage.com/common-storage-pickcook/recipes/recipe_just_salad.mp4',
       },
     ],
     poster:
