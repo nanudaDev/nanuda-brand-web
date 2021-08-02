@@ -504,7 +504,7 @@ export default class JustSalad extends BaseComponent {
           font-weight: 700;
         }
         .en-title {
-          font-size: 10px;
+          font-size: 12px;
           font-weight: 500;
         }
       }
