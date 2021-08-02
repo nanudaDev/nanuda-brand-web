@@ -1,5 +1,9 @@
 <template>
-  <article class="video-container" :class="{ 'is-active': isVisibleChapter }">
+  <article
+    class="video-container"
+    :class="{ 'is-active': isVisibleChapter }"
+    @contextmenu="onStopCtx($event)"
+  >
     <div class="video-wrapper">
       <transition name="fadeIn">
         <div class="video-title" v-if="!isPlaying">
@@ -331,6 +335,19 @@ export default class JustSalad extends BaseComponent {
     }
   }
 
+  onKeydown(key?: any) {
+    // disableclick F12
+    if (key.keyCode == 123) {
+      key.preventDefault();
+      key.returnValue = false;
+    }
+  }
+
+  onStopCtx(event?: any) {
+    // disable mouse right click
+    event.preventDefault();
+  }
+
   handleDebouncedResizing() {
     const screenWith = window.innerWidth;
 
@@ -349,10 +366,12 @@ export default class JustSalad extends BaseComponent {
     }, 300);
     this.handleDebouncedResizing();
     document.addEventListener('keyup', this.onKeyup);
+    document.addEventListener('keydown', this.onKeydown);
   }
 
   beforeDestroy() {
     document.removeEventListener('keyup', this.onKeyup);
+    document.removeEventListener('keydown', this.onKeydown);
     window.addEventListener('resize', this.handleDebouncedResizing);
     clearInterval(this.timeInterval);
   }
