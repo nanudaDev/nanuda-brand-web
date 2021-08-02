@@ -41,14 +41,17 @@
                     <div class="d-block d-xl-none">
                       <b-btn
                         size="md"
-                        variant="outline-blue"
+                        variant="blue"
                         block
                         v-b-toggle.analysis-detail
                         @click="onClickAnalysisDetail()"
+                        class="btn-toggle"
+                        :class="{ 'is-active': isAnalysisVisible }"
                       >
                         <span>{{
                           !isAnalysisVisible ? '확인하기' : '접기'
                         }}</span>
+                        <span class="icon icon-white"><BaseArrow /></span>
                       </b-btn>
                     </div>
                     <div class="d-none d-xl-block">
