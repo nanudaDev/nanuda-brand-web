@@ -582,7 +582,6 @@ export default class JustSalad extends BaseComponent {
             color: #8c8c8c;
           }
         }
-        &:hover,
         &.is-active {
           color: $blue;
           .icon {
@@ -654,6 +653,13 @@ export default class JustSalad extends BaseComponent {
     &.is-active {
       .chapter-wrapper {
         transform: translate(0, 0);
+      }
+    }
+  }
+  @media screen and (orientation: landscape) {
+    .video-container {
+      .chapter-wrapper {
+        height: auto;
       }
     }
   }
