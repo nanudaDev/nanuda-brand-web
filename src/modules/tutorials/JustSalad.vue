@@ -236,8 +236,9 @@ export default class JustSalad extends BaseComponent {
     sources: [
       {
         type: 'video/mp4',
-        src:
-          'https://kr.object.ncloudstorage.com/common-storage-pickcook/recipes/recipe_just_salad.mp4',
+        src: !this.isMobile
+          ? 'https://kr.object.ncloudstorage.com/common-storage-pickcook/recipes/recipe_just_salad.mp4'
+          : 'https://kr.object.ncloudstorage.com/common-storage-pickcook/recipes/recipe_just_salad_m.mp4',
       },
     ],
     poster:
