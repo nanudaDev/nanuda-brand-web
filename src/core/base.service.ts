@@ -9,8 +9,9 @@ import {
 } from '../../environments';
 import { Observable } from 'rxjs';
 import { Pagination, PaginatedResponse } from '../common';
-// import toast from '../../resources/assets/js/services/toast.js';
 import { AxiosObservable } from 'axios-observable/dist/axios-observable.interface';
+import JwtStorageService from '@/services/shared/auth/jwt-storage.service';
+import toast from '../../resources/assets/js/services/toast';
 
 // axios에서 사용할 메소드 타입
 type Method =
@@ -107,18 +108,15 @@ export class BaseService {
         return response;
       },
       error => {
-        // if (typeof error.response.data.message === 'object') {
-        //   Vue.toasted.global.custom_error({
-        //     message:
-        //       error.response.data.message[0].constraints[
-        //         Object.keys(error.response.data.message[0].constraints)[0]
-        //       ],
-        //   });
-        // } else {
-        //   Vue.toasted.global.custom_error({
-        //     message: error.response.data.message,
-        //   });
-        // }
+        if (typeof error.response.data.message === 'object') {
+          toast.error(
+            error.response.data.message[0].constraints[
+              Object.keys(error.response.data.message[0].constraints)[0]
+            ],
+          );
+        } else {
+          toast.error(error.response.data.message);
+        }
       },
     );
 
@@ -131,10 +129,10 @@ export class BaseService {
       //   'Accept': 'application/json',
     };
     // access token added if there is one.
-    // const accessToken = JwtStorageService.getToken();
-    // if (accessToken) {
-    //   headers.Authorization = `Bearer ${accessToken}`;
-    // }
+    const accessToken = JwtStorageService.getToken();
+    if (accessToken) {
+      headers.Authorization = `Bearer ${accessToken}`;
+    }
     if (params) {
       params = this.__excludeNullParam(params);
     }

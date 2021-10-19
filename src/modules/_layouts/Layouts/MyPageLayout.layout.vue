@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="`app-${$route.name}`">
+  <div id="app" class="app-mypage">
     <nav-bar :class="{ 'is-scrolled': isScrolled }"></nav-bar>
     <div id="appContent">
       <main :id="$route.name === 'main' ? 'main' : 'sub'">
@@ -12,8 +12,8 @@
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
 import { Component } from 'vue-property-decorator';
-import NavBar from '../NavBar/NavBar.layout.vue';
 import AppFooter from '../AppFooter/AppFooter.layout.vue';
+import NavBar from '../NavBar/NavBar.layout.vue';
 
 @Component({
   name: 'MainLayout',
@@ -27,21 +27,14 @@ export default class MainLayout extends BaseComponent {}
 <style lang="scss" scoped>
 @import '@/assets/scss/common.scss';
 #app {
-  &.app-main {
-    // 메인
-    .main-article {
-      padding: 0;
-      margin-top: -3.375em;
+  &.app-mypage {
+    #nav {
+      + #appContent {
+        margin-top: 3.375em;
+      }
     }
-  }
-  &:not(.app-main) {
     .main-article {
-      min-height: calc(100vh - 17.125em);
-    }
-  }
-  #nav {
-    + #appContent {
-      margin-top: 3.375em;
+      padding: 3.375em 0;
     }
   }
 }

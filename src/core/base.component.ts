@@ -3,6 +3,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import debounce from 'lodash/debounce';
 import { EnvironmentType } from '../../environments';
+
 @Component
 export default class BaseComponent extends Vue {
   constructor() {

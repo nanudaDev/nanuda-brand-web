@@ -24,6 +24,12 @@ const router = new VueRouter({
   mode: 'history',
   routes: routes,
   scrollBehavior(to, from, savedPosition) {
+    const fromHistory = Boolean(savedPosition);
+    const fromPath = from.path;
+    if (fromPath) {
+      sessionStorage.setItem('fromPath', fromPath);
+    }
+
     return { x: 0, y: 0 };
   },
 });

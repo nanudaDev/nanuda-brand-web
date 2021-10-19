@@ -135,6 +135,7 @@ label + input[type='checkbox'] {
 
 select,
 input[type='text'],
+input[type='password'],
 input[type='file'],
 textarea {
   border: 1px solid $border-color;

@@ -4,6 +4,9 @@ import router from './router';
 import '@/router/router-guard';
 import MainLayout from './modules/_layouts/Layouts/MainLayout.layout.vue';
 import NonLayout from './modules/_layouts/Layouts/NonLayout.layout.vue';
+import LoginLayout from './modules/_layouts/Layouts/LoginLayout.layout.vue';
+import LogoutLayout from './modules/_layouts/Layouts/LogoutLayout.layout.vue';
+import MyPageLayout from './modules/_layouts/Layouts/MyPageLayout.layout.vue';
 import BootstrapVue, { BootstrapVueIcons } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import './assets/css/common.css';
@@ -33,11 +36,13 @@ import VueMoment from 'vue-moment';
 
 // pipe
 import {
+  DatePipeTransformer,
   EnumPipeTransformer,
   PhonePipeTransformer,
   SecondsToMinutesPipeTransformer,
 } from './core';
 import { isEnvProd } from './common/utils/base-url.util';
+DatePipeTransformer();
 EnumPipeTransformer();
 PhonePipeTransformer();
 SecondsToMinutesPipeTransformer();
@@ -56,6 +61,10 @@ Vue.config.productionTip = false;
 
 Vue.component('MainLayout', MainLayout);
 Vue.component('NonLayout', NonLayout);
+Vue.component('LoginLayout', LoginLayout);
+Vue.component('LogoutLayout', LogoutLayout);
+Vue.component('MyPageLayout', MyPageLayout);
+
 Vue.component('BaseArrow', BaseArrow);
 Vue.component('BaseSearch', BaseSearch);
 Vue.component('VueOdometer', VueOdometer);

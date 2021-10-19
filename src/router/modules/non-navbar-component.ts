@@ -2,11 +2,57 @@ import { RouteConfig } from 'vue-router';
 
 const nonNavBarRouter: RouteConfig[] = [
   {
+    path: '/login',
+    name: 'login',
+    component: () =>
+      import('../../modules/_layouts/Layouts/LoginLayout.layout.vue'),
+    meta: {
+      layout: 'LoginLayout',
+      title: '로그인',
+      beforeGetAuth: true,
+    },
+  },
+  {
+    path: '/join',
+    name: 'join',
+    component: () => import('../../modules/join/Join.vue'),
+    meta: {
+      layout: 'MyPageLayout',
+      title: '회원가입',
+      beforeGetAuth: true,
+    },
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    meta: {
+      layout: 'LogoutLayout',
+    },
+  },
+  {
+    path: '/mypage',
+    name: 'mypage',
+    component: () =>
+      import('../../modules/mypage/components/AccountDetail.vue'),
+    children: [
+      {
+        path: '/mypage/account',
+        name: 'mypage-account',
+        component: () =>
+          import('../../modules/mypage/components/AccountDetail.vue'),
+        meta: {
+          layout: 'MyPageLayout',
+          title: '계정설정',
+          authRequired: true,
+        },
+      },
+    ],
+  },
+  {
     path: '/agreement',
     name: 'agreement',
     component: () => import('../../modules/agreement/Agreement.vue'),
     meta: {
-      authRequired: true,
       layout: 'NonLayout',
       title: '이용약관',
     },
@@ -30,15 +76,6 @@ const nonNavBarRouter: RouteConfig[] = [
       title: '설문',
     },
   },
-  // {
-  //   path: '/solution',
-  //   name: 'solution',
-  //   component: () => import('../../modules/question/Solution.vue'),
-  //   meta: {
-  //     layout: 'NonLayout',
-  //     title: '설문 조사 결과',
-  //   },
-  // },
   {
     path: '/reservation',
     name: 'reservation',

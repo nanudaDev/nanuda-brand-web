@@ -14637,6 +14637,7 @@ label + input[type='checkbox'] {
 
 select,
 input[type='text'],
+input[type='password'],
 input[type='file'],
 textarea {
   border: 1px solid #c9c9c9;
@@ -18134,7 +18135,7 @@ template {
 .tab .btn-copy {
   position: absolute;
   right: 0;
-  padding: .5em;
+  padding: 0.5em;
   width: 3em;
   height: 3em;
   border-width: 0;

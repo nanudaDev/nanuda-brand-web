@@ -4,3 +4,4 @@ export * from './question';
 export * from './sms';
 export * from './faq';
 export * from './proforma-consult-result-v3';
+export * from './pickcook-user';

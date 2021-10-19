@@ -67,13 +67,53 @@
           </span>
         </li>
       </ul>
+      <ul class="navbar-nav py-lg-0 ml-5">
+        <li class="nav-item  border-left pl-5" v-if="!isAuth">
+          <span class="nav-link">
+            <b-icon icon="box-arrow-in-right" class="mr-1"></b-icon>
+            <router-link to="/login">로그인</router-link></span
+          >
+        </li>
+        <li class="nav-item dropdown border-left pl-5" v-if="isAuth">
+          <span
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            class="nav-link dropdown-toggle"
+            v-if="user"
+          >
+            <b-icon icon="person-circle" class="mr-1"></b-icon>
+            {{ user.name }} 님
+          </span>
+          <div
+            class="dropdown-menu dropdown-menu-right mt-4"
+            aria-labelledby="navbarDropdown"
+          >
+            <b-dropdown-item to="/mypage/account">
+              <b-icon icon="gear" class="mr-1"></b-icon>
+              계정설정
+            </b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item @click="logout()">
+              <b-icon icon="box-arrow-in-left" class="mr-1"></b-icon>
+              로그아웃
+            </b-dropdown-item>
+          </div>
+        </li>
+      </ul>
     </div>
   </nav>
 </template>
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
-import { componentRoutes } from '@/router/modules';
 import { Component } from 'vue-property-decorator';
+import { componentRoutes } from '@/router/modules';
+import { PickcookUserDto } from '@/dto';
+import JwtStorageService from '@/services/shared/auth/jwt-storage.service';
+import PickcookUserService from '@/services/pickcook-user.service';
+import { BaseUser } from '@/services/shared/auth/dto';
 
 @Component({
   name: 'NavBar',
@@ -82,6 +122,8 @@ export default class NavBar extends BaseComponent {
   private items = componentRoutes;
   private isToggleNav = false;
   private isCollapsed = '';
+  private isAuth = JwtStorageService.getToken();
+  private user = new PickcookUserDto(BaseUser);
 
   onToggleNav() {
     this.isToggleNav = !this.isToggleNav;
@@ -91,6 +133,30 @@ export default class NavBar extends BaseComponent {
     if (this.isToggleNav) this.isCollapsed = 'collapse';
     else this.isCollapsed = '';
     this.isToggleNav = false;
+  }
+
+  findMe() {
+    PickcookUserService.findMe().subscribe(res => {
+      if (res) {
+        this.user = res.data;
+      }
+    });
+  }
+
+  logout() {
+    JwtStorageService.removeToken();
+    this.$router.push('/logout');
+    this.isAuth = null;
+  }
+
+  created() {
+    if (this.isAuth) {
+      this.findMe();
+    }
+    this.$root.$on('withdraw', () => {
+      JwtStorageService.removeToken();
+      this.isAuth = null;
+    });
   }
 }
 </script>
@@ -180,6 +246,7 @@ export default class NavBar extends BaseComponent {
   .navbar-nav {
     padding-top: 1.5em;
     padding-bottom: 2.5em;
+    align-items: center;
     .nav-item {
       margin: 0.5em 0;
       .nav-link {
