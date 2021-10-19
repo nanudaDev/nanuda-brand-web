@@ -98,6 +98,15 @@ const nonNavBarRouter: RouteConfig[] = [
       title: '저스트샐러드 교육페이지',
     },
   },
+  {
+    path: '/map',
+    name: 'Map',
+    component: () => import('../../modules/map/Map.vue'),
+    meta: {
+      layout: 'NonLayout',
+      title: '상권분석맵',
+    },
+  },
 ];
 
 export default nonNavBarRouter;

@@ -30,7 +30,7 @@ import VueGtag from 'vue-gtag';
 // facebook pixel
 import VueFacebookPixel from 'vue-analytics-facebook-pixel';
 import VueMoment from 'vue-moment';
-
+import naver from 'vue-naver-maps';
 // pipe
 import {
   EnumPipeTransformer,
@@ -87,6 +87,12 @@ if (isEnvProd()) {
   // });
   Vue.use(VueGtag, { config: { id: 'notProd' } });
 }
+
+Vue.use(naver, {
+  clientID: 'nkghv9zymy',
+  useGovAPI: false, //공공 클라우드 API 사용 (선택)
+  subModules: '', // 서브모듈 (선택)
+});
 
 new Vue({
   router,
