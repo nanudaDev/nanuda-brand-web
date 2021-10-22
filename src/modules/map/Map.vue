@@ -4,8 +4,9 @@
     :width="width"
     :mapOptions="mapOptions"
     @load="onLoad"
-    @dragstart="info = false"
-    @zoom_changed="info = false"
+    @dragend="onDrag"
+    @zoom_changed="onZoomChanged"
+    @init_stylemap="onInitStyleMap"
   >
     <naver-info-window
       class="info-window"
@@ -14,20 +15,15 @@
       :marker="marker"
     >
       <div class="info-window-container" v-if="marker">
-        <h1>{{ `x: ${marker.position.x} y: ${marker.position.y}` }}</h1>
+        <h1>hello</h1>
       </div>
     </naver-info-window>
     <naver-marker
-      :lat="37"
-      :lng="127"
+      :key="i"
+      v-for="(marker, i) in showingMarkers"
+      :lat="marker.position.y"
+      :lng="marker.position.x"
       @click="onMarkerClicked"
-      @load="onMarkerLoaded"
-    />
-    <naver-marker
-      :lat="37.2"
-      :lng="127.4"
-      @click="onMarkerClicked"
-      @load="onMarkerLoaded"
     />
   </naver-maps>
 </template>
@@ -35,6 +31,8 @@
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
 import { Component } from 'vue-property-decorator';
+import Vue from 'vue/types/umd';
+import sosang from '@/assets/test-data/sosangoingin.json';
 @Component({
   name: 'Map',
 })
@@ -46,23 +44,60 @@ export default class Map extends BaseComponent {
   private count = 1;
   private map: any = null;
   private isCTT = false;
+  private sosang = sosang.data;
+  private showingMarkers = [];
   private mapOptions = {
     lat: 37,
     lng: 127,
     zoom: 10,
+    minZoom: 6,
+    maxZoom: 20,
   };
-  onLoad(vue: any) {
-    console.log('onLoad');
-    console.log('vue', vue);
-    this.map = vue;
+  private heatmapCoords = [
+    new window.naver.maps.visualization.WeightedLocation(37.01, 127.01),
+    new window.naver.maps.visualization.WeightedLocation(37.01, 127.02),
+    new window.naver.maps.visualization.WeightedLocation(37.02, 127.01),
+  ];
+  // private heatmapCoords: any = [];
+  private markers: any = [];
+  private heatMap = null;
 
-    console.log('this.map', this.map);
+  updateMarkers() {
+    const mapBounds = this.map.getBounds();
+    this.showingMarkers = this.markers.filter(e => {
+      const position = e.getPosition();
+      // console.log('position', position);
+      if (mapBounds.hasLatLng(position)) return true;
+    });
+  }
+  startHeatMap() {
+    this.heatMap = new window.naver.maps.visualization.HeatMap({
+      map: this.map.map,
+      data: this.heatmapCoords,
+      colorMap: window.naver.maps.visualization.SpectrumStyle.HOT,
+    });
+  }
+
+  onLoad(vue: any) {
+    console.log('naver', window.naver);
+
+    this.map = vue;
+    this.sosang.forEach(e => {
+      const position = new window.naver.maps.LatLng(e[5], e[4]);
+
+      const marker = new window.naver.maps.Marker({
+        map: this.map,
+        position: position,
+        zIndex: 100,
+      });
+      this.markers.push(marker);
+      // this.heatmapCoords.push(position);
+    });
   }
   onWindowLoad(that: any) {
     console.log('that', that);
   }
   onMarkerClicked(event: any) {
-    console.log('event', event);
     this.info = false;
     this.$nextTick(() => {
       this.info = true;
@@ -70,10 +105,16 @@ export default class Map extends BaseComponent {
 
     this.marker = event.overlay;
   }
-  onMarkerLoaded(vue: any) {
-    console.log('vue', vue);
-    this.marker = vue.marker;
-    console.log(' vue.marker', vue.marker);
+  onZoomChanged(zoomLevel: number) {
+    console.log('on zoom changed vue', zoomLevel);
+    this.updateMarkers();
+  }
+  onDrag() {
+    this.updateMarkers();
+    this.info = false;
+  }
+  onInitStyleMap() {
+    this.startHeatMap();
   }
 }
 </script>

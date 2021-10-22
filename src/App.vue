@@ -5,12 +5,8 @@
 <script lang="ts">
 declare global {
   interface Window {
-    kakao: any;
-  }
-}
-declare global {
-  interface Window {
     Kakao: any;
+    naver: any;
   }
 }
 import { Component } from 'vue-property-decorator';

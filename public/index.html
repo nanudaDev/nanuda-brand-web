@@ -1,130 +1,91 @@
 <!DOCTYPE html>
 <html lang="kr">
-  <head>
-    <meta
-      name="description"
-      content="스마트하게 창업하기 빅데이터 기반 상권분석으로 실패 없는 창업을 안내합니다"
-    />
-    <meta
-      property="image"
-      content="https://www.facebook.com/pickcook21/photos/a.104258518419803/109782374534084"
-    />
-    <meta property="url" content="https://www.pickcook.kr" />
 
-    <meta
-      name="keywords"
-      content="픽쿡,
+<head>
+  <meta name="description" content="스마트하게 창업하기 빅데이터 기반 상권분석으로 실패 없는 창업을 안내합니다" />
+  <meta property="image" content="https://www.facebook.com/pickcook21/photos/a.104258518419803/109782374534084" />
+  <meta property="url" content="https://www.pickcook.kr" />
+
+  <meta name="keywords" content="픽쿡,
       픽쿡네비게이터,
       픽쿡창업,
       빅데이터음식점창업,
       상권분석창업,
-      음식점창업,빅데이터창업"
-    />
-    <!-- facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="픽쿡 - 음식점창업 네비게이터" />
-    <meta
-      property="og:description"
-      content="스마트하게 창업하기 빅데이터 기반 상권분석으로 실패 없는 창업을 안내합니다"
-    />
-    <meta
-      property="og:image"
-      content="https://www.facebook.com/pickcook21/photos/a.104258518419803/109782374534084"
-    />
-    <meta property="og:url" content="https://www.facebook.com/pickcook21" />
-    <meta property="og:site_name" content="스마트한 음식점 창업" />
+      음식점창업,빅데이터창업" />
+  <!-- facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="픽쿡 - 음식점창업 네비게이터" />
+  <meta property="og:description" content="스마트하게 창업하기 빅데이터 기반 상권분석으로 실패 없는 창업을 안내합니다" />
+  <meta property="og:image" content="https://www.facebook.com/pickcook21/photos/a.104258518419803/109782374534084" />
+  <meta property="og:url" content="https://www.facebook.com/pickcook21" />
+  <meta property="og:site_name" content="스마트한 음식점 창업" />
 
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <meta
-      name="naver-site-verification"
-      content="5c7b48ed0891477f4bf783eeb546ff376b99a8df"
-    />
-    <meta
-      name="facebook-domain-verification"
-      content="fnqrnqqdcex4tpd5a49gw7t8s3kq6q"
-    />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-      crossorigin="anonymous"
-    />
-    <title>
-      <%= htmlWebpackPlugin.options.title %>
-    </title>
-    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-  </head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="naver-site-verification" content="5c7b48ed0891477f4bf783eeb546ff376b99a8df" />
+  <meta name="facebook-domain-verification" content="fnqrnqqdcex4tpd5a49gw7t8s3kq6q" />
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+  <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+  <script type="text/javascript"
+    src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=nkghv9zymy&submodules=geocoder,visualization"></script>
+</head>
 
-  <body>
-    <noscript>
-      <strong
-        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
         properly without JavaScript enabled. Please enable it to
-        continue.</strong
-      >
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=15c9ab05bc5feb6e7c83ca2b56626027&libraries=services"
-    ></script>
-    <script>
-      Kakao.init('15c9ab05bc5feb6e7c83ca2b56626027');
-    </script>
-    <script>
-      !(function(f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function() {
-          n.callMethod
-            ? n.callMethod.apply(n, arguments)
-            : n.queue.push(arguments);
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = !0;
-        n.version = '2.0';
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = !0;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s);
-      })(
-        window,
-        document,
-        'script',
-        'https://connect.facebook.net/en_US/fbevents.js',
-      );
-      fbq('init', '432700378140556');
-    </script>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display:none"
-        src="https://www.facebook.com/tr?id=432700378140556&ev=PageView&noscript=1"
-    /></noscript>
-  </body>
+        continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=15c9ab05bc5feb6e7c83ca2b56626027&libraries=services"></script>
+  <script>
+    Kakao.init('15c9ab05bc5feb6e7c83ca2b56626027');
+  </script>
+  <script>
+    !(function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod
+          ? n.callMethod.apply(n, arguments)
+          : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    })(
+      window,
+      document,
+      'script',
+      'https://connect.facebook.net/en_US/fbevents.js',
+    );
+    fbq('init', '432700378140556');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=432700378140556&ev=PageView&noscript=1" /></noscript>
+</body>
+
 </html>

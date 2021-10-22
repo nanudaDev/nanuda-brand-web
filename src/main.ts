@@ -91,7 +91,7 @@ if (isEnvProd()) {
 Vue.use(naver, {
   clientID: 'nkghv9zymy',
   useGovAPI: false, //공공 클라우드 API 사용 (선택)
-  subModules: '', // 서브모듈 (선택)
+  subModules: 'visualization', // 서브모듈 (선택)
 });
 
 new Vue({
