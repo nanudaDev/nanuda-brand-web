@@ -128,6 +128,11 @@ export default class LoginLayout extends BaseComponent {
     });
   }
 
+  created() {
+    this.signinDto.isUsername = true;
+    console.log(this.signinDto.isUsername);
+  }
+
   mounted() {
     this.clearOut();
   }

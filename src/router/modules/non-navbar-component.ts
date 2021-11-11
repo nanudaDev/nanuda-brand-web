@@ -71,7 +71,6 @@ const nonNavBarRouter: RouteConfig[] = [
     name: 'question',
     component: () => import('../../modules/question/Question.vue'),
     meta: {
-      authRequired: true,
       layout: 'NonLayout',
       title: '설문',
     },
@@ -134,6 +133,23 @@ const nonNavBarRouter: RouteConfig[] = [
       layout: 'NonLayout',
       title: '저스트샐러드 교육페이지',
     },
+  },
+  {
+    path: '/login-provider',
+    name: 'login-provider',
+    component: () => import('../../modules/login-provider/LoginProvider.vue'),
+    children: [
+      {
+        path: '/login-provider/reset-password',
+        name: 'reset-password',
+        component: () =>
+          import('../../modules/login-provider/components/ResetPassword.vue'),
+        meta: {
+          layout: 'MyPageLayout',
+          title: '비밀번호 재 설정',
+        },
+      },
+    ],
   },
 ];
 

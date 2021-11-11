@@ -11,6 +11,12 @@ class AuthService extends BaseService {
   signout() {
     JwtStorageService.removeToken();
   }
+
+  validateByTempToken(token: string) {
+    return this.post('auth/pickcook-user/validate-temp-token', {
+      token: token,
+    });
+  }
 }
 
 export default new AuthService();
