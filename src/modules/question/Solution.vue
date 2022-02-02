@@ -1693,7 +1693,7 @@ export default class Solution extends BaseComponent {
           color: $black;
           strong {
             font-weight: $txt-bold;
-            font-family: 'YoonGothic', sans-serif;
+            font-family: 'SpoqaHanSansNeo', sans-serif;
           }
         }
       }
