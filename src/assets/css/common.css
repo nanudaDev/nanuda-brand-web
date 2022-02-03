@@ -14529,7 +14529,7 @@ html {
 body {
   background-color: #fff;
   font-size: 1rem;
-  font-family: 'Gotham', 'YoonGothic', sans-serif;
+  font-family: 'Gotham', 'SpoqaHanSansNeo', sans-serif;
   color: #707070;
   margin: 0;
 }
@@ -14864,42 +14864,24 @@ template {
 }
 
 @font-face {
-  font-family: 'YoonGothic';
+  font-family: 'SpoqaHanSansNeo';
   font-style: normal;
   font-weight: 400;
-  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro745.ttf") format("truetype");
+  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/SpoqaHanSansNeo-Regular.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/SpoqaHanSansNeo-Regular.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/SpoqaHanSansNeo-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'YoonGothic';
-  font-style: normal;
-  font-weight: 500;
-  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro755.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: 'YoonGothic';
+  font-family: 'SpoqaHanSansNeo';
   font-style: normal;
   font-weight: 600;
-  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro765.ttf") format("truetype");
+  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/SpoqaHanSansNeo-Medium.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/SpoqaHanSansNeo-Medium.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/SpoqaHanSansNeo-Medium.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'YoonGothic';
-  font-style: normal;
-  font-weight: 700;
-  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro775.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: 'YoonGothic';
+  font-family: 'SpoqaHanSansNeo';
   font-style: normal;
   font-weight: 800;
-  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/YoonGothicPro785.ttf") format("truetype");
-}
-
-.yoongothic {
-  font-family: 'YoonGothic', sans-serif;
+  src: url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/SpoqaHanSansNeo-Bold.woff2") format("woff2"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/SpoqaHanSansNeo-Bold.woff") format("woff"), url("https://kr.object.ncloudstorage.com/common-nanuda/fonts/SpoqaHanSansNeo-Bold.ttf") format("truetype");
 }
 
 .gotham {
