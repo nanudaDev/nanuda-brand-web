@@ -408,15 +408,18 @@
         원하는 지역의 내 메뉴 찾기
       </button>
     </transition>
+    <PopupModal></PopupModal>
   </article>
 </template>
 <script lang="ts">
 import BaseComponent from '@/core/base.component';
 import Component from 'vue-class-component';
 import debounce from 'lodash/debounce';
+import PopupModal from '@/modules/_components/modal/PopupModal.vue';
 
 @Component({
   name: 'Main',
+  components: { PopupModal },
 })
 export default class Main extends BaseComponent {
   $refs!: {

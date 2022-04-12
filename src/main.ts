@@ -15,12 +15,13 @@ import '@/core/guards/auth-role.guard';
 import {
   Swiper as SwiperClass,
   Pagination,
+  Navigation,
   Mousewheel,
   Autoplay,
   EffectFade,
 } from 'swiper';
 import getAwesomeSwiper from 'vue-awesome-swiper/dist/exporter';
-SwiperClass.use([Pagination, Mousewheel, Autoplay, EffectFade]);
+SwiperClass.use([Pagination, Navigation, Mousewheel, Autoplay, EffectFade]);
 import 'swiper/swiper-bundle.css';
 
 import BaseArrow from '@/modules/_components/svg/BaseArrow.vue';
