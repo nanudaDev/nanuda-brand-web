@@ -21,11 +21,11 @@
             style="width:100%; max-width:100%;"
             v-if="popup.images && popup.images[0]"
           />
-          <div v-if="popup.link" class="p-4 bg-light">
+          <!-- <div v-if="popup.link" class="p-4 bg-light">
             <b-btn variant="primary" size="lg" block>
               온라인 신청하기
             </b-btn>
-          </div>
+          </div> -->
         </a>
       </swiper-slide>
     </swiper>
