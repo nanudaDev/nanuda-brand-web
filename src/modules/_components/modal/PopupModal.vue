@@ -104,7 +104,6 @@ export default class PopupModal extends BaseComponent {
     PopupService.findAll().subscribe(res => {
       if (res) {
         const popupData = res.data;
-        console.log(popupData);
         this.popupList = popupData.filter(
           popup => popup.images && popup.images[0],
         );
