@@ -1,7 +1,7 @@
 <template>
   <b-modal
     id="popup"
-    :visible="showPopup"
+    :visible="showPopup && popupList.length > 0"
     centered
     hide-header
     hide-footer
@@ -19,6 +19,7 @@
             :src="popup.images[0].endpoint"
             :alt="popup.title"
             style="width:100%; max-width:100%;"
+            v-if="popup.images && popup.images[0]"
           />
           <div v-if="popup.link" class="p-4 bg-light">
             <b-btn variant="primary" size="lg" block>
@@ -103,7 +104,10 @@ export default class PopupModal extends BaseComponent {
     PopupService.findAll().subscribe(res => {
       if (res) {
         const popupData = res.data;
-        this.popupList = popupData.filter(popup => popup.images.length);
+        console.log(popupData);
+        this.popupList = popupData.filter(
+          popup => popup.images && popup.images[0],
+        );
       }
     });
   }
