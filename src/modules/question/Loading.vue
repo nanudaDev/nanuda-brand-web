@@ -2,7 +2,7 @@
   <div class="loading-progress-layer">
     <div class="loading-container">
       <div class="text-center">
-        <vue-ellipse-progress
+        <!-- <vue-ellipse-progress
           :progress="loadingProgress"
           color="#ffffff"
           empty-color="#ffffff"
@@ -15,7 +15,13 @@
           font-color="#ffffff"
         >
           <span slot="legend-value">%</span>
-        </vue-ellipse-progress>
+        </vue-ellipse-progress> -->
+        <div class="bg-white p-3 rounded w-14 m-auto">
+           <img
+          src="https://kr.object.ncloudstorage.com/common-storage-pickcook/main/loading.gif"
+          alt="로딩중"
+        />
+        </div>
       </div>
       <div class="mt-4 text-center">
         <p class="txt-large txt-white">
@@ -25,8 +31,8 @@
             알려드릴게요
           </template>
           <template v-else>
-            거의 완료되었어요 <br />
-            이제 결과를 보여드릴게요
+            분석이 거의 완료되었어요 <br />
+            완료되는대로 결과를 보여드릴게요
           </template>
         </p>
       </div>
