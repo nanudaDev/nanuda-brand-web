@@ -9,15 +9,16 @@ export const routes: RouteConfig[] = [
   {
     path: '/',
     name: 'main',
-    component: () => import('../modules/main/Main.vue'),
+    component: () => import('../modules/renewal/Renewal.vue'),
     meta: {
-      layout: 'MainLayout',
+      layout: 'NonLayout',
       title: '픽쿡 - 실패 없는 창업을 안내합니다',
       main: true,
     },
   },
-  ...componentRoutes,
-  ...nonNavBarRouter,
+  { path: '*', redirect: '/' }
+  // ...componentRoutes,
+  // ...nonNavBarRouter,
 ];
 
 const router = new VueRouter({
