@@ -39,28 +39,29 @@ export default class Renewal extends BaseComponent {
   border-top: 4px solid  #004d8a;
 
   .logo {
-    width: 300px;
-    margin-bottom:10px;
+    width: 6em;
+    margin-bottom:0.5em;
   }
 
   .renewal-contents {
     text-align: center;
     color: #323232;
+    padding:1em;
      strong {
         color: #004d8a;
       }
     h2 {
-      font-size: 40px;
-      margin-bottom: 10px;
+      font-size: 2.5rem;
+      margin-bottom: 0.5em;
     }
     p {
-      font-size: 24px;
+      font-size: 1.5rem;
      
     }
     .renewal-img {
       text-align: center;
       img {
-        width: 400px;
+        width: 20em;
       }
     }
   }
